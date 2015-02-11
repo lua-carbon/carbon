@@ -16,5 +16,5 @@ See [releases.md](releases.md) for the releases history of Carbon.
 [nanotube]: https://github.com/lua-carbon/nanotube
 [diamond]: https://github.com/lua-carbon/diamond
 [chaoite]: https://github.com/lua-carbon/chaoite
-[carbon_banner]: https://raw.githubusercontent.com/lua-carbon/what-is-carbon/master/assets/carbon-banner.png
-[carbon_icon]: https://raw.githubusercontent.com/lua-carbon/what-is-carbon/master/assets/carbon-icon.png
+[carbon_banner]: https://raw.githubusercontent.com/lua-carbon/carbon/master/assets/carbon-banner.png
+[carbon_icon]: https://raw.githubusercontent.com/lua-carbon/carbon/master/assets/carbon-icon.png
