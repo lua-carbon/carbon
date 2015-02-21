@@ -159,6 +159,10 @@ function OOP.BaseClass:Inherits(...)
 	for i = 1, select("#", ...) do
 		local object = select(i, ...)
 
+		if (type(object) ~= "table" or not object.__members) then
+			error(("Carbon.OOP: Cannot inherit from object #%d: %s"):format(i, object), 2)
+		end
+
 		Dictionary.DeepCopyMerge(object.__members, self.__members)
 		Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
 		Dictionary.ShallowMerge(object.__attributes, self.__attributes)
@@ -368,6 +372,7 @@ end
 	StaticClass OOP:StaticClass()
 
 	Creates a static (singleton) class.
+	Also works for abstract classes, see the alias below to OOP:AbstractClass()
 ]]
 function OOP:StaticClass()
 	local class = Dictionary.DeepCopy(self.StaticObject)
@@ -381,5 +386,7 @@ function OOP:StaticClass()
 
 	return class
 end
+
+OOP.AbstractClass = OOP.StaticClass
 
 return OOP

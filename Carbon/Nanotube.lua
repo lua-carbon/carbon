@@ -26,6 +26,7 @@
 
 local Carbon = (...)
 local OOP = Carbon.OOP
+local Time = Carbon.Time
 local ForwardPointer = Carbon.ForwardPointer
 
 local Nanotube = OOP:Class()
@@ -40,7 +41,7 @@ local Nanotube = OOP:Class()
 	}
 
 function Nanotube:_init()
-	self.__time = Carbon.GetTime()
+	self.__time = Time.Get()
 end
 
 local function compare_hooks(a, b)
@@ -65,7 +66,7 @@ end
 	Call the method after a number of seconds have elapsed.
 ]]
 function Nanotube:After(time, method)
-	table.insert(self.__timed_events, {method, Carbon.GetTime() + time})
+	table.insert(self.__timed_events, {method, Time.Get() + time})
 end
 
 --[[
@@ -79,7 +80,7 @@ end
 	Call the method every time this number of seconds have elapsed.
 ]]
 function Nanotube:Every(period, method)
-	table.insert(self.__every_events, {method, period, Carbon.GetTime() + period})
+	table.insert(self.__every_events, {method, period, Time.Get() + period})
 end
 
 --[[
@@ -132,7 +133,7 @@ end
 ]]
 function Nanotube:Step(...)
 	self:Fire("Step", ...)
-	local t = Carbon.GetTime()
+	local t = Time.Get()
 
 	local remove = {}
 	for key, hooked in ipairs(self.__timed_events) do

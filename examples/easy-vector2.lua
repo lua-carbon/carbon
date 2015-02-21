@@ -9,7 +9,9 @@ end
 	Carbon: Simple Vector2 Class
 
 	This demonstrates how to create a simple Vector2 class in Carbon.
-	Also see easy-oop for more OOP concepts
+	Also see easy-oop for more OOP concepts.
+
+	It's recommended that you use Carbon's built-in math classes in Carbon.Math in a real application.
 ]]
 
 local Carbon = require("Carbon")

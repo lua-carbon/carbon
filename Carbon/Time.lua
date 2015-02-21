@@ -78,11 +78,11 @@ end
 
 -- Discover the timer with the higest resolution
 if (love and love.timer) then
-	Time.GetTime = love.timer.getTime
+	Time.Get = love.timer.getTime
 elseif (socket) then
-	Time.GetTime = socket.gettime
+	Time.Get = socket.gettime
 else
-	Time.GetTime = os.clock
+	Time.Get = os.clock
 end
 
 -- Convert weeks to seconds
