@@ -28,11 +28,12 @@ local OOP = {}
 
 local config = Carbon.Config.OOP
 
--- Method names
+-- Default attributes for classes and static classes
+local default_attributes = {
+}
 
--- Attributes in the configuration
-local default_attributes = config:_require("DefaultAttributes")
-local default_static_attributes = config:_require("DefaultStaticAttributes")
+local default_static_attributes = {
+}
 
 config:_lock()
 

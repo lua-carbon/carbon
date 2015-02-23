@@ -31,13 +31,6 @@ local Carbon = {
 	Version = {1, 0, 0, "alpha"},
 
 	Config = {
-		OOP = Configuration:Create("Carbon.OOP") {
-			DefaultAttributes = {
-			},
-
-			DefaultStaticAttributes = {
-			}
-		}
 	}
 }
 
