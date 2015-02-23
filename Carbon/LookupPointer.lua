@@ -27,9 +27,6 @@
 local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
 
-local constructor_name = Carbon.Config.OOP:_require("ConstructorName")
-local set_name = Carbon.Config.Pointers:_require("SetName")
-
 local indexable = {
 	["table"] = true,
 	["userdata"] = true,
@@ -115,7 +112,7 @@ local meta = {
 
 local LookupPointer = {}
 
-LookupPointer[constructor_name] = function(self, parent, path)
+function LookupPointer:New(parent, path)
 	local instance = Dictionary.DeepCopy(self)
 	instance.__parent = parent
 	instance.__path = path
@@ -125,7 +122,7 @@ LookupPointer[constructor_name] = function(self, parent, path)
 	return instance
 end
 
-LookupPointer[set_name] = function(self, parent, path)
+function LookupPointer:Set(parent, path)
 	self.__parent = parent
 	self.__path = path
 end

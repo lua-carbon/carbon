@@ -28,10 +28,6 @@
 local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
 
-local constructor_name = Carbon.Config.OOP:_require("ConstructorName")
-local set_name = Carbon.Config.Pointers:_require("SetName")
-local available_check_name = Carbon.Config.Pointers:_require("AvailableCheckName")
-
 local indexable = {
 	["table"] = true,
 	["userdata"] = true,
@@ -101,7 +97,7 @@ local meta = {
 
 local WeakPointer = {}
 
-WeakPointer[constructor_name] = function(self, value)
+function WeakPointer:New(value)
 	local instance = Dictionary.DeepCopy(self)
 	instance.__value = value
 
@@ -110,11 +106,11 @@ WeakPointer[constructor_name] = function(self, value)
 	return instance
 end
 
-WeakPointer[set_name] = function(self, value)
+function WeakPointer:Set(value)
 	self.__value = value
 end
 
-WeakPointer[available_check_name] = function(self)
+function WeakPointer:Available()
 	return (rawget(self, "__value") ~= nil)
 end
 

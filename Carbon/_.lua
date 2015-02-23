@@ -32,22 +32,11 @@ local Carbon = {
 
 	Config = {
 		OOP = Configuration:Create("Carbon.OOP") {
-			InitializerName = "_init",
-			ConstructorName = "New",
-			PlacementConstructorName = "PlacementNew",
-			DestructorName = "Destroy",
-			CopyName = "Copy",
-			TypeCheckerName = "Is",
-
 			DefaultAttributes = {
 			},
 
 			DefaultStaticAttributes = {
 			}
-		},
-		Pointers = Configuration:Create("Carbon.Pointer") {
-			SetName = "Set",
-			AvailableCheckName = "Available"
 		}
 	}
 }

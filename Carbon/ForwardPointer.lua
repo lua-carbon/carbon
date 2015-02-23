@@ -28,9 +28,6 @@
 local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
 
-local constructor_name = Carbon.Config.OOP:_require("ConstructorName")
-local set_name = Carbon.Config.Pointers:_require("SetName")
-
 local indexable = {
 	["table"] = true,
 	["userdata"] = true,
@@ -99,7 +96,7 @@ local meta = {
 
 local ForwardPointer = {}
 
-ForwardPointer[constructor_name] = function(self, value)
+function ForwardPointer:New(value)
 	local instance = Dictionary.DeepCopy(self)
 	instance.__value = value
 
@@ -108,7 +105,7 @@ ForwardPointer[constructor_name] = function(self, value)
 	return instance
 end
 
-ForwardPointer[set_name] = function(self, value)
+function ForwardPointer:Set(value)
 	self.__value = value
 end
 

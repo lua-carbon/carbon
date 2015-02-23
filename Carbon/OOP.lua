@@ -29,12 +29,6 @@ local OOP = {}
 local config = Carbon.Config.OOP
 
 -- Method names
-local name_initializer = config:_require("InitializerName")
-local name_constructor = config:_require("ConstructorName")
-local name_placement_constructor = config:_require("PlacementConstructorName")
-local name_destructor = config:_require("DestructorName")
-local name_copy = config:_require("CopyName")
-local name_type_checker = config:_require("TypeCheckerName")
 
 -- Attributes in the configuration
 local default_attributes = config:_require("DefaultAttributes")
@@ -129,7 +123,7 @@ OOP.Attributes.Class["PooledInstantiation"] = function(class)
 		end
 	end
 
-	class.__members[name_destructor] = class.__members[name_destructor] or class.__pool_destructor
+	class.__members.Destroy = class.__members.Destroy or class.__pool_destructor
 	class.__metatable.__gc = class.__metatable.__gc or class.__pool_destructor
 end
 
@@ -233,7 +227,7 @@ OOP.Object.__members.class = newproxy(true)
 getmetatable(OOP.Object.__members.class).__index = OOP.Object
 
 OOP.Object.__typecheck[OOP.Object] = true
-OOP.Object[name_type_checker] = OOP.Object.typecheck
+OOP.Object.Is = OOP.Object.typecheck
 
 --[[
 	[This method can be renamed, see Carbon/_.lua]
@@ -242,7 +236,7 @@ OOP.Object[name_type_checker] = OOP.Object.typecheck
 
 	Creates a new object and puts it into a given indexable object.
 ]]
-OOP.Object[name_placement_constructor] = function(self, instance, ...)
+function OOP.Object:PlacementNew(instance, ...)
 	if (not instance) then
 		if (self.__attributes.PooledInstantiation) then
 			instance = table.remove(self.__pool, #self.__pool) or {}
@@ -265,8 +259,8 @@ OOP.Object[name_placement_constructor] = function(self, instance, ...)
 	getmetatable(instance.class).__index = self
 
 	-- We wrap the typechecking in a userdata so it doesn't get copied when our instance does.
-	instance[name_type_checker] = newproxy(true)
-	getmetatable(instance[name_type_checker]).__index = self.__typecheck
+	instance.Is = newproxy(true)
+	getmetatable(instance.Is).__index = self.__typecheck
 
 	-- InstanceIndirection attribute wraps the object in a userdata
 	-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
@@ -283,8 +277,8 @@ OOP.Object[name_placement_constructor] = function(self, instance, ...)
 	end
 
 	-- Call the defined constructor
-	if (instance[name_initializer]) then
-		instance[name_initializer](instance, ...)
+	if (instance._init) then
+		instance._init(instance, ...)
 	end
 
 	for attribute in pairs(self.__attributes) do
@@ -303,8 +297,8 @@ end
 
 	Creates a new object and passes parameters to its initializer.
 ]]
-OOP.Object[name_constructor] = function(self, ...)
-	return self[name_placement_constructor](self, nil, ...)
+function OOP.Object:New(...)
+	return self:PlacementNew(nil, ...)
 end
 
 --[[
@@ -313,7 +307,7 @@ end
 
 	Copies the given object.
 ]]
-OOP.Object.__base_members[name_copy] = function(self)
+OOP.Object.__base_members.Copy = function(self)
 	local class = self.class
 	local target
 
@@ -348,7 +342,7 @@ OOP.StaticObject.__members.class = newproxy(true)
 getmetatable(OOP.StaticObject.__members.class).__index = OOP.StaticObject
 
 OOP.StaticObject.__typecheck[OOP.StaticObject] = true
-OOP.StaticObject[name_type_checker] = OOP.StaticObject.__typecheck
+OOP.StaticObject.Is = OOP.StaticObject.__typecheck
 
 --[[
 	Class OOP:Class()
