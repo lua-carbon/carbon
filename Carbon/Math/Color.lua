@@ -26,6 +26,9 @@
 
 local Carbon = (...)
 
-local Color = Carbon.OOP:AbstractClass()
+local Color = Carbon.OOP:Class()
+	:Attributes {
+		Abstract = true
+	}
 
 return Color

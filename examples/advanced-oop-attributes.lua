@@ -17,6 +17,7 @@ end
 	- InstancedMetatable: Whether a new metatable should be given to each object or whether the same one should be kept class-wide.
 	- PooledInstantiation: Whether instances should come from a pool filled with collected objects.
 		- PoolSize: The maximum size of the instance pool, defaults to 20
+	- Abstract: Whether a class can be instantiated.
 ]]
 
 local Carbon = require("Carbon")

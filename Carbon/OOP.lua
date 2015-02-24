@@ -24,7 +24,9 @@
 
 local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
-local OOP = {}
+local OOP = {
+	__attribute_inheritance = {}
+}
 
 -- Default attributes for classes and static classes
 local default_attributes = {
@@ -109,6 +111,17 @@ function OOP:RegisterAttribute(type, name, method)
 	typeset[name] = method
 end
 
+--[[
+	void OOP:SetAttributeInherited(string name, bool inherited)
+		name: The name of the attribute to define a value for.
+		inherited: Whether inheriting a class will also inherit this attribute.
+
+	Marks an attribute as inherited or not inherited explicitly.
+]]
+function OOP:SetAttributeInherited(name, inherited)
+	self.__attribute_inheritance[name] = not not inherited
+end
+
 -- PooledInstantiation attribute
 -- The rest of the functionality is defined inline, since it modifies allocation behavior.
 OOP.Attributes.Class["PooledInstantiation"] = function(class)
@@ -151,13 +164,18 @@ function OOP.BaseClass:Inherits(...)
 		local object = select(i, ...)
 
 		if (type(object) ~= "table" or not object.__members) then
-			error(("Carbon.OOP: Cannot inherit from object #%d: %s"):format(i, object), 2)
+			error(("Carbon.OOP: Cannot inherit from object #%d, not a class: %s"):format(i, object), 2)
 		end
 
 		Dictionary.DeepCopyMerge(object.__members, self.__members)
 		Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
-		Dictionary.ShallowMerge(object.__attributes, self.__attributes)
 		Dictionary.ShallowMerge(object.__typecheck, self.__typecheck)
+
+		for key, value in pairs(object.__attributes) do
+			if (OOP.__attribute_inheritance[key]) then
+				self.__attributes = Dictionary.DeepCopy(value)
+			end
+		end
 
 		for attribute in pairs(object.__attributes) do
 			local found = OOP.Attributes.Class[attribute]
@@ -234,6 +252,10 @@ OOP.Object.Is = OOP.Object.typecheck
 	Creates a new object and puts it into a given indexable object.
 ]]
 function OOP.Object:PlacementNew(instance, ...)
+	if (self.__attributes.Abstract) then
+		error("Cannot create instance of abstract class!", 2)
+	end
+
 	if (not instance) then
 		if (self.__attributes.PooledInstantiation) then
 			instance = table.remove(self.__pool, #self.__pool) or {}
