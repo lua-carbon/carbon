@@ -26,6 +26,7 @@
 
 local Carbon = (...)
 
+local Color = Carbon.Math.Color
 local Color_RGBA, except = Carbon.Math.VectorN:Generate({"R", "G", "B", "A"})
 
 if (not Color_RGBA) then
@@ -35,5 +36,7 @@ if (not Color_RGBA) then
 	
 	Carbon.Error(except)
 end
+
+Color_RGBA:Inherits(Color)
 
 return Color_RGBA
