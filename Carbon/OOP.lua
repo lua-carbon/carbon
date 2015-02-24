@@ -26,16 +26,12 @@ local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
 local OOP = {}
 
-local config = Carbon.Config.OOP
-
 -- Default attributes for classes and static classes
 local default_attributes = {
 }
 
 local default_static_attributes = {
 }
-
-config:_lock()
 
 -- Utility methods
 local function handle_indirection(class, instance)
