@@ -25,7 +25,22 @@
 local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
 local OOP = {
-	__attribute_inheritance = {}
+	__attribute_inheritance = {
+		-- Inherited attributes
+		InstanceIndirection = true,
+		InstancedMetatable = true,
+		TemplateHandler = true, -- proposed
+		TemplateRequired = true, -- proposed
+
+		-- Not inherited attributes
+		SparseInstances = false,
+		PooledInstantiation = false,
+		PoolSize = false,
+		Abstract = false,
+		ExplicitInitialization = false, -- proposed
+		PrefetchedInstantiation = false, -- proposed
+		EXT_LJ_Struct = false, -- proposed
+	}
 }
 
 -- Default attributes for classes and static classes
