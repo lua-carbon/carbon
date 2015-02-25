@@ -28,13 +28,13 @@ local libCarbon = (...)
 local Configuration = libCarbon.Configuration
 
 local Carbon = {
-	Version = {1, 0, 0, "alpha"},
+	Version = {1, 0, 0, ""},
 
 	Config = {
 	}
 }
 
-Carbon.VersionString = ("%d.%d.%d-%s"):format(unpack(Carbon.Version))
+Carbon.VersionString = ("%d.%d.%d%s"):format(unpack(Carbon.Version))
 
 Carbon.Async = coroutine.wrap
 

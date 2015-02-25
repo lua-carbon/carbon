@@ -39,17 +39,38 @@ if (not ok) then
 	socket = nil
 end
 
--- Discover a sleep function for us to use
+-- Discover a timer and sleep function
 if (love and love.timer) then
 	Time.Sleep = love.timer.sleep
+	Time.Get = love.timer.getTime
 elseif (ffi) then
 	if (ffi.os == "Windows") then
 		ffi.cdef([[
+		int __stdcall QueryPerformanceFrequency(int64_t* lpFrequency);
+		int __stdcall QueryPerformanceCounter(int64_t* lpPerformanceCount);
+		uint32_t __stdcall GetTickCount();
+
 		void Sleep(unsigned long milliseconds);
 		unsigned int timeBeginPeriod(unsigned int uperiod);
 		]])
 
 		ffi.load("winmm.dll").timeBeginPeriod(1)
+
+		local s_frequency = ffi.new("int64_t[1]")
+		local s_use_qpc = ffi.C.QueryPerformanceFrequency(s_frequency) ~= 0
+		local now = ffi.new("int64_t[1]")
+
+		if (s_use_qpc) then
+			Time.Get = function()
+				ffi.C.QueryPerformanceFrequency(s_frequency)
+				ffi.C.QueryPerformanceCounter(now)
+				return tonumber(now[0]) / tonumber(s_frequency[0])
+			end
+		else
+			Time.Get = function()
+				return ffi.C.GetTickCount()
+			end
+		end
 
 		Time.Sleep = function(s)
 			ffi.C.Sleep(s * 1000)
@@ -68,20 +89,14 @@ elseif (ffi) then
 		end
 	end
 elseif (socket) then
+	Time.Get = socket.gettime
 	Time.Sleep = function(s)
 		socket.select(nil, nil, s)
 	end
 else
 	Time.Sleep = function(s)
 	end
-end
 
--- Discover the timer with the higest resolution
-if (love and love.timer) then
-	Time.Get = love.timer.getTime
-elseif (socket) then
-	Time.Get = socket.gettime
-else
 	Time.Get = os.clock
 end
 
