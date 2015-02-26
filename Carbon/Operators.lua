@@ -27,7 +27,11 @@ local Operators = {}
 
 local lua52 = not not table.unpack
 
-function Operators.Add(...)
+function Operators.Add(a, b)
+	return a + b
+end
+
+function Operators.AddN(...)
 	local result = 0
 
 	for i = 1, select("#", ...) do
@@ -37,7 +41,11 @@ function Operators.Add(...)
 	return result
 end
 
-function Operators.Subtract(...)
+function Operators.Subtract(a, b)
+	return a - b
+end
+
+function Operators.SubtractN(...)
 	local result = select(1, ...)
 
 	for i = 2, select("#", ...) do
@@ -47,7 +55,11 @@ function Operators.Subtract(...)
 	return result
 end
 
-function Operators.Multiply(...)
+function Operators.Multiply(a, b)
+	return a * b
+end
+
+function Operators.MultiplyN(...)
 	local result = 1
 
 	for i = 1, select("#", ...) do
@@ -57,7 +69,11 @@ function Operators.Multiply(...)
 	return result
 end
 
-function Operators.Divide(...)
+function Operators.Divide(a, b)
+	return a / b
+end
+
+function Operators.DivideN(...)
 	local result = select(1, ...)
 
 	for i = 2, select("#", ...) do
@@ -67,7 +83,11 @@ function Operators.Divide(...)
 	return result
 end
 
-function Operators.Power(...)
+function Operators.Power(a, b)
+	return a ^ b
+end
+
+function Operators.PowerN(...)
 	local result = select(1, ...)
 
 	for i = 2, select("#", ...) do
@@ -77,7 +97,11 @@ function Operators.Power(...)
 	return result
 end
 
-function Operators.Concat(...)
+function Operators.Concat(a, b)
+	return tostring(a) .. tostring(b)
+end
+
+function Operators.ConcatN(...)
 	local result = tostring(select(1, ...))
 
 	for i = 2, select("#", ...) do
