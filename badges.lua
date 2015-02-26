@@ -30,8 +30,6 @@ local badges = {
 				pass_color = "red"
 			end
 
-			local pass = tests.pass or 0
-			local fail = tests.fail or 0
 			local total = pass + fail
 			local ratio = pass / total
 			local tests_color =
