@@ -19,7 +19,7 @@ See [releases.md](releases.md) for the releases history of Carbon.
 [carbon_icon]: https://raw.githubusercontent.com/lua-carbon/carbon/master/assets/carbon-icon.png
 
 [shield_license]: https://img.shields.io/badge/license-zlib/libpng-333333.svg?style=flat-square
-[shield_build]: https://img.shields.io/badge/build-passing-green.svg?style=flat-square
+[shield_build]: https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square
 [shield_tests]: https://img.shields.io/badge/tests-1/1-brightgreen.svg?style=flat-square
 [shield_release_version]: https://img.shields.io/github/release/lua-carbon/carbon.svg?style=flat-square
 [shield_prerelease_version]: https://img.shields.io/github/tag/lua-carbon/carbon.svg?style=flat-square&label=prerelease

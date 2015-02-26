@@ -24,7 +24,7 @@ local badges = {
 			local pass_color = "lightgrey"
 			if (fail == 0 and pass > 0) then
 				pass_word = "passing"
-				pass_color = "green"
+				pass_color = "brightgreen"
 			elseif (fail > 0) then
 				pass_word = "failing"
 				pass_color = "red"
