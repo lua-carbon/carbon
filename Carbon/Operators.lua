@@ -25,7 +25,8 @@
 local Carbon = (...)
 local Operators = {}
 
-local lua52 = not not table.unpack
+local Graphene = Carbon:GetGraphene()
+local lua52 = Graphene.Support.lua52
 
 function Operators.Add(a, b)
 	return a + b
