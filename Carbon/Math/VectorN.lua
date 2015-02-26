@@ -218,6 +218,11 @@ function VectorN:Generate(members, parameters)
 	end
 
 	class:Metatable(metatable)
+		:Attributes {
+			PooledInstantiation = true,
+			PoolSize = 50,
+			SparseInstances = true,
+		}
 
 	self.__cache[args] = class
 
