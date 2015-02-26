@@ -188,7 +188,7 @@ end
 -- Contains our actual core
 local G = {
 	__load_callback = nil, -- User-specified callback for hooking into module loads.
-	__loading = {}, -- Dictionary of loaded modules for caching
+	__loaded = {}, -- Dictionary of loaded modules for caching
 	__metadata = {}, -- Contains module metadata
 	__submodules = {}, -- Contains submodule information
 
@@ -367,23 +367,8 @@ if (support.lua51) then
 		dictionary_shallow_copy(source, cenv)
 	end
 else
-	function import_dict(source)
-		local upenv, upenv_key
-		local this = debug.getinfo(1).func
-		local i = 0
-		repeat
-			i = i + 1
-			local k, v = debug.getupvalue(this, i)
-			if (k == "_ENV") then
-				upenv = v
-				upenv_key = i
-			end
-		until not k
-
-		local env = setmetatable({}, {__index = _G})
-		debug.setupvalue(this, upenv_key, env)
-
-		dictionary_shallow_copy(source, env)
+	function import_dict(source, level)
+		error("Cannot import under Lua 5.2+!", level + 2 or 2)
 	end
 end
 
@@ -958,7 +943,9 @@ local indexable = {
 	userdata = true
 }
 
-local directory_interface = {}
+local directory_interface = {
+	IsDirectory = true
+}
 G.Directory = directory_interface
 
 --[[
@@ -1000,7 +987,7 @@ function directory_interface:AddGrapheneAlias(path, object)
 		error("Bad argument #1: module alias path must be a string!", 2)
 	end
 
-	G.__loading[module_join(self.__directory.Path, path)] = object
+	G.__loaded[module_join(self.__directory.Path, path)] = object
 end
 
 --[[
@@ -1134,7 +1121,7 @@ function G:GetLoadedModules(path)
 
 	-- First, build a hashmap of module->{names} to ensure module uniqueness.
 	local map = {}
-	for name, module in pairs(self.__loading) do
+	for name, module in pairs(self.__loaded) do
 		if (name:match(path)) then
 			if (map[module]) then
 				table.insert(map[module], name)
@@ -1198,7 +1185,7 @@ function G:Alias(path, object)
 		error("Bad argument #1: module path must be a string.", 2)
 	end
 
-	self.__loading[path] = object
+	self.__loaded[path] = object
 end
 
 --[[
@@ -1271,14 +1258,24 @@ function G:SetLoadCallback(method)
 end
 
 --[[
-	table? G:GetMetadata(string? path)
-		path: The path of the module. If not specified, queries the root module.
+	table? G:GetMetadata(any object)
+		object: The object to query metadata for.
 
-	Returns the metadata object associated with the path.
-	If the module has not been loaded, it is loaded.
+	Returns the metadata object associated with the object.
 ]]
-function G:GetMetadata(path)
-	return select(2, G:Get(path))
+function G:GetMetadata(object)
+	return self.__metadata[object]
+end
+
+--[[
+	void G:SetMetadata(any object, any metadata)
+		object: The object to set metdata for.
+		metadata: The metadata to store with this object.
+
+	Stores metadata about a given object.
+]]
+function G:SetMetdata(object, metadata)
+	self.__metadata[object] = metadata
 end
 
 --[[
@@ -1304,19 +1301,19 @@ function G:Get(path, target, key)
 	local do_placement = not not (target and key)
 
 	-- Check for already loaded module!
-	if (self.__loading[path]) then
+	if (self.__loaded[path]) then
 		if (do_placement) then
-			target[key] = self.__loading[path]
+			target[key] = self.__loaded[path]
 		end
 
-		return self.__loading[path], self.__metadata[path]
+		return self.__loaded[path], self.__metadata[self.__loaded[path]]
 	end
 
 	-- Run path through our rebasing rules
 	local base = G.Base
-	for i, rebase in ipairs(self.__submodules) do
-		if (path:match(rebase[1])) then
-			base = self.__loading[rebase[2]] or G.Base
+	for i, submodule in ipairs(self.__submodules) do
+		if (path:match(submodule[1])) then
+			base = self.__loaded[submodule[2]] or G.Base
 
 			break
 		end
@@ -1331,13 +1328,12 @@ function G:Get(path, target, key)
 
 		if (object) then
 			path = meta.Path or path
-			self.__loading[path] = object
+			self.__loaded[path] = object
+			self.__metadata[object] = meta
 
 			if (do_placement) then
 				target[key] = object
 			end
-
-			self.__metadata[path] = meta
 
 			if (self.__load_callback) then
 				self.__load_callback(object, meta)
@@ -1353,7 +1349,7 @@ function G:Get(path, target, key)
 			local object = self:CreateDirectory(path, directory)
 
 			if (object) then
-				self.__loading[path] = object
+				self.__loaded[path] = object
 
 				if (do_placement) then
 					target[key] = object
@@ -1370,11 +1366,12 @@ function G:Get(path, target, key)
 					end
 
 					-- Get rid of the old path and load into a new one according to our metadata directive.
-					self.__metadata[path] = nil
-					self.__loading[path] = nil
+					self.__loaded[path] = nil
+
 					path = meta.Path or path
-					self.__loading[path] = init
-					self.__metadata[path] = meta
+
+					self.__loaded[path] = init
+					self.__metadata[init] = meta
 
 					if (do_placement) then
 						target[key] = init

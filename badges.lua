@@ -16,9 +16,9 @@ local badges = {
 	updaters = {
 		-- Unit test results
 		function(self, body, data)
-			local tests = data.tests or {}
-			local pass = tests.pass or 0
-			local fail = tests.fail or 0
+			local tests = data.Tests or {}
+			local pass = tests.Passes or 0
+			local fail = tests.Fails or 0
 
 			local pass_word = "unknown"
 			local pass_color = "lightgrey"
@@ -48,7 +48,7 @@ local badges = {
 		-- Current dev version
 		function(self, body, data)
 			return body
-				:gsub("%[shield_dev_version%]:[^\n]*", self.shields.dev_version:format((data.version:gsub("%-", "--"))))
+				:gsub("%[shield_dev_version%]:[^\n]*", self.shields.dev_version:format((data.Version:gsub("%-", "--"))))
 		end
 	}
 }
@@ -64,10 +64,10 @@ end
 --[[
 	Updates readme with all results from testing and the likes.
 	status structure:
-		tests (table):
-			pass (number)
-			fail (number)
-		version (string)
+		Tests (table):
+			Passes (number)
+			Fail (number)
+		Version (string)
 ]]
 function badges:update_readme(data)
 	local path = self.readme_path
