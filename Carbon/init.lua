@@ -1,25 +1,6 @@
 --[[
 	Graphene 1.1.0-alpha
-	https://github.com/LPGhatguy/lua-graphene
-
-	Copyright (c) 2014 Lucien Greathouse (LPGhatguy)
-
-	This software is provided 'as-is', without any express or implied warranty.
-	In no event will the authors be held liable for any damages arising from the
-	use of this software.
-
-	Permission is granted to anyone to use this software for any purpose, including
-	commercial applications, and to alter it and redistribute it freely, subject to
-	the following restrictions:
-
-	1. The origin of this software must not be misrepresented; you must not claim
-	that you wrote the original software. If you use this software in a product, an
-	acknowledgment in the product documentation would be appreciated but is not required.
-
-	2. Altered source versions must be plainly marked as such, and must not be misrepresented
-	as being the original software.
-
-	3. This notice may not be removed or altered from any source distribution.
+	https://github.com/lua-carbon/graphene
 ]]
 
 -- Current graphene version
@@ -187,7 +168,9 @@ end
 
 -- Contains our actual core
 local G = {
+	__safe = false, -- Suppress loading errors
 	__load_callback = nil, -- User-specified callback for hooking into module loads.
+	__error_callback = nil, -- User-specified callback for handling errors.
 	__loaded = {}, -- Dictionary of loaded modules for caching
 	__metadata = {}, -- Contains module metadata
 	__submodules = {}, -- Contains submodule information
@@ -1091,8 +1074,32 @@ local function load_file(file, base)
 		Loader = file.Loader
 	}
 
-	local method = assert(file.Loader(file:Read(), file.Path))
-	local result = method(base or G.Base, meta)
+	local method, err = file.Loader(file:Read(), file.Path)
+
+	if (not method) then
+		if (G.__error_callback) then
+			G.__error_callback("compile", err)
+		end
+
+		if (G.__safe) then
+			return false, err
+		else
+			error(err)
+		end
+	end
+
+	local ok, result = pcall(method, base or G.base, meta)
+	if (not ok) then
+		if (G.__error_callback) then
+			G.__error_callback("run", result)
+		end
+
+		if (G.__safe) then
+				return false, result
+		else
+			result = method(Base or G.Base, meta)
+		end
+	end
 
 	return result, meta
 end
@@ -1254,7 +1261,43 @@ end
 	Sets the method that should be called when a module is loaded by Graphene.
 ]]
 function G:SetLoadCallback(method)
+	if (type(method) ~= "function") then
+		error("Bad argument #1: method must be of type 'function'!", 2)
+	end
+
 	self.__load_callback = method
+end
+
+--[[
+	function? G:GetLoadCallback()
+
+	Returns the current load callback, if set.
+]]
+function G:GetLoadCallback()
+	return self.__load_callback
+end
+
+--[[
+	void G:SetErrorCallback(function method)
+		method: The callback to set.
+	
+	Sets the method to be called if an error arrises loading a module.
+]]
+function G:SetErrorCallback(method)
+	if (type(method) ~= "function") then
+		error("Bad argument #1: method must be of type 'function'!", 2)
+	end
+
+	self.__error_callback = method
+end
+
+--[[
+	function? G:GetLoadCallback()
+
+	Returns the current error callback, if set.
+]]
+function G:GetErrorCallback()
+	return self.__error_callback
 end
 
 --[[
@@ -1276,6 +1319,17 @@ end
 ]]
 function G:SetMetdata(object, metadata)
 	self.__metadata[object] = metadata
+end
+
+--[[
+	void G:SetSafeMode(bool value)
+		value: Whether loading should be safe.
+
+	Determines whether modules will have their errors suppressed when loading.
+	Useful for unit testing.
+]]
+function G:SetSafeMode(value)
+	self.__safe = not not value
 end
 
 --[[
