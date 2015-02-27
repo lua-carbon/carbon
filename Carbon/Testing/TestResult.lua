@@ -94,4 +94,14 @@ function TestResult:Fail(message)
 	return self
 end
 
+function TestResult:Assert(condition, message)
+	if (condition) then
+		self:Pass()
+	else
+		self:Fail(message)
+	end
+
+	return condition
+end
+
 return TestResult

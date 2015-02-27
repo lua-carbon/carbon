@@ -241,7 +241,6 @@ OOP.Object.__typecheck[OOP.Object] = true
 OOP.Object.Is = OOP.Object.typecheck
 
 --[[
-	[This method can be renamed, see Carbon/_.lua]
 	Object Class:PlacementNew(indexable target?, ...)
 		target: Where to place the instance, will be provided if not given.
 
@@ -261,8 +260,13 @@ function OOP.Object:PlacementNew(instance, ...)
 	end
 
 	if (self.__attributes.SparseInstances) then
-		Dictionary.DeepCopy(self.__base_members, instance)
-		setmetatable(instance, {__index = self.__members})
+		if (not self.__sparse_metatable) then
+			local box = Dictionary.DeepCopy(self.__base_members)
+			setmetatable(box, {__index = self.__members})
+			self.__sparse_metatable = {__index = box}
+		end
+		
+		setmetatable(instance, self.__sparse_metatable)
 	else
 		Dictionary.DeepCopy(self.__base_members, instance)
 		Dictionary.DeepCopy(self.__members, instance)
@@ -307,7 +311,6 @@ function OOP.Object:PlacementNew(instance, ...)
 end
 
 --[[
-	[This method can be renamed, see Carbon/_.lua]
 	Object Class:New(...)
 
 	Creates a new object and passes parameters to its initializer.
@@ -317,7 +320,6 @@ function OOP.Object:New(...)
 end
 
 --[[
-	[This method can be renamed, see Carbon/_.lua]
 	Object Object:Copy()
 
 	Copies the given object.

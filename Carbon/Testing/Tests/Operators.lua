@@ -9,17 +9,31 @@ local Operators = Carbon.Operators
 local Test = {}
 
 function Test:Run(test)
-	if (Operators.Add(5, 2) ~= 7) then
-		test:Fail("Simple addition failed!")
-	end
+	Carbon.Testing.Checks.Augment(test)
 
-	if (Operators.Add(5, 2) ~= Operators.Add(2, 5)) then
-		test:Fail("Addition was not communative!")
-	end
+	test:Assert(
+		Operators.Add(5, 2) == 7,
+		"Simple addition failed"
+	)
 
-	if (Operators.Subtract(5, 2) ~= 3) then
-		test:Fail("Simple subtraction failed!")
-	end
+	test:AssertCommutative(Operators.Add, "Add")
+
+	test:Assert(
+		Operators.Subtract(5, 2) == 3,
+		"Simple subtraction failed!"
+	)
+
+	test:Assert(
+		Operators.Multiply(5, 2) == 10,
+		"Simple multiplication failed!"
+	)
+
+	test:AssertCommutative(Operators.Multiply, "Multiply")
+
+	test:Assert(
+		Operators.Divide(6, 2) == 3,
+		"Simple division failed!"
+	)
 end
 
 return Test

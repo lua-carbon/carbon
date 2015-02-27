@@ -349,9 +349,40 @@ if (support.lua51) then
 
 		dictionary_shallow_copy(source, cenv)
 	end
-else
+elseif (support.debug) then
 	function import_dict(source, level)
-		error("Cannot import under Lua 5.2+!", level + 2 or 2)
+		local func = debug.getinfo(level + 2 or 2).func
+		local i = 1
+		local name, cenv = debug.getupvalue(func, 1)
+
+		if (name ~= "_ENV") then
+			while (true) do
+				local name, value = debug.getlocal(func, i)
+				if (not name) then
+					break
+				end
+				if (name == "_ENV") then
+					cenv = value
+					break
+				end
+				i = i + 1
+			end
+		end
+
+		if (not cenv) then
+			error("Couldn't locate _ENV upvalue, tell LPGhatguy on GitHub!")
+		end
+
+		if (cenv == _G) then
+			cenv = setmetatable({}, {__index = _G})
+			debug.setupvalue(func, i, cenv)
+		end
+
+		dictionary_shallow_copy(source, cenv)
+	end
+else
+	function import_dict()
+		error("Importing requires Lua 5.1, or Lua 5.2+ with the debug library enabled!", 2)
 	end
 end
 
@@ -1095,9 +1126,9 @@ local function load_file(file, base)
 		end
 
 		if (G.__safe) then
-				return false, result
+			return false, result
 		else
-			result = method(Base or G.Base, meta)
+			error(result)
 		end
 	end
 
@@ -1111,6 +1142,27 @@ end
 -- This library can be accessed by any codefile by using
 -- Directory:GetGrapheneCore()
 -- on any Graphene directory.
+
+G.__importable = {
+	Import = G.Directory.Import,
+	ImportAs = G.Directory.ImportAs
+}
+
+function G.__importable:ImportAll()
+	import_dict(self, 1)
+end
+
+--[[
+	self G:MakeImportable(table object)
+		object: The object to augment.
+
+	Makes an object importable like a Graphene Directory.
+]]
+function G:MakeImportable(object)
+	dictionary_shallow_copy(self.__importable, object)
+
+	return object
+end
 
 --[[
 	List G:GetLoadedModules([string path])

@@ -10,6 +10,8 @@ local Carbon = (...)
 local Graphene = Carbon:GetGraphene()
 local TestResult = Carbon.Testing.TestResult
 
+local Tests = Carbon.Testing.Tests
+
 local Testing = {
 	__tests = Carbon.Testing.Tests:FullyLoad(),
 	__results = {},

@@ -186,7 +186,7 @@ function VectorN:Generate(members, parameters)
 
 	local metatable = {}
 
-		for name, body in pairs(self.__metatable) do
+	for name, body in pairs(self.__metatable) do
 		if (type(body) == "string") then
 			metatable[name], err, body = self:__generate_method(body, gen_args)
 
