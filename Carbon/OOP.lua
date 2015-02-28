@@ -48,7 +48,7 @@ local function handle_indirection(class, instance)
 end
 
 local function apply_metatable(class, instance)
-if (class.__attributes.InstanceIndirection) then
+	if (class.__attributes.InstanceIndirection) then
 		-- If we wrapped the object in a userdata, we need to apply metatables a little differently.
 		Dictionary.ShallowCopy(class.__metatable, getmetatable(instance))
 	else
@@ -120,18 +120,20 @@ end
 
 -- PooledInstantiation attribute
 -- The rest of the functionality is defined inline, since it modifies allocation behavior.
-OOP.Attributes.Class["PooledInstantiation"] = function(class)
-	class.__pool = {}
-	class.__pool_destructor = function(instance)
-		local pool = class.__pool
-		if (#pool < (class.__attributes.PoolSize or 20)) then
-			table.insert(pool, instance)
+OOP:RegisterAttribute("Class", "PooledInstantiation",
+	function(class)
+		class.__pool = {}
+		class.__pool_destructor = function(instance)
+			local pool = class.__pool
+			if (#pool < (class.__attributes.PoolSize or 20)) then
+				table.insert(pool, instance)
+			end
 		end
-	end
 
-	class.__members.Destroy = class.__members.Destroy or class.__pool_destructor
-	class.__metatable.__gc = class.__metatable.__gc or class.__pool_destructor
-end
+		class.__members.Destroy = class.__members.Destroy or class.__pool_destructor
+		class.__metatable.__gc = class.__metatable.__gc or class.__pool_destructor
+	end
+)
 
 --[[
 	Body for both Class and StaticClass base classes.
@@ -267,7 +269,7 @@ function OOP.Object:PlacementNew(instance, ...)
 		end
 		
 		setmetatable(instance, self.__sparse_metatable)
-	else
+	elseif (not self.__attributes.ExplicitInitialization) then
 		Dictionary.DeepCopy(self.__base_members, instance)
 		Dictionary.DeepCopy(self.__members, instance)
 	end

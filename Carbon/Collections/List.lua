@@ -3,36 +3,53 @@
 	List Utilities
 ]]
 
-local Carbon = (...)
+local Carbon, self = ...
 local List = {}
 
+List.__object_metatable = {
+	__index = List
+}
+
 --[[
-	void List.Clear(List list)
-		list: The list to clear.
+	List List:New(table data)
+		data: The data of the dictionary
+
+	Turns the given object into a List.
+	Allows method-style syntax.
+]]
+function List:New(object)
+	return setmetatable(object or {}, self.__object_metatable)
+end
+
+--[[
+	void List.Clear(List self)
+		self: The list to clear.
 
 	Clears a list of all list values.
 ]]
-function List.Clear(list)
-	for key, value in ipairs(list) do
-		list[key] = nil
+function List.Clear(self)
+	for i = 1, #self do
+		self[i] = nil
 	end
 end
 
 --[[
-	table List.ShallowCopy(List from, [List to])
-		from: The list to source data from
+	table List.ShallowCopy(List self, [List to])
+		self: The list to source data from
 		to: The list to copy into; an empty table if not given.
 
 	Shallow copies data from one table into another and returns the result.
 ]]
-function List.ShallowCopy(from, to)
-	to = to or {}
+function List.ShallowCopy(self, to)
+	to = to or List:New({})
 
-	for key, value in ipairs(from) do
+	for key, value in ipairs(self) do
 		table.insert(to, value)
 	end
 
 	return to
 end
+
+Carbon.Metadata:RegisterMethods(List, self)
 
 return List
