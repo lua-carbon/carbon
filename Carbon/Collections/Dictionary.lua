@@ -125,7 +125,7 @@ end
 	table Dictionary.DeepCopyExceptTypes(table self, table? to, set except, [table map])
 		self: The table to source data from.
 		to: The table to copy into; an empty table if nil.
-		except: A set (dictionary) of type names to ignore.
+		except: A set of type names to ignore.
 		map: A map projecting original values into copied values. Used internally.
 
 	Performs a self-reference fixing deep copy from one table into another.

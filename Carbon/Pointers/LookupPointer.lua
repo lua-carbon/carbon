@@ -3,6 +3,7 @@
 	Lookup Pointer
 
 	Provides an interface to referencing a data lookup.
+	LookupPointers are copied, but the data they point to stays the same.
 ]]
 
 local Carbon = (...)

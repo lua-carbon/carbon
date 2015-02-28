@@ -8,7 +8,7 @@
 local Carbon = (...)
 local OOP = Carbon.OOP
 local Time = Carbon.Time
-local BasicPointer = Carbon.BasicPointer
+local CopyBarrier = Carbon.CopyBarrier
 
 local Nanotube = OOP:Class()
 	:Members {
@@ -172,7 +172,7 @@ function Nanotube:Loop()
 	self:Fire("Stop")
 end
 
--- Singleton instance through a BasicPointer
-Nanotube.Global = BasicPointer:New(Nanotube:New())
+-- Singleton instance through a CopyBarrier
+Nanotube.Global = CopyBarrier:New(Nanotube:New())
 
 return Nanotube

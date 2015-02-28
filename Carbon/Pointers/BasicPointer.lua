@@ -3,6 +3,7 @@
 	Basic Pointer
 
 	Wraps an object to pass it by-reference.
+	Creates an implicit copy barrier
 ]]
 
 local Carbon = (...)

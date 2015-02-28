@@ -4,6 +4,7 @@
 
 	Wraps primitives and forwards operators.
 	Use Carbon.Number for comparisons to ensure compatibility.
+	Data pointed to by a ForwardPointer is copied.
 ]]
 
 local Carbon = (...)
