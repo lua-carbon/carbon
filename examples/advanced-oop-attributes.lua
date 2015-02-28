@@ -12,12 +12,13 @@ end
 	Classes have the notion of "attributes", which are values determining extra internal behavior with the class.
 
 	The current included attributes are:
-	- SparseInstances: Save data by not storing class data in instances unless it changes.
+	- SparseInstances: Save data by not storing class data in instances unless it changes. Implies InstancedMetatable
 	- InstanceIndirection: Wraps class instances in a userdata access layer. Allows for the __gc metamethod on Lua 5.1 and LuaJIT.
 	- InstancedMetatable: Whether a new metatable should be given to each object or whether the same one should be kept class-wide.
 	- PooledInstantiation: Whether instances should come from a pool filled with collected objects.
 		- PoolSize: The maximum size of the instance pool, defaults to 20
 	- Abstract: Whether a class can be instantiated.
+	- ExplicitInitialization: Whether the constructor is no-copy or not. This makes constructions compiled under LuaJIT.
 ]]
 
 local Carbon = require("Carbon")

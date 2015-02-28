@@ -55,7 +55,7 @@ local function apply_metatable(class, instance)
 		-- The InstancedMetatable attribute determines whether the metatable
 		-- is class-specific or instance-specific.
 		if (class.__attributes.InstancedMetatable) then
-			setmetatable(instance, Dictionary.ShallowCopy(class.__metatable))
+			setmetatable(instance, Dictionary.ShallowCopy(class.__metatable, Dictionary.ShallowCopy(getmetatable(instance))))
 		else
 			setmetatable(instance, class.__metatable)
 		end
@@ -104,7 +104,20 @@ function OOP:RegisterAttribute(type, name, method)
 		error(("Could not register attribute of type %q: unknown attribute type"):format(type), 2)
 	end
 
-	typeset[name] = method
+	local out
+	for i, attribute in ipairs(typeset) do
+		if (attribute[1] == name) then
+			out = attribute
+			break
+		end
+	end
+
+	if (not out) then
+		out = {name}
+		table.insert(typeset, out)
+	end
+
+	out[2] = method
 end
 
 --[[
@@ -132,6 +145,17 @@ OOP:RegisterAttribute("Class", "PooledInstantiation",
 
 		class.__members.Destroy = class.__members.Destroy or class.__pool_destructor
 		class.__metatable.__gc = class.__metatable.__gc or class.__pool_destructor
+	end
+)
+
+OOP:RegisterAttribute("Class", "SparseInstances",
+	function(class)
+		local box = Dictionary.DeepCopy(class.__base_members)
+		setmetatable(box, {__index = class.__members})
+		
+		class:Metatable {
+			__index = box
+		}
 	end
 )
 
@@ -175,10 +199,9 @@ function OOP.BaseClass:Inherits(...)
 			end
 		end
 
-		for attribute in pairs(object.__attributes) do
-			local found = OOP.Attributes.Class[attribute]
-			if (found) then
-				found(self)
+		for i, attribute in ipairs(OOP.Attributes.Class) do
+			if (object.__attributes[attribute[1]]) then
+				attribute[2](self)
 			end
 		end
 	end
@@ -196,10 +219,9 @@ end
 function OOP.BaseClass:Attributes(attributes)
 	Dictionary.ShallowCopy(attributes, self.__attributes)
 
-	for attribute in pairs(attributes) do
-		local found = OOP.Attributes.Class[attribute]
-		if (found) then
-			found(self)
+	for i, attribute in ipairs(OOP.Attributes.Class) do
+		if (attributes[attribute[1]]) then
+			attribute[2](self)
 		end
 	end
 
@@ -261,15 +283,7 @@ function OOP.Object:PlacementNew(instance, ...)
 		end
 	end
 
-	if (self.__attributes.SparseInstances) then
-		if (not self.__sparse_metatable) then
-			local box = Dictionary.DeepCopy(self.__base_members)
-			setmetatable(box, {__index = self.__members})
-			self.__sparse_metatable = {__index = box}
-		end
-		
-		setmetatable(instance, self.__sparse_metatable)
-	elseif (not self.__attributes.ExplicitInitialization) then
+	if (not (self.__attributes.SparseInstances or self.__attributes.ExplicitInitialization)) then
 		Dictionary.DeepCopy(self.__base_members, instance)
 		Dictionary.DeepCopy(self.__members, instance)
 	end
@@ -290,10 +304,9 @@ function OOP.Object:PlacementNew(instance, ...)
 	instance = handle_indirection(self, instance)
 	apply_metatable(self, instance)
 
-	for attribute in pairs(self.__attributes) do
-		local found = OOP.Attributes.PreInitialize[attribute]
-		if (found) then
-			found(self, instance)
+	for i, attribute in ipairs(OOP.Attributes.PreInitialize) do
+		if (self.__attributes[attribute[1]]) then
+			attribute[2](self, instance)
 		end
 	end
 
@@ -302,10 +315,9 @@ function OOP.Object:PlacementNew(instance, ...)
 		instance._init(instance, ...)
 	end
 
-	for attribute in pairs(self.__attributes) do
-		local found = OOP.Attributes.PostInitialize[attribute]
-		if (found) then
-			found(self, instance)
+	for i, attribute in ipairs(OOP.Attributes.PostInitialize) do
+		if (self.__attributes[attribute[1]]) then
+			attribute[2](self, instance)
 		end
 	end
 
@@ -343,10 +355,9 @@ OOP.Object.__base_members.Copy = function(self)
 	copy = handle_indirection(class, copy)
 	apply_metatable(class, copy)
 
-	for attribute in pairs(class.__attributes) do
-		local found = OOP.Attributes.Copy[attribute]
-		if (found) then
-			found(self, copy)
+	for i, attribute in ipairs(OOP.Attributes.Copy) do
+		if (self.__attributes[attribute[1]]) then
+			attribute[2](self, copy)
 		end
 	end
 

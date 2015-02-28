@@ -203,6 +203,7 @@ function VectorN:Generate(members, parameters)
 			PooledInstantiation = true,
 			PoolSize = 50,
 			SparseInstances = true,
+			ExplicitInitialization = true
 		}
 
 	self.__cache[args] = class
