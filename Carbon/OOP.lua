@@ -4,6 +4,13 @@
 ]]
 
 local Carbon = (...)
+
+local ok, ffi = pcall(require, "ffi")
+
+if (not ok) then
+	ffi = nil
+end
+
 local Dictionary = Carbon.Collections.Dictionary
 local OOP = {
 	__attribute_inheritance = {
@@ -278,31 +285,50 @@ function OOP.Object:PlacementNew(instance, ...)
 	if (not instance) then
 		if (self.__attributes.PooledInstantiation) then
 			instance = table.remove(self.__pool, #self.__pool) or {}
+		elseif (ffi and self.__attributes.EXT_LJ_Struct) then
+			if (not self.__ext_ffi_metatype) then
+				local index = Dictionary.ShallowCopy(self.__base_members)
+				Dictionary.ShallowCopy(self.__members, index)
+
+				self.__ext_ffi_metatype = {
+					__index = index
+				}
+				Dictionary.ShallowCopy(self.__metatable, self.__ext_ffi_metatype)
+				ffi.metatype(self.__attributes.EXT_LJ_Struct, self.__ext_ffi_metatype)
+			end
+
+			if (not self.__ext_ffi_constructor) then
+				self.__ext_ffi_constructor = ffi.typeof(self.__attributes.EXT_LJ_Struct)
+			end
+
+			instance = self.__ext_ffi_constructor()
 		else
 			instance = {}
 		end
 	end
 
-	if (not (self.__attributes.SparseInstances or self.__attributes.ExplicitInitialization)) then
+	if (not (self.__attributes.SparseInstances or self.__attributes.ExplicitInitialization or self.__attributes.EXT_LJ_Struct)) then
 		Dictionary.DeepCopy(self.__base_members, instance)
 		Dictionary.DeepCopy(self.__members, instance)
 	end
 
-	instance.self = instance.self or instance
+	if (not self.__attributes.EXT_LJ_Struct) then
+		instance.self = instance.self or instance
 
-	instance.class = newproxy(true)
-	getmetatable(instance.class).__index = self
+		instance.class = newproxy(true)
+		getmetatable(instance.class).__index = self
 
-	-- We wrap the typechecking in a userdata so it doesn't get copied when our instance does.
-	instance.Is = newproxy(true)
-	getmetatable(instance.Is).__index = self.__typecheck
+		-- We wrap the typechecking in a userdata so it doesn't get copied when our instance does.
+		instance.Is = newproxy(true)
+		getmetatable(instance.Is).__index = self.__typecheck
 
-	-- InstanceIndirection attribute wraps the object in a userdata
-	-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
-	-- As a side effect, 'self' becomes a userdata
-	-- Get the internal table with self.self
-	instance = handle_indirection(self, instance)
-	apply_metatable(self, instance)
+		-- InstanceIndirection attribute wraps the object in a userdata
+		-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
+		-- As a side effect, 'self' becomes a userdata
+		-- Get the internal table with self.self
+		instance = handle_indirection(self, instance)
+		apply_metatable(self, instance)
+	end
 
 	for i, attribute in ipairs(OOP.Attributes.PreInitialize) do
 		if (self.__attributes[attribute[1]]) then
@@ -310,9 +336,15 @@ function OOP.Object:PlacementNew(instance, ...)
 		end
 	end
 
-	-- Call the defined constructor
-	if (instance._init) then
-		instance._init(instance, ...)
+	if (self.__attributes.EXT_LJ_Struct) then
+		if (self.__members._init) then
+			self.__members._init(instance, ...)
+		end
+	else
+		-- Call the defined constructor
+		if (instance._init) then
+			instance._init(instance, ...)
+		end
 	end
 
 	for i, attribute in ipairs(OOP.Attributes.PostInitialize) do
