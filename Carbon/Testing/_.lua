@@ -122,7 +122,7 @@ function Testing:GetResults()
 		result.Passes = result.Passes + value.__passes
 		result.Fails = result.Fails + value.__fails
 
-		local metadata = Graphene:GetMetadata(value.__test)
+		local metadata = Graphene.Metadata:Get(value.__test)
 		local name = metadata and metadata.Path or "Unnamed"
 
 		for i, message in ipairs(value.__messages) do

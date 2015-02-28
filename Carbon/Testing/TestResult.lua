@@ -94,6 +94,13 @@ function TestResult:Fail(message)
 	return self
 end
 
+--[[
+	bool TestResult:Assert(bool condition, string message)
+		condition: Condition to check.
+		message: Message to report on failure.
+
+	Checks the given condition and adds a pass if it is true, or fails with the given message.
+]]
 function TestResult:Assert(condition, message)
 	if (condition) then
 		self:Pass()

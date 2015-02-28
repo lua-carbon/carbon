@@ -3,7 +3,7 @@
 	Operators
 ]]
 
-local Carbon = (...)
+local Carbon, self = ...
 local Operators = {}
 
 local Graphene = Carbon:GetGraphene()
@@ -181,5 +181,7 @@ else
 		end
 	end
 end
+
+Carbon.Metadata:RegisterMethods(Operators, self)
 
 return Operators

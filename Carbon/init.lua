@@ -168,11 +168,11 @@ end
 
 -- Contains our actual core
 local G = {
+	__default_import_exceptions = {},
 	__safe = false, -- Suppress loading errors
 	__load_callback = nil, -- User-specified callback for hooking into module loads.
 	__error_callback = nil, -- User-specified callback for handling errors.
 	__loaded = {}, -- Dictionary of loaded modules for caching
-	__metadata = {}, -- Contains module metadata
 	__submodules = {}, -- Contains submodule information
 
 	Support = support, -- Table for fast support lookups
@@ -182,6 +182,12 @@ local G = {
 	-- Filesystem abstraction
 	FS = {
 		Providers = {}
+	},
+
+	-- Metadata API
+	Metadata = {
+		__store = {},
+		Enabled = true
 	},
 
 	-- Configuration
@@ -338,8 +344,10 @@ end
 ]]
 local import_dict
 if (support.lua51) then
-	function import_dict(source, level)
+	function import_dict(source, level, except)
 		level = level and level + 2 or 2
+		except = except or {}
+
 		local cenv = getfenv(level)
 
 		if (cenv == _G) then
@@ -347,11 +355,18 @@ if (support.lua51) then
 			setfenv(level, cenv)
 		end
 
-		dictionary_shallow_copy(source, cenv)
+		for key, value in pairs(source) do
+			if (not except[key] and key ~= "__import_exceptions") then
+				cenv[key] = value
+			end
+		end
 	end
 elseif (support.debug) then
-	function import_dict(source, level)
-		local func = debug.getinfo(level + 2 or 2).func
+	function import_dict(source, level, except)
+		level = level and level + 2 or 2
+		except = except or {}
+
+		local func = debug.getinfo(level).func
 		local i = 1
 		local name, cenv = debug.getupvalue(func, 1)
 
@@ -378,7 +393,11 @@ elseif (support.debug) then
 			debug.setupvalue(func, i, cenv)
 		end
 
-		dictionary_shallow_copy(source, cenv)
+		for key, value in pairs(source) do
+			if (not except[key] and key ~= "__import_exceptions") then
+				cenv[key] = value
+			end
+		end
 	end
 else
 	function import_dict()
@@ -1025,12 +1044,13 @@ end
 	Imports a directory using a defined mapping of aliases.
 ]]
 function directory_interface:ImportAs(mapping)
+	local except = self.__import_exceptions or G.__default_import_exceptions
 	local fake = {}
 	for key, value in pairs(mapping) do
 		fake[value] = self[key]
 	end
 
-	import_dict(fake, 1)
+	import_dict(fake, 1, except)
 end
 
 --[[
@@ -1039,12 +1059,13 @@ end
 	Imports the given members from the library.
 ]]
 function directory_interface:Import(...)
+	local except = self.__import_exceptions or G.__default_import_exceptions
 	local fake = {}
 	for i = 1, select("#", ...) do
 		fake[select(i, ...)] = self[select(i, ...)]
 	end
 
-	import_dict(fake, 1)
+	import_dict(fake, 1, except)
 end
 
 --[[
@@ -1053,9 +1074,10 @@ end
 	Loads the entire library and imports all of its members.
 ]]
 function directory_interface:ImportAll()
+	local except = self.__import_exceptions or G.__default_import_exceptions
 	self:FullyLoad()
 
-	import_dict(self, 1)
+	import_dict(self, 1, except)
 end
 
 --[[
@@ -1099,6 +1121,8 @@ local function load_file(file, base)
 	end
 
 	local meta = {
+		Name = file.Path,
+		ShortName = file.Path:match("[^%.]+$"),
 		Path = file.Path,
 		FilePath = file.FilePath,
 		FSID = file.FSID,
@@ -1132,12 +1156,46 @@ local function load_file(file, base)
 		end
 	end
 
+	G.Metadata:Set(result, meta)
+
 	return result, meta
 end
 
 --===============--
 -- GRAPHENE API --
 --===============--
+
+--[[
+	table? G.Metadata:Get(any object, any field)
+		object: The object to query metadata for.
+		field: The key of the metadata to try to return.
+
+	Returns the metadata object associated with the object if it exists
+]]
+function G.Metadata:Get(object, field)
+	local meta = self.__store[object]
+
+	if (field ~= nil) then
+		return meta and meta[field]
+	else
+		return meta
+	end
+end
+
+--[[
+	void G.Metadata:Set(any object, any metadata)
+		object: The object to set metdata for.
+		metadata: The metadata to store with this object.
+
+	Stores metadata about a given object.
+]]
+function G.Metadata:Set(object, metadata)
+	if (not self.Enabled) then
+		return
+	end
+
+	self.__store[object] = metadata
+end
 
 -- This library can be accessed by any codefile by using
 -- Directory:GetGrapheneCore()
@@ -1153,13 +1211,15 @@ function G.__importable:ImportAll()
 end
 
 --[[
-	self G:MakeImportable(table object)
+	self G:MakeImportable(table object, set exception)
 		object: The object to augment.
+		exception: A set of object keys to not import from this object.
 
 	Makes an object importable like a Graphene Directory.
 ]]
-function G:MakeImportable(object)
+function G:MakeImportable(object, exception)
 	dictionary_shallow_copy(self.__importable, object)
+	object.__import_exceptions = object.__import_exceptions or exception
 
 	return object
 end
@@ -1303,6 +1363,17 @@ function G:CreateDirectory(path, directory)
 		__index = object.GrapheneGet
 	})
 
+	if (G.Metadata.Enabled) then
+		G.Metadata:Set(object, {
+			Name = directory.Path,
+			ShortName = directory.Path:match("[^%.]+$"),
+			Path = directory.Path,
+			FilePath = directory.FilePath,
+			FSID = directory.FSID,
+			Loader = directory.Loader
+		})
+	end
+
 	return object
 end
 
@@ -1353,27 +1424,6 @@ function G:GetErrorCallback()
 end
 
 --[[
-	table? G:GetMetadata(any object)
-		object: The object to query metadata for.
-
-	Returns the metadata object associated with the object.
-]]
-function G:GetMetadata(object)
-	return self.__metadata[object]
-end
-
---[[
-	void G:SetMetadata(any object, any metadata)
-		object: The object to set metdata for.
-		metadata: The metadata to store with this object.
-
-	Stores metadata about a given object.
-]]
-function G:SetMetdata(object, metadata)
-	self.__metadata[object] = metadata
-end
-
---[[
 	void G:SetSafeMode(bool value)
 		value: Whether loading should be safe.
 
@@ -1408,14 +1458,16 @@ function G:Get(path, target, key)
 
 	-- Check for already loaded module!
 	if (self.__loaded[path]) then
+		local object = self.__loaded[path]
+
 		if (do_placement) then
-			target[key] = self.__loaded[path]
+			target[key] = object
 		end
 
-		return self.__loaded[path], self.__metadata[self.__loaded[path]]
+		return object, self.Metadata:Get(object)
 	end
 
-	-- Run path through our rebasing rules
+	-- Run path through our submodule rules
 	local base = G.Base
 	for i, submodule in ipairs(self.__submodules) do
 		if (path:match(submodule[1])) then
@@ -1435,7 +1487,6 @@ function G:Get(path, target, key)
 		if (object) then
 			path = meta.Path or path
 			self.__loaded[path] = object
-			self.__metadata[object] = meta
 
 			if (do_placement) then
 				target[key] = object
@@ -1477,7 +1528,6 @@ function G:Get(path, target, key)
 					path = meta.Path or path
 
 					self.__loaded[path] = init
-					self.__metadata[init] = meta
 
 					if (do_placement) then
 						target[key] = init
