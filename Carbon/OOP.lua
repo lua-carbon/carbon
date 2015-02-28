@@ -26,8 +26,7 @@ local OOP = {
 		PoolSize = false,
 		Abstract = false,
 		ExplicitInitialization = false,
-		PrefetchedInstantiation = false, -- proposed
-		EXT_LJ_Struct = false, -- proposed
+		EXT_LJ_Struct = false,
 	}
 }
 
