@@ -292,9 +292,6 @@ end
 OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 	:Attributes(default_attributes)
 
-OOP.Object.__members.class = newproxy(true)
-getmetatable(OOP.Object.__members.class).__index = OOP.Object
-
 OOP.Object.Is[OOP.Object] = true
 
 --[[
@@ -415,6 +412,11 @@ OOP.Object.__base_members.Copy = function(self)
 	local class = self.class
 	local target
 
+	-- If there is no class member, we probably want __base_members
+	if (not class) then
+		return Dictionary.DeepCopy(self)
+	end
+
 	if (class.__attributes.PooledInstantiation) then
 		target = table.remove(class.__pool, #class.__pool) or {}
 	end
@@ -440,9 +442,6 @@ end
 -- StaticObject, the base class for all singleton classes.
 OOP.StaticObject = Dictionary.DeepCopy(OOP.BaseClass)
 	:Attributes(default_static_attributes)
-
-OOP.StaticObject.__members.class = newproxy(true)
-getmetatable(OOP.StaticObject.__members.class).__index = OOP.StaticObject
 
 OOP.StaticObject.Is[OOP.StaticObject] = true
 

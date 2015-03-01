@@ -13,6 +13,23 @@ Dictionary.__object_metatable = {
 	__index = Dictionary
 }
 
+local indexables = {
+	["table"] = true,
+	["userdata"] = true
+}
+
+local function indexable(item)
+	local t = type(item)
+	if (t == "table") then
+		return true, t
+	elseif (t == "userdata") then
+		local meta = getmetatable(item)
+		return meta and not not meta.__index, t
+	end
+
+	return false, t
+end
+
 --[[
 	Dictionary Dictionary:New(table data)
 		data: The data of the dictionary
@@ -91,66 +108,38 @@ function Dictionary.ShallowCopy(self, to)
 end
 
 --[[
-	Dictionary Dictionary.DeepCopy(table self, [table to, table map, function copy_function, ...])
+	Dictionary Dictionary.DeepCopy(table self, [table to, bool datawise, table map])
 		self: The dictionary to source data from.
 		to: The dictionary to copy into; an empty table if not given.
-		copy_function: The function to copy members with: defaults to this method.
 		map: A map projecting original values into copied values. Used internally.
+		copy_function: The function to copy members with: defaults to this method.
 
 	Performs a self-reference fixing deep copy from one table into another.
 	Handles self-references properly.
 ]]
-function Dictionary.DeepCopy(self, to, map, copy_function, ...)
+function Dictionary.DeepCopy(self, to, datawise, map)
 	to = to or Dictionary:New()
-	copy_function = copy_function or Dictionary.DeepCopy
 	map = map or {
 		[self] = to
 	}
 
 	for key, value in pairs(self) do
-		if (type(value) == "table") then
+		local i, t = indexable(value)
+		if (i) then
 			if (not map[value]) then
-				map[value] = {}
-				copy_function(value, map[value], map, ...)
+				local copy = (not datawise) and value.Copy or value.DeepCopy or value.ShallowCopy
+
+				if (copy) then
+					map[value] = copy(value)
+				elseif (t == "table") then
+					map[value] = {}
+					Dictionary.DeepCopy(value, map[value], datawise, map)
+				end
 			end
 
 			to[key] = map[value]
 		else
 			to[key] = value
-		end
-	end
-
-	return to
-end
-
---[[
-	table Dictionary.DeepCopyExceptTypes(table self, table? to, set except, [table map])
-		self: The table to source data from.
-		to: The table to copy into; an empty table if nil.
-		except: A set of type names to ignore.
-		map: A map projecting original values into copied values. Used internally.
-
-	Performs a self-reference fixing deep copy from one table into another.
-	Handles self-references properly.
-]]
-function Dictionary.DeepCopyExceptTypes(self, to, except, map)
-	to = to or Dictionary:New()
-	map = map or {
-		[self] = to
-	}
-
-	for key, value in pairs(self) do
-		if (not except[type(value)]) then
-			if (type(value) == "table") then
-				if (not map[value]) then
-					map[value] = {}
-					Dictionary.DeepCopy(value, map[value], except, map)
-				end
-
-				to[key] = map[value]
-			else
-				to[key] = value
-			end
 		end
 	end
 
