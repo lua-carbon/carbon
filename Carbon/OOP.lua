@@ -320,6 +320,16 @@ function OOP.Object:PlacementNew(instance, ...)
 				local index = Dictionary.ShallowCopy(self.__base_members)
 				Dictionary.ShallowCopy(self.__members, index)
 
+				if (not index.class) then
+					index.class = newproxy(true)
+					getmetatable(index.class).__index = self
+				end
+
+				if (not index.Is) then
+					index.Is = newproxy(true)
+					getmetatable(index.Is).__index = self.Is
+				end
+
 				self.__ext_ffi_metatype = {
 					__index = index
 				}
@@ -346,12 +356,19 @@ function OOP.Object:PlacementNew(instance, ...)
 	if (not self.__attributes.EXT_LJ_Struct) then
 		instance.self = instance.self or instance
 
-		instance.class = newproxy(true)
-		getmetatable(instance.class).__index = self
+		if (not self.__class_reference) then
+			self.__class_reference = newproxy(true)
+			getmetatable(self.__class_reference).__index = self
+		end
 
-		-- We wrap the typechecking in a userdata so it doesn't get copied when our instance does.
-		instance.Is = newproxy(true)
-		getmetatable(instance.Is).__index = self.Is
+		instance.class = self.__class_reference
+
+		if (not self.__is_reference) then
+			self.__is_reference = newproxy(true)
+			getmetatable(self.__is_reference).__index = self.Is
+		end
+
+		instance.Is = self.__is_reference
 
 		-- InstanceIndirection attribute wraps the object in a userdata
 		-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
