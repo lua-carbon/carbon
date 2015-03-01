@@ -14,7 +14,6 @@ Dictionary.__object_metatable = {
 }
 
 --[[
-	TESTED
 	Dictionary Dictionary:New(table data)
 		data: The data of the dictionary
 
@@ -26,7 +25,6 @@ function Dictionary:New(object)
 end
 
 --[[
-	TESTED
 	List Dictionary.Keys(table self)
 		self: The table to retrieve keys for.
 
@@ -43,7 +41,6 @@ function Dictionary.Keys(self)
 end
 
 --[[
-	TESTED
 	List Dictionary.Values(table self)
 		self: The table to retrieve values for.
 
@@ -77,7 +74,6 @@ function Dictionary.ToSet(self, out)
 end
 
 --[[
-	TESTED
 	table Dictionary.ShallowCopy(table self, [table to])
 		self: The table to source data from
 		to: The table to copy into; an empty table if not given.
@@ -95,7 +91,6 @@ function Dictionary.ShallowCopy(self, to)
 end
 
 --[[
-	TESTED
 	table Dictionary.DeepCopy(table self, [table to, table map])
 		self: The table to source data from.
 		to: The table to copy into; an empty table if not given.
@@ -161,7 +156,6 @@ function Dictionary.DeepCopyExceptTypes(self, to, except, map)
 end
 
 --[[
-	TESTED
 	table Dictionary.ShallowMerge(table self, table to)
 		self: The table to source data from.
 		to: The table to output into.
@@ -179,7 +173,6 @@ function Dictionary.ShallowMerge(self, to)
 end
 
 --[[
-	TESTED
 	table Dictionary.DeepCopyMerge(table self, table to)
 		self: The table to source data from.
 		to: The table to put data into.
