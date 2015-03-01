@@ -10,6 +10,8 @@ Carbon.Testing.Checks:ImportAll()
 
 local Test = {}
 
+Carbon.Testing:TestFor(Operators, Test)
+
 function Test:Run(test)
 	Augment(test)
 

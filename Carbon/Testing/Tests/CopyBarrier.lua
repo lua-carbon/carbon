@@ -9,6 +9,8 @@ local CopyBarrier = Carbon.CopyBarrier
 
 local Test = {}
 
+Carbon.Testing:TestFor(CopyBarrier, Test)
+
 function Test:Run(test)
 	Carbon.Testing:Requires(Dictionary)
 
