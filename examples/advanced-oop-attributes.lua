@@ -19,6 +19,8 @@ end
 		- PoolSize: The maximum size of the instance pool, defaults to 20
 	- Abstract: Whether a class can be instantiated.
 	- ExplicitInitialization: Whether the constructor is no-copy or not. This makes constructions compiled under LuaJIT.
+	- TemplateHandler: The handler to handle templates.
+	- TemplateRequired: Whether the template is required to be specified before this class is instantiated.
 
 	Extension attributes include:
 	- EXT_LJ_Struct: String name of a struct to use under the hood. Non-struct members become immutable, and the class is sealed after the first call to :New.
