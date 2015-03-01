@@ -10,11 +10,12 @@ local Carbon = (...)
 local Graphene = Carbon:GetGraphene()
 local TestResult = Carbon.Testing.TestResult
 
-local Tests = Carbon.Testing.Tests
-
 local Testing = {
-	__tests = Carbon.Testing.Tests:FullyLoad(),
+	__loaded = false,
+	__test_fors = {},
+	__tests = nil,
 	__results = {},
+	__ran = {},
 	__names = {}
 }
 
@@ -42,6 +43,29 @@ local function test_report(self)
 end
 
 --[[
+	void Testing:TestFor(any module, Test test)
+		module: The module to associate a test wtith.
+		test: The test to associate with this module.
+
+	Associates a test as necessary to prove functionality of a module.
+]]
+function Testing:TestFor(module, test)
+	self.__test_fors[module] = test
+end
+
+--[[
+	void Testing:Requires(any module)
+		module: The module to test before this one.
+
+	Denotes that another module needs to be tested before this one.
+]]
+function Testing:Requires(module)
+	if (self.__test_fors[module]) then
+		self:RunTest(self.__test_fors[module])
+	end
+end
+
+--[[
 	void Testing:Prerequisite(Test test)
 		test: The test to mark.
 
@@ -59,17 +83,21 @@ end
 	Runs a test if it has not been run already.
 ]]
 function Testing:RunTest(test)
-	if (not self.__results[test]) then
-		self.__results[test] = true
+	if (not self.__ran[test]) then
+		self.__ran[test] = true
 
 		if (test.IsDirectory) then
-			self:RunAllTests(test)
-		else
+			self:RunTestList(test)
+		elseif (test.Run) then
 			local result = TestResult:New(test)
-			test:Run(result)
+			local ok, err = pcall(test.Run, test, result)
 
-			if (result.__fails == 0 and result.__passes == 0) then
-				result:Pass()
+			if (ok) then
+				if (result.__fails == 0 and result.__passes == 0) then
+					result:Pass()
+				end
+			else
+				result:Fail("Test threw an error: " .. tostring(err))
 			end
 
 			self.__results[test] = result
@@ -87,7 +115,7 @@ function Testing:RunTestList(source)
 	source = source or self.__tests
 
 	for key, test in pairs(source) do
-		if (type(test) == "table" and test.Run) then
+		if (type(test) == "table") then
 			self:RunTest(test)
 		end
 	end
@@ -99,6 +127,7 @@ end
 	Runs all the tests.
 ]]
 function Testing:RunAllTests()
+	self.__tests = self.__tests or Carbon.Testing.Tests:FullyLoad()
 	return self:RunTestList(self.__tests)
 end
 

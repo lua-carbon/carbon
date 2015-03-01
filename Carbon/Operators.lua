@@ -9,6 +9,9 @@ local Operators = {}
 local Graphene = Carbon:GetGraphene()
 local lua52 = Graphene.Support.lua52
 
+--[[
+	TESTED
+]]
 function Operators.Add(a, b)
 	return a + b
 end
@@ -23,6 +26,9 @@ function Operators.AddN(...)
 	return result
 end
 
+--[[
+	TESTED
+]]
 function Operators.Subtract(a, b)
 	return a - b
 end
@@ -37,6 +43,9 @@ function Operators.SubtractN(...)
 	return result
 end
 
+--[[
+	TESTED
+]]
 function Operators.Multiply(a, b)
 	return a * b
 end
@@ -51,6 +60,9 @@ function Operators.MultiplyN(...)
 	return result
 end
 
+--[[
+	TESTED
+]]
 function Operators.Divide(a, b)
 	return a / b
 end
@@ -65,6 +77,9 @@ function Operators.DivideN(...)
 	return result
 end
 
+--[[
+	TESTED
+]]
 function Operators.Power(a, b)
 	return a ^ b
 end
@@ -79,6 +94,9 @@ function Operators.PowerN(...)
 	return result
 end
 
+--[[
+	TESTED
+]]
 function Operators.Concat(a, b)
 	return tostring(a) .. tostring(b)
 end
