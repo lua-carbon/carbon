@@ -12,26 +12,32 @@ if (not ok) then
 end
 
 local Dictionary = Carbon.Collections.Dictionary
+local List = Carbon.Collections.List
 local OOP = {
 	__attribute_inheritance = {
 		-- Inherited attributes
 		InstanceIndirection = true,
 		InstancedMetatable = true,
-		TemplateHandler = true, -- proposed
-		TemplateRequired = true, -- proposed
 
 		-- Not inherited attributes
+		TemplateHandler = false,
+		TemplateRequired = false,
 		SparseInstances = false,
 		PooledInstantiation = false,
 		PoolSize = false,
 		Abstract = false,
 		ExplicitInitialization = false,
-		EXT_LJ_Struct = false,
+		EXT_LJ_Struct = false
 	}
 }
 
 -- Default attributes for classes and static classes
 local default_attributes = {
+	TemplateHandler = function(self, ...)
+		self.__template_arguments = List.ShallowCopy({...}, self.__template_arguments)
+
+		return self
+	end
 }
 
 local default_static_attributes = {
@@ -172,32 +178,36 @@ OOP:RegisterAttribute("Class", "SparseInstances",
 	__base_members: Holds base class members so they can be overridden effectively.
 	__metatable: Holds metatable to be applied to instances.
 	__attributes: Holds class attributes.
-	__typecheck: The typecheck object for this class.
+	Is: The typecheck object for this class.
 ]]
 OOP.BaseClass = {
 	__members = {},
 	__base_members = {},
 	__metatable = {},
 	__attributes = {},
-	__typecheck = {}
+	Is = {}
 }
 
 --[[
 	Class BaseClass:Inherits(...)
 
-	Inherits from classes, taking on their attributes, members, metatables, and type information.
+	Inherits from classes, taking on their inheritable attributes, members, metatables, and type information.
 ]]
 function OOP.BaseClass:Inherits(...)
 	for i = 1, select("#", ...) do
 		local object = select(i, ...)
 
 		if (type(object) ~= "table" or not object.__members) then
-			error(("Carbon.OOP: Cannot inherit from object #%d, not a class: %s"):format(i, object), 2)
+			error(("Carbon.OOP: Cannot inherit from object #%d, not a class: %s"):format(i, tostring(object)), 2)
 		end
 
 		Dictionary.DeepCopyMerge(object.__members, self.__members)
 		Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
-		Dictionary.ShallowMerge(object.__typecheck, self.__typecheck)
+		Dictionary.ShallowMerge(object.Is, self.Is)
+
+		if (object.__template_arguments) then
+			self.__template_arguments = List.ShallowCopy(object.__template_arguments, self.__template_arguments)
+		end
 
 		for key, value in pairs(object.__attributes) do
 			if (OOP.__attribute_inheritance[key]) then
@@ -260,6 +270,24 @@ function OOP.BaseClass:Members(members)
 	return self
 end
 
+--[[
+	any? BaseClass:Template(...)
+		...: Arguments to the template handler
+
+	Specializes the class by passing arguments to the template handler.
+]]
+function OOP.BaseClass:Template(...)
+	if (self.__attributes.TemplateHandler) then
+		local sub = OOP:Class(self)
+
+		sub.__complete = true
+
+		return sub.__attributes.TemplateHandler(sub, ...)
+	end
+
+	return self
+end
+
 -- The base object for all non-singleton objects
 OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 	:Attributes(default_attributes)
@@ -267,8 +295,7 @@ OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 OOP.Object.__members.class = newproxy(true)
 getmetatable(OOP.Object.__members.class).__index = OOP.Object
 
-OOP.Object.__typecheck[OOP.Object] = true
-OOP.Object.Is = OOP.Object.typecheck
+OOP.Object.Is[OOP.Object] = true
 
 --[[
 	Object Class:PlacementNew(indexable target?, ...)
@@ -279,6 +306,10 @@ OOP.Object.Is = OOP.Object.typecheck
 function OOP.Object:PlacementNew(instance, ...)
 	if (self.__attributes.Abstract) then
 		error("Cannot create instance of abstract class!", 2)
+	end
+
+	if (self.__attributes.TemplateRequired and not self.__complete) then
+		error("Cannot create instance of incomplete templated class!", 2)
 	end
 
 	if (not instance) then
@@ -306,6 +337,7 @@ function OOP.Object:PlacementNew(instance, ...)
 		end
 	end
 
+	-- These attributes all disable member copying
 	if (not (self.__attributes.SparseInstances or self.__attributes.ExplicitInitialization or self.__attributes.EXT_LJ_Struct)) then
 		Dictionary.DeepCopy(self.__base_members, instance)
 		Dictionary.DeepCopy(self.__members, instance)
@@ -319,7 +351,7 @@ function OOP.Object:PlacementNew(instance, ...)
 
 		-- We wrap the typechecking in a userdata so it doesn't get copied when our instance does.
 		instance.Is = newproxy(true)
-		getmetatable(instance.Is).__index = self.__typecheck
+		getmetatable(instance.Is).__index = self.Is
 
 		-- InstanceIndirection attribute wraps the object in a userdata
 		-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
@@ -335,15 +367,8 @@ function OOP.Object:PlacementNew(instance, ...)
 		end
 	end
 
-	if (self.__attributes.EXT_LJ_Struct) then
-		if (self.__members._init) then
-			self.__members._init(instance, ...)
-		end
-	else
-		-- Call the defined constructor
-		if (instance._init) then
-			instance._init(instance, ...)
-		end
+	if (self.__members._init) then
+		self.__members._init(instance, ...)
 	end
 
 	for i, attribute in ipairs(OOP.Attributes.PostInitialize) do
@@ -402,22 +427,23 @@ OOP.StaticObject = Dictionary.DeepCopy(OOP.BaseClass)
 OOP.StaticObject.__members.class = newproxy(true)
 getmetatable(OOP.StaticObject.__members.class).__index = OOP.StaticObject
 
-OOP.StaticObject.__typecheck[OOP.StaticObject] = true
-OOP.StaticObject.Is = OOP.StaticObject.__typecheck
+OOP.StaticObject.Is[OOP.StaticObject] = true
 
 --[[
 	Class OOP:Class()
 
 	Creates a new, empty class.
 ]]
-function OOP:Class()
-	local class = Dictionary.DeepCopy(self.Object)
+function OOP:Class(based_on)
+	based_on = based_on or self.Object
+	local class = Dictionary.DeepCopy(based_on)
 
-	class.__typecheck[class] = true
+	class.Is[class] = true
 
 	setmetatable(class, {
 		__newindex = class.__members,
-		__index = class.__members
+		__index = class.__members,
+		__call = class.Template
 	})
 
 	return class
@@ -430,18 +456,7 @@ end
 	Also works for abstract classes, see the alias below to OOP:AbstractClass()
 ]]
 function OOP:StaticClass()
-	local class = Dictionary.DeepCopy(self.StaticObject)
-
-	class.__typecheck[class] = true
-
-	setmetatable(class, {
-		__newindex = class.__members,
-		__index = class.__members
-	})
-
-	return class
+	return OOP:Class(self.StaticObject)
 end
-
-OOP.AbstractClass = OOP.StaticClass
 
 return OOP
