@@ -50,6 +50,39 @@ function List.ShallowCopy(self, to)
 	return to
 end
 
+--[[
+	List List.DeepCopy(table self, [table to, table map, function copy_function, ...])
+		self: The list to source data from.
+		to: The list to copy into; an empty table if not given.
+		copy_function: The function to copy members with: defaults to this method.
+		map: A map projecting original values into copied values. Used internally.
+
+	Performs a self-reference fixing deep copy from one list into another.
+	Handles self-references properly.
+]]
+function List.DeepCopy(self, to, map, copy_function, ...)
+	to = to or List:New({})
+	copy_function = copy_function or List.DeepCopy
+	map = map or {
+		[self] = to
+	}
+
+	for key, value in ipairs(self) do
+		if (type(value) == "table") then
+			if (not map[value]) then
+				map[value] = {}
+				to[key] = copy_function(value, map[value], map, ...)
+			end
+
+			to[key] = map[value]
+		else
+			to[key] = value
+		end
+	end
+
+	return to
+end
+
 Carbon.Metadata:RegisterMethods(List, self)
 
 return List
