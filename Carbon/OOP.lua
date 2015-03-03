@@ -382,7 +382,11 @@ function OOP.Object:PlacementNew(instance, ...)
 	end
 
 	if (self.__members._init) then
-		self.__members._init(instance, ...)
+		local err, result = self.__members._init(instance, ...)
+
+		if (err == false) then
+			return err, result
+		end
 	end
 
 	for i, attribute in ipairs(OOP.Attributes.PostInitialize) do
