@@ -12,11 +12,11 @@ local unpack = unpack or table.unpack
 local Sets = Carbon.Testing.Sets
 
 local Graphene = Carbon:GetGraphene()
-local Checks = Graphene:MakeImportable({
+local Checks = Graphene:MakeImportable {
 	__augmented = {}
-}, {
+} :Except {
 	__augmented = true
-})
+}
 
 --[[
 	bool Checks.IsCommutative(function, set, n)

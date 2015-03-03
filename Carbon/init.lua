@@ -1044,7 +1044,7 @@ end
 	Imports a directory using a defined mapping of aliases.
 ]]
 function directory_interface:ImportAs(mapping)
-	local except = self.__import_exceptions or G.__default_import_exceptions
+	local except = self.__import_exceptions or G.Importable.__import_exceptions
 	local fake = {}
 	for key, value in pairs(mapping) do
 		fake[value] = self[key]
@@ -1059,7 +1059,7 @@ end
 	Imports the given members from the library.
 ]]
 function directory_interface:Import(...)
-	local except = self.__import_exceptions or G.__default_import_exceptions
+	local except = self.__import_exceptions or G.Importable.__import_exceptions
 	local fake = {}
 	for i = 1, select("#", ...) do
 		fake[select(i, ...)] = self[select(i, ...)]
@@ -1074,7 +1074,7 @@ end
 	Loads the entire library and imports all of its members.
 ]]
 function directory_interface:ImportAll()
-	local except = self.__import_exceptions or G.__default_import_exceptions
+	local except = self.__import_exceptions or G.Importable.__import_exceptions
 	self:FullyLoad()
 
 	import_dict(self, 1, except)
@@ -1201,25 +1201,49 @@ end
 -- Directory:GetGrapheneCore()
 -- on any Graphene directory.
 
-G.__importable = {
+G.Importable = {
+	__import_exceptions = {
+		Import = true,
+		ImportAs = true,
+		ImportAll = true,
+		Except = true,
+		__import_exceptions = true
+	},
 	Import = G.Directory.Import,
 	ImportAs = G.Directory.ImportAs
 }
 
-function G.__importable:ImportAll()
-	import_dict(self, 1)
+function G.Importable:ImportAll()
+	local except = self.__import_exceptions or G.__import_exceptions
+	import_dict(self, 1, except)
 end
 
 --[[
-	self G:MakeImportable(table object, set exception)
+	self Importable:Except(table block)
+		block: A set of things to ignore.
+
+	Adds exceptions to the object's import list.
+]]
+function G.Importable:Except(block)
+	if (self.__import_exceptions == G.Importable.__import_exceptions) then
+		self.__import_exceptions = dictionary_shallow_copy(G.Importable.__import_exceptions)
+	end
+
+	dictionary_shallow_copy(block, self.__import_exceptions)
+
+	return self
+end
+
+--[[
+	object G:MakeImportable(table object)
 		object: The object to augment.
-		exception: A set of object keys to not import from this object.
 
 	Makes an object importable like a Graphene Directory.
 ]]
-function G:MakeImportable(object, exception)
-	dictionary_shallow_copy(self.__importable, object)
-	object.__import_exceptions = object.__import_exceptions or exception
+function G:MakeImportable(object)
+	setmetatable(object, {
+		__index = self.Importable
+	})
 
 	return object
 end
