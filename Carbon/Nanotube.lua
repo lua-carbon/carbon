@@ -165,7 +165,7 @@ function Nanotube:Loop()
 		self:Step()
 
 		if (self.UseSleep) then
-			Carbon.Sleep(self.StepPeriod)
+			Carbon.Time.Sleep(self.StepPeriod)
 		end
 	end
 
