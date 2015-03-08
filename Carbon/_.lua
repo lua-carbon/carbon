@@ -39,7 +39,6 @@ for key, value in pairs(Carbon) do
 	libCarbon[key] = value
 end
 
-libCarbon:GetGrapheneCore().Config.Loaders[".tlua"] = libCarbon.Carbide.CompileTemplated
 libCarbon:GetGrapheneCore().Config.Loaders[".clua"] = libCarbon.Carbide.Compile
 
 return Carbon

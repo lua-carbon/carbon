@@ -15,7 +15,7 @@ local Carbide = {
 	Engine = TemplateEngine:New()
 }
 
-function Carbide.ParseTemplated(source)
+function Carbide.Parse(source)
 	local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon})
 	
 	if (not result) then
@@ -25,19 +25,16 @@ function Carbide.ParseTemplated(source)
 	return result
 end
 
-function Carbide.CompileTemplated(source, name, environment)
-	local result, err = Carbide.ParseTemplated(source)
+function Carbide.Compile(source, name, environment)
+	if (source:find("#TEMPLATES_ENABLED") then
+		local result, err = Carbide.ParseTemplated(source)
 
-	if (not result) then
-		error(err)
+		if (not result) then
+			error(err)
+		end
 	end
 
 	return lua_loader(result, name, environment)
 end
-
--- Right now, Carbide implements no language extensions beyond inlined templates.
--- Full Carbide Lua (*.clua) will implement more features in the future over Templated Carbide Lua (*.tlua).
-Carbide.Compile = Carbide.CompileTemplated
-Carbide.Parse = Carbide.ParseTemplated
 
 return Carbide
