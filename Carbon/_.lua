@@ -6,7 +6,7 @@
 local libCarbon = (...)
 
 local Carbon = {
-	Version = {1, 0, 0},
+	Version = {1, 0, 0, "alpha"},
 
 	Config = {
 	}
@@ -22,7 +22,12 @@ Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 
 Carbon.Async = coroutine.wrap
 
-Carbon.Assert = function(...)
+--[[
+	void Carbon.Assert(...)
+
+	Asserts, like Lua's assert, but calls tostring on the message explicitly.
+]]
+function Carbon.Assert(...)
 	if (not (...)) then
 		error(tostring(select(2, ...)), 2)
 	end
@@ -30,8 +35,28 @@ Carbon.Assert = function(...)
 	return ...
 end
 
-Carbon.Error = function(...)
-	error(tostring(...))
+--[[
+	void Carbon.Error(...)
+
+	Throws an error, calling tostring on the message explicitly.
+]]
+function Carbon.Error(...)
+	error(tostring((...)), select(2, ...))
+end
+
+--[[
+	bool Carbon.IsObject(any object)
+		object: The object to check
+
+	Returns whether the given object is a valid Carbon object.
+]]
+function Carbon.IsObject(x)
+	local t = type(x)
+	if (t == "table" or (t == "userdata" and getmetatable(t) and getmetatable(t).__index)) then
+		return not not t.Is
+	end
+
+	return false
 end
 
 -- These shims are used for Carbide and its dependencies.
