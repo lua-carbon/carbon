@@ -20,8 +20,6 @@ local OOP = {
 		InstancedMetatable = true,
 
 		-- Not inherited attributes
-		TemplateHandler = false,
-		TemplateRequired = false,
 		SparseInstances = false,
 		PooledInstantiation = false,
 		PoolSize = false,
@@ -33,11 +31,6 @@ local OOP = {
 
 -- Default attributes for classes and static classes
 local default_attributes = {
-	TemplateHandler = function(self, ...)
-		self.__template_arguments = List.ShallowCopy({...}, self.__template_arguments)
-
-		return self
-	end
 }
 
 local default_static_attributes = {
@@ -183,7 +176,13 @@ OOP:RegisterAttribute("Class", "SparseInstances",
 OOP.BaseClass = {
 	__members = {},
 	__base_members = {},
-	__metatable = {},
+	__metatable = {
+		__gc = function(self)
+			if (self.Destroy) then
+				self:Destroy()
+			end
+		end
+	},
 	__attributes = {},
 	Is = {}
 }
@@ -204,10 +203,6 @@ function OOP.BaseClass:Inherits(...)
 		Dictionary.DeepCopyMerge(object.__members, self.__members)
 		Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
 		Dictionary.ShallowMerge(object.Is, self.Is)
-
-		if (object.__template_arguments) then
-			self.__template_arguments = List.ShallowCopy(object.__template_arguments, self.__template_arguments)
-		end
 
 		for key, value in pairs(object.__attributes) do
 			if (OOP.__attribute_inheritance[key]) then
@@ -270,24 +265,6 @@ function OOP.BaseClass:Members(members)
 	return self
 end
 
---[[
-	any? BaseClass:Template(...)
-		...: Arguments to the template handler
-
-	Specializes the class by passing arguments to the template handler.
-]]
-function OOP.BaseClass:Template(...)
-	if (self.__attributes.TemplateHandler) then
-		local sub = OOP:Class(self)
-
-		sub.__complete = true
-
-		return sub.__attributes.TemplateHandler(sub, ...)
-	end
-
-	return self
-end
-
 -- The base object for all non-singleton objects
 OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 	:Attributes(default_attributes)
@@ -303,10 +280,6 @@ OOP.Object.Is[OOP.Object] = true
 function OOP.Object:PlacementNew(instance, ...)
 	if (self.__attributes.Abstract) then
 		error("Cannot create instance of abstract class!", 2)
-	end
-
-	if (self.__attributes.TemplateRequired and not self.__complete) then
-		error("Cannot create instance of incomplete templated class!", 2)
 	end
 
 	if (not instance) then
