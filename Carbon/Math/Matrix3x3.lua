@@ -5,7 +5,7 @@
 
 local Carbon = (...)
 
-local Matrix3x3, except = Carbon.Math.Matrix:Generate(3, 3)
+local Matrix3x3, except = Carbon.Math.FastMatrix:Generate(3, 3)
 
 if (not Matrix3x3) then
 	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then

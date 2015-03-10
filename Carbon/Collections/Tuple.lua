@@ -14,7 +14,8 @@ local Tuple = OOP:Class()
 	:Attributes {
 		PooledInstantiation = true,
 		PoolSize = 16,
-		ExplicitInitialization = true
+		ExplicitInitialization = true,
+		SparseInstances = true
 	}
 
 function Tuple:_init(...)

@@ -5,7 +5,7 @@
 
 local Carbon = (...)
 
-local Matrix2x2, except = Carbon.Math.Matrix:Generate(2, 2)
+local Matrix2x2, except = Carbon.Math.FastMatrix:Generate(2, 2)
 
 if (not Matrix2x2) then
 	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then

@@ -5,18 +5,18 @@
 	Generates NxM matrices.
 
 	This does not scale very well, but is fast for small values of N and M.
-	Past 14x14 matrices, this class will not work at all.
+	Works only for matrices smaller than 14x14.
 	For larger matrices, consider a different implementation.
 ]]
 
 local Carbon = (...)
+local Dictionary = Carbon.Collections.Dictionary
 local OOP = Carbon.OOP
 local CodeGenerationException = Carbon.Exceptions.CodeGenerationException
 local TemplateEngine = Carbon.TemplateEngine
 
-local loadstring = loadstring or load
-
-local FastMatrix = {
+local FastMatrix
+FastMatrix = {
 	Engine = TemplateEngine:New(),
 	__cache = {},
 	__methods = {
@@ -36,7 +36,19 @@ local FastMatrix = {
 			end
 		]],
 
-		-- FastMatrix:Identity()
+		Zero = [[
+			return function(self)
+				return self:New(
+				{% for i = 1, N do
+					_("0")
+					if (i < N) then
+						_(",")
+					end
+				end %}
+				)
+			end
+		]],
+
 		Identity = [[
 			return function(self)
 				{% if (ROWS == COLUMNS) then %}
@@ -59,7 +71,59 @@ local FastMatrix = {
 					return nil, "No identity exists for non-square matrices!"
 				{% end %}
 			end
-		]]
+		]],
+
+		SetValue = function(self, i, j, value)
+			self[(i - 1) * self.ColumnCount + j] = value
+		end,
+
+		GetValue = function(self, i, j)
+			return self[(i - 1) * self.ColumnCount + j]
+		end,
+
+		MultiplyScalar = [[
+			return function(self, value, out)
+				out = out or self.class:New()
+
+				{% for i = 1, N do
+					_(("out[%d] = out[%d] * value\n"):format(
+						i, i
+					))
+				end %}
+			end
+		]],
+
+		MultiplyLoose = [[
+			return function(self, rows, columns, ...)
+				local out = select(rows*columns + 1, ...) or self.class:New()
+			end
+		]],
+
+		MultiplyLikeMatrix = [[
+			return function() end
+		]],
+
+		MultiplyMatrix = function(self, other, out)
+			if (self.ColumnCount ~= other.RowCount) then
+				return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
+			end
+
+			out = out or FastMatrix:Generate(self.RowCount, other.ColumnCount):New()
+
+			for i = 1, self.RowCount do
+				for j = 1, other.ColumnCount do
+					local sum = 0
+					for k = 1, self.ColumnCount do
+						sum = sum + 
+							(self:GetValue(i, k)) *
+							(other:GetValue(k, j))
+					end
+					out:SetValue(i, j, sum)
+				end
+			end
+
+			return out
+		end
 	},
 	__metatable = {
 		-- String conversion:
@@ -83,14 +147,15 @@ local FastMatrix = {
 
 	Generates a method using Carbon's TemplateEngine and handles errors.
 ]]
-function FastMatrix:__generate_method(body, arguments)
+function FastMatrix:__generate_method(body, arguments, env)
 	local generated, exception = self.Engine:Render(body, arguments)
 
 	if (not generated) then
 		return false, exception
 	end
 
-	local generator, err = loadstring(generated)
+	Dictionary.ShallowMerge(_G, env)
+	local generator, err = Carbon:LoadString(generated, body:sub(1, 50), env)
 
 	if (not generator) then
 		return false, CodeGenerationException:New(err, generated), generated
@@ -108,19 +173,18 @@ end
 	It performs runtime code generation and template parsing on each generated class.
 ]]
 function FastMatrix:Generate(rows, columns)
-	local dimensions = rows .. "x" .. columns
 	local n = rows * columns
 
-	if (self.__cache[dimensions]) then
-		return self.__cache[dimensions]
+	if (self.__cache[rows] and self.__cache[rows][columns]) then
+		return self.__cache[rows][columns]
 	end
 
 	local class = OOP:Class()
 	class.Is[FastMatrix] = true
 
 	local body = {
-		__rows = rows,
-		__columns = columns
+		RowCount = rows,
+		ColumnCount = columns
 	}
 
 	class:Members(body)
@@ -133,10 +197,14 @@ function FastMatrix:Generate(rows, columns)
 		CLASS = class
 	}
 
+	local env = {
+		FastMatrix = self
+	}
+
 	-- Process methods for the generated class
 	for name, body in pairs(self.__methods) do
 		if (type(body) == "string") then
-			class[name], err, body = self:__generate_method(body, gen_args)
+			class[name], err, body = self:__generate_method(body, gen_args, env)
 
 			if (not class[name]) then
 				return nil, err, name, body
@@ -150,7 +218,7 @@ function FastMatrix:Generate(rows, columns)
 
 	for name, body in pairs(self.__metatable) do
 		if (type(body) == "string") then
-			metatable[name], err, body = self:__generate_method(body, gen_args)
+			metatable[name], err, body = self:__generate_method(body, gen_args, env)
 
 			if (not metatable[name]) then
 				return nil, err, name, body
@@ -168,7 +236,8 @@ function FastMatrix:Generate(rows, columns)
 			ExplicitInitialization = true
 		}
 
-	self.__cache[dimensions] = class
+	self.__cache[rows] = self.__cache[rows] or {}
+	self.__cache[rows][columns] = class
 
 	return class
 end
