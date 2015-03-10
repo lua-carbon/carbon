@@ -8,7 +8,7 @@
 local Carbon = (...)
 
 local Color = Carbon.Math.Color
-local Color_RGB, except = Carbon.Math.VectorN:Generate({"R", "G", "B"})
+local Color_RGB, except = Carbon.Math.Vector:Generate({"R", "G", "B"})
 
 if (not Color_RGB) then
 	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then

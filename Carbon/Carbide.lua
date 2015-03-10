@@ -26,7 +26,7 @@ function Carbide.Parse(source)
 end
 
 function Carbide.Compile(source, name, environment)
-	if (source:find("#TEMPLATES_ENABLED") then
+	if (source:find("#TEMPLATES_ENABLED")) then
 		local result, err = Carbide.ParseTemplated(source)
 
 		if (not result) then

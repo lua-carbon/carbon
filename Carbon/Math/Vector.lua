@@ -1,18 +1,19 @@
 --[[
 	Carbon for Lua
-	VectorN Template
+	Vector Template
 
 	Provides a code generation-driven method of generating arbitrary-length vectors.
 ]]
 
 local Carbon = (...)
 local OOP = Carbon.OOP
+local List = Carbon.Collections.List
 local CodeGenerationException = Carbon.Exceptions.CodeGenerationException
 local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
 
-local VectorN = {
+local Vector = {
 	Engine = TemplateEngine:New(),
 	__cache = {},
 	__methods = {
@@ -96,13 +97,13 @@ local VectorN = {
 }
 
 --[[
-	function VectorN:__generate_method(string body, table arguments)
+	function Vector:__generate_method(string body, table arguments)
 		body: Template-enabled code to return a function.
 		arguments: Arguments to the template
 
 	Generates a method using Carbon's TemplateEngine and handles errors.
 ]]
-function VectorN:__generate_method(body, arguments)
+function Vector:__generate_method(body, arguments)
 	local generated, exception = self.Engine:Render(body, arguments)
 
 	if (not generated) then
@@ -119,7 +120,7 @@ function VectorN:__generate_method(body, arguments)
 end
 
 --[[
-	Class<Vector> VectorN:Generate(string[] members, [table parameters])
+	Class<Vector> Vector:Generate(string[] members, [table parameters])
 		members: The keys to the vector.
 		parameters: Options for generating the class:
 			number NormalizedLength (1): The length the vector reaches when normalized.
@@ -129,7 +130,7 @@ end
 	Generates a new Vector class with the given keys and parameters. Results are cached, but this method may still be slow.
 	It performs runtime code generation and template parsing on each generated class.
 ]]
-function VectorN:Generate(members, parameters)
+function Vector:Generate(members, parameters)
 	parameters = parameters or {}
 
 	local n = #members
@@ -154,8 +155,11 @@ function VectorN:Generate(members, parameters)
 	parameters.NormalizedLength = parameters.NormalizedLength or 1
 
 	local class = OOP:Class()
+	class.Is[Vector] = true
 
-	local body = {}
+	local body = {
+		__keys = List.ShallowCopy(members)
+	}
 	for i = 1, n do
 		body[members[i]] = 0
 	end
@@ -211,4 +215,4 @@ function VectorN:Generate(members, parameters)
 	return class
 end
 
-return VectorN
+return Vector

@@ -1,15 +1,13 @@
 --[[
 	Carbon for Lua
-	Vector2 Object
-
-	Provides a 2-length vector with X and Y keys.
+	2x2 FastMatrix
 ]]
 
 local Carbon = (...)
 
-local Vector2, except = Carbon.Math.Vector:Generate({"X", "Y"})
+local Matrix2x2, except = Carbon.Math.Matrix:Generate(2, 2)
 
-if (not Vector2) then
+if (not Matrix2x2) then
 	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then
 		print(except.GeneratedCode)
 	end
@@ -17,4 +15,4 @@ if (not Vector2) then
 	Carbon.Error(except)
 end
 
-return Vector2
+return Matrix2x2
