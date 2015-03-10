@@ -116,6 +116,7 @@ function FastMatrix:Generate(rows, columns)
 	end
 
 	local class = OOP:Class()
+	class.Is[FastMatrix] = true
 
 	local body = {
 		__rows = rows,
