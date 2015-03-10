@@ -63,8 +63,7 @@ elseif (ffi) then
 		]])
 
 		Time.Sleep = function(s)
-			local whole = math.floor(s)
-			local fract = s - whole
+			local whole, fract = math.modf(s)
 			ffi.C.sleep(whole)
 			ffi.C.usleep(fract * 1000000)
 		end
