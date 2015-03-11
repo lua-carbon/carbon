@@ -7,7 +7,7 @@
 
 local Carbon = (...)
 
-local Vector3, except = Carbon.Math.Vector:Generate({"X", "Y", "Z"})
+local Vector3, except = Carbon.Math.Vector:Generate(3)
 
 if (not Vector3) then
 	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then

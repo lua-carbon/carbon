@@ -231,7 +231,7 @@ function FastMatrix:Generate(rows, columns)
 	class:Metatable(metatable)
 		:Attributes {
 			PooledInstantiation = true,
-			PoolSize = 50,
+			PoolSize = 64,
 			SparseInstances = true,
 			ExplicitInitialization = true
 		}

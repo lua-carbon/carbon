@@ -9,13 +9,125 @@ local Carbon = (...)
 local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
-local lua_loader = Carbon:GetGrapheneCore().Config.Loaders[".lua"]
+local lua_loader = Carbon:GetGraphene().Config.Loaders[".lua"]
 
 local Carbide = {
 	Engine = TemplateEngine:New()
 }
 
-function Carbide.Parse(source)
+local direct_arrow_indices = {
+	x = 1, y = 2, z = 3, w = 4,
+	r = 1, g = 2, b = 3, a = 4,
+	u = 1, v = 2,
+	s = 1, t = 2, p = 3, q = 4
+}
+
+local function matchexpr(source, start, backwards)
+	local direction = backwards and -1 or 1
+
+	-- parens, bracket, curly brace
+	local plevel, blevel, clevel = 0, 0, 0
+	local target_beginning = start
+	local space_ok = true
+
+	for i = start, (backwards and 1 or #source), direction do
+		local char = source:sub(i, i)
+
+		if (char:match("%s")) then
+			if (space_ok) then
+				target_beginning = target_beginning + direction
+			elseif (plevel == 0 and blevel == 0 and clevel == 0) then
+				local die = false
+
+				-- Crawl around to see if the next character would be illegal
+				for j = i, (backwards and 1 or #source), direction do
+					local char = source:sub(j, j)
+					if (char:match(backwards and "[%w%)%}%];]" or "[%w;]")) then
+						die = true
+						break
+					elseif (char:match("%S")) then
+						break
+					end
+				end
+				
+				if (die) then
+					break
+				end
+			end
+		else
+			target_beginning = target_beginning + direction
+			space_ok = not char:match("[%w_]")
+
+			if (char == "[") then
+				blevel = blevel + direction
+			elseif (char == "]") then
+				blevel = blevel - direction
+			elseif (char == "(") then
+				plevel = plevel + direction
+			elseif (char == ")") then
+				plevel = plevel - direction
+			elseif (char == "{") then
+				clevel = clevel + direction
+			elseif (char == "}") then
+				clevel = clevel - direction
+			end
+		end
+	end
+
+	return target_beginning
+end
+
+local function operator_double(source, operator)
+	local double_operator = "%" .. operator .. "%" .. operator
+	local start, finish = 0, 0
+	while (true) do
+		start, finish = source:find(double_operator, finish + 1)
+
+		if (not start) then
+			break
+		end
+
+		local target_beginning = matchexpr(source, start - 1, true)
+		local target = source:sub(target_beginning, start - 1):gsub("^%s+", ""):gsub("%s+$", "")
+
+		source = ("%s\n%s = (%s) %s 1\n%s"):format(
+			source:sub(1, target_beginning - 1),
+			target, target,
+			operator,
+			source:sub(finish + 1)
+		)
+	end
+
+	return source
+end
+
+local function operator_mutating(source, operator)
+	local start, finish = 0, 0
+	while (true) do
+		start, finish = source:find(operator .. "=", finish + 1)
+		
+		if (not start) then
+			break
+		end
+
+		local target_beginning = matchexpr(source, start - 1, true)
+		local target = source:sub(target_beginning, start - 1):gsub("^%s+", ""):gsub("%s+$", "")
+
+		local value_ending = matchexpr(source, finish + 1)
+		local value = source:sub(finish + 1, value_ending):gsub("^%s+", ""):gsub("%s+$", "")
+
+		source = ("%s\n%s = %s + (%s)\n%s"):format(
+			source:sub(1, target_beginning - 1),
+			target, target,
+			value,
+			source:sub(value_ending + 1)
+		)
+	end
+
+	return source
+end
+
+function Carbide.ParseTemplated(source)
 	local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon})
 	
 	if (not result) then
@@ -29,12 +141,36 @@ function Carbide.Compile(source, name, environment)
 	if (source:find("#TEMPLATES_ENABLED")) then
 		local result, err = Carbide.ParseTemplated(source)
 
-		if (not result) then
+		if (result) then
+			source = result
+		else
 			error(err)
 		end
 	end
 
-	return lua_loader(result, name, environment)
+	-- Implement direct arrow operator
+	-- Transforms vec3->x to vec3[1], see 'direct_arrow_indices' table above
+	source = source:gsub("(([^-])%->([%w_]+))", function(whole, prec, key)
+		local index = direct_arrow_indices[key]
+
+		if (not index) then
+			error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
+		end
+
+		return ("%s[%d]"):format(prec, index)
+	end)
+
+	source = operator_double(source, "+")
+
+	source = operator_mutating(source, "+")
+	source = operator_mutating(source, "-")
+	source = operator_mutating(source, "*")
+	source = operator_mutating(source, "/")
+	source = operator_mutating(source, "^")
+
+	--print(source)
+
+	return lua_loader(source, name, environment)
 end
 
 return Carbide
