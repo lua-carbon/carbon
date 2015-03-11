@@ -160,6 +160,17 @@ function Carbide.Compile(source, name, environment)
 		return ("%s[%d]"):format(prec, index)
 	end)
 
+	-- Implement BANG
+	-- Transforms x:y!() to x:y(x)
+	source = source:gsub("((%w+):(%w+)!(%b()))", function(whole, self, method, args)
+		return ("%s:%s(%s%s %s)"):format(
+			self, method,
+			args:sub(2, -2),
+			#args:gsub("%s", "") > 2 and "," or "",
+			self
+		)
+	end)
+
 	source = operator_double(source, "+")
 
 	source = operator_mutating(source, "+")
