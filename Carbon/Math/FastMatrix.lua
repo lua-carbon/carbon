@@ -103,12 +103,32 @@ FastMatrix = {
 			return function() end
 		]],
 
+		MultiplyVector = function(self, other, out)
+			if (self.ColumnCount ~= other.ComponentCount) then
+				return nil, "Cannot multiply mismatched matrices and vectors!"
+			end
+
+			out = (out == "self") and self or out or other.class:New()
+
+			for i = 1, self.RowCount do
+				local sum = 0
+				for k = 1, self.ColumnCount do
+					sum = sum +
+						(self:GetValue(i, k)) *
+						(other[k])
+				end
+				out[i] = sum
+			end
+
+			return out
+		end,
+
 		MultiplyMatrix = function(self, other, out)
 			if (self.ColumnCount ~= other.RowCount) then
 				return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
 			end
 
-			out = out or FastMatrix:Generate(self.RowCount, other.ColumnCount):New()
+			out = (out == "self") and self or out or FastMatrix:Generate(self.RowCount, other.ColumnCount):New()
 
 			for i = 1, self.RowCount do
 				for j = 1, other.ColumnCount do
@@ -155,7 +175,7 @@ function FastMatrix:__generate_method(body, arguments, env)
 	end
 
 	Dictionary.ShallowMerge(_G, env)
-	local generator, err = Carbon:LoadString(generated, body:sub(1, 50), env)
+	local generator, err = Carbon.LoadString(generated, body:sub(1, 50), env)
 
 	if (not generator) then
 		return false, CodeGenerationException:New(err, generated), generated

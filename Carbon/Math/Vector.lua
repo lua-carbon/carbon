@@ -31,13 +31,12 @@ local Vector = {
 			end
 		]],
 
-		--[=[
 		Length = [[
 			return function(self)
 				return math.sqrt(
-				{% for i, member in ipairs(MEMBERS) do
-					_(("self[%q]^2%s"):format(
-						member, i < N and "+" or ""
+				{% for i = 1, LENGTH do
+					_(("self[%d]^2%s"):format(
+						i, i < LENGTH and "+" or ""
 					))
 				end %})
 			end
@@ -46,9 +45,9 @@ local Vector = {
 		LengthSquared = [[
 			return function(self)
 				return 
-				{% for i, member in ipairs(MEMBERS) do
-					_(("self[%q]^2%s"):format(
-						member, i < N and "+" or ""
+				{% for i = 1, LENGTH do
+					_(("self[%d]^2%s"):format(
+						i, i < LENGTH and "+" or ""
 					))
 				end %}
 			end
@@ -56,14 +55,9 @@ local Vector = {
 
 		Normalize = [[
 			return function(self, out)
-				out = out or self.class:New()
+				out = (out == "self") and self or out or self.class:New()
 
-				local length = math.sqrt(
-				{% for i, member in ipairs(MEMBERS) do
-					_(("self[%q]^2%s"):format(
-						member, i < N and "+" or ""
-					))
-				end %})
+				local length = self:Length()
 
 				if (length == 0) then
 					length = 1 / {%= PARAMETERS.NormalizedLength %}
@@ -73,32 +67,29 @@ local Vector = {
 					{% end %}
 				end
 
-				{% for i, member in ipairs(MEMBERS) do
-					_(("out[%q] = %g * self[%q] / length;"):format(
-						member, PARAMETERS.NormalizedLength, member
+				{% for i = 1, LENGTH do
+					_(("out[%d] = %g * self[%d] / length;"):format(
+						i, PARAMETERS.NormalizedLength, i
 					))
 				end %}
 
 				return out
 			end
 		]]
-		]=]
 	},
 	__metatable = {
 		-- String conversion:
 		-- tostring(Vector)
-		--[=[
 		__tostring = [[
 			return function(self)
-				return ("({%= ("%g, "):rep(N):sub(1,-3) %})"):format(
-				{% for i, member in ipairs(MEMBERS) do
-					_(("self[%q]%s"):format(
-						member, i < N and "," or ""
+				return ("({%= ("%g, "):rep(LENGTH):sub(1,-3) %})"):format(
+				{% for i = 1, LENGTH do
+					_(("self[%d]%s"):format(
+						i, i < LENGTH and "," or ""
 					))
 				end %})
 			end
 		]]
-		]=]
 	}
 }
 
@@ -120,7 +111,7 @@ function Vector:__generate_method(body, arguments, env)
 	end
 
 	Dictionary.ShallowMerge(_G, env)
-	local generator, err = Carbon:LoadString(generated, body:sub(1, 50), env)
+	local generator, err = Carbon.LoadString(generated, body:sub(1, 50), env)
 
 	if (not generator) then
 		return false, CodeGenerationException:New(err, generated), generated
@@ -172,7 +163,7 @@ function Vector:Generate(length, parameters)
 	class.Is[Vector] = true
 
 	local body = {
-		Length = length
+		ComponentCount = length
 	}
 
 	class:Members(body)

@@ -141,28 +141,13 @@ local function operator_dan(source)
 end
 
 local function operator_bang(source)
-	local start, finish = 0, 0
-	while (true) do
-		start, finish, convention, method, args = source:find("([%.:%->]+)(%w+)!(%b())", finish + 1)
-		
-		if (not start) then
-			break
-		end
-
-		local self_beginning = matchexpr(source, start - 1, true)
-		local self = source:sub(self_beginning, start - 1):gsub("^%s+", ""):gsub("%s+$", "")
-
-		source = ("%s\n%s%s%s(%s%s%s)\n%s"):format(
-			source:sub(1, self_beginning - 1),
-			self, convention, method,
+	return (source:gsub("([%.:%->]+)(%w+)!(%b())", function(convention, method, args)
+		return ("%s%s(%s%s\"self\")"):format(
+			convention, method,
 			args:sub(2, -2),
-			#args:gsub("%s", "") > 2 and ", " or "",
-			self,
-			source:sub(finish + 1)
+			#args:gsub("%s", "") > 2 and ", " or ""
 		)
-	end
-
-	return source
+	end))
 end
 
 function Carbide.ParseTemplated(source)
