@@ -166,38 +166,47 @@ local function operator_bang(source)
 end
 
 function Carbide.ParseTemplated(source)
-	local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon})
-	
-	if (not result) then
-		return false, err
+	if (source:find("#TEMPLATES_ENABLED")) then
+		local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon})
+		
+		if (not result) then
+			return false, err
+		end
+
+		return result
+	else
+		return source
+	end
+end
+
+function Carbide.ParseCore(source)
+	local feature_level = tonumber(source:match("#CARBIDE_FEATURE_LEVEL (%d+)")) or 2
+	local extensions = {}
+
+	if (feature_level >= 1) then
+		source = operator_bang(source)
+		source = operator_dan(source)
+
+		source = operator_double(source, "+")
+
+		source = operator_mutating(source, "+")
+		source = operator_mutating(source, "-")
+		source = operator_mutating(source, "*")
+		source = operator_mutating(source, "/")
+		source = operator_mutating(source, "^")
 	end
 
-	return result
+	return source
 end
 
 function Carbide.Compile(source, name, environment)
-	if (source:find("#TEMPLATES_ENABLED")) then
-		local result, err = Carbide.ParseTemplated(source)
+	source, err = Carbide.ParseTemplated(source)
 
-		if (result) then
-			source = result
-		else
-			error(err)
-		end
+	if (not source) then
+		error(err)
 	end
 
-	source = operator_bang(source)
-	source = operator_dan(source)
-
-	source = operator_double(source, "+")
-
-	source = operator_mutating(source, "+")
-	source = operator_mutating(source, "-")
-	source = operator_mutating(source, "*")
-	source = operator_mutating(source, "/")
-	source = operator_mutating(source, "^")
-
-	print(source)
+	source = Carbide.ParseCore(source)
 
 	return Carbon.LoadString(source, name, environment)
 end
