@@ -53,9 +53,13 @@ local Vector = {
 			end
 		]],
 
+		NormalizeInPlace = function(self)
+			return self:Normalize(self)
+		end,
+
 		Normalize = [[
 			return function(self, out)
-				out = (out == "self") and self or out or self.class:New()
+				out = out or self.class:New()
 
 				local length = self:Length()
 

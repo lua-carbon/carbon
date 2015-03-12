@@ -141,6 +141,14 @@ local function operator_dan(source)
 end
 
 local function operator_bang(source)
+	return (source:gsub("([%.:%->]+)(%w+)!", function(convention, method)
+		return ("%s%sInPlace"):format(
+			convention, method
+		)
+	end))
+end
+
+local function operator_bang_old(source)
 	return (source:gsub("([%.:%->]+)(%w+)!(%b())", function(convention, method, args)
 		return ("%s%s(%s%s\"self\")"):format(
 			convention, method,

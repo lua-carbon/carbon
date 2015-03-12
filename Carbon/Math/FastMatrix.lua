@@ -81,6 +81,10 @@ FastMatrix = {
 			return self[(i - 1) * self.ColumnCount + j]
 		end,
 
+		MultiplyScalarInPlace = function(self, value)
+			return self:MultiplyScalar(value, self)
+		end,
+
 		MultiplyScalar = [[
 			return function(self, value, out)
 				out = out or self.class:New()
@@ -108,7 +112,7 @@ FastMatrix = {
 				return nil, "Cannot multiply mismatched matrices and vectors!"
 			end
 
-			out = (out == "self") and self or out or other.class:New()
+			out = out or other.class:New()
 
 			for i = 1, self.RowCount do
 				local sum = 0
@@ -123,12 +127,16 @@ FastMatrix = {
 			return out
 		end,
 
+		MultiplyMatrixInPlace = function(self, other, out)
+			return self:MultiplyMatrix(other, out)
+		end,
+
 		MultiplyMatrix = function(self, other, out)
 			if (self.ColumnCount ~= other.RowCount) then
 				return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
 			end
 
-			out = (out == "self") and self or out or FastMatrix:Generate(self.RowCount, other.ColumnCount):New()
+			out = out or FastMatrix:Generate(self.RowCount, other.ColumnCount):New()
 
 			for i = 1, self.RowCount do
 				for j = 1, other.ColumnCount do
