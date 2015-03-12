@@ -148,16 +148,6 @@ local function operator_bang(source)
 	end))
 end
 
-local function operator_bang_old(source)
-	return (source:gsub("([%.:%->]+)(%w+)!(%b())", function(convention, method, args)
-		return ("%s%s(%s%s\"self\")"):format(
-			convention, method,
-			args:sub(2, -2),
-			#args:gsub("%s", "") > 2 and ", " or ""
-		)
-	end))
-end
-
 function Carbide.ParseTemplated(source)
 	if (source:find("#TEMPLATES_ENABLED")) then
 		local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon})
