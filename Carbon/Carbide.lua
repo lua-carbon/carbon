@@ -9,7 +9,6 @@ local Carbon = (...)
 local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
-local lua_loader = Carbon:GetGraphene().Config.Loaders[".lua"]
 
 local Carbide = {
 	Engine = TemplateEngine:New()
@@ -127,6 +126,45 @@ local function operator_mutating(source, operator)
 	return source
 end
 
+local function operator_dan(source)
+	-- Implement direct arrow operator
+	-- Transforms vec3->x to vec3[1], see 'direct_arrow_indices' table above
+	return (source:gsub("(([^-])%->([%w_]+))", function(whole, prec, key)
+		local index = direct_arrow_indices[key]
+
+		if (not index) then
+			error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
+		end
+
+		return ("%s[%d]"):format(prec, index)
+	end))
+end
+
+local function operator_bang(source)
+	local start, finish = 0, 0
+	while (true) do
+		start, finish, convention, method, args = source:find("([%.:%->]+)(%w+)!(%b())", finish + 1)
+		
+		if (not start) then
+			break
+		end
+
+		local self_beginning = matchexpr(source, start - 1, true)
+		local self = source:sub(self_beginning, start - 1):gsub("^%s+", ""):gsub("%s+$", "")
+
+		source = ("%s\n%s%s%s(%s%s%s)\n%s"):format(
+			source:sub(1, self_beginning - 1),
+			self, convention, method,
+			args:sub(2, -2),
+			#args:gsub("%s", "") > 2 and ", " or "",
+			self,
+			source:sub(finish + 1)
+		)
+	end
+
+	return source
+end
+
 function Carbide.ParseTemplated(source)
 	local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon})
 	
@@ -148,28 +186,8 @@ function Carbide.Compile(source, name, environment)
 		end
 	end
 
-	-- Implement direct arrow operator
-	-- Transforms vec3->x to vec3[1], see 'direct_arrow_indices' table above
-	source = source:gsub("(([^-])%->([%w_]+))", function(whole, prec, key)
-		local index = direct_arrow_indices[key]
-
-		if (not index) then
-			error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
-		end
-
-		return ("%s[%d]"):format(prec, index)
-	end)
-
-	-- Implement BANG
-	-- Transforms x:y!() to x:y(x)
-	source = source:gsub("((%w+):(%w+)!(%b()))", function(whole, self, method, args)
-		return ("%s:%s(%s%s %s)"):format(
-			self, method,
-			args:sub(2, -2),
-			#args:gsub("%s", "") > 2 and "," or "",
-			self
-		)
-	end)
+	source = operator_bang(source)
+	source = operator_dan(source)
 
 	source = operator_double(source, "+")
 
@@ -179,9 +197,9 @@ function Carbide.Compile(source, name, environment)
 	source = operator_mutating(source, "/")
 	source = operator_mutating(source, "^")
 
-	--print(source)
+	print(source)
 
-	return lua_loader(source, name, environment)
+	return Carbon.LoadString(source, name, environment)
 end
 
 return Carbide

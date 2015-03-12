@@ -61,7 +61,7 @@ function Carbon.IsObject(x)
 end
 
 --[[
-	loaded Carbon:LoadString(string source, table environment)
+	loaded Carbon.LoadString(string source, table environment)
 		source: The source code to compile into a function.
 		environment: The environment to load the function into.
 
@@ -69,7 +69,7 @@ end
 	Essentially backports Lua 5.2's load function to LuaJIT and Lua 5.1.
 ]]
 if (Support.lua51) then
-	function Carbon:LoadString(source, from, environment)
+	function Carbon.LoadString(source, from, environment)
 		environment = environment or getfenv()
 		local chunk, err = loadstring(source, from)
 
@@ -82,7 +82,7 @@ if (Support.lua51) then
 		return chunk
 	end
 elseif (Support.lua52) then
-	function Carbon:LoadString(source, from, environment)
+	function Carbon.LoadString(source, from, environment)
 		return load(source, from, nil, environment)
 	end
 end

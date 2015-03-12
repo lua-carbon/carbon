@@ -1,8 +1,8 @@
 local Carbon = (...)
 local object = {
-	bang = function(self, out)
-		print("bang", out)
+	[1] = function(self, out)
+		print("bang", self, out)
 	end
 }
 
-object:bang!()
+object->x!()

@@ -19,22 +19,6 @@ local lua51 = Carbon:GetGrapheneCore().Support.lua51
 local block_pattern = "%-?%-?{%%%s*(.-)%s*%%}" --matches {% block %}
 local put_pattern = "^=%s*(.+)" --matches the inner part of {%= output %}
 
-local function load_with_environment(code, environment)
-	if (lua51) then
-		local func, err = loadstring(code)
-
-		if (not func) then
-			return false, err
-		end
-
-		setfenv(func, environment)
-
-		return func
-	else --5.2, newer
-		return load(code, nil, nil, environment)
-	end
-end
-
 local function shallow_copy(from, to)
 	to = to or {}
 
@@ -142,7 +126,7 @@ function TemplateEngine:Execute(template, data)
 	env._ = append_to_buffer
 
 	--Load the function and try executing it
-	local func = load_with_environment(template, env)
+	local func = Carbon.Compile(template, template:sub(50), env)
 	local result, err = pcall(func)
 
 	--Did something go wrong? Abort!
