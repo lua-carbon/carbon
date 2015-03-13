@@ -21,10 +21,6 @@ function Set:New(object)
 	return setmetatable(object or {}, self.__object_metatable)
 end
 
-Set.Serialize = Serializable.Serialize
-Set.DeserializeInPlace = Serializable.DeserializeInPlace
-Set.Deserialize = Serializable.Deserialize
-
 --[[
 	List Set.ToList(table self, [table out])
 		self: The set to collect members for.
