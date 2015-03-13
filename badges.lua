@@ -5,7 +5,7 @@
 ]]
 
 local badges = {
-	readme_path = "readme.md",
+	readme_paths = {"readme.md"},
 
 	shields = {
 		build = "[shield_build]: https://img.shields.io/badge/build-%s-%s.svg?style=flat-square",
@@ -68,16 +68,17 @@ end
 		Version (string)
 ]]
 function badges:update_readme(data)
-	local path = self.readme_path
-	local handle = assert(io.open(path, "r"))
-	local body = handle:read("*a")
-	handle:close()
+	for i, path in ipairs(self.readme_paths) do
+		local handle = assert(io.open(path, "r"))
+		local body = handle:read("*a")
+		handle:close()
 
-	local updated = self:update_readme_body(body, data)
+		local updated = self:update_readme_body(body, data)
 
-	local handle = assert(io.open(path, "w"))
-	handle:write(updated)
-	handle:close()
+		local handle = assert(io.open(path, "w"))
+		handle:write(updated)
+		handle:close()
+	end
 end
 
 return badges

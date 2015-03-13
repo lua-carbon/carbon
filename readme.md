@@ -12,7 +12,7 @@ Carbon is a full suite intended to make Lua more semantic, expressive, and power
 
 Carbon uses a custom cross-platform loader and namespacing provider, [Graphene][graphene] along with a large set of semantic utility libraries providing object orientation, strong typing facilities, data structure utilities, asynchronous events and I/O, testing, profiling, and math utilities.
 
-See [releases.md](releases.md) for the releases history of Carbon.
+See [changelog.md](changelog.md) for the releases history of Carbon.
 
 [graphene]: https://github.com/lua-carbon/graphene
 [carbon_banner]: https://raw.githubusercontent.com/lua-carbon/carbon/master/assets/carbon-banner.png
