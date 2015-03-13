@@ -16,7 +16,7 @@ local TemplateEngine = OOP:Class()
 
 local lua51 = Carbon:GetGrapheneCore().Support.lua51
 
-local block_pattern = "%-?%-?{%%%s*(.-)%s*%%}" --matches {% block %}
+local block_pattern = "%-?%-?{{level}%%%s*(.-)%s*%%{level}}" --matches {% block %}
 local put_pattern = "^=%s*(.+)" --matches the inner part of {%= output %}
 
 local function shallow_copy(from, to)
@@ -64,19 +64,22 @@ end
 --[[
 	Takes the contents of a templated document and compiles it to an executable template
 ]]
-function TemplateEngine:Compile(document)
+function TemplateEngine:Compile(document, level)
+	level = level or 0
+
 	--Determine how many equals signs we need to safely embed this document's contents in a string
 	local equals_depth = 0
 	for signs in document:gmatch("[%[%]](=+)[%[%]]") do
 		equals_depth = math.max(equals_depth, #signs)
 	end
 
+	local this_block_pattern = block_pattern:gsub("{level}", ("!"):rep(level))
 	local equals = ("="):rep(equals_depth + 1) --We'll use this in our embedded strings
 	local output_buffer = {}
 	local last = 0 --The last character we dealt with
 
 	while (true) do
-		local start, finish, result = document:find(block_pattern, last)
+		local start, finish, result = document:find(this_block_pattern, last)
 
 		--Have we finished dealing with template blocks?
 		if (not start) then
@@ -114,7 +117,10 @@ end
 function TemplateEngine:Execute(template, data)
 	--Create a relatively sandboxed environment
 	local env = shallow_copy(self.DefaultEnvironment)
-	shallow_copy(data, env)
+
+	if (data) then
+		shallow_copy(data, env)
+	end
 
 	--Define a buffer append function so the template can write out results
 	local buffer = {}
@@ -141,8 +147,8 @@ end
 --[[
 	Compiles and executes a template-enabled document with the given data.
 ]]
-function TemplateEngine:Render(document, data)
-	local result, err = self:Compile(document)
+function TemplateEngine:Render(document, data, level)
+	local result, err = self:Compile(document, level)
 
 	if (not result) then
 		return false, err
@@ -160,8 +166,8 @@ end
 --[[
 	Adds a partial document with a given name
 ]]
-function TemplateEngine:AddPartial(name, document)
-	local compiled = self:Compile(document)
+function TemplateEngine:AddPartial(name, document, level)
+	local compiled = self:Compile(document, level)
 	self.Partials[name] = compiled
 end
 

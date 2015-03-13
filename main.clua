@@ -1,3 +1,14 @@
+--#TEMPLATES_ENABLED
+--#TEMPLATE_LEVEL 1
+{!%
+	local engine = Carbon.TemplateEngine:New()
+	_(engine:Render([[
+		{%
+			_('print("Hello, world!")')
+		%}
+	]], nil, 0))
+%!}
+
 local Carbon = (...)
 local Vector4 = Carbon.Math.Vector4
 local Matrix4x4 = Carbon.Math.Matrix4x4
