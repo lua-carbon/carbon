@@ -151,7 +151,7 @@ end
 function Carbide.ParseTemplated(source)
 	if (source:find("#TEMPLATES_ENABLED")) then
 		local level = tonumber(source:match("#TEMPLATE_LEVEL%s+(%d+)"))
-		local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon}, level)
+		local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon, __engine = Carbide.Engine}, level)
 		
 		if (not result) then
 			return false, err

@@ -1,8 +1,7 @@
 --#TEMPLATES_ENABLED
 --#TEMPLATE_LEVEL 1
 {!%
-	local engine = Carbon.TemplateEngine:New()
-	_(engine:Render([[
+	_(__engine:Render([[
 		{%
 			_('print("Hello, world!")')
 		%}
