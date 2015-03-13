@@ -19,7 +19,7 @@ function Serializable:DeserializeInPlace(source)
 	return self:Deserialize(source, self)
 end
 
-function Serializable:Deserialize(source, out)
+function Serializable.Deserialize(source, out)
 	return nil, Carbon.Exceptions.NotImplementedException("Deserialize")
 end
 

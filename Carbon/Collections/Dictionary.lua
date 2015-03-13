@@ -41,6 +41,18 @@ function Dictionary:New(object)
 	return setmetatable(object or {}, self.__object_metatable)
 end
 
+function Dictionary:Serialize()
+	return nil, Carbon.Exceptions.NotImplementedException("Dictionary:Serialize")
+end
+
+function Dictionary.DeserializeInPlace(source)
+	return self.Deserialize(source, self)
+end
+
+function Dictionary.Deserialize(source, out)
+	return nil, Carbon.Exceptions.NotImplementedException("Dictionary:Deserialize")
+end
+
 --[[
 	List Dictionary.Keys(table self)
 		self: The table to retrieve keys for.

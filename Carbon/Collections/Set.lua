@@ -21,6 +21,18 @@ function Set:New(object)
 	return setmetatable(object or {}, self.__object_metatable)
 end
 
+function Set:Serialize()
+	return nil, Carbon.Exceptions.NotImplementedException("Set:Serialize")
+end
+
+function Set.DeserializeInPlace(source)
+	return self.Deserialize(source, self)
+end
+
+function Set.Deserialize(source, out)
+	return nil, Carbon.Exceptions.NotImplementedException("Set:Deserialize")
+end
+
 --[[
 	List Set.ToList(table self, [table out])
 		self: The set to collect members for.

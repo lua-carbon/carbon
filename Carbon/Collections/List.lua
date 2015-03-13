@@ -22,6 +22,18 @@ function List:New(object)
 	return setmetatable(object or {}, self.__object_metatable)
 end
 
+function List:Serialize()
+	return nil, Carbon.Exceptions.NotImplementedException("List:Serialize")
+end
+
+function List.DeserializeInPlace(source)
+	return self.Deserialize(source, self)
+end
+
+function List.Deserialize(source, out)
+	return nil, Carbon.Exceptions.NotImplementedException("List:Deserialize")
+end
+
 --[[
 	void List.Clear(List self)
 		self: The list to clear.
