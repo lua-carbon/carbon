@@ -25,4 +25,13 @@ end
 
 Carbon.Metadata:RegisterMethods(Serializable, self)
 
+-- Add the Serializable ancestry entry to classes that can't directly reference this one.
+for key, class in ipairs({
+	Carbon.Collections.Dictionary,
+	Carbon.Collections.List,
+	Carbon.Collections.Set
+}) do
+	class.Is[Serializable] = true
+end
+
 return Serializable

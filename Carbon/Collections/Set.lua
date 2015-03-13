@@ -10,6 +10,8 @@ Set.__object_metatable = {
 	__index = Set
 }
 
+Set.Is = {}
+
 --[[
 	Set Set:New(table data)
 		data: The data of the dictionary.

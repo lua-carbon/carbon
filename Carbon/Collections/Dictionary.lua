@@ -13,6 +13,8 @@ Dictionary.__object_metatable = {
 	__index = Dictionary
 }
 
+Dictionary.Is = {}
+
 local indexables = {
 	["table"] = true,
 	["userdata"] = true

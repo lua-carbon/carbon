@@ -10,6 +10,7 @@ List.__object_metatable = {
 	__index = List
 }
 
+List.Is = {}
 
 --[[
 	List List:New(table data)
