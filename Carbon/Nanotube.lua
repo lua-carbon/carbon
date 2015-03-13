@@ -5,7 +5,7 @@
 	Funnels events and provides an event loop.
 ]]
 
-local Carbon = (...)
+local Carbon, self = ...
 local OOP = Carbon.OOP
 local Time = Carbon.Time
 local CopyBarrier = Carbon.CopyBarrier
@@ -174,5 +174,7 @@ end
 
 -- Singleton instance through a CopyBarrier
 Nanotube.Global = CopyBarrier:New(Nanotube:New())
+
+Carbon.Metadata:RegisterMethods(Nanotube, self)
 
 return Nanotube

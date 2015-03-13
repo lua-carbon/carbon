@@ -41,6 +41,10 @@ function Dictionary:New(object)
 	return setmetatable(object or {}, self.__object_metatable)
 end
 
+Dictionary.Serialize = Serializable.Serialize
+Dictionary.DeserializeInPlace = Serializable.DeserializeInPlace
+Dictionary.Deserialize = Serializable.Deserialize
+
 --[[
 	List Dictionary.Keys(table self)
 		self: The table to retrieve keys for.

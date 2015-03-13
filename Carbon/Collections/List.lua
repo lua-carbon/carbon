@@ -10,6 +10,10 @@ List.__object_metatable = {
 	__index = List
 }
 
+List.Is = {
+	[Carbon.Serializable] = true
+}
+
 --[[
 	List List:New(table data)
 		data: The data of the dictionary
@@ -20,6 +24,10 @@ List.__object_metatable = {
 function List:New(object)
 	return setmetatable(object or {}, self.__object_metatable)
 end
+
+List.Serialize = Serializable.Serialize
+List.DeserializeInPlace = Serializable.DeserializeInPlace
+List.Deserialize = Serializable.Deserialize
 
 --[[
 	void List.Clear(List self)

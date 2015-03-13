@@ -5,7 +5,7 @@
 	Implements a set of Lua language extensions, including inlined templates.
 ]]
 
-local Carbon = (...)
+local Carbon, self = ...
 local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
@@ -194,5 +194,7 @@ function Carbide.Compile(source, name, environment)
 
 	return Carbon.LoadString(source, name, environment)
 end
+
+Carbon.Metadata:RegisterMethods(Carbide, self)
 
 return Carbide
