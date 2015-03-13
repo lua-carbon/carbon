@@ -7,7 +7,7 @@ local libCarbon = (...)
 local Support = libCarbon:GetGraphene().Support
 
 local Carbon = {
-	Version = {1, 0, 0, "alpha"},
+	Version = {1, 0, 0, "alpha2"},
 
 	Config = {
 	}
