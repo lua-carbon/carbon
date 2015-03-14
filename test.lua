@@ -1,4 +1,4 @@
-local badges = require("badges")
+local badges = require("tools.badges")
 
 local function main()
 	local Carbon = require("Carbon")

@@ -1,8 +1,8 @@
 --[[
 	Carbon for Lua
-	Exception
+	class: Exception
 
-	Signals error conditions.
+	Signals detailed, strongly-typed error conditions.
 ]]
 
 local Carbon = (...)
