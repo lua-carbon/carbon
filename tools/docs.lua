@@ -11,8 +11,13 @@ if (not ok) then
 end
 
 local docs = {
-	source_base = "./Carbon"
+	fs_base = "./Carbon",
+	url_base = "https://github.com/lua-carbon/carbon/tree/master/Carbon"
 }
+
+local function path_join(a, b)
+	return ((a .. "/" .. b):gsub("//+", "/"))
+end
 
 function docs:parse_file(filename)
 	--todo: body
