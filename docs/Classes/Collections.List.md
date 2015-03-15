@@ -1,7 +1,7 @@
 # Collections.List
 Provides utilities for operating on Lists and List-like data.
 
-Inherits [OOP.Object](Classes/OOP.Object.md), [Serializable](Classes/Serializable.md)
+Inherits [OOP.Object](http://carbon.lpghatguy.com/Classes/OOP.Object), [Serializable](http://carbon.lpghatguy.com/Classes/Serializable)
 
 ## Methods
 ### List List:New(table data)

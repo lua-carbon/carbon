@@ -20,7 +20,8 @@ local docs = {
 	fs_base = "./Carbon",
 
 	-- Generator attributes
-	url_base = "https://github.com/lua-carbon/carbon/tree/master/Carbon",
+	file_url_base = "https://github.com/lua-carbon/carbon/tree/master/Carbon",
+	doc_url_base = "carbon.lpghatguy.com",
 	doc_dir = "./docs"
 }
 
@@ -30,6 +31,10 @@ end
 
 local function path_leaf(a)
 	return (a:match("([^/]+)/*$"))
+end
+
+local function link_to_class(name)
+	return "http://" .. path_join(path_join(docs.doc_url_base, "Classes"), name)
 end
 
 local function path_to_class(name)
@@ -346,7 +351,7 @@ function docs.generator.class(class)
 		end
 
 		return ("[%s](%s)%s"):format(
-			target, path_to_class(class.type_aliases[target] or target),
+			target, link_to_class(class.type_aliases[target] or target),
 			post
 		)
 	end)

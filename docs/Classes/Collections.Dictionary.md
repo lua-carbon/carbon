@@ -3,7 +3,7 @@ Provides a set of utilities to operate on dictionary structures.
 
 Most methods here are intended to be called as both OOP-style methods and on pure data objects.
 
-Inherits [OOP.Object](Classes/OOP.Object.md), [Serializable](Classes/Serializable.md)
+Inherits [OOP.Object](http://carbon.lpghatguy.com/Classes/OOP.Object), [Serializable](http://carbon.lpghatguy.com/Classes/Serializable)
 
 ## Methods
 ### Dictionary Dictionary:New(table data)
@@ -13,24 +13,24 @@ Turns the given object into a Dictionary.
 Allows method-style syntax to be used on the object.
 
 
-### [List](Classes/Collections.List.md) Dictionary.Keys(table self)
+### [List](http://carbon.lpghatguy.com/Classes/Collections.List) Dictionary.Keys(table self)
 - self: The table to retrieve keys for.
 
 Returns all the keys in the table.
 
 
-### [List](Classes/Collections.List.md) Dictionary.Values(table self)
+### [List](http://carbon.lpghatguy.com/Classes/Collections.List) Dictionary.Values(table self)
 - self: The table to retrieve values for.
 
-Returns all the values in the table in a [List](Classes/Collections.List.md)
+Returns all the values in the table in a [List](http://carbon.lpghatguy.com/Classes/Collections.List)
 
 
-### [Set](Classes/Collections.Set.md) Dictionary.ToSet(table self, [table out])
+### [Set](http://carbon.lpghatguy.com/Classes/Collections.Set) Dictionary.ToSet(table self, [table out])
 - self: The table to convert to a set.
 
 - out: Where to put the resulting set. Defaults to a new set.
 
-Converts the Dictionary to a [Set](Classes/Collections.Set.md).
+Converts the Dictionary to a [Set](http://carbon.lpghatguy.com/Classes/Collections.Set).
 
 
 ### table Dictionary.ShallowCopy(table self, [table to])

@@ -1,7 +1,7 @@
 # Exception
 Signals detailed, strongly-typed error conditions.
 
-Inherits [OOP.Object](Classes/OOP.Object.md)
+Inherits [OOP.Object](http://carbon.lpghatguy.com/Classes/OOP.Object)
 
 ## Methods
 ### Exception Exception:New(string message)

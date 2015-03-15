@@ -1,7 +1,7 @@
 # Collections.Tuple
 A disposable List object for quick vararg transformations.
 
-Inherits [OOP.Object](Classes/OOP.Object.md)
+Inherits [OOP.Object](http://carbon.lpghatguy.com/Classes/OOP.Object)
 
 ## Methods
 ### Tuple Tuple:New(...)

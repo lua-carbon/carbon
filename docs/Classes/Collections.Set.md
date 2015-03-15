@@ -11,7 +11,7 @@ Turns the given object into a Set.
 Allows method-style syntax.
 
 
-### [List](Classes/Collections.List.md) Set.ToList(table self, [table out])
+### [List](http://carbon.lpghatguy.com/Classes/Collections.List) Set.ToList(table self, [table out])
 - self: The set to collect members for.
 
 - out: Where to put the resulting data.
