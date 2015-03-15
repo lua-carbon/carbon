@@ -33,8 +33,13 @@ local function path_leaf(a)
 	return (a:match("([^/]+)/*$"))
 end
 
-local function link_to_class(name)
+-- FIXME: this breaks with readthedocs
+local function absolute_link_to_class(name)
 	return "http://" .. path_join(path_join(docs.doc_url_base, "Classes"), name)
+end
+
+local function link_to_class(name)
+	return name
 end
 
 local function path_to_class(name)

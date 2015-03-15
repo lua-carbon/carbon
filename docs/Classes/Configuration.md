@@ -1,7 +1,7 @@
 # Configuration
 Provides configuration facilities for modules.
 
-Inherits [OOP.Object](http://carbon.lpghatguy.com/Classes/OOP.Object)
+Inherits [OOP.Object](OOP.Object)
 
 ## Methods
 ### Configuration Configuration:New(string name)
