@@ -1,6 +1,14 @@
 --[[
 	Carbon for Lua
-	Serializable
+	#class Serializable
+	#inherits OOP.Object
+
+	#description {
+		***Abstract***
+		Provides an interface to serialize and deserialize data.
+
+		All methods provided by this class that are not overridden throw a @NotImplementedException.
+	}
 ]]
 
 local Carbon, self = ...
@@ -11,14 +19,40 @@ local Serializable = OOP:Class()
 		Abstract = true
 	}
 
+--[[#method {
+	string Serializable:Serialize()
+
+	Serializes the object into a string representation.
+}]]
 function Serializable:Serialize()
 	return nil, Carbon.Exceptions.NotImplementedException("Serialize")
 end
 
+--[[#method {
+	self Serializable:DeserializeInPlace(string source)
+		source: A string containing a serialized representation of an instance of this class.
+
+	Deserializes a previously serialized instance of this class.
+	Places the data into the class this method is called on.
+
+	Equivalent to
+	```lua
+	self:Deserialize(source, self)
+	```
+
+	Can be called with self:Deserialize!(source) in Carbide Lua.
+}]]
 function Serializable:DeserializeInPlace(source)
 	return self:Deserialize(source, self)
 end
 
+--[[#method {
+	out Serializable.Deserialize(string source, Serializable out)
+		source: A string containing a serialized representation of an instance of this class.
+		out: Where to place the resulting data.
+
+	Deserializes the given source string and places it into the given Serializable `out` object.
+}]]
 function Serializable.Deserialize(source, out)
 	return nil, Carbon.Exceptions.NotImplementedException("Deserialize")
 end

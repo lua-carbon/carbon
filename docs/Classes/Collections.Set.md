@@ -13,7 +13,6 @@ Allows method-style syntax.
 
 ### [List](Classes/Collections.List) Set.ToList(table self, [table out])
 - self: The set to collect members for.
-
 - out: Where to put the resulting data.
 
 Collects all members of the set and puts them in a list.

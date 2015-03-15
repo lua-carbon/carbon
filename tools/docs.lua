@@ -304,6 +304,7 @@ Inherits {inherits_string}
 local template_method = [[
 ### {declaration}
 {arg_descriptions_string}
+
 {description}
 ]]
 
@@ -340,7 +341,7 @@ function docs.generator.class(class)
 		if (member.type == "method") then
 			local arg_descriptions_buffer = {}
 			for key, description in ipairs(member.arg_descriptions) do
-				table.insert(arg_descriptions_buffer, do_template(template_arg_description, description))
+				table.insert(arg_descriptions_buffer, clean_multiline_string(do_template(template_arg_description, description)))
 			end
 
 			member.arg_descriptions_string = table.concat(arg_descriptions_buffer, "\n")

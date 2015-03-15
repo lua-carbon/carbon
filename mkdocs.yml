@@ -12,3 +12,4 @@ pages:
 - [Classes/Exception.md, Classes, Exception]
 - [Classes/OOP.Object.md, Classes, OOP.Object]
 - [Classes/OOP.StaticObject.md, Classes, OOP.StaticObject]
+- [Classes/Serializable.md, Classes, Serializable]

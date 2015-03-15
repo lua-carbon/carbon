@@ -27,7 +27,6 @@ Returns all the values in the table in a [List](Classes/Collections.List)
 
 ### [Set](Classes/Collections.Set) Dictionary.ToSet(table self, [table out])
 - self: The table to convert to a set.
-
 - out: Where to put the resulting set. Defaults to a new set.
 
 Converts the Dictionary to a [Set](Classes/Collections.Set).
@@ -35,7 +34,6 @@ Converts the Dictionary to a [Set](Classes/Collections.Set).
 
 ### table Dictionary.ShallowCopy(table self, [table to])
 - self: The table to source data from
-
 - to: The table to copy into; an empty table if not given.
 
 Shallow copies data from one table into another and returns the result.
@@ -43,11 +41,8 @@ Shallow copies data from one table into another and returns the result.
 
 ### Dictionary Dictionary.DeepCopy(table self, [table to, bool datawise, table map])
 - self: The dictionary to source data from.
-
 - to: The dictionary to copy into; an empty table if not given.
-
 - datawise: Whether the copy should ignore Copy member functions.
-
 - map: A map projecting original values into copied values. Used internally.
 
 Performs a self-reference fixing deep copy from one table into another.
@@ -56,7 +51,6 @@ Handles self-references properly.
 
 ### table Dictionary.ShallowMerge(table self, table to)
 - self: The table to source data from.
-
 - to: The table to output into.
 
 Performs a merge into a table without overwriting existing keys.
@@ -64,7 +58,6 @@ Performs a merge into a table without overwriting existing keys.
 
 ### table Dictionary.DeepCopyMerge(table self, table to)
 - self: The table to source data from.
-
 - to: The table to put data into.
 
 Performs a merge into the table, performing a deep copy on all table members.
