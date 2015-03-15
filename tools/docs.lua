@@ -60,6 +60,9 @@ local function clean_multiline_string(a)
 	local indent_level = #a:match("^(\t*)")
 	a = a:sub(indent_level + 1):gsub("\n" .. ("\t"):rep(indent_level), "\n")
 	a = a:match("^%s*(.-)%s*$")
+	a = a:gsub("  +", function(whole)
+			return ("&nbsp;"):rep(#whole)
+		end)
 
 	return a
 end

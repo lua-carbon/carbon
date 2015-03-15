@@ -7,7 +7,7 @@ Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)
 
 ## Methods
 ### Dictionary Dictionary:New([table data])
-- *optional* data: The data of the dictionary. Empty if not specified.
+- ***optional***&nbsp;&nbsp;data: The data of the dictionary. Empty if not specified.
 
 Turns the given object into a Dictionary.
 Allows method-style syntax to be used on the object.
@@ -27,23 +27,23 @@ Returns all the values in the table in a [List](Classes/Collections.List)
 
 ### [Set](Classes/Collections.Set) Dictionary.ToSet(table self, [table out])
 - self: The table to convert to a set.
-- out: Where to put the resulting set. Defaults to a new set.
+- ***optional***&nbsp;&nbsp;out: Where to put the resulting set. Defaults to a new set.
 
 Converts the Dictionary to a [Set](Classes/Collections.Set).
 
 
 ### table Dictionary.ShallowCopy(table self, [table to])
 - self: The table to source data from
-- *optional* to: The table to copy into; an empty table if not given.
+- ***optional***&nbsp;&nbsp;to: The table to copy into; an empty table if not given.
 
 Shallow copies data from one table into another and returns the result.
 
 
 ### Dictionary Dictionary.DeepCopy(table self, [table to, bool datawise, table map])
 - self: The dictionary to source data from.
-- *optional* to: The dictionary to copy into; an empty table if not given.
-- *optional* datawise: Whether the copy should ignore Copy member functions.
-- *optional* map: A map projecting original values into copied values. Used internally.
+- ***optional***&nbsp;&nbsp;to: The dictionary to copy into; an empty table if not given.
+- ***optional***&nbsp;&nbsp;datawise: Whether the copy should ignore Copy member functions.
+- ***optional***&nbsp;&nbsp;map: A map projecting original values into copied values. Used internally.
 
 Performs a self-reference fixing deep copy from one table into another.
 Handles self-references properly.
