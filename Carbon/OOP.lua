@@ -196,24 +196,30 @@ function OOP.BaseClass:Inherits(...)
 	for i = 1, select("#", ...) do
 		local object = select(i, ...)
 
-		if (type(object) ~= "table" or not object.__members) then
+		if (type(object) ~= "table") then
 			error(("Carbon.OOP: Cannot inherit from object #%d, not a class: %s"):format(i, tostring(object)), 2)
 		end
 
-		Dictionary.DeepCopyMerge(object.__members, self.__members)
-		Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
-		Dictionary.ShallowMerge(object.Is, self.Is)
+		-- Is this an actual class, or just a collection of members?
+		if (object.__members and object.__metatable and object.Is and object.__attributes) then
+			Dictionary.DeepCopyMerge(object.__members, self.__members)
+			Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
+			Dictionary.ShallowMerge(object.Is, self.Is)
 
-		for key, value in pairs(object.__attributes) do
-			if (OOP.__attribute_inheritance[key]) then
-				self.__attributes = Dictionary.DeepCopy(value)
+			for key, value in pairs(object.__attributes) do
+				if (OOP.__attribute_inheritance[key]) then
+					self.__attributes = Dictionary.DeepCopy(value)
+				end
 			end
-		end
 
-		for i, attribute in ipairs(OOP.Attributes.Class) do
-			if (object.__attributes[attribute[1]]) then
-				attribute[2](self)
+			for i, attribute in ipairs(OOP.Attributes.Class) do
+				if (object.__attributes[attribute[1]]) then
+					attribute[2](self)
+				end
 			end
+		else
+			-- This isn't really a class, but we can treat it like one!
+			Dictionary.DeepCopyMerge(object, self.__members)
 		end
 	end
 
@@ -265,18 +271,23 @@ function OOP.BaseClass:Members(members)
 	return self
 end
 
--- The base object for all non-singleton objects
+--[[
+	#class OOP.Object
+	#description {
+		The base object for all instancable classes.
+	}
+]]
 OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 	:Attributes(default_attributes)
 
 OOP.Object.Is[OOP.Object] = true
 
---[[
+--[[#method {
 	Object Class:PlacementNew(indexable target?, ...)
 		target: Where to place the instance, will be provided if not given.
 
 	Creates a new object and puts it into a given indexable object.
-]]
+}]]
 function OOP.Object:PlacementNew(instance, ...)
 	if (self.__attributes.Abstract) then
 		error("Cannot create instance of abstract class!", 2)
@@ -371,20 +382,20 @@ function OOP.Object:PlacementNew(instance, ...)
 	return instance
 end
 
---[[
+--[[#method {
 	Object Class:New(...)
 
 	Creates a new object and passes parameters to its initializer.
-]]
+}]]
 function OOP.Object:New(...)
 	return self:PlacementNew(nil, ...)
 end
 
---[[
+--[[#method {
 	Object Object:Copy()
 
 	Copies the given object.
-]]
+}]]
 OOP.Object.__base_members.Copy = function(self)
 	local class = self.class
 	local target
@@ -416,7 +427,12 @@ OOP.Object.__base_members.Copy = function(self)
 	return copy
 end
 
--- StaticObject, the base class for all singleton classes.
+--[[
+	#class OOP.StaticObject
+	#description {
+		The base class for objects that cannot be instanced, but use OOP-like functionality like inheritance.
+	}
+]]
 OOP.StaticObject = Dictionary.DeepCopy(OOP.BaseClass)
 	:Attributes(default_static_attributes)
 

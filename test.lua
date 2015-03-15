@@ -1,4 +1,5 @@
 local badges = require("tools.badges")
+local docs = require("tools.docs")
 
 local function main()
 	local Carbon = require("Carbon")
@@ -19,7 +20,11 @@ local function main()
 		Tests = result,
 		Version = Carbon.VersionString
 	}
-	print("readme.md updated")
+	print("Readme updated")
+
+	print("Generating documentation...")
+	docs.update()
+	print("Documentation generated!")
 end
 
 main()

@@ -1,8 +1,11 @@
 --[[
 	Carbon for Lua
-	Tuple
+	#class Collections.Tuple
+	#inherits OOP.Object
 
-	A disposable List object for quick vararg transformations.
+	#description {
+		A disposable List object for quick vararg transformations.
+	}
 ]]
 
 local Carbon = (...)
@@ -18,6 +21,12 @@ local Tuple = OOP:Class()
 		SparseInstances = true
 	}
 
+--[[#method {
+	Tuple Tuple:New(...)
+		...: The values to initialize the Tuple with.
+
+	Creates a new Tuple.
+}]]
 function Tuple:_init(...)
 	self.Unpack = self.class.Unpack
 	self.Destroy = self.class.Destroy
@@ -26,10 +35,21 @@ function Tuple:_init(...)
 	end
 end
 
+--[[#method {
+	... Tuple:Unpack()
+
+	Unpacks and destroys the Tuple, returning all its values.
+}]]
 function Tuple:Unpack()
 	return self:Destroy(unpack(self))
 end
 
+--[[#method {
+	... Tuple:Destroy(...)
+
+	Destroys the tuple, passing any arguments that it was given as return values.
+	This will put the tuple back into the main buffer, usually.
+}]]
 function Tuple:Destroy(...)
 	for i = 1, #self do
 		self[i] = nil

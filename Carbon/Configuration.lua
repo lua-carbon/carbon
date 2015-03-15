@@ -1,18 +1,23 @@
 --[[
 	Carbon for Lua
-	Module Configuration Object
+	#class Configuration
+	#inherits OOP.Object
+
+	#description {
+		Provides configuration facilities for modules.
+	}
 ]]
 
 local Carbon = (...)
-local Config = {}
+local Configuration = {}
 
---[[
-	Config Config:Create(string name)
+--[[#method {
+	Configuration Configuration:New(string name)
 		name: The name of the configuration object
 
 	Creates a new configuration object for configuring modules before they're loaded.
-]]
-function Config:Create(name)
+}]]
+function Configuration:New(name)
 	return function(body)
 		local body = body or {}
 		local handle = newproxy(true)
@@ -51,4 +56,7 @@ function Config:Create(name)
 	end
 end
 
-return Config
+function Configuration:Copy()
+end
+
+return Configuration
