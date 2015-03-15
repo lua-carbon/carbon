@@ -13,7 +13,10 @@ if (not ok) then
 end
 
 local docs = {
-	files_written = {},
+	files_written = {
+		"index.md",
+		"Getting Started.md"
+	},
 	parser = {},
 	generator = {},
 
