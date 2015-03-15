@@ -1,7 +1,7 @@
 # Configuration
 Provides configuration facilities for modules.
 
-Inherits [OOP.Object](OOP.Object)
+Inherits [OOP.Object](Classes/OOP.Object)
 
 ## Methods
 ### Configuration Configuration:New(string name)

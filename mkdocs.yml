@@ -1,1 +1,10 @@
 site_name: Carbon for Lua
+pages:
+- [Classes/Collections.Dictionary.md, Collections.Dictionary]
+- [Classes/Collections.List.md, Collections.List]
+- [Classes/Collections.Set.md, Collections.Set]
+- [Classes/Collections.Tuple.md, Collections.Tuple]
+- [Classes/Configuration.md, Configuration]
+- [Classes/Exception.md, Exception]
+- [Classes/OOP.Object.md, OOP.Object]
+- [Classes/OOP.StaticObject.md, OOP.StaticObject]

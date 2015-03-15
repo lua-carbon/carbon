@@ -1,7 +1,7 @@
 # Exception
 Signals detailed, strongly-typed error conditions.
 
-Inherits [OOP.Object](OOP.Object)
+Inherits [OOP.Object](Classes/OOP.Object)
 
 ## Methods
 ### Exception Exception:New(string message)

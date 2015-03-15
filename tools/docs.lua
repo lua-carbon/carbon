@@ -13,6 +13,7 @@ if (not ok) then
 end
 
 local docs = {
+	files_written = {},
 	parser = {},
 	generator = {},
 
@@ -39,7 +40,7 @@ local function absolute_link_to_class(name)
 end
 
 local function link_to_class(name)
-	return name
+	return path_join("Classes", name)
 end
 
 local function path_to_class(name)
@@ -271,6 +272,8 @@ function docs.generator.write_file(path, contents)
 
 	handle:write(contents)
 	handle:close()
+
+	table.insert(docs.files_written, path)
 end
 
 local function do_template(template, data)
@@ -375,6 +378,26 @@ function docs.generator.root(object)
 	end
 end
 
+function docs.update_mkdocs()
+	local handle = io.open("mkdocs.yml", "rb")
+	local body = handle:read("*a")
+	handle:close()
+
+	local filename_buffer = {}
+	for key, file in ipairs(docs.files_written) do
+		table.insert(filename_buffer, ("- [%s, %s]"):format(
+			file, file:match("([%w%._]-)%.md$")
+		))
+	end
+
+	table.sort(filename_buffer)
+	body = body:gsub("pages%:.+", "pages:\n" .. table.concat(filename_buffer, "\n"))
+
+	handle = io.open("mkdocs.yml", "wb")
+	handle:write(body)
+	handle:close()
+end
+
 function docs.update()
 	local out = {
 		classes = {},
@@ -383,6 +406,7 @@ function docs.update()
 
 	local parsed = docs.parser.directory(docs.fs_base, out)
 	docs.generator.root(out)
+	docs.update_mkdocs()
 end
 
 return docs

@@ -1,7 +1,7 @@
 # Collections.List
 Provides utilities for operating on Lists and List-like data.
 
-Inherits [OOP.Object](OOP.Object), [Serializable](Serializable)
+Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)
 
 ## Methods
 ### List List:New(table data)

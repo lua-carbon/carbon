@@ -3,7 +3,7 @@ Provides a set of utilities to operate on dictionary structures.
 
 Most methods here are intended to be called as both OOP-style methods and on pure data objects.
 
-Inherits [OOP.Object](OOP.Object), [Serializable](Serializable)
+Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)
 
 ## Methods
 ### Dictionary Dictionary:New(table data)
@@ -13,24 +13,24 @@ Turns the given object into a Dictionary.
 Allows method-style syntax to be used on the object.
 
 
-### [List](Collections.List) Dictionary.Keys(table self)
+### [List](Classes/Collections.List) Dictionary.Keys(table self)
 - self: The table to retrieve keys for.
 
 Returns all the keys in the table.
 
 
-### [List](Collections.List) Dictionary.Values(table self)
+### [List](Classes/Collections.List) Dictionary.Values(table self)
 - self: The table to retrieve values for.
 
-Returns all the values in the table in a [List](Collections.List)
+Returns all the values in the table in a [List](Classes/Collections.List)
 
 
-### [Set](Collections.Set) Dictionary.ToSet(table self, [table out])
+### [Set](Classes/Collections.Set) Dictionary.ToSet(table self, [table out])
 - self: The table to convert to a set.
 
 - out: Where to put the resulting set. Defaults to a new set.
 
-Converts the Dictionary to a [Set](Collections.Set).
+Converts the Dictionary to a [Set](Classes/Collections.Set).
 
 
 ### table Dictionary.ShallowCopy(table self, [table to])
