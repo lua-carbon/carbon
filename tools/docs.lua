@@ -395,7 +395,7 @@ function docs.update_mkdocs()
 	table.sort(docs.files_written)
 	for key, file in ipairs(docs.files_written) do
 		table.insert(filename_buffer, ("- [%s, %s, %s]"):format(
-			file, file:match("([^/]+)%.md$"), file:match("^(.+)/.-$")
+			file, file:match("^(.+)/.-$"), file:match("([^/]+)%.md$")
 		))
 	end
 
