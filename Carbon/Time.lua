@@ -1,6 +1,10 @@
 --[[
 	Carbon for Lua
-	Time Utilities
+	#class Time
+
+	#description {
+		Provides utilities for working with time.
+	}
 ]]
 
 local Carbon = (...)
@@ -21,6 +25,21 @@ if (not ok) then
 end
 
 -- Discover a timer and sleep function
+--[[
+	#method {
+		void Time.Sleep(ufloat seconds)
+			seconds: The number of seconds to sleep.
+
+		Sleeps using the system timer.
+		If no timer providers are available, will not do anything.
+	}
+
+	#method {
+		ufloat Time.Get()
+
+		Returns a benchmarking time using the highest precision internal timer.
+	}
+]]
 if (love and love.timer) then
 	Time.Sleep = love.timer.sleep
 	Time.Get = love.timer.getTime
@@ -80,40 +99,68 @@ else
 	Time.Get = os.clock
 end
 
--- Convert weeks to seconds
+--[[#method {
+	ufloat Time.Weeks(ufloat weeks)
+
+	Converts the given number of weeks to seconds.
+}]]
 function Time.Weeks(w)
 	return w * 604800
 end
 
--- Convert days to seconds
+--[[#method {
+	ufloat Time.Days(ufloat days)
+
+	Converts the given number of days to seconds.
+}]]
 function Time.Days(d)
 	return d * 86400
 end
 
--- Convert hours to seconds
+--[[#method {
+	ufloat Time.Hours(ufloat hours)
+
+	Converts the given number of hours to seconds.
+}]]
 function Time.Hours(h)
 	return h * 3600
 end
 
--- Convert minutes to seconds
+--[[#method {
+	ufloat Time.Minutes(ufloat minutes)
+
+	Converts the given number of minutes to seconds.
+}]]
 function Time.Minutes(m)
 	return m * 60
 end
 
--- Convert seconds to seconds
--- This isn't very useful, is it?
+--[[#method {
+	ufloat Time.Seconds(ufloat seconds)
+
+	Converts the given number of seconds to seconds.
+	Not very useful.
+}]]
 function Time.Seconds(s)
 	return s
 end
 
--- Convert milliseconds to seconds
-function Time.Milliseconds(s)
-	return s / 1000
+--[[#method {
+	ufloat Time.Milliseconds(ufloat milliseconds)
+
+	Converts the given number of milliseconds to seconds.
+}]]
+function Time.Milliseconds(ms)
+	return ms / 1000
 end
 
--- Convert nanoseconds to seconds
-function Time.Nanoseconds(s)
-	return s / 1000000
+--[[#method {
+	ufloat Time.Nanoseconds(ufloat nanoseconds)
+
+	Converts the given number of nanoseconds to seconds.
+}]]
+function Time.Nanoseconds(ns)
+	return ns / 1000000
 end
 
 return Time

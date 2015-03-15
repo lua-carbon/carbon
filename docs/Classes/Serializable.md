@@ -5,16 +5,16 @@ Provides an interface to serialize and deserialize data.
 
 All methods provided by this class that are not overridden throw a [NotImplementedException](Classes/NotImplementedException).
 
-Inherits [OOP.Object](Classes/OOP.Object)
+**Inherits [OOP.Object](Classes/OOP.Object)**
 
 ## Methods
-### string Serializable:Serialize()
+#### string Serializable:Serialize()
 
 
 Serializes the object into a string representation.
 
 
-### self Serializable:DeserializeInPlace(string source)
+#### self Serializable:DeserializeInPlace(string source)
 - source: A string containing a serialized representation of an instance of this class.
 
 Deserializes a previously serialized instance of this class.
@@ -28,7 +28,7 @@ self:Deserialize(source, self)
 Can be called with self:Deserialize!(source) in Carbide Lua.
 
 
-### out Serializable.Deserialize(string source, Serializable out)
+#### out Serializable.Deserialize(string source, Serializable out)
 - source: A string containing a serialized representation of an instance of this class.
 - out: Where to place the resulting data.
 
@@ -37,3 +37,5 @@ Deserializes the given source string and places it into the given Serializable `
 
 ## Properties
 [none]
+
+

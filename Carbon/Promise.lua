@@ -1,6 +1,10 @@
 --[[
 	Carbon for Lua
-	Promises
+	#class Promise
+
+	#description {
+		Implements a model for asynchronous tasks via promises.
+	}
 ]]
 
 local Carbon = (...)

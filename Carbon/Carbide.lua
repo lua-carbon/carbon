@@ -1,8 +1,10 @@
 --[[
 	Carbon for Lua
-	Carbide Language Extensions
+	#class Carbide
 
-	Implements a set of Lua language extensions, including inlined templates.
+	#description {
+		Implements a set of Lua language extensions known as Carbide.
+	}
 ]]
 
 local Carbon, self = ...

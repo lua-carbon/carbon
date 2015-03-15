@@ -1,9 +1,12 @@
 --[[
 	Carbon for Lua
-	CopyBarrier
+	#class CopyBarrier
+	#inherits OOP.Object
 
-	Prevents copying of the data it points to.
-	Forwards indexes and newindexes to target.
+	#description {
+		Prevents copying of the data it points to.
+		Forwards indexes and newindexes to target.
+	}
 ]]
 
 local Carbon = (...)

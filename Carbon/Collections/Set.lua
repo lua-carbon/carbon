@@ -23,8 +23,8 @@ Set.Is = {
 }
 
 --[[#method {
-	Set Set:New(table data)
-		data: The data of the dictionary.
+	!!public Set Set:New([table data])
+		!!optional data: The data of the set. Empty if not given.
 
 	Turns the given object into a Set.
 	Allows method-style syntax.
@@ -46,9 +46,9 @@ function Set.Deserialize(source, out)
 end
 
 --[[#method {
-	@List Set.ToList(table self, [table out])
-		self: The set to collect members for.
-		out: Where to put the resulting data.
+	!!public @List Set.ToList(table self, [table out])
+		!!required self: The set to collect members for.
+		!!optional out: Where to put the resulting data. Put into a new @List by default.
 
 	Collects all members of the set and puts them in a list.
 }]]

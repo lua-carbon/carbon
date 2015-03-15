@@ -22,8 +22,8 @@ local Tuple = OOP:Class()
 	}
 
 --[[#method {
-	Tuple Tuple:New(...)
-		...: The values to initialize the Tuple with.
+	!!public Tuple Tuple:New(...)
+		!!optional ...: The values to initialize the Tuple with.
 
 	Creates a new Tuple.
 }]]
@@ -36,7 +36,7 @@ function Tuple:_init(...)
 end
 
 --[[#method {
-	... Tuple:Unpack()
+	!!public ... Tuple:Unpack()
 
 	Unpacks and destroys the Tuple, returning all its values.
 }]]
@@ -45,7 +45,8 @@ function Tuple:Unpack()
 end
 
 --[[#method {
-	... Tuple:Destroy(...)
+	!!public ... Tuple:Destroy(...)
+		!!optional ...: Data to pipe through this method.
 
 	Destroys the tuple, passing any arguments that it was given as return values.
 	This will put the tuple back into the main buffer, usually.

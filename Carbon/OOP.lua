@@ -1,6 +1,10 @@
 --[[
 	Carbon for Lua
-	Object Orientation System
+	#class OOP
+
+	#description {
+		Provides object orientation features for Carbon.
+	}
 ]]
 
 local Carbon = (...)
@@ -74,34 +78,33 @@ OOP.Attributes = {
 	Copy = {}
 }
 
---[[
-	void OOP:RegisterAttribute(string type, string name, function method)
-		type: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).
-		name: The name of the attribute as a class would call it.
-		method: The class applicator. For function signatures, see below.
+--[[#method {
+	!!public void OOP:RegisterAttribute(string type, string name, function method)
+		!!required type: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).
+		!!required name: The name of the attribute as a class would call it.
+		!!required method: The class applicator. For function signatures, see below.
 
 	Registers a new custom class attribute.
 
-	Class:
-		void function(class)
+	- Class: `void function(class)`
 
 		Called immediately when the attribute is added to the class.
 
-	PreInitialize:
-		void function(class, instance)
+
+	- PreInitialize: `void function(class, instance)`
 
 		Called after instance allocation but before the object's initializer is called.
 
-	PostInitialize:
-		void function(class, instance)
+
+	- PostInitialize: `void function(class, instance)`
 
 		Called after the object is fully initialized.
 
-	Copy:
-		void function(original, copy)
+
+	- Copy: `void function(original, copy)`
 
 		Called after the copied object has been allocated and filled.
-]]
+}]]
 function OOP:RegisterAttribute(type, name, method)
 	local typeset = self.Attributes[type]
 
@@ -125,13 +128,13 @@ function OOP:RegisterAttribute(type, name, method)
 	out[2] = method
 end
 
---[[
-	void OOP:SetAttributeInherited(string name, bool inherited)
-		name: The name of the attribute to define a value for.
-		inherited: Whether inheriting a class will also inherit this attribute.
+--[[#method {
+	!!public void OOP:SetAttributeInherited(string name, bool inherited)
+		!!required name: The name of the attribute to define a value for.
+		!!required inherited: Whether inheriting a class will also inherit this attribute.
 
 	Marks an attribute as inherited or not inherited explicitly.
-]]
+}]]
 function OOP:SetAttributeInherited(name, inherited)
 	self.__attribute_inheritance[name] = not not inherited
 end
@@ -165,13 +168,31 @@ OOP:RegisterAttribute("Class", "SparseInstances",
 )
 
 --[[
-	Body for both Class and StaticClass base classes.
+	#class OOP.BaseClass
 
-	__members: Holds user-defined class members.
-	__base_members: Holds base class members so they can be overridden effectively.
-	__metatable: Holds metatable to be applied to instances.
-	__attributes: Holds class attributes.
-	Is: The typecheck object for this class.
+	#description {
+		Body for both @OOP.Class and @OOP.StaticClass base classes.
+	}
+
+	#property !!public Is {
+		The typecheck object for this class.
+	}
+
+	#property !!private __members {
+		Holds user-defined class members.
+	}
+
+	#property !!private __base_members {
+		Holds base class members so they can be overridden effectively.
+	}
+
+	#property !!private __metatable {
+		Holds metatable to be applied to instances.
+	}
+
+	#property !!private __attributes {
+		Holds class attributes.
+	}
 ]]
 OOP.BaseClass = {
 	__members = {},
@@ -187,11 +208,11 @@ OOP.BaseClass = {
 	Is = {}
 }
 
---[[
-	Class BaseClass:Inherits(...)
+--[[#method {
+	!!public self BaseClass:Inherits(...)
 
 	Inherits from classes, taking on their inheritable attributes, members, metatables, and type information.
-]]
+}]]
 function OOP.BaseClass:Inherits(...)
 	for i = 1, select("#", ...) do
 		local object = select(i, ...)
@@ -226,13 +247,13 @@ function OOP.BaseClass:Inherits(...)
 	return self
 end
 
---[[
-	Class BaseClass:Attributes(table attributes)
-		attributes: The attributes to give to the object.
+--[[#method {
+	!!public self BaseClass:Attributes(table attributes)
+		!!required attributes: The attributes to give to the object.
 
 	Adds attributes to the class. Overwrites existing attributes.
 	The attributes parameter is only shallow copied, keep this in mind.
-]]
+}]]
 function OOP.BaseClass:Attributes(attributes)
 	Dictionary.ShallowCopy(attributes, self.__attributes)
 
@@ -245,26 +266,26 @@ function OOP.BaseClass:Attributes(attributes)
 	return self
 end
 
---[[
-	Class BaseClass:Metatable(table metatable)
-		metatable: The metatable to give to instances of this class.
+--[[#method {
+	!!public self BaseClass:Metatable(table metatable)
+		!!required metatable: The metatable to give to instances of this class.
 
 	Adds metatables to the class. Overwrites existing metatable entries.
 	The metatable parameter is only shallow copied, keep this in mind.
-]]
+}]]
 function OOP.BaseClass:Metatable(metatable)
 	Dictionary.ShallowCopy(metatable, self.__metatable)
 
 	return self
 end
 
---[[
-	Class BaseClass:Metatable(table member)
-		member: The member to give to instances of this class.
+--[[#method {
+	!!public self BaseClass:Metatable(table member)
+		!!required: The member to give to instances of this class.
 
 	Adds members to the class. Overwrites existing member entries.
 	The members parameter is only shallow copied, keep this in mind.
-]]
+}]]
 function OOP.BaseClass:Members(members)
 	Dictionary.ShallowCopy(members, self.__members)
 
@@ -273,6 +294,7 @@ end
 
 --[[
 	#class OOP.Object
+	#inherits OOP.BaseClass
 	#description {
 		The base object for all instancable classes.
 	}
@@ -438,11 +460,13 @@ OOP.StaticObject = Dictionary.DeepCopy(OOP.BaseClass)
 
 OOP.StaticObject.Is[OOP.StaticObject] = true
 
---[[
-	Class OOP:Class()
+-- #class OOP
+--[[#method {
+	!!public Class OOP:Class([Class based_on])
+		!!optional based_on: A class to make a direct copy of for the basis of this class.
 
 	Creates a new, empty class.
-]]
+}]]
 function OOP:Class(based_on)
 	based_on = based_on or self.Object
 	local class = Dictionary.DeepCopy(based_on)
@@ -458,12 +482,11 @@ function OOP:Class(based_on)
 	return class
 end
 
---[[
-	StaticClass OOP:StaticClass()
+--[[#method {
+	!!public StaticClass OOP:StaticClass()
 
-	Creates a static (singleton) class.
-	Also works for abstract classes, see the alias below to OOP:AbstractClass()
-]]
+	Creates a static class, enabling it to inherit from other objects without having instantiation capability.
+}]]
 function OOP:StaticClass()
 	return OOP:Class(self.StaticObject)
 end

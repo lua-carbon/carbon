@@ -1,22 +1,22 @@
 # OOP.Object
 The base object for all instancable classes.
 
-Inherits [none]
+**Inherits [OOP.BaseClass](Classes/OOP.BaseClass)**
 
 ## Methods
-### Object Class:PlacementNew(indexable target?, ...)
+#### Object Class:PlacementNew(indexable target?, ...)
 - target: Where to place the instance, will be provided if not given.
 
 Creates a new object and puts it into a given indexable object.
 
 
-### Object Class:New(...)
+#### Object Class:New(...)
 
 
 Creates a new object and passes parameters to its initializer.
 
 
-### Object Object:Copy()
+#### Object Object:Copy()
 
 
 Copies the given object.
@@ -24,3 +24,5 @@ Copies the given object.
 
 ## Properties
 [none]
+
+

@@ -1,8 +1,10 @@
 --[[
 	Carbon for Lua
-	Testing Core
+	#class Testing
 
-	Manages execution of tests for the engine.
+	#description {
+		Manages execution of tests for Carbon.
+	}
 ]]
 
 local Carbon = (...)
@@ -42,46 +44,46 @@ local function test_report(self)
 	)
 end
 
---[[
-	void Testing:TestFor(any module, Test test)
-		module: The module to associate a test wtith.
-		test: The test to associate with this module.
+--[[#method {
+	!!public void Testing:TestFor(any module, Test test)
+		!!required module: The module to associate a test wtith.
+		!!required test: The test to associate with this module.
 
 	Associates a test as necessary to prove functionality of a module.
-]]
+}]]
 function Testing:TestFor(module, test)
 	self.__test_fors[module] = test
 end
 
---[[
-	void Testing:Requires(any module)
-		module: The module to test before this one.
+--[[#method {
+	!!public void Testing:Requires(any module)
+		!!required module: The module to test before this one.
 
-	Denotes that another module needs to be tested before this one.
-]]
+	Denotes that this module will not test correcly if another module failed any tests.
+}]]
 function Testing:Requires(module)
 	if (self.__test_fors[module]) then
 		self:RunTest(self.__test_fors[module])
 	end
 end
 
---[[
-	void Testing:Prerequisite(Test test)
-		test: The test to mark.
+--[[#method {
+	!!public void Testing:Prerequisite(Test test)
+		!!required test: The test to mark.
 
 	Marks that a given test is a prerequisite of this test.
 	Should only be used within tests.
-]]
+}]]
 function Testing:Prerequisite(test)
 	return self:RunTest(test)
 end
 
---[[
-	void Testing:RunTest(Test test)
-		test: The test to run.
+--[[#method {
+	!!public void Testing:RunTest(Test test)
+		!!required test: The test to run.
 
 	Runs a test if it has not been run already.
-]]
+}]]
 function Testing:RunTest(test)
 	if (not self.__ran[test]) then
 		self.__ran[test] = true
@@ -105,12 +107,12 @@ function Testing:RunTest(test)
 	end
 end
 
---[[
-	void Testing:RunTestList(table test)
-		test: The test container to run.
+--[[#method {
+	!!public void Testing:RunTestList(table test)
+		!!required test: The test container to run.
 
 	Runs a list or dictionary full of tests.
-]]
+}]]
 function Testing:RunTestList(source)
 	source = source or self.__tests
 
@@ -121,21 +123,21 @@ function Testing:RunTestList(source)
 	end
 end
 
---[[
-	void Testing:RunAllTests()
+--[[#method {
+	!!public void Testing:RunAllTests()
 
 	Runs all the tests.
-]]
+}]]
 function Testing:RunAllTests()
 	self.__tests = self.__tests or Carbon.Testing.Tests:FullyLoad()
 	return self:RunTestList(self.__tests)
 end
 
---[[
-	table Testing:GetResults()
+--[[#method {
+	!!public table Testing:GetResults()
 
 	Aggregates and returns the overall results for the tests that have been run.
-]]
+}]]
 function Testing:GetResults()
 	local result = {
 		Passes = 0,

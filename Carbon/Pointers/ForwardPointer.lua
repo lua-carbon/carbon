@@ -1,10 +1,12 @@
 --[[
 	Carbon for Lua
-	Forward Pointer
+	#class Pointers.ForwardPointer
 
-	Wraps primitives and forwards operators.
-	Use Carbon.Number for comparisons to ensure compatibility.
-	Data pointed to by a ForwardPointer is copied.
+	#description {
+		Wraps primitives and forwards operators.
+		Use @Operators for comparisons to ensure compatibility.
+		Data pointed to by a ForwardPointer is copied.
+	}
 ]]
 
 local Carbon = (...)
@@ -78,6 +80,12 @@ local meta = {
 
 local ForwardPointer = {}
 
+--[[#method {
+	!!public ForwardPointer ForwardPointer:New(any? value)
+		!!optional value: The value to point this ForwardPointer at.
+
+	Creates a new ForwardPointer pointing at the given value.
+}]]
 function ForwardPointer:New(value)
 	local instance = Dictionary.DeepCopy(self)
 	instance.__value = value
@@ -87,6 +95,21 @@ function ForwardPointer:New(value)
 	return instance
 end
 
+--[[#method {
+	!!public any? ForwardPointer:Get()
+
+	Returns an unwrapped version of the value pointed to by this pointer.
+}]]
+function ForwardPointer:Get()
+	return self.__value
+end
+
+--[[#method {
+	!!public void ForwardPointer:New(any? value)
+		!!optional value: The value to point this ForwardPointer at.
+
+	Points the ForwardPointer at the given value.
+}]]
 function ForwardPointer:Set(value)
 	self.__value = value
 end

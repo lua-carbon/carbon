@@ -20,6 +20,14 @@ local docs = {
 	files_written = {},
 	parser = {},
 	generator = {},
+	classes_by_name = {},
+	images = {
+		optional = "https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square",
+		required = "https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square",
+		internal = "https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square",
+		public = "https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square",
+		private = "https://img.shields.io/badge/%20-private-d30500.svg?style=flat-square"
+	},
 
 	-- Parser attributes
 	fs_base = "./Carbon",
@@ -110,14 +118,21 @@ function docs.parser.classes(body, class_list)
 			low_bound, high_bound = class[1], #body
 		end
 
-		local object = {
-			type = "class",
-			name = class[2],
-			description = "[no description]",
-			members = {},
-			inherits = {},
-			type_aliases = {}
-		}
+		local object, existing
+		if (docs.classes_by_name[class[2]]) then
+			object = docs.classes_by_name[class[2]]
+			existing = true
+		else
+			object = {
+				type = "class",
+				name = class[2],
+				description = "[no description]",
+				members = {},
+				inherits = {},
+				type_aliases = {}
+			}
+			docs.classes_by_name[class[2]] = object
+		end
 
 		table.insert(objects, object)
 
@@ -155,8 +170,8 @@ function docs.parser.classes(body, class_list)
 		-- Match #method {...}
 		local start, finish = 0, low_bound
 		while (true) do
-			local method
-			start, finish, definition = body:find("#method%s+(%b{})", finish)
+			local definition
+			start, finish, definition = body:find("#method%s*(%b{})", finish)
 
 			if (not start or finish > high_bound) then
 				break
@@ -172,6 +187,28 @@ function docs.parser.classes(body, class_list)
 
 			docs.parser.method(method)
 			table.insert(object.members, method)
+		end
+
+		-- Match #property {...}
+		local start, finish = 0, low_bound
+		while (true) do
+			local name, description
+			start, finish, name, description = body:find("#property%s+([^{]-)%s*(%b{})", finish)
+
+			if (not start or finish > high_bound) then
+				break
+			end
+
+			description = description:sub(2, -2)
+			description = clean_multiline_string(description)
+
+			local property = {
+				type = "property",
+				name = name,
+				description = description
+			}
+
+			table.insert(object.members, property)
 		end
 	end
 
@@ -217,9 +254,13 @@ function docs.parser.file(filename, out)
 	docs.parser.body(body, object)
 
 	table.insert(out.files, object)
+	local seen = {}
 	for key, value in ipairs(object.classes) do
 		value.filename = filename
-		table.insert(out.classes, value)
+		if (not seen[value]) then
+			seen[value] = true
+			table.insert(out.classes, value)
+		end
 	end
 
 	return object
@@ -295,7 +336,7 @@ local template_class = [[
 # {name}
 {description}
 
-Inherits {inherits_string}
+**Inherits {inherits_string}**
 
 ## Methods
 {methods_string}
@@ -305,7 +346,7 @@ Inherits {inherits_string}
 ]]
 
 local template_method = [[
-### {declaration}
+#### {declaration}
 {arg_descriptions_string}
 
 {description}
@@ -315,9 +356,8 @@ local template_arg_description = [[
 - {name}: {description}
 ]]
 
--- NYI
 local template_property = [[
-### {name}
+#### {name}
 {description}
 ]]
 
@@ -372,6 +412,30 @@ function docs.generator.class(class)
 		)
 	end)
 
+	-- Inserts images using !!image
+	local images = {}
+	body = body:gsub("!!([\\%w_]+)", function(name)
+		if (name:sub(1, 1) == "\\") then
+			return "!!" .. name:sub(2)
+		end
+
+		images[name] = true
+
+		return ("![%s][%s]"):format(name, name)
+	end)
+
+	-- Link images that are used in this document.
+	local images_buffer = {}
+	for name in pairs(images) do
+		if (docs.images[name]) then
+			table.insert(images_buffer, ("[%s]: %s"):format(
+				name, docs.images[name]
+			))
+		end
+	end
+
+	body = body .. "\n\n" .. table.concat(images_buffer, "\n")
+
 	docs.generator.write_file(path, body)
 end
 
@@ -396,7 +460,20 @@ function docs.update_mkdocs()
 		table.insert(filename_buffer, "- [" .. file .. "]")
 	end
 
-	table.sort(docs.files_written)
+	-- Sort the written files really well
+	table.sort(docs.files_written, function(a, b)
+		a = a:match("([^/]+)%.md$")
+		b = b:match("([^/]+)%.md$")
+
+		if (a:match("^" .. b)) then
+			return false
+		elseif (b:match("^" .. a)) then
+			return true
+		else
+			return a < b
+		end
+	end)
+
 	for key, file in ipairs(docs.files_written) do
 		table.insert(filename_buffer, ("- [%s, %s, %s]"):format(
 			file, file:match("^(.+)/.-$"), file:match("([^/]+)%.md$")

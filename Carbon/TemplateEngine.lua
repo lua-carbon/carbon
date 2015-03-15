@@ -1,8 +1,10 @@
 --[[
 	Carbon for Lua
-	TemplateEngine
+	#class TemplateEngine
 
-	Template engine based on Soquid.
+	#description {
+		Templating engine targeted at metaprogramming.
+	}
 ]]
 
 local Carbon = (...)

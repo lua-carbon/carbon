@@ -1,8 +1,10 @@
 --[[
 	Carbon for Lua
-	Test Result Container
+	#class Testing.TestResult
 
-	An object to signal success and failure conditions to the test engine.
+	#description {
+		An object to signal success and failure conditions to the test engine.
+	}
 ]]
 
 local Carbon = (...)
@@ -28,12 +30,12 @@ local TestResult = {
 	__warnings = {}
 }
 
---[[
-	TestResult TestResult:New(Test test)
-		test: The test that will use this TestResult.
+--[[#method {
+	!!public TestResult TestResult:New(Test test)
+		!!required test: The test that will use this TestResult.
 
 	Creates a new TestResult object for unit tests to fill.
-]]
+}]]
 function TestResult:New(test)
 	local new = shallow_copy(self)
 
@@ -45,47 +47,47 @@ function TestResult:New(test)
 	return new
 end
 
---[[
-	self TestResult:Pass()
+--[[#method {
+	!!public self TestResult:Pass()
 
 	Marks that a component of the TestResult has passed.
-]]
+}]]
 function TestResult:Pass()
 	self.__passes = self.__passes + 1
 
 	return self
 end
 
---[[
-	self TestResult:Message(string message)
-		message: A message to record.
+--[[#method {
+	!!public self TestResult:Message(string message)
+		!!required message: A message to record.
 
 	Records a message about the test without failing the test.
-]]
+}]]
 function TestResult:Message(message)
 	table.insert(self.__messages, message)
 
 	return self
 end
 
---[[
-	self TestResult:Warn(string message)
-		message: A warning to issue.
+--[[#method {
+	!!public self TestResult:Warn(string message)
+		!!required message: A warning to issue.
 
 	Issues a warning without failing the test.
-]]
+}]]
 function TestResult:Warn(message)
 	table.insert(self.__warnings, message)
 
 	return self
 end
 
---[[
-	self TestResult:Fail(string message)
-		message: The error message to store.
+--[[#method {
+	!!public self TestResult:Fail(string message)
+		!!required message: The error message to store.
 
 	Marks the test as a failure and increments the failure counter.
-]]
+}]]
 function TestResult:Fail(message)
 	self.__fails = self.__fails + 1
 	self.__passed = false
@@ -94,13 +96,13 @@ function TestResult:Fail(message)
 	return self
 end
 
---[[
-	bool TestResult:Assert(bool condition, string message)
-		condition: Condition to check.
-		message: Message to report on failure.
+--[[#method {
+	!!public bool TestResult:Assert(bool condition, string message)
+		!!required condition: Condition to check.
+		!!required message: Message to report on failure.
 
 	Checks the given condition and adds a pass if it is true, or fails with the given message.
-]]
+}]]
 function TestResult:Assert(condition, message)
 	if (condition) then
 		self:Pass()

@@ -1,6 +1,10 @@
 --[[
 	Carbon for Lua
-	IO module
+	#class IO
+	
+	#description {
+		Provides async and sync I/O operations that work on multiple platforms.
+	}
 ]]
 
 local Carbon = (...)

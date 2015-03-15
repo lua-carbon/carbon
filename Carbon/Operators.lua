@@ -1,6 +1,10 @@
 --[[
 	Carbon for Lua
-	Operators
+	#class Operators
+
+	#description {
+		Provides functional forms of operators.
+	}
 ]]
 
 local Carbon, self = ...

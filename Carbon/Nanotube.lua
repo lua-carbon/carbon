@@ -1,8 +1,10 @@
 --[[
 	Carbon for Lua
-	Nanotube Class
+	#class Nanotube
 
-	Funnels events and provides an event loop.
+	#description {
+		Funnels events and provides an event loop.
+	}
 ]]
 
 local Carbon, self = ...

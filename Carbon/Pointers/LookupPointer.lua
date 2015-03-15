@@ -1,9 +1,11 @@
 --[[
 	Carbon for Lua
-	Lookup Pointer
+	#class Pointers.LookupPointer
 
-	Provides an interface to referencing a data lookup.
-	LookupPointers are copied, but the data they point to stays the same.
+	#description {
+		Provides an interface to referencing a data lookup.
+		LookupPointers themselves are copied, but the data they point to is not.
+	}
 ]]
 
 local Carbon = (...)
@@ -94,6 +96,13 @@ local meta = {
 
 local LookupPointer = {}
 
+--[[#method {
+	!!public LookupPointer LookupPointer:New(indexable parent, string[] path)
+		!!required parent: The base of the lookup to be performed.
+		!!required path: A list of strings to navigate through the parent with.
+
+	Creates a new LookupPointer pointing at the given parent with a given navigation table.
+}]]
 function LookupPointer:New(parent, path)
 	local instance = Dictionary.DeepCopy(self)
 	instance.__parent = parent
@@ -104,6 +113,22 @@ function LookupPointer:New(parent, path)
 	return instance
 end
 
+--[[#method {
+	!!public (indexable, string[]) LookupPointer:Get()
+
+	Returns the current parent and navigation table.
+}]]
+function LookupPointer:Get()
+	return self.__parent, self.__path
+end
+
+--[[#method {
+	!!public void LookupPointer:Get(indexable parent, string[] path)
+		!!required parent: The base of the lookup to be performed.
+		!!required path: A list of strings to navigate through the parent with.
+
+	Sets a new parent and navigation table for the LookupPointer.
+}]]
 function LookupPointer:Set(parent, path)
 	self.__parent = parent
 	self.__path = path
