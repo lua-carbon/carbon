@@ -79,7 +79,7 @@ function docs.parser.method(out)
 	out.arg_descriptions = {}
 	local start, finish, last = 0, 0, finish
 	while (true) do
-		start, finish, name, description = out.definition:find("\t([%w_]+):%s*([^\n]+)", finish + 1)
+		start, finish, name, description = out.definition:find("\t([^\n\t:]+):%s*([^\n]+)", finish + 1)
 
 		if (not start) then
 			break

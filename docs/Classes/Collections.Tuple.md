@@ -5,9 +5,7 @@ Inherits [OOP.Object](Classes/OOP.Object)
 
 ## Methods
 ### Tuple Tuple:New(...)
-
-
-...: The values to initialize the Tuple with.
+- ...: The values to initialize the Tuple with.
 
 Creates a new Tuple.
 

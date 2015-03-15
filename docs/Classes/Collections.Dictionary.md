@@ -6,8 +6,8 @@ Most methods here are intended to be called as both OOP-style methods and on pur
 Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)
 
 ## Methods
-### Dictionary Dictionary:New(table data)
-- data: The data of the dictionary
+### Dictionary Dictionary:New([table data])
+- *optional* data: The data of the dictionary. Empty if not specified.
 
 Turns the given object into a Dictionary.
 Allows method-style syntax to be used on the object.
@@ -34,16 +34,16 @@ Converts the Dictionary to a [Set](Classes/Collections.Set).
 
 ### table Dictionary.ShallowCopy(table self, [table to])
 - self: The table to source data from
-- to: The table to copy into; an empty table if not given.
+- *optional* to: The table to copy into; an empty table if not given.
 
 Shallow copies data from one table into another and returns the result.
 
 
 ### Dictionary Dictionary.DeepCopy(table self, [table to, bool datawise, table map])
 - self: The dictionary to source data from.
-- to: The dictionary to copy into; an empty table if not given.
-- datawise: Whether the copy should ignore Copy member functions.
-- map: A map projecting original values into copied values. Used internally.
+- *optional* to: The dictionary to copy into; an empty table if not given.
+- *optional* datawise: Whether the copy should ignore Copy member functions.
+- *optional* map: A map projecting original values into copied values. Used internally.
 
 Performs a self-reference fixing deep copy from one table into another.
 Handles self-references properly.
