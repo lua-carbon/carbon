@@ -389,7 +389,7 @@ function docs.update_mkdocs()
 	local filename_buffer = {}
 	for key, file in ipairs(docs.files_written) do
 		table.insert(filename_buffer, ("- [%s, %s]"):format(
-			file, file:match("([%w%._]-)%.md$")
+			file, file:match("^(.+)/.-$") or "Tutorials"
 		))
 	end
 
