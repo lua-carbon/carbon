@@ -4,7 +4,8 @@
 	#inherits OOP.Object
 
 	#description {
-		***Abstract***
+		**Abstract**
+
 		Provides an interface to serialize and deserialize data.
 
 		All methods provided by this class that are not overridden throw a @NotImplementedException.
