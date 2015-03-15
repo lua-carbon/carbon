@@ -1,12 +1,14 @@
 site_name: Carbon for Lua
+theme: readthedocs
+repo_url: https://github.com/lua-carbon/carbon
 pages:
-- [Classes/Collections.Dictionary.md, Classes]
-- [Classes/Collections.List.md, Classes]
-- [Classes/Collections.Set.md, Classes]
-- [Classes/Collections.Tuple.md, Classes]
-- [Classes/Configuration.md, Classes]
-- [Classes/Exception.md, Classes]
-- [Classes/OOP.Object.md, Classes]
-- [Classes/OOP.StaticObject.md, Classes]
-- [Getting Started.md, Tutorials]
-- [index.md, Tutorials]
+- [index.md, Index]
+- [Getting Started.md, Tutorials, Getting Started]
+- [Classes/Collections.Dictionary.md, Collections.Dictionary, Classes]
+- [Classes/Collections.List.md, Collections.List, Classes]
+- [Classes/Collections.Set.md, Collections.Set, Classes]
+- [Classes/Collections.Tuple.md, Collections.Tuple, Classes]
+- [Classes/Configuration.md, Configuration, Classes]
+- [Classes/Exception.md, Exception, Classes]
+- [Classes/OOP.Object.md, OOP.Object, Classes]
+- [Classes/OOP.StaticObject.md, OOP.StaticObject, Classes]

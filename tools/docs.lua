@@ -13,10 +13,11 @@ if (not ok) then
 end
 
 local docs = {
-	files_written = {
-		"index.md",
-		"Getting Started.md"
+	hand_files = {
+		"index.md, Index",
+		"Getting Started.md, Tutorials, Getting Started"
 	},
+	files_written = {},
 	parser = {},
 	generator = {},
 
@@ -387,13 +388,17 @@ function docs.update_mkdocs()
 	handle:close()
 
 	local filename_buffer = {}
+	for key, file in ipairs(docs.hand_files) do
+		table.insert(filename_buffer, "- [" .. file .. "]")
+	end
+
+	table.sort(docs.files_written)
 	for key, file in ipairs(docs.files_written) do
-		table.insert(filename_buffer, ("- [%s, %s]"):format(
-			file, file:match("^(.+)/.-$") or "Tutorials"
+		table.insert(filename_buffer, ("- [%s, %s, %s]"):format(
+			file, file:match("([^/]+)%.md$"), file:match("^(.+)/.-$")
 		))
 	end
 
-	table.sort(filename_buffer)
 	body = body:gsub("pages%:.+", "pages:\n" .. table.concat(filename_buffer, "\n"))
 
 	handle = io.open("mkdocs.yml", "wb")
