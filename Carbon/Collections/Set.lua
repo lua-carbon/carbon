@@ -28,7 +28,7 @@ Set.Is = {
 	[Set] = true
 }
 
---[[#method {
+--[[#method 1 {
 	public @Set Set:New([@table data])
 		optional data: The data of the set. Empty if not given.
 

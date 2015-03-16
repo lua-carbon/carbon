@@ -1,8 +1,11 @@
 --[[
 	Carbon for Lua
-	RGBA Class
+	#class Math.ColorRGBA
+	#inherits Math.Color, Math.Vector<4>
 
-	Provides an RGB color class with alpha.
+	#description {
+		Provides an RGB color class with alpha.
+	}
 ]]
 
 local Carbon = (...)

@@ -96,7 +96,7 @@ local meta = {
 
 local LookupPointer = {}
 
---[[#method {
+--[[#method 1 {
 	public @LookupPointer LookupPointer:New(@indexable parent, @list<string> path)
 		required parent: The base of the lookup to be performed.
 		required path: A list of strings to navigate through the parent with.

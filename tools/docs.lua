@@ -65,6 +65,10 @@ local function path_to_class(name)
 	return path_join("Classes", name) .. ".md"
 end
 
+local function escape_html(str)
+	return (str:gsub("<", "&lt;"):gsub(">", "&gt;"))
+end
+
 local function clean_multiline_string(a)
 	-- Strip \r, trim whitespace
 	a = a:gsub("\r", "")
@@ -82,10 +86,9 @@ local function clean_multiline_string(a)
 end
 
 function docs.parser.method(out)
-	local start, finish, prefix, name, args = out.definition:find("(.-)%s+([%w_:%.]+)(%b())")
+	local start, finish, prefix, name, args = out.definition:find("(.-)%s+([^%s]-)(%b())")
 	if (not start) then
-		print(out.definition)
-		error("^^Invalid method definition ^^")
+		error("Invalid method definition: " .. tostring(out.definition))
 	end
 
 	local sans_public, publics = prefix:gsub("^public", "")
@@ -106,11 +109,20 @@ function docs.parser.method(out)
 
 	out.arg_descriptions = {}
 	local start, finish, last = 0, 0, finish
+	local arg = 0
 	while (true) do
 		start, finish, prefix, name, description = out.definition:find("\t([^\t\n:]-)([^%s:]+):%s*([^\n]+)", finish + 1)
 
 		if (not start) then
 			break
+		end
+		arg = arg + 1
+
+		if (#prefix == 0) then
+			print(("DOCGEN WARNING: Unknown prefix %q for argument %d in method %s!"):format(
+				prefix, arg, out.name
+			))
+			prefix = "unknown"
 		end
 
 		last = math.max(last, finish)
@@ -141,6 +153,7 @@ function docs.parser.classes(body, class_list)
 			existing = true
 		else
 			object = {
+				__priority = 0,
 				type = "class",
 				name = class[2],
 				description = "[no description]",
@@ -168,9 +181,15 @@ function docs.parser.classes(body, class_list)
 		-- Match #inherits
 		local start, finish, inherits_string = body:find("#inherits%s+([^\n]+)", low_bound)
 		if (start and finish < high_bound) then
-			for key in inherits_string:gmatch("[^,%s]+") do
+			for key in inherits_string:gmatch("%s*([^,\r\n]+)%s*") do
 				table.insert(object.inherits, key)
 			end
+		end
+
+		-- Match #priority
+		local start, finish, priority = body:find("#priority%s+(%-?[%d%.]+)", low_bound)
+		if (start and finish < high_bound) then
+			object.priority = tonumber(priority) or priority
 		end
 
 		-- Match #alias TypeA TypeB
@@ -186,11 +205,11 @@ function docs.parser.classes(body, class_list)
 			object.type_aliases[source] = target
 		end
 
-		-- Match #method {...}
+		-- Match #method priority {...}
 		local start, finish = 0, low_bound
 		while (true) do
 			local definition
-			start, finish, definition = body:find("#method%s*(%b{})", finish)
+			start, finish, priority, definition = body:find("#method%s*(%-?[%d%.]*)%s*(%b{})", finish)
 
 			if (not start or finish > high_bound) then
 				break
@@ -200,6 +219,7 @@ function docs.parser.classes(body, class_list)
 			definition = clean_multiline_string(definition)
 
 			local method = {
+				priority = tonumber(priority) or object.__priority,
 				type = "method",
 				definition = definition
 			}
@@ -229,6 +249,7 @@ function docs.parser.classes(body, class_list)
 			end
 
 			local property = {
+				priority = object.__priority,
 				type = "property",
 				visibility = visibility,
 				class = class,
@@ -364,6 +385,7 @@ local template_class = [[
 <link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">{name}</h1>
 <span class="file-link">(in [{filename}]({file_link}))</span><br/>
+
 {description}
 
 **Inherits {inherits_string}**
@@ -376,12 +398,12 @@ local template_class = [[
 ]]
 
 local template_method = [[
-#### !!{visibility} {name}({backticked_args})
+#### !!{visibility} {escaped_name}({backticked_args})
 {arg_descriptions_string}
 
-**Returns {returns}**
+**Returns {escaped_returns}**
 
-{description}
+{escaped_description}
 ]]
 
 local template_arg_description = [[
@@ -411,6 +433,23 @@ function docs.generator.class(class)
 
 	class.file_link = docs.file_url_base .. class.filename
 
+	-- Sort members based on their priority
+	table.sort(class.members, function(a, b)
+		if (a.priority > b.priority) then
+			return true
+		elseif (a.priority < b.priority) then
+			return false
+		end
+
+		if (a.visibility == "public" and b.visibility == "private") then
+			return true
+		elseif (b.visibility == "public" and a.visibility == "private") then
+			return false
+		end
+
+		return a.name < b.name
+	end)
+
 	-- Handle methods and properties
 	local methods_buffer = {}
 	local properties_buffer = {}
@@ -422,7 +461,16 @@ function docs.generator.class(class)
 			end
 
 			member.arg_descriptions_string = table.concat(arg_descriptions_buffer, "\n")
-			member.backticked_args = #member.args > 0 and ("<code>%s</code>"):format(member.args) or ""
+
+			-- Make args code-styled
+			member.escaped_args = member.args:gsub("<", "&lt;"):gsub(">", "&gt;")
+			member.backticked_args = #member.args > 0 and ("<code>%s</code>"):format(member.escaped_args) or ""
+
+			-- Escape the name and return types so we can use template syntax in them
+			member.escaped_name = escape_html(member.name)
+			member.escaped_returns = escape_html(member.returns)
+			member.escaped_description = escape_html(member.description)
+
 			table.insert(methods_buffer, do_template(template_method, member))
 		elseif (member.type == "property") then
 			if (#member.class > 0) then
@@ -434,8 +482,8 @@ function docs.generator.class(class)
 			table.insert(properties_buffer, do_template(template_property, member))
 		end
 	end
-	class.methods_string = next(methods_buffer) and table.concat(methods_buffer, "\n\n") or class.methods_string
-	class.properties_string = next(properties_buffer) and table.concat(properties_buffer, "\n\n") or class.properties_string
+	class.methods_string = next(methods_buffer) and table.concat(methods_buffer, "\n<hr/>\n") or class.methods_string
+	class.properties_string = next(properties_buffer) and table.concat(properties_buffer, "\n<hr/>\n") or class.properties_string
 
 	body = do_template(body, class)
 
@@ -493,6 +541,8 @@ function docs.update_mkdocs()
 	for key, file in ipairs(docs.hand_files) do
 		table.insert(filename_buffer, "- [" .. file .. "]")
 	end
+
+	table.insert(filename_buffer, "- [ dud ]")
 
 	-- Sort the written files really well
 	table.sort(docs.files_written, function(a, b)

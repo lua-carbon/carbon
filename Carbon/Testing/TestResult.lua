@@ -30,7 +30,7 @@ local TestResult = {
 	__warnings = {}
 }
 
---[[#method {
+--[[#method 1 {
 	public TestResult TestResult:New(Test test)
 		required test: The test that will use this TestResult.
 

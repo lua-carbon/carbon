@@ -26,7 +26,7 @@ List.Is = {
 	[List] = true
 }
 
---[[#method {
+--[[#method 1 {
 	public @List List:New([@list data])
 		optional data: The data of the list. Empty if not given.
 

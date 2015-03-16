@@ -1,8 +1,13 @@
 --[[
 	Carbon for Lua
-	Color Class
+	#class Math.Color
+	#inherits OOP.Object
 
-	Provides an abstract color class.
+	#description {
+		**Abstract**
+
+		Provides an abstract color class.
+	}
 ]]
 
 local Carbon = (...)

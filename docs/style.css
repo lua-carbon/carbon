@@ -16,6 +16,10 @@ a:visited {
 	text-decoration: none;
 }
 
+p {
+	margin-bottom: 0.6em;
+}
+
 /* Custom Classes */
 h1.class-title {
 	margin-bottom: 0.1em;

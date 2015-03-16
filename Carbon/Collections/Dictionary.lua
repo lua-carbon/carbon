@@ -51,7 +51,7 @@ local function indexable(item)
 	return false, t
 end
 
---[[#method {
+--[[#method 1 {
 	public @Dictionary Dictionary:New([@table data])
 		optional data: The data of the dictionary. Empty if not specified.
 

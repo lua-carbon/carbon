@@ -43,7 +43,7 @@ else
 	return fake
 end
 
---[[#method {
+--[[#method 1 {
 	public @File IO.Open(@string path, [@string mode, @Nanotube tube])
 		required path: The path to the file to open.
 		optional mode: The file mode to open the file with. Defaults to "rb".

@@ -11,7 +11,7 @@
 local Carbon = (...)
 local Configuration = {}
 
---[[#method {
+--[[#method 1 {
 	public @Configuration Configuration:New(string name)
 		required name: The name of the configuration object
 

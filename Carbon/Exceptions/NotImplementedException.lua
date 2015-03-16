@@ -22,7 +22,7 @@ local NotImplementedException = Carbon.OOP:Class()
 		MethodName = "[unknown]"
 	}
 
---[[#method {
+--[[#method 1 {
 	public @NotImplementedException NotImplementedException:New(string method_name)
 		required method_name: The name of the method that isn't yet implemented.
 

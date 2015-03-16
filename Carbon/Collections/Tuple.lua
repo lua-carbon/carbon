@@ -21,7 +21,7 @@ local Tuple = OOP:Class()
 		SparseInstances = true
 	}
 
---[[#method {
+--[[#method 1 {
 	public @Tuple Tuple:New(...)
 		optional ...: The values to initialize the Tuple with.
 

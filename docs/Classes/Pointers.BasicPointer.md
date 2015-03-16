@@ -1,6 +1,7 @@
 <link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Pointers.BasicPointer</h1>
 <span class="file-link">(in [./Carbon/Pointers/BasicPointer.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Pointers/BasicPointer.lua))</span><br/>
+
 Wraps an object to pass it by-reference.
 Creates an implicit copy barrier.
 
@@ -14,7 +15,7 @@ Creates an implicit copy barrier.
 
 Creates a new BasicPointer, pointing at any sort of object.
 
-
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:Get()
 
 
@@ -22,7 +23,7 @@ Creates a new BasicPointer, pointing at any sort of object.
 
 Returns the value currently pointed at by the BasicPointer.
 
-
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:Set(<code>[any](Types#any)? value</code>)
 
 

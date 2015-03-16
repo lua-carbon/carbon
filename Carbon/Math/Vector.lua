@@ -1,9 +1,15 @@
 --[[
 	Carbon for Lua
-	Vector Template
+	#class Math.Vector
+	#inherits OOP.Object
 
-	Provides a code generation-driven method of generating arbitrary-length vectors.
-	Maximum length of 26, can be expanded upon request.
+	#description {
+		**Abstract Template `Vector<N>`**
+
+		Provides a metaprogramming-driven method of generating N-length vectors.
+
+		Presently has a hard maximum component count of 26, can be expanded upon request.
+	}
 ]]
 
 local Carbon = (...)
@@ -19,8 +25,12 @@ local Vector = {
 	Engine = TemplateEngine:New(),
 	__cache = {},
 	__methods = {
-		-- Initializer:
-		-- Vector:_init(...)
+		--[[#method 1 {
+			public @Vector<N> Vector<N>:New(...)
+				optional ...: The arguments to the intialization. Should be `N` arguments long.
+
+			Creates a new @Vector with `N` components.
+		}]]
 		_init = [[
 			return function(self, {%= ARGS_STRING %})
 				{% for i, arg in ipairs(ARGS) do
@@ -31,6 +41,11 @@ local Vector = {
 			end
 		]],
 
+		--[[#method {
+			public @unumber Vector<N>:Length()
+
+			Returns the length of the vector.
+		}]]
 		Length = [[
 			return function(self)
 				return math.sqrt(
@@ -42,6 +57,11 @@ local Vector = {
 			end
 		]],
 
+		--[[#method {
+			public @unumber Vector<N>:LengthSquared()
+
+			Returns the length of the vector squared.
+		}]]
 		LengthSquared = [[
 			return function(self)
 				return 
@@ -53,10 +73,23 @@ local Vector = {
 			end
 		]],
 
+		--[[#method {
+			public self Vector<N>:NormalizeInPlace()
+
+			Normalizes the vector in-place.
+
+			Called in Carbide as `Vector:Normalize!()`
+		}]]
 		NormalizeInPlace = function(self)
 			return self:Normalize(self)
 		end,
 
+		--[[#method {
+			public out Vector<N>:Normalize([@Vector<N> out])
+				optional out: Where to place the data of the normalized vector. A new `Vector<N>` if not given.
+
+			Normalizes the @Vector<N> object, optionally outputting the data to an existing @Vector<N>.
+		}]]
 		Normalize = [[
 			return function(self, out)
 				out = out or self.class:New()
@@ -79,6 +112,24 @@ local Vector = {
 
 				return out
 			end
+		]],
+
+		--[[#method {
+			public @tuple<N, unumber> Vector<N>:Components()
+
+			Returns the individual components of the @Vector<N> in order. Much faster than `unpack`.
+		}]]
+		Components = [[
+			return function(self)
+				return 
+				{% for i = 1, LENGTH do
+					_(("self[%d]"):format(i))
+
+					if (i < LENGTH) then
+						_(",")
+					end
+				end %}
+			end
 		]]
 	},
 	__metatable = {
@@ -99,13 +150,14 @@ local Vector = {
 
 local arg_list = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
 
---[[
-	function Vector:__generate_method(string body, table arguments)
-		body: Template-enabled code to return a function.
-		arguments: Arguments to the template
+--[[#method {
+	private function Vector:__generate_method(@string body, @dictionary arguments, [@dictionary env])
+		required body: Template-enabled code to return a function.
+		required arguments: Arguments to the template
+		optional env: The environment to generate the method under.
 
 	Generates a method using Carbon's TemplateEngine and handles errors.
-]]
+}]]
 function Vector:__generate_method(body, arguments, env)
 	env = env or {}
 	local generated, exception = self.Engine:Render(body, arguments)
@@ -124,17 +176,20 @@ function Vector:__generate_method(body, arguments, env)
 	return generator()
 end
 
---[[
-	Class<Vector> Vector:Generate(uint length, [table parameters])
-		length: The length of the vector.
-		parameters: Options for generating the class:
-			number NormalizedLength (1): The length the vector reaches when normalized.
-			number DefaultValue (0): The value to initialize all members to if not given.
-			list DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
+--[[#method {
+	public @Vector<length> Vector:Generate(@uint length, [@dictionary parameters])
+		required length: The length of the vector.
+		optional parameters: Options for generating the class:
 
 	Generates a new Vector class with the given keys and parameters. Results are cached, but this method may still be slow.
 	It performs runtime code generation and template parsing on each generated class.
-]]
+
+	The following parameters are valid:
+
+	- @number NormalizedLength (1): The length the vector reaches when normalized.
+	- @number DefaultValue (0): The value to initialize all members to if not given.
+	- @list<@number> DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
+}]]
 function Vector:Generate(length, parameters)
 	parameters = parameters or {}
 

@@ -80,7 +80,7 @@ local meta = {
 
 local ForwardPointer = {}
 
---[[#method {
+--[[#method 1 {
 	public @ForwardPointer ForwardPointer:New(@any? value)
 		optional value: The value to point this ForwardPointer at.
 

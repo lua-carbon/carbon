@@ -26,7 +26,7 @@ end
 
 -- Discover a timer and sleep function
 --[[
-	#method {
+	#method 1 {
 		public @void Time.Sleep(@unumber seconds)
 			required seconds: The number of seconds to sleep.
 
@@ -34,7 +34,7 @@ end
 		If no timer providers are available, will not do anything.
 	}
 
-	#method {
+	#method 0.9 {
 		public @unumber Time.Get()
 
 		Returns a benchmarking time using the highest precision internal timer.

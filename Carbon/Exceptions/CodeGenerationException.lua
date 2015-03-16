@@ -26,7 +26,7 @@ local CodeGenerationException = Carbon.OOP:Class()
 		GeneratedCode = "[none]"
 	}
 
---[[#method {
+--[[#method 1 {
 	public @CodeGenerationException CodeGenerationException:New(string message, string code)
 		required message: A message explaining why code generation failed.
 		required code: The code that was generated.

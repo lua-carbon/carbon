@@ -1,6 +1,7 @@
 <link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Time</h1>
 <span class="file-link">(in [./Carbon/Time.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Time.lua))</span><br/>
+
 Provides utilities for working with time.
 
 **Inherits [none]**
@@ -14,7 +15,7 @@ Provides utilities for working with time.
 Sleeps using the system timer.
 If no timer providers are available, will not do anything.
 
-
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Get()
 
 
@@ -22,15 +23,7 @@ If no timer providers are available, will not do anything.
 
 Returns a benchmarking time using the highest precision internal timer.
 
-
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Weeks(<code>[unumber](Types#unumber) weeks</code>)
-
-
-**Returns  [unumber](Types#unumber)**
-
-Converts the given number of weeks to seconds.
-
-
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Days(<code>[unumber](Types#unumber) days</code>)
 
 
@@ -38,7 +31,7 @@ Converts the given number of weeks to seconds.
 
 Converts the given number of days to seconds.
 
-
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Hours(<code>[unumber](Types#unumber) hours</code>)
 
 
@@ -46,7 +39,15 @@ Converts the given number of days to seconds.
 
 Converts the given number of hours to seconds.
 
+<hr/>
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Milliseconds(<code>[unumber](Types#unumber) milliseconds</code>)
 
+
+**Returns  [unumber](Types#unumber)**
+
+Converts the given number of milliseconds to seconds.
+
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Minutes(<code>[unumber](Types#unumber) minutes</code>)
 
 
@@ -54,7 +55,15 @@ Converts the given number of hours to seconds.
 
 Converts the given number of minutes to seconds.
 
+<hr/>
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Nanoseconds(<code>[unumber](Types#unumber) nanoseconds</code>)
 
+
+**Returns  [unumber](Types#unumber)**
+
+Converts the given number of nanoseconds to seconds.
+
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Seconds(<code>[unumber](Types#unumber) seconds</code>)
 
 
@@ -63,21 +72,13 @@ Converts the given number of minutes to seconds.
 Converts the given number of seconds to seconds.
 Not very useful.
 
-
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Milliseconds(<code>[unumber](Types#unumber) milliseconds</code>)
-
-
-**Returns  [unumber](Types#unumber)**
-
-Converts the given number of milliseconds to seconds.
-
-
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Nanoseconds(<code>[unumber](Types#unumber) nanoseconds</code>)
+<hr/>
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Weeks(<code>[unumber](Types#unumber) weeks</code>)
 
 
 **Returns  [unumber](Types#unumber)**
 
-Converts the given number of nanoseconds to seconds.
+Converts the given number of weeks to seconds.
 
 
 ## Properties

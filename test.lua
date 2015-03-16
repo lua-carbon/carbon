@@ -16,11 +16,13 @@ local function main()
 
 	print(result:Report())
 
+
+	print("Updating README...")
 	badges:update_readme {
 		Tests = result,
 		Version = Carbon.VersionString
 	}
-	print("Readme updated")
+	print("README updated!")
 
 	print("Generating documentation...")
 	docs.update()

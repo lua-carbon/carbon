@@ -26,7 +26,7 @@ local Exception = OOP:Class()
 		Message = "An exception occurred!"
 	}
 
---[[#method {
+--[[#method 1 {
 	public @Exception Exception:New(@string message)
 		required message: The message to initialize the exception with.
 

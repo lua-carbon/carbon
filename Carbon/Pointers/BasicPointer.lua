@@ -12,7 +12,7 @@ local Carbon = (...)
 
 local BasicPointer = {}
 
---[[#method {
+--[[#method 1 {
 	public @BasicPointer BasicPointer:New(@any? value)
 		optional value: The value the pointer should point at.
 

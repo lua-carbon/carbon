@@ -13,7 +13,7 @@ local Dictionary = Carbon.Collections.Dictionary
 
 local WeakPointer = {}
 
---[[#method {
+--[[#method 1 {
 	public @WeakPointer WeakPointer:New(@any? value)
 		optional value: The value to initialize the pointer with.
 

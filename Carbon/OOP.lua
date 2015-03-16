@@ -304,7 +304,7 @@ OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 
 OOP.Object.Is[OOP.Object] = true
 
---[[#method {
+--[[#method 0.9 {
 	public Object Class:PlacementNew(@indexable? target, ...)
 		optional target: Where to place the instance, will be provided if not given.
 		optional ...: Arguments to pass to the constructor
@@ -405,7 +405,7 @@ function OOP.Object:PlacementNew(instance, ...)
 	return instance
 end
 
---[[#method {
+--[[#method 1 {
 	public Object Class:New(...)
 
 	Creates a new object and passes parameters to its initializer.
@@ -414,7 +414,7 @@ function OOP.Object:New(...)
 	return self:PlacementNew(nil, ...)
 end
 
---[[#method {
+--[[#method 0.8 {
 	public Object Object:Copy()
 
 	Copies the given object.
@@ -462,7 +462,7 @@ OOP.StaticObject = Dictionary.DeepCopy(OOP.BaseClass)
 OOP.StaticObject.Is[OOP.StaticObject] = true
 
 -- #class OOP
---[[#method {
+--[[#method 1 {
 	public Class OOP:Class([Class based_on])
 		optional based_on: A class to make a direct copy of for the basis of this class.
 
@@ -483,7 +483,7 @@ function OOP:Class(based_on)
 	return class
 end
 
---[[#method {
+--[[#method  0.9 {
 	public StaticClass OOP:StaticClass()
 
 	Creates a static class, enabling it to inherit from other objects without having instantiation capability.

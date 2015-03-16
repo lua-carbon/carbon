@@ -1,19 +1,6 @@
---#TEMPLATES_ENABLED
---#TEMPLATE_LEVEL 1
-{!%
-	_(__engine:Render([[
-		{%
-			_('print("Hello, world!")')
-		%}
-	]], nil, 0))
-%!}
-
 local Carbon = (...)
-local Vector4 = Carbon.Math.Vector4
-local Matrix4x4 = Carbon.Math.Matrix4x4
+local Vector3 = Carbon.Math.Vector3
+local vec3 = Vector3:New(1, 2, 3)
 
-local translation = Matrix4x4:Translation(1, 1, 1)
-local vec4 = Vector4:New(1, 2, 3, 1)
-
-print(vec4)
-print(translation:MultiplyVector(vec4))
+print(vec3:Components())
+print(vec3->x, vec3->y, vec3->z)
