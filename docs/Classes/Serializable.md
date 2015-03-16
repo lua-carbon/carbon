@@ -1,3 +1,4 @@
+<link href="style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Serializable</h1>
 <span class="file-link">(in [./Carbon/Serializable.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Serializable.lua))</span><br/>
 **Abstract**

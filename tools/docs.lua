@@ -361,6 +361,7 @@ local function do_template(template, data)
 end
 
 local template_class = [[
+<link href="style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">{name}</h1>
 <span class="file-link">(in [{filename}]({file_link}))</span><br/>
 {description}

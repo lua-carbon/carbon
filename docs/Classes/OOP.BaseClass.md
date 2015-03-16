@@ -1,3 +1,4 @@
+<link href="style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">OOP.BaseClass</h1>
 <span class="file-link">(in [./Carbon/OOP.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/OOP.lua))</span><br/>
 Body for both [OOP.Class](Classes/OOP.Class) and [OOP.StaticClass](Classes/OOP.StaticClass) base classes.

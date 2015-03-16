@@ -16,12 +16,12 @@ a:visited {
 	text-decoration: none;
 }
 
+/* Custom Classes */
 h1.class-title {
 	margin-bottom: 0;
 	line-height: 0.5;
 }
 
-/* Custom Classes */
 .file-link {
 	font-size: 70%;
 }

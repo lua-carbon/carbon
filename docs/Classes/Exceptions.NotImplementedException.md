@@ -1,3 +1,4 @@
+<link href="style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Exceptions.NotImplementedException</h1>
 <span class="file-link">(in [./Carbon/Exceptions/NotImplementedException.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Exceptions/NotImplementedException.lua))</span><br/>
 An exception to be generated when a feature is not (yet) implemented.

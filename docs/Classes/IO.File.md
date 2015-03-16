@@ -1,3 +1,4 @@
+<link href="style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">IO.File</h1>
 <span class="file-link">(in [./Carbon/IO.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/IO.lua))</span><br/>
 Represents a Carbon file I/O handle. See [IO](Classes/IO) for more documentation on the object.
