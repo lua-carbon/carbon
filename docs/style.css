@@ -18,10 +18,11 @@ a:visited {
 
 /* Custom Classes */
 h1.class-title {
-	margin-bottom: 0;
+	margin-bottom: 0.1em;
 	line-height: 0.5;
 }
 
 .file-link {
 	font-size: 70%;
+	line-height: 2;
 }
