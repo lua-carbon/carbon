@@ -79,29 +79,29 @@ OOP.Attributes = {
 }
 
 --[[#method {
-	!!public void OOP:RegisterAttribute(string type, string name, function method)
-		!!required type: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).
-		!!required name: The name of the attribute as a class would call it.
-		!!required method: The class applicator. For function signatures, see below.
+	public void OOP:RegisterAttribute(@string type, @string name, function method)
+		required type: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).
+		required name: The name of the attribute as a class would call it.
+		required method: The class applicator. For function signatures, see below.
 
 	Registers a new custom class attribute.
 
-	- Class: `void function(class)`
+	- Class: `@void function(class)`
 
 		Called immediately when the attribute is added to the class.
 
 
-	- PreInitialize: `void function(class, instance)`
+	- PreInitialize: `@void function(class, instance)`
 
 		Called after instance allocation but before the object's initializer is called.
 
 
-	- PostInitialize: `void function(class, instance)`
+	- PostInitialize: `@void function(class, instance)`
 
 		Called after the object is fully initialized.
 
 
-	- Copy: `void function(original, copy)`
+	- Copy: `@void function(original, copy)`
 
 		Called after the copied object has been allocated and filled.
 }]]
@@ -129,9 +129,9 @@ function OOP:RegisterAttribute(type, name, method)
 end
 
 --[[#method {
-	!!public void OOP:SetAttributeInherited(string name, bool inherited)
-		!!required name: The name of the attribute to define a value for.
-		!!required inherited: Whether inheriting a class will also inherit this attribute.
+	public void OOP:SetAttributeInherited(@string name, @bool inherited)
+		required name: The name of the attribute to define a value for.
+		required inherited: Whether inheriting a class will also inherit this attribute.
 
 	Marks an attribute as inherited or not inherited explicitly.
 }]]
@@ -174,23 +174,23 @@ OOP:RegisterAttribute("Class", "SparseInstances",
 		Body for both @OOP.Class and @OOP.StaticClass base classes.
 	}
 
-	#property !!public Is {
+	#property public set Is {
 		The typecheck object for this class.
 	}
 
-	#property !!private __members {
+	#property private dictionary __members {
 		Holds user-defined class members.
 	}
 
-	#property !!private __base_members {
+	#property private dictionary __base_members {
 		Holds base class members so they can be overridden effectively.
 	}
 
-	#property !!private __metatable {
+	#property private dictionary __metatable {
 		Holds metatable to be applied to instances.
 	}
 
-	#property !!private __attributes {
+	#property private dictionary __attributes {
 		Holds class attributes.
 	}
 ]]
@@ -209,7 +209,7 @@ OOP.BaseClass = {
 }
 
 --[[#method {
-	!!public self BaseClass:Inherits(...)
+	public self BaseClass:Inherits(...)
 
 	Inherits from classes, taking on their inheritable attributes, members, metatables, and type information.
 }]]
@@ -248,8 +248,8 @@ function OOP.BaseClass:Inherits(...)
 end
 
 --[[#method {
-	!!public self BaseClass:Attributes(table attributes)
-		!!required attributes: The attributes to give to the object.
+	public self BaseClass:Attributes(@dictionary attributes)
+		required attributes: The attributes to give to the object.
 
 	Adds attributes to the class. Overwrites existing attributes.
 	The attributes parameter is only shallow copied, keep this in mind.
@@ -267,8 +267,8 @@ function OOP.BaseClass:Attributes(attributes)
 end
 
 --[[#method {
-	!!public self BaseClass:Metatable(table metatable)
-		!!required metatable: The metatable to give to instances of this class.
+	public self BaseClass:Metatable(@dictionary metatable)
+		required metatable: The metatable to give to instances of this class.
 
 	Adds metatables to the class. Overwrites existing metatable entries.
 	The metatable parameter is only shallow copied, keep this in mind.
@@ -280,8 +280,8 @@ function OOP.BaseClass:Metatable(metatable)
 end
 
 --[[#method {
-	!!public self BaseClass:Metatable(table member)
-		!!required: The member to give to instances of this class.
+	public self BaseClass:Members(@dictionary members)
+		required members: The member to give to instances of this class.
 
 	Adds members to the class. Overwrites existing member entries.
 	The members parameter is only shallow copied, keep this in mind.
@@ -305,9 +305,9 @@ OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 OOP.Object.Is[OOP.Object] = true
 
 --[[#method {
-	!!public Object Class:PlacementNew(indexable target?, ...)
-		!!optional target: Where to place the instance, will be provided if not given.
-		!!optional ...: Arguments to pass to the constructor
+	public Object Class:PlacementNew(@indexable? target, ...)
+		optional target: Where to place the instance, will be provided if not given.
+		optional ...: Arguments to pass to the constructor
 
 	Creates a new object and puts it into a given indexable object.
 }]]
@@ -406,7 +406,7 @@ function OOP.Object:PlacementNew(instance, ...)
 end
 
 --[[#method {
-	!!public Object Class:New(...)
+	public Object Class:New(...)
 
 	Creates a new object and passes parameters to its initializer.
 }]]
@@ -415,7 +415,7 @@ function OOP.Object:New(...)
 end
 
 --[[#method {
-	!!public Object Object:Copy()
+	public Object Object:Copy()
 
 	Copies the given object.
 }]]
@@ -463,8 +463,8 @@ OOP.StaticObject.Is[OOP.StaticObject] = true
 
 -- #class OOP
 --[[#method {
-	!!public Class OOP:Class([Class based_on])
-		!!optional based_on: A class to make a direct copy of for the basis of this class.
+	public Class OOP:Class([Class based_on])
+		optional based_on: A class to make a direct copy of for the basis of this class.
 
 	Creates a new, empty class.
 }]]
@@ -484,7 +484,7 @@ function OOP:Class(based_on)
 end
 
 --[[#method {
-	!!public StaticClass OOP:StaticClass()
+	public StaticClass OOP:StaticClass()
 
 	Creates a static class, enabling it to inherit from other objects without having instantiation capability.
 }]]

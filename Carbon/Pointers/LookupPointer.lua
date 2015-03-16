@@ -97,9 +97,9 @@ local meta = {
 local LookupPointer = {}
 
 --[[#method {
-	!!public LookupPointer LookupPointer:New(indexable parent, string[] path)
-		!!required parent: The base of the lookup to be performed.
-		!!required path: A list of strings to navigate through the parent with.
+	public LookupPointer LookupPointer:New(indexable parent, string[] path)
+		required parent: The base of the lookup to be performed.
+		required path: A list of strings to navigate through the parent with.
 
 	Creates a new LookupPointer pointing at the given parent with a given navigation table.
 }]]
@@ -114,7 +114,7 @@ function LookupPointer:New(parent, path)
 end
 
 --[[#method {
-	!!public (indexable, string[]) LookupPointer:Get()
+	public (indexable, string[]) LookupPointer:Get()
 
 	Returns the current parent and navigation table.
 }]]
@@ -123,9 +123,9 @@ function LookupPointer:Get()
 end
 
 --[[#method {
-	!!public void LookupPointer:Get(indexable parent, string[] path)
-		!!required parent: The base of the lookup to be performed.
-		!!required path: A list of strings to navigate through the parent with.
+	public void LookupPointer:Get(indexable parent, string[] path)
+		required parent: The base of the lookup to be performed.
+		required path: A list of strings to navigate through the parent with.
 
 	Sets a new parent and navigation table for the LookupPointer.
 }]]

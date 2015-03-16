@@ -1,66 +1,83 @@
-# Time
+<h1 class="class-title">Time</h1>
+<span class="file-link">(in [./Carbon/Time.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Time.lua))</span><br/>
 Provides utilities for working with time.
 
 **Inherits [none]**
 
 ## Methods
-#### void Time.Sleep(ufloat seconds)
-- seconds: The number of seconds to sleep.
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Sleep(<code>ufloat seconds</code>)
+- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`seconds`: The number of seconds to sleep.
+
+**Returns  void**
 
 Sleeps using the system timer.
 If no timer providers are available, will not do anything.
 
 
-#### ufloat Time.Get()
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Get()
 
+
+**Returns  ufloat**
 
 Returns a benchmarking time using the highest precision internal timer.
 
 
-#### ufloat Time.Weeks(ufloat weeks)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Weeks(<code>ufloat weeks</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of weeks to seconds.
 
 
-#### ufloat Time.Days(ufloat days)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Days(<code>ufloat days</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of days to seconds.
 
 
-#### ufloat Time.Hours(ufloat hours)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Hours(<code>ufloat hours</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of hours to seconds.
 
 
-#### ufloat Time.Minutes(ufloat minutes)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Minutes(<code>ufloat minutes</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of minutes to seconds.
 
 
-#### ufloat Time.Seconds(ufloat seconds)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Seconds(<code>ufloat seconds</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of seconds to seconds.
 Not very useful.
 
 
-#### ufloat Time.Milliseconds(ufloat milliseconds)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Milliseconds(<code>ufloat milliseconds</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of milliseconds to seconds.
 
 
-#### ufloat Time.Nanoseconds(ufloat nanoseconds)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Time.Nanoseconds(<code>ufloat nanoseconds</code>)
 
+
+**Returns  ufloat**
 
 Converts the given number of nanoseconds to seconds.
 
 
 ## Properties
 [none]
-
-

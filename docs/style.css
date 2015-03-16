@@ -1,0 +1,27 @@
+/* Read The Docs changes */
+.wy-menu-vertical a:visited {
+	color: #b3b3b3;
+}
+
+a.icon.icon-home {
+	color: #ffffff;
+}
+
+.wy-nav-content {
+	max-width: 1100px;
+}
+
+a:visited {
+	color: #2980B9;
+	text-decoration: none;
+}
+
+h1.class-title {
+	margin-bottom: 0;
+	line-height: 0.5;
+}
+
+/* Custom Classes */
+.file-link {
+	font-size: 70%;
+}

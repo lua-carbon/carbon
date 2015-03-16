@@ -12,7 +12,7 @@ local Carbon = (...)
 local OOP = Carbon.OOP
 
 --[[
-	#property !!public string Exception.Message {
+	#property public string Exception.Message {
 		An error message explaining the exception.
 	}
 ]]
@@ -27,8 +27,8 @@ local Exception = OOP:Class()
 	}
 
 --[[#method {
-	!!public Exception Exception:New(string message)
-		!!required message: The message to initialize the exception with.
+	public Exception Exception:New(string message)
+		required message: The message to initialize the exception with.
 
 	Creates a new generic exception with the given message.
 }]]
@@ -37,8 +37,8 @@ function Exception:_init(message)
 end
 
 --[[#method {
-	!!public void Exception:Throw([uint level])
-		!!optional level: An optional parameter passed onto Lua's error function.
+	public void Exception:Throw([uint level])
+		optional level: An optional parameter passed onto Lua's error function.
 
 	Throws the exception as a traditional Lua error.
 }]]

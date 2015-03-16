@@ -5,6 +5,8 @@
 	#description {
 		Provides async and sync I/O operations that work on multiple platforms.
 	}
+
+	#alias File IO.File
 ]]
 
 local Carbon = (...)
@@ -41,14 +43,14 @@ else
 	return fake
 end
 
---[[
-	File IO.Open(string path, [string mode, Nanotube tube])
-		path: The path to the file to open.
-		mode: The file mode to open the file with. Defaults to "rb".
-		tube: The Nanotube object to cycle file events through with asynchronous I/O calls on this file.
+--[[#method {
+	public @File IO.Open(@string path, [@string mode, @Nanotube tube])
+		required path: The path to the file to open.
+		optional mode: The file mode to open the file with. Defaults to "rb".
+		optional tube: The Nanotube object to cycle file events through with asynchronous I/O calls on this file.
 
-	Opens a new File object.
-]]
+	Opens a new @File object.
+}]]
 function IO.Open(path, mode, tube)
 	local handle, err = io_open(path, mode)
 
@@ -68,13 +70,13 @@ function IO.Open(path, mode, tube)
 	return file
 end
 
---[[
-	Promise<string> IO.ReadFileAsync(string path, [Nanotube tube])
-		path: The path to the file to read.
-		tube: The Nanotube object to cycle events through. Defaults to the global tube.
+--[[#method {
+	public @Promise<string> IO.ReadFileAsync(@string path, [@Nanotube tube])
+		required path: The path to the file to read.
+		optional tube: The Nanotube object to cycle events through. Defaults to the global tube.
 
-	Opens a file by a path and returns its contents.
-]]
+	Opens a file by a path and returns its contents through a @Promise.
+}]]
 function IO.ReadFileAsync(path, tube)
 	local promise = Promise:New()
 	local file, err = IO.Open(path, "rb", tube)
@@ -92,45 +94,42 @@ function IO.ReadFileAsync(path, tube)
 	return promise
 end
 
---[[
-	void IO.Close(File self)
-	void File:Close()
+--[[#method {
+	public @void IO.Close(@File self)
 	
-	Closes the file.
-]]
+	Closes the file. The same as `File:Close()`
+}]]
 function IO.Close(self)
 	return self.__handle:close()
 end
 
---[[
-	string IO.Read(File self)
-	string File:Read()
+--[[#method {
+	public @string IO.Read(@File self)
 
-	Reads the entire contents of the file.
-]]
+	Reads the entire contents of the file. The same as `File:Read()`
+}]]
 function IO.Read(self, ...)
 	return self.__handle:read(...)
 end
 
---[[
-	void IO.Write(File self, string contents)
-	string File:Write(string contents)
-		contents: The file contents
+--[[#method {
+	public @void IO.Write(@File self, @string contents)
+		required contents: The file contents
 
-	Writes to the file.
-]]
+	Writes to the file. The same as `File:Write(contents)`
+}]]
 function IO.Write(self, ...)
 	return self.__handle:write(...)
 end
 
---[[
-	Promise<string[]> IO.ReadBufferAsync(File self, [string[] into])
-	Promise<string[]> File:ReadBufferAsync([string[] into])
-		into: A list to write the output into instead of creating a new buffer.
+--[[#method {
+	public @Promise<@list<@string>> IO.ReadBufferAsync(@File self, [@list<@string> into])
+		optional into: A list to write the output into instead of creating a new buffer.
 
 	Reads a file and amortizes its loading through an event loop.
 	Returns the raw buffer, containing a series of strings.
-]]
+	The same as `File:ReadBufferAsync(into)`
+}]]
 function IO.ReadBufferAsync(self, into)
 	local promise = Promise:New()
 	local buffer = into or {}
@@ -150,14 +149,48 @@ function IO.ReadBufferAsync(self, into)
 	return promise
 end
 
---[[
-	Promise<string> IO.ReadBufferAsync(File self)
-	Promise<string> File:ReadBufferAsync()
+--[[#method {
+	public @Promise<@string> IO.ReadBufferAsync(File self)
 
 	Reads a file and amortizes its loading through an event loop.
-]]
+	The same as `File:ReadAsync()`
+}]]
 function IO.ReadAsync(self)
 	return IO.ReadBufferAsync(self):Then(table.concat)
 end
+
+--[[
+	IO exposes a "File" class that's a bit unusual.
+	#class IO.File
+	#description {
+		Represents a Carbon file I/O handle. See @IO for more documentation on the object.
+	}
+
+	#method {
+		public @void File:Close()
+
+		Closes the file.
+	}
+
+	#method {
+		public @string File:Read()
+
+		Reads the entire file.
+	}
+
+	#method {
+		public @void File:Write(@string contents)
+			required contents: The contents to write to the file.
+
+		Writes a contents to the file.
+	}
+
+	#method {
+		public @Promise<@list<@string>> File:ReadBufferAsync([@list<@string> into])
+			optional into: An existing buffer to read the file's contents into.
+
+		Reads the entire file into a buffer.
+	}
+]]
 
 return IO

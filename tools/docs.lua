@@ -15,25 +15,27 @@ end
 local docs = {
 	hand_files = {
 		"index.md, Index",
-		"Getting Started.md, Tutorials, Getting Started"
+		"Getting Started.md, Tutorials, Getting Started",
+		"Types.md, Tutorials, Carbon Types"
 	},
 	files_written = {},
 	parser = {},
 	generator = {},
 	classes_by_name = {},
-	images = {
-		optional = "https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square",
-		required = "https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square",
-		internal = "https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square",
-		public = "https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square",
-		private = "https://img.shields.io/badge/%20-private-d30500.svg?style=flat-square"
+	shorts = {
+		optional = "![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)",
+		required = "![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)",
+		internal = "![internal](https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square)",
+		unknown = "![unknown](https://img.shields.io/badge/%20-unknown-333333.svg?style=flat-square)",
+		public = "![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square)",
+		private = "![private](https://img.shields.io/badge/%20-private-d30500.svg?style=flat-square)"
 	},
 
 	-- Parser attributes
 	fs_base = "./Carbon",
 
 	-- Generator attributes
-	file_url_base = "https://github.com/lua-carbon/carbon/tree/master/Carbon",
+	file_url_base = "https://github.com/lua-carbon/carbon/tree/master/",
 	doc_url_base = "carbon.lpghatguy.com",
 	doc_dir = "./docs"
 }
@@ -49,6 +51,10 @@ end
 -- FIXME: this breaks with readthedocs
 local function absolute_link_to_class(name)
 	return "http://" .. path_join(path_join(docs.doc_url_base, "Classes"), name)
+end
+
+local function link_to_type(name)
+	return "Types#" .. name
 end
 
 local function link_to_class(name)
@@ -76,13 +82,24 @@ local function clean_multiline_string(a)
 end
 
 function docs.parser.method(out)
-	local start, finish, returns, name, args = out.definition:find("(.-)%s+([%w_:%.]+)(%b())")
+	local start, finish, prefix, name, args = out.definition:find("(.-)%s+([%w_:%.]+)(%b())")
 	if (not start) then
 		print(out.definition)
 		error("^^Invalid method definition ^^")
 	end
 
-	out.returns = returns
+	local sans_public, publics = prefix:gsub("^public", "")
+	local sans_private, privates = prefix:gsub("^private", "")
+	local sans_vis = publics > 0 and sans_public or sans_private
+	local visibility = publics > 0 and "public" or privates > 0 and "private" or "unknown"
+
+	if (visibility == "unknown") then
+		print("DOCGEN WARNING: Unknown visibility in method:", name)
+	end
+
+	out.prefix = prefix
+	out.visibility = visibility
+	out.returns = sans_vis
 	out.name = name
 	out.args = args:sub(2, -2)
 	out.declaration = ("%s %s%s"):format(returns, name, args)
@@ -90,7 +107,7 @@ function docs.parser.method(out)
 	out.arg_descriptions = {}
 	local start, finish, last = 0, 0, finish
 	while (true) do
-		start, finish, name, description = out.definition:find("\t([^\n\t:]+):%s*([^\n]+)", finish + 1)
+		start, finish, prefix, name, description = out.definition:find("\t([^\t\n:]-)([^%s:]+):%s*([^\n]+)", finish + 1)
 
 		if (not start) then
 			break
@@ -98,7 +115,7 @@ function docs.parser.method(out)
 
 		last = math.max(last, finish)
 
-		table.insert(out.arg_descriptions, {name = name, description = description})
+		table.insert(out.arg_descriptions, {prefix = prefix, name = name, description = description})
 	end
 	
 	out.description = clean_multiline_string(out.definition:sub(last + 1))
@@ -129,7 +146,9 @@ function docs.parser.classes(body, class_list)
 				description = "[no description]",
 				members = {},
 				inherits = {},
-				type_aliases = {}
+				type_aliases = {
+					[class[2]:match("([^%.]+)$")] = class[2]
+				}
 			}
 			docs.classes_by_name[class[2]] = object
 		end
@@ -189,11 +208,11 @@ function docs.parser.classes(body, class_list)
 			table.insert(object.members, method)
 		end
 
-		-- Match #property {...}
+		-- Match #property visibility class name {...}
 		local start, finish = 0, low_bound
 		while (true) do
-			local name, description
-			start, finish, name, description = body:find("#property%s+([^{]-)%s*(%b{})", finish)
+			local visibility, class, name, description
+			start, finish, visibility, class, name, description = body:find("#property%s*(%w+)%s*([^\n]-)%s+([%w%._]+)%s*(%b{})", finish)
 
 			if (not start or finish > high_bound) then
 				break
@@ -202,8 +221,17 @@ function docs.parser.classes(body, class_list)
 			description = description:sub(2, -2)
 			description = clean_multiline_string(description)
 
+			if (visibility ~= "public" and visibility ~= "private") then
+				print(("DOCGEN WARNING: Unknown visibility %q in property %s!"):format(
+					visibility, name
+				))
+				visibility = "unknown"
+			end
+
 			local property = {
 				type = "property",
+				visibility = visibility,
+				class = class,
 				name = name,
 				description = description
 			}
@@ -333,7 +361,8 @@ local function do_template(template, data)
 end
 
 local template_class = [[
-# {name}
+<h1 class="class-title">{name}</h1>
+<span class="file-link">(in [{filename}]({file_link}))</span><br/>
 {description}
 
 **Inherits {inherits_string}**
@@ -346,18 +375,20 @@ local template_class = [[
 ]]
 
 local template_method = [[
-#### {declaration}
+#### !!{visibility} {name}({backticked_args})
 {arg_descriptions_string}
+
+**Returns {returns}**
 
 {description}
 ]]
 
 local template_arg_description = [[
-- {name}: {description}
+- !!{prefix} `{name}`: {description}
 ]]
 
 local template_property = [[
-#### {name}
+#### !!{visibility} {class_string} {name}
 {description}
 ]]
 
@@ -377,6 +408,8 @@ function docs.generator.class(class)
 	end
 	class.inherits_string = next(inherits_buffer) and table.concat(inherits_buffer, ", ") or class.inherits_string
 
+	class.file_link = docs.file_url_base .. class.filename
+
 	-- Handle methods and properties
 	local methods_buffer = {}
 	local properties_buffer = {}
@@ -388,8 +421,15 @@ function docs.generator.class(class)
 			end
 
 			member.arg_descriptions_string = table.concat(arg_descriptions_buffer, "\n")
+			member.backticked_args = #member.args > 0 and ("<code>%s</code>"):format(member.args) or ""
 			table.insert(methods_buffer, do_template(template_method, member))
 		elseif (member.type == "property") then
+			if (#member.class > 0) then
+				member.class_string = "<code>" .. member.class .. "</code>"
+			else
+				member.class_string = "<code>[unknown]</code>"
+			end
+			
 			table.insert(properties_buffer, do_template(template_property, member))
 		end
 	end
@@ -406,35 +446,28 @@ function docs.generator.class(class)
 			target = target:sub(1, -2)
 		end
 
-		return ("[%s](%s)%s"):format(
-			target, link_to_class(class.type_aliases[target] or target),
-			post
-		)
+		-- Lowercase aliases are internal types, uppercase are classes.
+		if (target:sub(1, 1):lower() == target:sub(1, 1)) then
+			return ("[%s](%s)%s"):format(
+				target, link_to_type(target),
+				post
+			)
+		else
+			return ("[%s](%s)%s"):format(
+				target, link_to_class(class.type_aliases[target] or target),
+				post
+			)
+		end
 	end)
 
-	-- Inserts images using !!image
-	local images = {}
+	-- Inserts shorts using !!image
 	body = body:gsub("!!([\\%w_]+)", function(name)
 		if (name:sub(1, 1) == "\\") then
 			return "!!" .. name:sub(2)
 		end
 
-		images[name] = true
-
-		return ("![%s][%s]"):format(name, name)
+		return docs.shorts[name] or "UNKNOWN SHORT"
 	end)
-
-	-- Link images that are used in this document.
-	local images_buffer = {}
-	for name in pairs(images) do
-		if (docs.images[name]) then
-			table.insert(images_buffer, ("[%s]: %s"):format(
-				name, docs.images[name]
-			))
-		end
-	end
-
-	body = body .. "\n\n" .. table.concat(images_buffer, "\n")
 
 	docs.generator.write_file(path, body)
 end

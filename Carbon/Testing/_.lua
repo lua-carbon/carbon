@@ -45,9 +45,9 @@ local function test_report(self)
 end
 
 --[[#method {
-	!!public void Testing:TestFor(any module, Test test)
-		!!required module: The module to associate a test wtith.
-		!!required test: The test to associate with this module.
+	public void Testing:TestFor(any module, Test test)
+		required module: The module to associate a test wtith.
+		required test: The test to associate with this module.
 
 	Associates a test as necessary to prove functionality of a module.
 }]]
@@ -56,8 +56,8 @@ function Testing:TestFor(module, test)
 end
 
 --[[#method {
-	!!public void Testing:Requires(any module)
-		!!required module: The module to test before this one.
+	public void Testing:Requires(any module)
+		required module: The module to test before this one.
 
 	Denotes that this module will not test correcly if another module failed any tests.
 }]]
@@ -68,8 +68,8 @@ function Testing:Requires(module)
 end
 
 --[[#method {
-	!!public void Testing:Prerequisite(Test test)
-		!!required test: The test to mark.
+	public void Testing:Prerequisite(Test test)
+		required test: The test to mark.
 
 	Marks that a given test is a prerequisite of this test.
 	Should only be used within tests.
@@ -79,8 +79,8 @@ function Testing:Prerequisite(test)
 end
 
 --[[#method {
-	!!public void Testing:RunTest(Test test)
-		!!required test: The test to run.
+	public void Testing:RunTest(Test test)
+		required test: The test to run.
 
 	Runs a test if it has not been run already.
 }]]
@@ -108,8 +108,8 @@ function Testing:RunTest(test)
 end
 
 --[[#method {
-	!!public void Testing:RunTestList(table test)
-		!!required test: The test container to run.
+	public void Testing:RunTestList(table test)
+		required test: The test container to run.
 
 	Runs a list or dictionary full of tests.
 }]]
@@ -124,7 +124,7 @@ function Testing:RunTestList(source)
 end
 
 --[[#method {
-	!!public void Testing:RunAllTests()
+	public void Testing:RunAllTests()
 
 	Runs all the tests.
 }]]
@@ -134,7 +134,7 @@ function Testing:RunAllTests()
 end
 
 --[[#method {
-	!!public table Testing:GetResults()
+	public table Testing:GetResults()
 
 	Aggregates and returns the overall results for the tests that have been run.
 }]]

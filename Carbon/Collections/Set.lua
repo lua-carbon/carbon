@@ -23,8 +23,8 @@ Set.Is = {
 }
 
 --[[#method {
-	!!public Set Set:New([table data])
-		!!optional data: The data of the set. Empty if not given.
+	public Set Set:New([table data])
+		optional data: The data of the set. Empty if not given.
 
 	Turns the given object into a Set.
 	Allows method-style syntax.
@@ -46,9 +46,9 @@ function Set.Deserialize(source, out)
 end
 
 --[[#method {
-	!!public @List Set.ToList(table self, [table out])
-		!!required self: The set to collect members for.
-		!!optional out: Where to put the resulting data. Put into a new @List by default.
+	public @List Set.ToList(table self, [table out])
+		required self: The set to collect members for.
+		optional out: Where to put the resulting data. Put into a new @List by default.
 
 	Collects all members of the set and puts them in a list.
 }]]

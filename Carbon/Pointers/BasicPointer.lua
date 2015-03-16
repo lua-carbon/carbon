@@ -13,8 +13,8 @@ local Carbon = (...)
 local BasicPointer = {}
 
 --[[#method {
-	!!public BasicPointer BasicPointer:New(any? value)
-		!!optional value: The value the pointer should point at.
+	public BasicPointer BasicPointer:New(any? value)
+		optional value: The value the pointer should point at.
 
 	Creates a new BasicPointer, pointing at any sort of object.
 }]]
@@ -27,7 +27,7 @@ function BasicPointer:New(value)
 end
 
 --[[#method {
-	!!public any? BasicPointer:Get()
+	public any? BasicPointer:Get()
 
 	Returns the value currently pointed at by the BasicPointer.
 }]]
@@ -36,7 +36,7 @@ function BasicPointer:Get()
 end
 
 --[[#method {
-	!!public void BasicPointer:Set(any? value)
+	public void BasicPointer:Set(any? value)
 
 	Sets a new value to be pointed at by this BasicPointer.
 }]]

@@ -4,6 +4,7 @@ repo_url: https://github.com/lua-carbon/carbon
 pages:
 - [index.md, Index]
 - [Getting Started.md, Tutorials, Getting Started]
+- [Types.md, Tutorials, Carbon Types]
 - [Classes/Carbide.md, Classes, Carbide]
 - [Classes/Collections.Dictionary.md, Classes, Collections.Dictionary]
 - [Classes/Collections.List.md, Classes, Collections.List]
@@ -15,6 +16,7 @@ pages:
 - [Classes/Exceptions.CodeGenerationException.md, Classes, Exceptions.CodeGenerationException]
 - [Classes/Exceptions.NotImplementedException.md, Classes, Exceptions.NotImplementedException]
 - [Classes/IO.md, Classes, IO]
+- [Classes/IO.File.md, Classes, IO.File]
 - [Classes/Metadata.md, Classes, Metadata]
 - [Classes/Nanotube.md, Classes, Nanotube]
 - [Classes/OOP.md, Classes, OOP]

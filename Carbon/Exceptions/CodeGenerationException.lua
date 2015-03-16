@@ -11,11 +11,11 @@
 local Carbon = (...)
 
 --[[
-	#property string CodeGenerationException.Message {
+	#property public string Message {
 		Contains a message about what went wrong generating code.
 	}
 
-	#property string CodeGenerationException.GeneratedCode {
+	#property public string GeneratedCode {
 		Contains the code that was generated and failed to meet the criteria.
 	}
 ]]
@@ -27,9 +27,9 @@ local CodeGenerationException = Carbon.OOP:Class()
 	}
 
 --[[#method {
-	CodeGenerationException CodeGenerationException:New(string message, string code)
-		message: A message explaining why code generation failed.
-		code: The code that was generated.
+	public @CodeGenerationException CodeGenerationException:New(string message, string code)
+		required message: A message explaining why code generation failed.
+		required code: The code that was generated.
 
 	Denotes that code generation failed in a metaprogramming-enabled module.
 }]]

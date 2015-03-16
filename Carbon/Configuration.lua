@@ -12,8 +12,8 @@ local Carbon = (...)
 local Configuration = {}
 
 --[[#method {
-	Configuration Configuration:New(string name)
-		name: The name of the configuration object
+	public Configuration Configuration:New(string name)
+		required name: The name of the configuration object
 
 	Creates a new configuration object for configuring modules before they're loaded.
 }]]

@@ -4,6 +4,8 @@
 
 	#description {
 		Implements a model for asynchronous tasks via promises.
+
+		A type of `Promise<T>` is a Promise that returns the given type, `T`.
 	}
 ]]
 

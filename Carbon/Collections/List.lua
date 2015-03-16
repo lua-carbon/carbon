@@ -20,8 +20,8 @@ List.Is = {
 }
 
 --[[#method {
-	!!public List List:New([table data])
-		!!optional data: The data of the list. Empty if not given.
+	public List List:New([table data])
+		optional data: The data of the list. Empty if not given.
 
 	Turns the given object into a List.
 	Allows method-style syntax.
@@ -43,8 +43,8 @@ function List.Deserialize(source, out)
 end
 
 --[[#method {
-	!!public void List.Clear(List self)
-		!!required self: The list to clear.
+	public void List.Clear(List self)
+		required self: The list to clear.
 
 	Clears a list of all list values.
 }]]
@@ -55,9 +55,9 @@ function List.Clear(self)
 end
 
 --[[#method {
-	!!public table List.ShallowCopy(List self, [List to])
-		!!required self: The list to source data from
-		!!optional to: The list to copy into; an empty table if not given.
+	public table List.ShallowCopy(List self, [List to])
+		required self: The list to source data from
+		optional to: The list to copy into; an empty table if not given.
 
 	Shallow copies data from one table into another and returns the result.
 }]]
@@ -74,11 +74,11 @@ end
 List.Copy = List.ShallowCopy
 
 --[[#method {
-	!!public List List.DeepCopy(table self, [table to, table map, function copy_function, ...])
-		!!required self: The list to source data from.
-		!!optional to: The list to copy into; an empty table if not given.
-		!!internal map: A map projecting original values into copied values. Used internally.
-		!!optional copy_function: The function to copy members with: defaults to this method.
+	public @List List.DeepCopy(table self, [table to, table map, function copy_function, ...])
+		required self: The list to source data from.
+		optional to: The list to copy into; an empty table if not given.
+		internal map: A map projecting original values into copied values. Used internally.
+		optional copy_function: The function to copy members with: defaults to this method.
 
 	Performs a self-reference fixing deep copy from one list into another.
 	Handles self-references properly.

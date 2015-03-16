@@ -81,8 +81,8 @@ local meta = {
 local ForwardPointer = {}
 
 --[[#method {
-	!!public ForwardPointer ForwardPointer:New(any? value)
-		!!optional value: The value to point this ForwardPointer at.
+	public ForwardPointer ForwardPointer:New(any? value)
+		optional value: The value to point this ForwardPointer at.
 
 	Creates a new ForwardPointer pointing at the given value.
 }]]
@@ -96,7 +96,7 @@ function ForwardPointer:New(value)
 end
 
 --[[#method {
-	!!public any? ForwardPointer:Get()
+	public any? ForwardPointer:Get()
 
 	Returns an unwrapped version of the value pointed to by this pointer.
 }]]
@@ -105,8 +105,8 @@ function ForwardPointer:Get()
 end
 
 --[[#method {
-	!!public void ForwardPointer:New(any? value)
-		!!optional value: The value to point this ForwardPointer at.
+	public void ForwardPointer:New(any? value)
+		optional value: The value to point this ForwardPointer at.
 
 	Points the ForwardPointer at the given value.
 }]]

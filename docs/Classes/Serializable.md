@@ -1,4 +1,5 @@
-# Serializable
+<h1 class="class-title">Serializable</h1>
+<span class="file-link">(in [./Carbon/Serializable.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Serializable.lua))</span><br/>
 **Abstract**
 
 Provides an interface to serialize and deserialize data.
@@ -8,14 +9,18 @@ All methods provided by this class that are not overridden throw a [NotImplement
 **Inherits [OOP.Object](Classes/OOP.Object)**
 
 ## Methods
-#### ![public][public] string Serializable:Serialize()
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Serializable:Serialize()
 
+
+**Returns  string**
 
 Serializes the object into a string representation.
 
 
-#### ![public][public] self Serializable:DeserializeInPlace(string source)
-- ![required][required] source: A string containing a serialized representation of an instance of this class.
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Serializable:DeserializeInPlace(<code>string source</code>)
+- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`source`: A string containing a serialized representation of an instance of this class.
+
+**Returns  self**
 
 Deserializes a previously serialized instance of this class.
 Places the data into the class this method is called on.
@@ -28,17 +33,14 @@ self:Deserialize(source, self)
 Can be called with self:Deserialize!(source) in Carbide Lua.
 
 
-#### ![public][public] out Serializable.Deserialize(string source, Serializable out)
-- ![required][required] source: A string containing a serialized representation of an instance of this class.
-- ![optional][optional] out: Where to place the resulting data.
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Serializable.Deserialize(<code>string source, Serializable out</code>)
+- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`source`: A string containing a serialized representation of an instance of this class.
+- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`out`: Where to place the resulting data.
+
+**Returns  out**
 
 Deserializes the given source string and places it into the given Serializable `out` object.
 
 
 ## Properties
 [none]
-
-
-[required]: https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square
-[public]: https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square
-[optional]: https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square

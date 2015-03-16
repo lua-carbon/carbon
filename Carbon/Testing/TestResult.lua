@@ -31,8 +31,8 @@ local TestResult = {
 }
 
 --[[#method {
-	!!public TestResult TestResult:New(Test test)
-		!!required test: The test that will use this TestResult.
+	public TestResult TestResult:New(Test test)
+		required test: The test that will use this TestResult.
 
 	Creates a new TestResult object for unit tests to fill.
 }]]
@@ -48,7 +48,7 @@ function TestResult:New(test)
 end
 
 --[[#method {
-	!!public self TestResult:Pass()
+	public self TestResult:Pass()
 
 	Marks that a component of the TestResult has passed.
 }]]
@@ -59,8 +59,8 @@ function TestResult:Pass()
 end
 
 --[[#method {
-	!!public self TestResult:Message(string message)
-		!!required message: A message to record.
+	public self TestResult:Message(string message)
+		required message: A message to record.
 
 	Records a message about the test without failing the test.
 }]]
@@ -71,8 +71,8 @@ function TestResult:Message(message)
 end
 
 --[[#method {
-	!!public self TestResult:Warn(string message)
-		!!required message: A warning to issue.
+	public self TestResult:Warn(string message)
+		required message: A warning to issue.
 
 	Issues a warning without failing the test.
 }]]
@@ -83,8 +83,8 @@ function TestResult:Warn(message)
 end
 
 --[[#method {
-	!!public self TestResult:Fail(string message)
-		!!required message: The error message to store.
+	public self TestResult:Fail(string message)
+		required message: The error message to store.
 
 	Marks the test as a failure and increments the failure counter.
 }]]
@@ -97,9 +97,9 @@ function TestResult:Fail(message)
 end
 
 --[[#method {
-	!!public bool TestResult:Assert(bool condition, string message)
-		!!required condition: Condition to check.
-		!!required message: Message to report on failure.
+	public bool TestResult:Assert(bool condition, string message)
+		required condition: Condition to check.
+		required message: Message to report on failure.
 
 	Checks the given condition and adds a pass if it is true, or fails with the given message.
 }]]

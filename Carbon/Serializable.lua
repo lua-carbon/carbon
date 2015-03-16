@@ -21,7 +21,7 @@ local Serializable = OOP:Class()
 	}
 
 --[[#method {
-	!!public string Serializable:Serialize()
+	public string Serializable:Serialize()
 
 	Serializes the object into a string representation.
 }]]
@@ -30,8 +30,8 @@ function Serializable:Serialize()
 end
 
 --[[#method {
-	!!public self Serializable:DeserializeInPlace(string source)
-		!!required source: A string containing a serialized representation of an instance of this class.
+	public self Serializable:DeserializeInPlace(string source)
+		required source: A string containing a serialized representation of an instance of this class.
 
 	Deserializes a previously serialized instance of this class.
 	Places the data into the class this method is called on.
@@ -48,9 +48,9 @@ function Serializable:DeserializeInPlace(source)
 end
 
 --[[#method {
-	!!public out Serializable.Deserialize(string source, Serializable out)
-		!!required source: A string containing a serialized representation of an instance of this class.
-		!!optional out: Where to place the resulting data.
+	public out Serializable.Deserialize(string source, Serializable out)
+		required source: A string containing a serialized representation of an instance of this class.
+		optional out: Where to place the resulting data.
 
 	Deserializes the given source string and places it into the given Serializable `out` object.
 }]]
