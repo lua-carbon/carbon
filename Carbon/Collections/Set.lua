@@ -4,6 +4,12 @@
 
 	#description {
 		Provides operations for operating on unordered sets.
+
+		The @Set type Differs from the primtive @set type by adding methods to it.
+		It is possible to use these methods with a plain @set, just call them in a non-object oriented way:
+		```lua
+		Set.ToList(set)
+		```
 	}
 
 	#alias List Collections.List
@@ -23,7 +29,7 @@ Set.Is = {
 }
 
 --[[#method {
-	public Set Set:New([table data])
+	public @Set Set:New([@table data])
 		optional data: The data of the set. Empty if not given.
 
 	Turns the given object into a Set.
@@ -46,7 +52,7 @@ function Set.Deserialize(source, out)
 end
 
 --[[#method {
-	public @List Set.ToList(table self, [table out])
+	public @List Set.ToList(@table self, [@table out])
 		required self: The set to collect members for.
 		optional out: Where to put the resulting data. Put into a new @List by default.
 

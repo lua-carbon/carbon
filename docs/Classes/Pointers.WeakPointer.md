@@ -7,35 +7,35 @@ Provides an implicit copy barrier.
 **Inherits [none]**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) WeakPointer:New(<code>any? value</code>)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) WeakPointer:New(<code>[any](Types#any)? value</code>)
 - ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`value`: The value to initialize the pointer with.
 
-**Returns  WeakPointer**
+**Returns  [WeakPointer](Classes/Pointers.WeakPointer)**
 
-Creates a new WeakPointer.
+Creates a new [WeakPointer](Classes/Pointers.WeakPointer).
 
 
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) WeakPointer:Get()
 
 
-**Returns  any?**
+**Returns  [any](Types#any)?**
 
-Returns the value currently pointed to by the WeakPointer.
+Returns the value currently pointed to by the [WeakPointer](Classes/Pointers.WeakPointer).
 Use `WeakPointer:Available()` first to make sure the data is still valid.
 
 
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) WeakPointer:Set(<code>any? value</code>)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) WeakPointer:Set(<code>[any](Types#any)? value</code>)
 - ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`value`: The value to initialize the pointer with.
 
-**Returns  void**
+**Returns  [void](Types#void)**
 
-Sets a new value for the WeakPointer.
+Sets a new value for the [WeakPointer](Classes/Pointers.WeakPointer).
 
 
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) WeakPointer:Available()
 
 
-**Returns  bool**
+**Returns  [bool](Types#bool)**
 
 Returns whether the data the WeakPointer is pointing to is still valid for access.
 If this returns false, the data was probably garbage collected.

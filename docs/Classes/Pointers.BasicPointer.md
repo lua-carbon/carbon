@@ -7,10 +7,10 @@ Creates an implicit copy barrier.
 **Inherits [none]**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:New(<code>any? value</code>)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:New(<code>[any](Types#any)? value</code>)
 - ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`value`: The value the pointer should point at.
 
-**Returns  BasicPointer**
+**Returns  [BasicPointer](Classes/Pointers.BasicPointer)**
 
 Creates a new BasicPointer, pointing at any sort of object.
 
@@ -18,15 +18,15 @@ Creates a new BasicPointer, pointing at any sort of object.
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:Get()
 
 
-**Returns  any?**
+**Returns  [any](Types#any)?**
 
 Returns the value currently pointed at by the BasicPointer.
 
 
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:Set(<code>any? value</code>)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) BasicPointer:Set(<code>[any](Types#any)? value</code>)
 
 
-**Returns  void**
+**Returns  [void](Types#void)**
 
 Sets a new value to be pointed at by this BasicPointer.
 

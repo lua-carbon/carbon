@@ -7,6 +7,13 @@
 		Provides a set of utilities to operate on dictionary structures.
 
 		Most methods here are intended to be called as both OOP-style methods and on pure data objects.
+
+		The @Dictionary type Differs from the primtive @dictionary type by adding methods to it.
+		It is possible to use these methods with a plain @dictionary, just call them in a non-object oriented way:
+		```lua
+		Dictionary.Keys(dictionary)
+		Dictionary.ShallowCopy(dictionary)
+		```
 	}
 
 	#alias List Collections.List

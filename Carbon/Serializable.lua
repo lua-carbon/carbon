@@ -30,7 +30,7 @@ function Serializable:Serialize()
 end
 
 --[[#method {
-	public self Serializable:DeserializeInPlace(string source)
+	public self Serializable:DeserializeInPlace(@string source)
 		required source: A string containing a serialized representation of an instance of this class.
 
 	Deserializes a previously serialized instance of this class.
@@ -48,11 +48,11 @@ function Serializable:DeserializeInPlace(source)
 end
 
 --[[#method {
-	public out Serializable.Deserialize(string source, Serializable out)
+	public @Serializable out Serializable.Deserialize(@string source, @Serializable out)
 		required source: A string containing a serialized representation of an instance of this class.
 		optional out: Where to place the resulting data.
 
-	Deserializes the given source string and places it into the given Serializable `out` object.
+	Deserializes the given source string and places it into the given @Serializable `out` object, if given, or a new instance of the class.
 }]]
 function Serializable.Deserialize(source, out)
 	return nil, Carbon.Exceptions.NotImplementedException("Deserialize")

@@ -12,10 +12,10 @@ local Carbon = (...)
 local Configuration = {}
 
 --[[#method {
-	public Configuration Configuration:New(string name)
+	public @Configuration Configuration:New(string name)
 		required name: The name of the configuration object
 
-	Creates a new configuration object for configuring modules before they're loaded.
+	Creates a new @Configuration object for configuring modules before they're loaded.
 }]]
 function Configuration:New(name)
 	return function(body)

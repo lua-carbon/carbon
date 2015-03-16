@@ -27,7 +27,7 @@ end
 -- Discover a timer and sleep function
 --[[
 	#method {
-		public void Time.Sleep(ufloat seconds)
+		public @void Time.Sleep(@unumber seconds)
 			required seconds: The number of seconds to sleep.
 
 		Sleeps using the system timer.
@@ -35,7 +35,7 @@ end
 	}
 
 	#method {
-		public ufloat Time.Get()
+		public @unumber Time.Get()
 
 		Returns a benchmarking time using the highest precision internal timer.
 	}
@@ -100,7 +100,7 @@ else
 end
 
 --[[#method {
-	public ufloat Time.Weeks(ufloat weeks)
+	public @unumber Time.Weeks(@unumber weeks)
 
 	Converts the given number of weeks to seconds.
 }]]
@@ -109,7 +109,7 @@ function Time.Weeks(w)
 end
 
 --[[#method {
-	public ufloat Time.Days(ufloat days)
+	public @unumber Time.Days(@unumber days)
 
 	Converts the given number of days to seconds.
 }]]
@@ -118,7 +118,7 @@ function Time.Days(d)
 end
 
 --[[#method {
-	public ufloat Time.Hours(ufloat hours)
+	public @unumber Time.Hours(@unumber hours)
 
 	Converts the given number of hours to seconds.
 }]]
@@ -127,7 +127,7 @@ function Time.Hours(h)
 end
 
 --[[#method {
-	public ufloat Time.Minutes(ufloat minutes)
+	public @unumber Time.Minutes(@unumber minutes)
 
 	Converts the given number of minutes to seconds.
 }]]
@@ -136,7 +136,7 @@ function Time.Minutes(m)
 end
 
 --[[#method {
-	public ufloat Time.Seconds(ufloat seconds)
+	public @unumber Time.Seconds(@unumber seconds)
 
 	Converts the given number of seconds to seconds.
 	Not very useful.
@@ -146,7 +146,7 @@ function Time.Seconds(s)
 end
 
 --[[#method {
-	public ufloat Time.Milliseconds(ufloat milliseconds)
+	public @unumber Time.Milliseconds(@unumber milliseconds)
 
 	Converts the given number of milliseconds to seconds.
 }]]
@@ -155,7 +155,7 @@ function Time.Milliseconds(ms)
 end
 
 --[[#method {
-	public ufloat Time.Nanoseconds(ufloat nanoseconds)
+	public @unumber Time.Nanoseconds(@unumber nanoseconds)
 
 	Converts the given number of nanoseconds to seconds.
 }]]

@@ -5,6 +5,13 @@ Provides a set of utilities to operate on dictionary structures.
 
 Most methods here are intended to be called as both OOP-style methods and on pure data objects.
 
+The [Dictionary](Classes/Collections.Dictionary) type Differs from the primtive [dictionary](Types#dictionary) type by adding methods to it.
+It is possible to use these methods with a plain [dictionary](Types#dictionary), just call them in a non-object oriented way:
+```lua
+Dictionary.Keys(dictionary)
+Dictionary.ShallowCopy(dictionary)
+```
+
 **Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)**
 
 ## Methods

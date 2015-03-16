@@ -14,10 +14,10 @@ local Dictionary = Carbon.Collections.Dictionary
 local WeakPointer = {}
 
 --[[#method {
-	public WeakPointer WeakPointer:New(any? value)
+	public @WeakPointer WeakPointer:New(@any? value)
 		optional value: The value to initialize the pointer with.
 
-	Creates a new WeakPointer.
+	Creates a new @WeakPointer.
 }]]
 function WeakPointer:New(value)
 	local instance = newproxy(true)
@@ -30,9 +30,9 @@ function WeakPointer:New(value)
 end
 
 --[[#method {
-	public any? WeakPointer:Get()
+	public @any? WeakPointer:Get()
 
-	Returns the value currently pointed to by the WeakPointer.
+	Returns the value currently pointed to by the @WeakPointer.
 	Use `WeakPointer:Available()` first to make sure the data is still valid.
 }]]
 function WeakPointer:Get()
@@ -40,17 +40,17 @@ function WeakPointer:Get()
 end
 
 --[[#method {
-	public void WeakPointer:Set(any? value)
+	public @void WeakPointer:Set(@any? value)
 		optional value: The value to initialize the pointer with.
 
-	Sets a new value for the WeakPointer.
+	Sets a new value for the @WeakPointer.
 }]]
 function WeakPointer:Set(value)
 	getmetatable(self).__value[1] = value
 end
 
 --[[#method {
-	public bool WeakPointer:Available()
+	public @bool WeakPointer:Available()
 
 	Returns whether the data the WeakPointer is pointing to is still valid for access.
 	If this returns false, the data was probably garbage collected.

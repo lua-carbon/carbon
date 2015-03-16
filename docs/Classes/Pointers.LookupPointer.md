@@ -7,30 +7,30 @@ LookupPointers themselves are copied, but the data they point to is not.
 **Inherits [none]**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) LookupPointer:New(<code>indexable parent, string[] path</code>)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) LookupPointer:New(<code>[indexable](Types#indexable) parent, [list](Types#list)<string> path</code>)
 - ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`parent`: The base of the lookup to be performed.
 - ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`path`: A list of strings to navigate through the parent with.
 
-**Returns  LookupPointer**
+**Returns  [LookupPointer](Classes/Pointers.LookupPointer)**
 
-Creates a new LookupPointer pointing at the given parent with a given navigation table.
+Creates a new [LookupPointer](Classes/Pointers.LookupPointer) pointing at the given parent with a given navigation table.
 
 
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) LookupPointer:Get()
 
 
-**Returns  (indexable, string[])**
+**Returns  ([indexable](Types#indexable), [list](Types#list)<string>)**
 
 Returns the current parent and navigation table.
 
 
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) LookupPointer:Get(<code>indexable parent, string[] path</code>)
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) LookupPointer:Get(<code>[indexable](Types#indexable) parent, [list](Types#list)<string> path</code>)
 - ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`parent`: The base of the lookup to be performed.
 - ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`path`: A list of strings to navigate through the parent with.
 
-**Returns  void**
+**Returns  [void](Types#void)**
 
-Sets a new parent and navigation table for the LookupPointer.
+Sets a new parent and navigation table for the [LookupPointer](Classes/Pointers.LookupPointer).
 
 
 ## Properties

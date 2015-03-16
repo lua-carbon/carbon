@@ -5,6 +5,13 @@
 	
 	#description {
 		Provides utilities for operating on Lists and List-like data.
+
+		The @List type Differs from the primtive @list type by adding methods to it.
+		It is possible to use these methods with a plain @list, just call them in a non-object oriented way:
+		```lua
+		List.Clear(list)
+		List.ShallowCopy(list)
+		```
 	}
 ]]
 
@@ -20,10 +27,10 @@ List.Is = {
 }
 
 --[[#method {
-	public List List:New([table data])
+	public @List List:New([@list data])
 		optional data: The data of the list. Empty if not given.
 
-	Turns the given object into a List.
+	Turns the given object into a @List.
 	Allows method-style syntax.
 }]]
 function List:New(object)
@@ -43,7 +50,7 @@ function List.Deserialize(source, out)
 end
 
 --[[#method {
-	public void List.Clear(List self)
+	public @void List.Clear(@List self)
 		required self: The list to clear.
 
 	Clears a list of all list values.
@@ -55,7 +62,7 @@ function List.Clear(self)
 end
 
 --[[#method {
-	public table List.ShallowCopy(List self, [List to])
+	public @list List.ShallowCopy(@list self, [@list to])
 		required self: The list to source data from
 		optional to: The list to copy into; an empty table if not given.
 
@@ -74,7 +81,7 @@ end
 List.Copy = List.ShallowCopy
 
 --[[#method {
-	public @List List.DeepCopy(table self, [table to, table map, function copy_function, ...])
+	public @List List.DeepCopy(@list self, [@list to, @dictionary map, function copy_function, ...])
 		required self: The list to source data from.
 		optional to: The list to copy into; an empty table if not given.
 		internal map: A map projecting original values into copied values. Used internally.

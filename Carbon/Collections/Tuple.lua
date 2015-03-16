@@ -22,7 +22,7 @@ local Tuple = OOP:Class()
 	}
 
 --[[#method {
-	public Tuple Tuple:New(...)
+	public @Tuple Tuple:New(...)
 		optional ...: The values to initialize the Tuple with.
 
 	Creates a new Tuple.

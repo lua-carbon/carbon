@@ -9,7 +9,7 @@ A disposable List object for quick vararg transformations.
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Tuple:New(<code>...</code>)
 - ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`...`: The values to initialize the Tuple with.
 
-**Returns  Tuple**
+**Returns  [Tuple](Classes/Collections.Tuple)**
 
 Creates a new Tuple.
 
