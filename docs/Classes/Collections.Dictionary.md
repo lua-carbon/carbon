@@ -1,4 +1,4 @@
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Collections.Dictionary</h1>
 <span class="file-link">(in [./Carbon/Collections/Dictionary.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Collections/Dictionary.lua))</span><br/>
 Provides a set of utilities to operate on dictionary structures.

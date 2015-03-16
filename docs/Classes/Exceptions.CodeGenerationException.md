@@ -1,4 +1,4 @@
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Exceptions.CodeGenerationException</h1>
 <span class="file-link">(in [./Carbon/Exceptions/CodeGenerationException.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Exceptions/CodeGenerationException.lua))</span><br/>
 An exception to be generated when generation of code fails.

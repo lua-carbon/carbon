@@ -1,4 +1,4 @@
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Collections.Set</h1>
 <span class="file-link">(in [./Carbon/Collections/Set.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Collections/Set.lua))</span><br/>
 Provides operations for operating on unordered sets.

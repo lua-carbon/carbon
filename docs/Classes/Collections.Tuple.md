@@ -1,4 +1,4 @@
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Collections.Tuple</h1>
 <span class="file-link">(in [./Carbon/Collections/Tuple.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Collections/Tuple.lua))</span><br/>
 A disposable List object for quick vararg transformations.

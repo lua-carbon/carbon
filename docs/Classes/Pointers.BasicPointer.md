@@ -1,4 +1,4 @@
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Pointers.BasicPointer</h1>
 <span class="file-link">(in [./Carbon/Pointers/BasicPointer.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Pointers/BasicPointer.lua))</span><br/>
 Wraps an object to pass it by-reference.

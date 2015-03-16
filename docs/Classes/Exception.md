@@ -1,4 +1,4 @@
-<link href="style.css" rel="stylesheet" type="text/css"/>
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Exception</h1>
 <span class="file-link">(in [./Carbon/Exception.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Exception.lua))</span><br/>
 Signals detailed, strongly-typed error conditions.
