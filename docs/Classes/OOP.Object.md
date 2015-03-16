@@ -4,19 +4,20 @@ The base object for all instancable classes.
 **Inherits [OOP.BaseClass](Classes/OOP.BaseClass)**
 
 ## Methods
-#### Object Class:PlacementNew(indexable target?, ...)
-- target: Where to place the instance, will be provided if not given.
+#### ![public][public] Object Class:PlacementNew(indexable target?, ...)
+- ![optional][optional] target: Where to place the instance, will be provided if not given.
+- ![optional][optional] ...: Arguments to pass to the constructor
 
 Creates a new object and puts it into a given indexable object.
 
 
-#### Object Class:New(...)
+#### ![public][public] Object Class:New(...)
 
 
 Creates a new object and passes parameters to its initializer.
 
 
-#### Object Object:Copy()
+#### ![public][public] Object Object:Copy()
 
 
 Copies the given object.
@@ -26,3 +27,5 @@ Copies the given object.
 [none]
 
 
+[public]: https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square
+[optional]: https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square

@@ -305,8 +305,9 @@ OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 OOP.Object.Is[OOP.Object] = true
 
 --[[#method {
-	Object Class:PlacementNew(indexable target?, ...)
-		target: Where to place the instance, will be provided if not given.
+	!!public Object Class:PlacementNew(indexable target?, ...)
+		!!optional target: Where to place the instance, will be provided if not given.
+		!!optional ...: Arguments to pass to the constructor
 
 	Creates a new object and puts it into a given indexable object.
 }]]
@@ -405,7 +406,7 @@ function OOP.Object:PlacementNew(instance, ...)
 end
 
 --[[#method {
-	Object Class:New(...)
+	!!public Object Class:New(...)
 
 	Creates a new object and passes parameters to its initializer.
 }]]
@@ -414,7 +415,7 @@ function OOP.Object:New(...)
 end
 
 --[[#method {
-	Object Object:Copy()
+	!!public Object Object:Copy()
 
 	Copies the given object.
 }]]
