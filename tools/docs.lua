@@ -542,8 +542,6 @@ function docs.update_mkdocs()
 		table.insert(filename_buffer, "- [" .. file .. "]")
 	end
 
-	table.insert(filename_buffer, "- [ dud ]")
-
 	-- Sort the written files really well
 	table.sort(docs.files_written, function(a, b)
 		a = a:match("([^/]+)%.md$")
@@ -563,6 +561,8 @@ function docs.update_mkdocs()
 			file, file:match("^(.+)/.-$"), file:match("([^/]+)%.md$")
 		))
 	end
+
+	table.insert(filename_buffer, "- [style.css]")
 
 	body = body:gsub("pages%:.+", "pages:\n" .. table.concat(filename_buffer, "\n"))
 
