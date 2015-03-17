@@ -193,10 +193,6 @@ end
 function Vector:Generate(length, parameters)
 	parameters = parameters or {}
 
-	if (self.__cache[length]) then
-		return self.__cache[length]
-	end
-
 	local args = {}
 	for i = 1, length do
 		table.insert(args, arg_list[i])
@@ -270,8 +266,6 @@ function Vector:Generate(length, parameters)
 			SparseInstances = true,
 			ExplicitInitialization = true
 		}
-
-	self.__cache[length] = class
 
 	return class
 end
