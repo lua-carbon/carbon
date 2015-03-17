@@ -9,15 +9,9 @@
 ]]
 
 local Carbon = (...)
+local OOP = Carbon.OOP
+local Vector4 = Carbon.Math.Vector4
 
-local Quaternion, except = Carbon.Math.Vector:Generate(4)
-
-if (not Quaternion) then
-	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then
-		print(except.GeneratedCode)
-	end
-	
-	Carbon.Error(except)
-end
+local Quaternion = OOP:Class(Vector4)
 
 return Quaternion

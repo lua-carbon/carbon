@@ -1,12 +1,16 @@
 --[[
 	Carbon for Lua
-	FastMatrix Template
+	#class Math.FastMatrix<N, M>
 
-	Generates NxM matrices.
+	#description {
+		Generates `N`x`M` matrices.
 
-	This does not scale very well, but is fast for small values of N and M.
-	Works only for matrices smaller than 14x14.
-	For larger matrices, consider a different implementation.
+		Matrices native to Carbon are Row-Major!
+
+		This does not scale very well, but is fast for small values of `N` and `M`.
+		Works only for matrices smaller than 14x14.
+		For larger matrices, consider a different implementation.
+	}
 ]]
 
 local Carbon = (...)
@@ -34,6 +38,26 @@ FastMatrix = {
 					end
 				end %} = ...
 			end
+		]],
+
+		TransposeInPlace = function(self)
+			return self:Transpose(self)
+		end,
+
+		Transpose = [[
+			{% if (COLUMNS == ROWS) then %}
+				return function(self, out)
+					out = out or self.class:New()
+
+					for i = 1, {%=ROWS %} do
+						for j = 1, {%=COLUMNS %} do
+							out:Set(i, j, self:Get(j, i))
+						end
+					end
+
+					return out
+				end
+			{% end %}
 		]],
 
 		Zero = [[
@@ -73,13 +97,17 @@ FastMatrix = {
 			end
 		]],
 
-		SetValue = function(self, i, j, value)
-			self[(i - 1) * self.ColumnCount + j] = value
-		end,
+		Set = [[
+			return function(self, i, j, value)
+				self[(i - 1) * {%=COLUMNS %} + j] = value
+			end
+		]],
 
-		GetValue = function(self, i, j)
-			return self[(i - 1) * self.ColumnCount + j]
-		end,
+		Get = [[
+			return function(self, i, j)
+				return self[(i - 1) * {%=COLUMNS %} + j]
+			end
+		]],
 
 		MultiplyScalarInPlace = function(self, value)
 			return self:MultiplyScalar(value, self)
@@ -118,7 +146,7 @@ FastMatrix = {
 				local sum = 0
 				for k = 1, self.ColumnCount do
 					sum = sum +
-						(self:GetValue(i, k)) *
+						(self:Get(i, k)) *
 						(other[k])
 				end
 				out[i] = sum
@@ -143,10 +171,10 @@ FastMatrix = {
 					local sum = 0
 					for k = 1, self.ColumnCount do
 						sum = sum + 
-							(self:GetValue(i, k)) *
-							(other:GetValue(k, j))
+							(self:Get(i, k)) *
+							(other:Get(k, j))
 					end
-					out:SetValue(i, j, sum)
+					out:Set(i, j, sum)
 				end
 			end
 

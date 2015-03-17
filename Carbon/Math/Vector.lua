@@ -191,6 +191,10 @@ end
 	- @list<@number> DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
 }]]
 function Vector:Generate(length, parameters)
+	if (self.__cache[length]) then
+		return self.__cache[length]
+	end
+
 	parameters = parameters or {}
 
 	local args = {}
@@ -266,6 +270,8 @@ function Vector:Generate(length, parameters)
 			SparseInstances = true,
 			ExplicitInitialization = true
 		}
+
+	self.__cache[length] = class
 
 	return class
 end
