@@ -30,7 +30,7 @@ function support:Report()
 end
 
 -- Do we have LFS?
---local ok, lfs = pcall(require, "lfs")
+local ok, lfs = pcall(require, "lfs")
 if (not ok) then
 	lfs = nil
 end
