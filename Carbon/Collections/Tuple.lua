@@ -27,7 +27,7 @@ local Tuple = OOP:Class()
 
 	Creates a new Tuple.
 }]]
-function Tuple:_init(...)
+function Tuple:Init(...)
 	self.Unpack = self.class.Unpack
 	self.Destroy = self.class.Destroy
 	for i = 1, select("#", ...) do

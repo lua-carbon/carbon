@@ -10,6 +10,9 @@
 		This does not scale very well, but is fast for small values of `N` and `M`.
 		Works only for matrices smaller than 14x14.
 		For larger matrices, consider a different implementation.
+
+		The 'loose' form of a FastMatrix is a tuple of the following form `(N, M, ...)` where `N` and `M`
+		are the dimensions of the matrix and `...` are the values within it.
 	}
 ]]
 
@@ -25,8 +28,8 @@ FastMatrix = {
 	__cache = {},
 	__methods = {
 		-- Initializer:
-		-- FastMatrix:_init(...)
-		_init = [[
+		-- FastMatrix:Init(...)
+		Init = [[
 			return function(self, ...)
 				{% for i = 1, N do
 					_(("self[%d]"):format(
@@ -37,6 +40,36 @@ FastMatrix = {
 						_(",")
 					end
 				end %} = ...
+			end
+		]],
+
+		InitFromLoose = function(self, rows, columns, ...)
+			for i = 1, columns do
+				for j = 1, rows do
+					self[(i - 1) * columns + j] = select((i - 1) * columns + j, ...)
+				end
+			end
+
+			return self
+		end,
+
+		NewFromLoose = function(self, ...)
+			return self:New():InitFromLoose(...)
+		end,
+
+		ToLoose = [[
+			return function(self)
+				return
+				{% _(ROWS) _(",") _(COLUMNS) _(",")
+				for i = 1, N do
+					_(("self[%d]"):format(
+						i
+					))
+
+					if (i < N) then
+						_(",")
+					end
+				end %}
 			end
 		]],
 

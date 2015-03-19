@@ -1,6 +1,11 @@
 --[[
 	Carbon for Lua
-	3x3 FastMatrix
+	#class Matrix3x3
+	#inherits Math.FastMatrix
+
+	#description {
+		A 3x3 row-major matrix.
+	}
 ]]
 
 local Carbon = (...)
@@ -20,6 +25,8 @@ function Matrix3x3:OrthonormalizeInPlace()
 end
 
 function Matrix3x3:Orthonormalize(out)
+	out = out or self.class:New()
+
 	local m11 = self:Get(1, 1)
 	local m12 = self:Get(1, 2)
 	local m13 = self:Get(1, 3)
@@ -60,7 +67,7 @@ function Matrix3x3:Orthonormalize(out)
 		m22 * m32 +
 		m23 * m33
 
-	dot_0 = 
+	dot_0 =
 		m11 * m31 +
 		m12 * m32 +
 		m13 * m33
@@ -75,19 +82,11 @@ function Matrix3x3:Orthonormalize(out)
 	m32 = m32 / length
 	m33 = m33 / length
 
-	if (out) then
-		return self.class:PlacementNew(out,
-			m11, m12, m13,
-			m21, m22, m23,
-			m31, m32, m33
-		)
-	else
-		return self.class:New(
-			m11, m12, m13,
-			m21, m22, m23,
-			m31, m32, m33
-		)
-	end
+	return out:InitFromLoose(3, 3,
+		m11, m12, m13,
+		m21, m22, m23,
+		m31, m32, m33
+	)
 end
 
 return Matrix3x3

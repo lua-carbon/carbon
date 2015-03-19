@@ -33,7 +33,7 @@ local CodeGenerationException = Carbon.OOP:Class()
 
 	Denotes that code generation failed in a metaprogramming-enabled module.
 }]]
-function CodeGenerationException:_init(message, code)
+function CodeGenerationException:Init(message, code)
 	self.GeneratedCode = code
 	self.Message = self.Message .. message
 end

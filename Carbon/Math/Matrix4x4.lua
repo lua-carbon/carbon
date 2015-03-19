@@ -1,6 +1,11 @@
 --[[
 	Carbon for Lua
-	4x4 FastMatrix
+	#class Math.Matrix4x4
+	#inherits Math.Matrix3x3, Math.FastMatrix
+
+	#description {
+		A 4x4 row-major matrix.
+	}
 ]]
 
 local Carbon = (...)

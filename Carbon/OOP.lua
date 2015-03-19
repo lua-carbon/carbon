@@ -325,13 +325,11 @@ function OOP.Object:PlacementNew(instance, ...)
 				Dictionary.ShallowCopy(self.__members, index)
 
 				if (not index.class) then
-					index.class = newproxy(true)
-					getmetatable(index.class).__index = self
+					index.class = self.__class_reference
 				end
 
 				if (not index.Is) then
-					index.Is = newproxy(true)
-					getmetatable(index.Is).__index = self.Is
+					index.Is = self.__is_reference
 				end
 
 				self.__ext_ffi_metatype = {
@@ -359,20 +357,8 @@ function OOP.Object:PlacementNew(instance, ...)
 
 	if (not self.__attributes.EXT_LJ_Struct) then
 		instance.self = instance.self or instance
-
-		if (not self.__class_reference) then
-			self.__class_reference = newproxy(true)
-			getmetatable(self.__class_reference).__index = self
-		end
-
-		instance.class = self.__class_reference
-
-		if (not self.__is_reference) then
-			self.__is_reference = newproxy(true)
-			getmetatable(self.__is_reference).__index = self.Is
-		end
-
-		instance.Is = self.__is_reference
+		instance.class = instance.class or self.__class_reference
+		instance.Is = instance.Is or self.__is_reference
 
 		-- InstanceIndirection attribute wraps the object in a userdata
 		-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
@@ -388,8 +374,8 @@ function OOP.Object:PlacementNew(instance, ...)
 		end
 	end
 
-	if (self.__members._init) then
-		local err, result = self.__members._init(instance, ...)
+	if (self.__members.Init) then
+		local err, result = self.__members.Init(instance, ...)
 
 		if (err == false) then
 			return err, result
@@ -412,6 +398,15 @@ end
 }]]
 function OOP.Object:New(...)
 	return self:PlacementNew(nil, ...)
+end
+
+--[[#method  0.85 {
+	public self Object:Init(...)
+
+	Initializes the object with the given parameters.
+}]]
+OOP.Object.__base_members.Init = function(self)
+	return self
 end
 
 --[[#method 0.8 {
@@ -473,6 +468,12 @@ function OOP:Class(based_on)
 	local class = Dictionary.DeepCopy(based_on)
 
 	class.Is[class] = true
+
+	class.__class_reference = newproxy(true)
+	getmetatable(class.__class_reference).__index = class
+
+	class.__is_reference = newproxy(true)
+	getmetatable(class.__is_reference).__index = class.Is
 
 	setmetatable(class, {
 		__newindex = class.__members,

@@ -63,7 +63,7 @@ Vector2 = Carbon.OOP:Class()
 		0, 0
 	}
 
-function Vector2:_init(x, y)
+function Vector2:Init(x, y)
 	self[1] = x or 0
 	self[2] = y or 0
 end
@@ -92,7 +92,7 @@ local Person = Carbon.OOP:Class()
 		Name = "Unknown"
 	}
 
-function Person:_init(name)
+function Person:Init(name)
 	self.Name = name or "Unknown"
 end
 

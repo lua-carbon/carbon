@@ -28,7 +28,7 @@ local NotImplementedException = Carbon.OOP:Class()
 
 	Generates a new @NotImplementedException for a method with the given name.
 }]]
-function NotImplementedException:_init(method_name)
+function NotImplementedException:Init(method_name)
 	self.MethodName = method_name or self.MethodName
 	self.Message = self.Message .. self.MethodName
 end

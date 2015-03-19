@@ -27,7 +27,7 @@ local Named = Carbon.OOP:Class()
 	}
 
 -- Give it a constructor with an optional 'name' argument
-function Named:_init(name)
+function Named:Init(name)
 	self.Name = name or "Unknown"
 end
 

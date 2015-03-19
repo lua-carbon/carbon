@@ -23,7 +23,7 @@ local Promise = OOP:Class()
 		__fail_chain = {}
 	}
 
-function Promise:_init(handler)
+function Promise:Init(handler)
 	if (handler) then
 		handler(self)
 	end

@@ -10,6 +10,9 @@ This does not scale very well, but is fast for small values of `N` and `M`.
 Works only for matrices smaller than 14x14.
 For larger matrices, consider a different implementation.
 
+The 'loose' form of a FastMatrix is a tuple of the following form `(N, M, ...)` where `N` and `M`
+are the dimensions of the matrix and `...` are the values within it.
+
 **Inherits [none]**
 
 ## Methods

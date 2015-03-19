@@ -23,7 +23,7 @@ local Nanotube = OOP:Class()
 		__events = {}
 	}
 
-function Nanotube:_init()
+function Nanotube:Init()
 	self.__time = Time.Get()
 end
 

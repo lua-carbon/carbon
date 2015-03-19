@@ -1,8 +1,11 @@
 --[[
 	Carbon for Lua
-	Vector3 Object
+	#class Math.Vector3
+	#inherits Math.Vector<3>
 
-	Provides a 3-length vector with X, Y, and Z keys.
+	#description {
+		A 3-length vector.
+	}
 ]]
 
 local Carbon = (...)

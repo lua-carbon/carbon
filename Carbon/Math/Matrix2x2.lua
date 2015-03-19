@@ -1,6 +1,11 @@
 --[[
 	Carbon for Lua
-	2x2 FastMatrix
+	#class Math.Matrix2x2
+	#inherits Math.FastMatrix
+
+	#description {
+		A 2x2 row-major matrix.
+	}
 ]]
 
 local Carbon = (...)

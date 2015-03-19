@@ -24,7 +24,7 @@ local Vector2 = Carbon.OOP:Class()
 
 -- Initializer for the object
 -- Called when we create the object
-function Vector2:_init(x, y)
+function Vector2:Init(x, y)
 	self[1] = x or 0
 	self[2] = y or 0
 end

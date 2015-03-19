@@ -1,10 +1,10 @@
 --[[
-	Graphene 1.1.0-alpha
+	Graphene 1.1.0-alpha2
 	https://github.com/lua-carbon/graphene
 ]]
 
 -- Current graphene version
-local g_version = {1, 1, 0, "alpha"}
+local g_version = {1, 1, 0, "alpha2"}
 local g_versionstring = ("%s.%s.%s-%s"):format((unpack or table.unpack)(g_version))
 
 -- Determine Lua capabilities and library support
@@ -30,7 +30,7 @@ function support:Report()
 end
 
 -- Do we have LFS?
-local ok, lfs = pcall(require, "lfs")
+--local ok, lfs = pcall(require, "lfs")
 if (not ok) then
 	lfs = nil
 end
@@ -163,7 +163,7 @@ if (g_file) then
 else
 	print("Could not locate lua-graphene source file; is debug info stripped?")
 	print("This code path is untested.")
-	g_root = (...):match("(.+)%..-$")
+	g_root = ((...):match("(.+)%..-$") or ""):gsub("%.", "/")
 end
 
 -- Contains our actual core
@@ -344,9 +344,20 @@ end
 ]]
 local import_dict
 if (support.lua51) then
-	function import_dict(source, level, except)
+	function import_dict(source, level, list, is_white)
 		level = level and level + 2 or 2
-		except = except or {}
+
+		if (is_white) then
+			local white = list
+			list = {}
+			for key, value in pairs(source) do
+				if (not white[key]) then
+					list[key] = true
+				end
+			end
+		else
+			list = list or {}
+		end
 
 		local cenv = getfenv(level)
 
@@ -356,15 +367,25 @@ if (support.lua51) then
 		end
 
 		for key, value in pairs(source) do
-			if (not except[key] and key ~= "__import_exceptions") then
+			if (not list[key]) then
 				cenv[key] = value
 			end
 		end
 	end
 elseif (support.debug) then
-	function import_dict(source, level, except)
+	function import_dict(source, level, list, is_white)
 		level = level and level + 2 or 2
-		except = except or {}
+		
+		if (is_white) then
+			list = {}
+			for key, value in pairs(source) do
+				if (not is_white[key]) then
+					list[key] = true
+				end
+			end
+		else
+			list = list or {}
+		end
 
 		local func = debug.getinfo(level).func
 		local i = 1
@@ -394,7 +415,7 @@ elseif (support.debug) then
 		end
 
 		for key, value in pairs(source) do
-			if (not except[key] and key ~= "__import_exceptions") then
+			if (not black[key]) then
 				cenv[key] = value
 			end
 		end
@@ -976,10 +997,9 @@ local indexable = {
 	userdata = true
 }
 
-local directory_interface = {
+G.Directory = {
 	IsDirectory = true
 }
-G.Directory = directory_interface
 
 --[[
 	G Directory:GetGrapheneCore()
@@ -987,12 +1007,12 @@ G.Directory = directory_interface
 	Returns the Graphene core, defined as G in this file.
 	Not affected by any rebasing rules.
 ]]
-function directory_interface:GetGraphene()
+function G.Directory:GetGraphene()
 	return G
 end
 
 -- DEPRECATED: GetGrapheneCore -> GetGraphene
-directory_interface.GetGrapheneCore = directory_interface.GetGraphene
+G.Directory.GetGrapheneCore = G.Directory.GetGraphene
 
 --[[
 	void Directory:AddGrapheneSubmodule(string path)
@@ -1000,7 +1020,7 @@ directory_interface.GetGrapheneCore = directory_interface.GetGraphene
 
 	Adds a submodule relative to this directory.
 ]]
-function directory_interface:AddGrapheneSubmodule(path)
+function G.Directory:AddGrapheneSubmodule(path)
 	if (type(path) ~= "string") then
 		error("Bad argument #1: submodule path must be a string!", 2)
 	end
@@ -1015,7 +1035,7 @@ end
 
 	Aliases an object with a library path. Will overwrite existing entries mercilessly.
 ]]
-function directory_interface:AddGrapheneAlias(path, object)
+function G.Directory:AddGrapheneAlias(path, object)
 	if (type(path) ~= "string") then
 		error("Bad argument #1: module alias path must be a string!", 2)
 	end
@@ -1029,7 +1049,7 @@ end
 
 	Creates a directory based on a submodule of the current directory.
 ]]
-function directory_interface:CreateGrapheneSubdirectory(path)
+function G.Directory:CreateGrapheneSubdirectory(path)
 	if (type(path) ~= "string") then
 		error("Bad argument #1: subdirectory path must be a string!", 2)
 	end
@@ -1043,14 +1063,16 @@ end
 
 	Imports a directory using a defined mapping of aliases.
 ]]
-function directory_interface:ImportAs(mapping)
-	local except = self.__import_exceptions or G.Importable.__import_exceptions
+function G.Directory:ImportAs(mapping)
+	local white = self.__import_whitelist
+	local black = self.__import_blacklist or G.Importable.__import_blacklist
+
 	local fake = {}
 	for key, value in pairs(mapping) do
 		fake[value] = self[key]
 	end
 
-	import_dict(fake, 1, except)
+	import_dict(fake, 1, white or black, not not white)
 end
 
 --[[
@@ -1058,14 +1080,16 @@ end
 
 	Imports the given members from the library.
 ]]
-function directory_interface:Import(...)
-	local except = self.__import_exceptions or G.Importable.__import_exceptions
+function G.Directory:Import(...)
+	local white = self.__import_whitelist
+	local black = self.__import_blacklist or G.Importable.__import_blacklist
+
 	local fake = {}
 	for i = 1, select("#", ...) do
 		fake[select(i, ...)] = self[select(i, ...)]
 	end
 
-	import_dict(fake, 1, except)
+	import_dict(fake, 1, white or black, not not white)
 end
 
 --[[
@@ -1073,11 +1097,13 @@ end
 
 	Loads the entire library and imports all of its members.
 ]]
-function directory_interface:ImportAll()
-	local except = self.__import_exceptions or G.Importable.__import_exceptions
+function G.Directory:ImportAll()
+	local white = self.__import_whitelist
+	local black = self.__import_blacklist or G.Importable.__import_blacklist
+
 	self:FullyLoad()
 
-	import_dict(self, 1, except)
+	import_dict(self, 1, white or black, not not white)
 end
 
 --[[
@@ -1085,7 +1111,7 @@ end
 
 	Recursively loads all members of the directory.
 ]]
-function directory_interface:FullyLoad()
+function G.Directory:FullyLoad()
 	local list = self.__directory:List()
 
 	for i, member in ipairs(list) do
@@ -1102,6 +1128,63 @@ function directory_interface:FullyLoad()
 	end
 
 	return self
+end
+
+--[[
+	Describes can object that can be imported.
+]]
+G.Importable = {
+	__import_whitelist = nil,
+	__import_blacklist = {
+		Import = true,
+		ImportAs = true,
+		ImportAll = true,
+		Except = true,
+		__import_blacklist = true
+	},
+	Import = G.Directory.Import,
+	ImportAs = G.Directory.ImportAs
+}
+
+--[[
+	self Importable:ImportAll()
+
+	Imports all of the members of the object.
+]]
+function G.Importable:ImportAll()
+	local white = self.__import_whitelist
+	local black = self.__import_blacklist or G.Importable.__import_blacklist
+
+	import_dict(self, 1, white or black, not not white)
+end
+
+--[[
+	self Importable:Except(table block)
+		block: A set of things to ignore.
+
+	Adds exceptions to the object's import list.
+]]
+function G.Importable:Except(block)
+	if (self.__import_blacklist == G.Importable.__import_blacklist) then
+		self.__import_blacklist = dictionary_shallow_copy(G.Importable.__import_blacklist)
+	end
+
+	dictionary_shallow_copy(block, self.__import_blacklist)
+
+	return self
+end
+
+function G.Importable:Only(block)
+	self.__import_whitelist = dictionary_shallow_copy(block, self.__import_whitelist)
+
+	return self
+end
+
+local function xerrhand(...)
+	return ("\n%s\n%s"):format(
+		tostring(...),
+		debug.traceback()
+	)
 end
 
 --[[
@@ -1143,7 +1226,7 @@ local function load_file(file, base)
 		end
 	end
 
-	local ok, result = pcall(method, base or G.base, meta)
+	local ok, result = xpcall(method, xerrhand, base or G.base, meta)
 	if (not ok) then
 		if (G.__error_callback) then
 			G.__error_callback("run", result)
@@ -1164,6 +1247,20 @@ end
 --===============--
 -- GRAPHENE API --
 --===============--
+
+--[[
+	object G:MakeImportable(table object)
+		object: The object to augment.
+
+	Makes an object an Importable.
+]]
+function G:MakeImportable(object)
+	setmetatable(object, {
+		__index = self.Importable
+	})
+
+	return object
+end
 
 --[[
 	table? G.Metadata:Get(any object, any field)
@@ -1195,57 +1292,6 @@ function G.Metadata:Set(object, metadata)
 	end
 
 	self.__store[object] = metadata
-end
-
--- This library can be accessed by any codefile by using
--- Directory:GetGrapheneCore()
--- on any Graphene directory.
-
-G.Importable = {
-	__import_exceptions = {
-		Import = true,
-		ImportAs = true,
-		ImportAll = true,
-		Except = true,
-		__import_exceptions = true
-	},
-	Import = G.Directory.Import,
-	ImportAs = G.Directory.ImportAs
-}
-
-function G.Importable:ImportAll()
-	local except = self.__import_exceptions or G.__import_exceptions
-	import_dict(self, 1, except)
-end
-
---[[
-	self Importable:Except(table block)
-		block: A set of things to ignore.
-
-	Adds exceptions to the object's import list.
-]]
-function G.Importable:Except(block)
-	if (self.__import_exceptions == G.Importable.__import_exceptions) then
-		self.__import_exceptions = dictionary_shallow_copy(G.Importable.__import_exceptions)
-	end
-
-	dictionary_shallow_copy(block, self.__import_exceptions)
-
-	return self
-end
-
---[[
-	object G:MakeImportable(table object)
-		object: The object to augment.
-
-	Makes an object importable like a Graphene Directory.
-]]
-function G:MakeImportable(object)
-	setmetatable(object, {
-		__index = self.Importable
-	})
-
-	return object
 end
 
 --[[
@@ -1357,7 +1403,7 @@ function G:CreateDirectory(path, directory)
 		}
 	end
 
-	local object = dictionary_shallow_copy(directory_interface)
+	local object = dictionary_shallow_copy(self.Directory)
 	object.__initializing = {}
 	object.__directory = directory
 
@@ -1547,7 +1593,6 @@ function G:Get(path, target, key)
 					end
 
 					-- Get rid of the old path and load into a new one according to our metadata directive.
-					self.__loaded[path] = nil
 
 					path = meta.Path or path
 

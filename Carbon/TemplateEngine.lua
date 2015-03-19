@@ -37,7 +37,7 @@ local function strip_line_if_just_spaces(line)
 	end
 end
 
-function TemplateEngine:_init()
+function TemplateEngine:Init()
 	self.DefaultEnvironment = {
 		math = math,
 		string = string,

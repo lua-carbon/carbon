@@ -31,7 +31,7 @@ local Vector = {
 
 			Creates a new @Vector with `N` components.
 		}]]
-		_init = [[
+		Init = [[
 			return function(self, {%= ARGS_STRING %})
 				{% for i, arg in ipairs(ARGS) do
 					_(("self[%d] = %s or %s;"):format(
@@ -191,9 +191,13 @@ end
 	- @list<@number> DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
 }]]
 function Vector:Generate(length, parameters)
+	-- I had a good reason why this function cached based on parameters,
+	-- but I don't remember it now, so for now it does not cache.
+	--[[
 	if (self.__cache[length]) then
 		return self.__cache[length]
 	end
+	]]
 
 	parameters = parameters or {}
 
@@ -271,7 +275,7 @@ function Vector:Generate(length, parameters)
 			ExplicitInitialization = true
 		}
 
-	self.__cache[length] = class
+	--self.__cache[length] = class
 
 	return class
 end

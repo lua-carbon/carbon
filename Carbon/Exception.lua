@@ -32,7 +32,7 @@ local Exception = OOP:Class()
 
 	Creates a new generic exception with the given message.
 }]]
-function Exception:_init(message)
+function Exception:Init(message)
 	self.Message = message or self.Message
 end
 
