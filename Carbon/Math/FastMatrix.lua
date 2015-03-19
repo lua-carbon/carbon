@@ -142,6 +142,21 @@ FastMatrix = {
 			end
 		]],
 
+		GetRow = [[
+			return function(self, i)
+				return 
+				{% for j = 1, COLUMNS do
+					_(("self[(i - 1) * %d + %d]"):format(
+						COLUMNS, j
+					))
+
+					if (j < COLUMNS) then
+						_(",")
+					end
+				end %}
+			end
+		]],
+
 		MultiplyScalarInPlace = function(self, value)
 			return self:MultiplyScalar(value, self)
 		end,

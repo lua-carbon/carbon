@@ -1,6 +1,4 @@
 local Carbon = (...)
-local Vector3 = Carbon.Math.Vector3
-local vec3 = Vector3:New(1, 2, 3)
-
-print(vec3:Components())
-print(vec3->x, vec3->y, vec3->z)
+local Matrix3x3 = Carbon.Math.Matrix3x3
+local mat3 = Matrix3x3:Identity()
+print(mat3:ToLooseQuaternion())

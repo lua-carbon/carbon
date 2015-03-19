@@ -20,6 +20,67 @@ if (not Matrix3x3) then
 	Carbon.Error(except)
 end
 
+-- Reference:
+-- http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+function Matrix3x3:ToLooseQuaternion()
+	local m11, m12, m13 = self:GetRow(1)
+	local m21, m22, m23 = self:GetRow(2)
+	local m31, m32, m33 = self:GetRow(3)
+
+	local trace = m11 + m22 + m33 + 1
+
+	if (trace > 0) then
+		local S = 0.5 / math.sqrt(trace)
+		local W = 0.25 / S
+
+		return
+			(m32 - m23) * S,
+			(m13 - m31) * S,
+			(m21 - m12) * S,
+			W
+	else
+		local tr = m11 + m22 + m33
+
+		if (tr > 0) then
+			local S = math.sqrt(tr + 1) * 2 -- S = 4*qw
+			return
+				(m32 - m23) / S,
+				(m13 - m31) / S,
+				(m21 - m12) / S,
+				0.25 * S
+		elseif (m11 > m22 and m11 > m33) then
+			local S = math.sqrt(1 + m11 - m22 - m33) * 2 -- S = 4*qx
+			return
+				0.25 * S,
+				(m12 + m21) / S,
+				(m13 + m31) / S,
+				(m32 - m23) / S
+		elseif (m22 > m33) then
+			local S = math.sqrt(1 + m22 - m11 - m33) * 2 -- S = 4*qy
+			return
+				(m12 + m21) / S,
+				0.25 * S,
+				(m23 + m32) / S,
+				(m13 - m31) / S
+		else
+			local S = math.sqrt(1 + m33 - m11 - m22) * 2 -- S = 4*qz
+			return
+				(m13 + m31) / S,
+				(m23 + m32) / S,
+				0.25 * S,
+				(m21 - m12) / S
+		end
+	end
+end
+
+function Matrix3x3:ToQuaternion()
+	if (out) then
+		out:Init(self:ToLooseQuaternion())
+	else
+		return Quaternion:New(self:ToLooseQuaternion())
+	end
+end
+
 function Matrix3x3:OrthonormalizeInPlace()
 	return self:Orthonormalize(self)
 end
@@ -27,15 +88,9 @@ end
 function Matrix3x3:Orthonormalize(out)
 	out = out or self.class:New()
 
-	local m11 = self:Get(1, 1)
-	local m12 = self:Get(1, 2)
-	local m13 = self:Get(1, 3)
-	local m21 = self:Get(2, 1)
-	local m22 = self:Get(2, 2)
-	local m23 = self:Get(2, 3)
-	local m31 = self:Get(3, 1)
-	local m32 = self:Get(3, 2)
-	local m33 = self:Get(3, 3)
+	local m11, m12, m13 = self:GetRow(1)
+	local m21, m22, m23 = self:GetRow(2)
+	local m31, m32, m33 = self:GetRow(3)
 
 	-- Compute q1
 

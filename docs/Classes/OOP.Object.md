@@ -24,6 +24,14 @@ Creates a new object and passes parameters to its initializer.
 Creates a new object and puts it into a given indexable object.
 
 <hr/>
+#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Object:Init(<code>...</code>)
+
+
+**Returns  self**
+
+Initializes the object with the given parameters.
+
+<hr/>
 #### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Object:Copy()
 
 

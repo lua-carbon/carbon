@@ -39,27 +39,6 @@ function Matrix4x4:Translation(x, y, z, out)
 	)
 end
 
-function Matrix4x4:ToQuaternion(out)
-	out = out or Quaternion:New()
-
-	local trace = self[1] + self[6] + self[11] + 1
-
-	if (trace > 0) then
-		local S = 0.5 / math.sqrt(trace)
-		local W = 0.25 / S
-
-		out[1] = (self[10] - self[7]) * S
-		out[2] = (self[3] - self[9]) * S
-		out[3] = (self[5] - self[2]) * S
-		out[4] = W
-	else
-		--error("OH GOD UH OH")
-	end
-end
-
-function Matrix4x4:ToLooseQuaternion()
-end
-
 function Matrix4x4:Rotation(x, y, z, out)
 	-- todo: requires MultiplyLooseMatrix implementation
 end
