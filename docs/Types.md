@@ -35,6 +35,9 @@ A conglomerate type indicating that this type can be any of the types `x`, `y`, 
 Where `x` is any other type, represnts that type or `nil`. Known as a "nullable" type, since types are non-nullable by default.
 This is the same as `(x, nil)`.
 
+## `loose<x>`
+Many types can be represented in a 'loose' form, often used for intermediate conversions to prevent allocations.
+
 ## `any`
 A generic type that any other type can fill.
 
