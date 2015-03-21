@@ -1,7 +1,7 @@
 --[[
 	Carbon for Lua
 	#class Matrix3x3
-	#inherits Math.FastMatrix
+	#inherits Math.Matrix
 
 	#description {
 		A 3x3 row-major matrix.
@@ -10,7 +10,7 @@
 
 local Carbon = (...)
 
-local Matrix3x3, except = Carbon.Math.FastMatrix:Generate(3, 3)
+local Matrix3x3, except = Carbon.Math.Matrix:Generate(3, 3)
 
 if (not Matrix3x3) then
 	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then

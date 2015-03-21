@@ -1,6 +1,6 @@
 --[[
 	Carbon for Lua
-	#class Math.FastMatrix<N, M>
+	#class Math.Matrix<N, M>
 
 	#description {
 		Generates `N`x`M` matrices.
@@ -11,7 +11,7 @@
 		Works only for matrices smaller than 14x14.
 		For larger matrices, consider a different implementation.
 
-		The 'loose' form of a FastMatrix, `@loose<@FastMatrix>` is of the form `(N, M, ...)` where `N` and `M`
+		The 'loose' form of a Matrix, `@loose<@Matrix>` is of the form `(N, M, ...)` where `N` and `M`
 		are the dimensions of the matrix and `...` represents the values within it.
 	}
 ]]
@@ -27,16 +27,16 @@ if (not ok) then
 	ffi = nil
 end
 
-local FastMatrix
-FastMatrix = {
+local Matrix
+Matrix = {
 	Engine = TemplateEngine:New(),
 	__cache = {},
 	__methods = {
 		-- Initializer:
-		-- FastMatrix:Init(...)
+		-- Matrix:Init(...)
 		--[[#method 1 {
-			class public @FastMatrix FastMatrix:New(...)
-			-alias: object public self FastMatrix:Init(...)
+			class public @Matrix Matrix:New(...)
+			-alias: object public self Matrix:Init(...)
 				optional ...: The values to initialize the matrix with. Each value is 0 by default.
 
 			Initializes or creates a matrix with a set of row-major values.
@@ -56,8 +56,8 @@ FastMatrix = {
 		]],
 
 		--[[#method 1 {
-			class public @FastMatrix FastMatrix:NewFromLoose(@unumber rows, @unumber columns, ...)
-			-alias: object public self FastMatrix:InitFromLoose(@unumber rows, @unumber columns, ...)
+			class public @Matrix Matrix:NewFromLoose(@unumber rows, @unumber columns, ...)
+			-alias: object public self Matrix:InitFromLoose(@unumber rows, @unumber columns, ...)
 				required rows: The number of rows the loose data has.
 				required columns: The number of columns the loose data has.
 				optional ...: The data to initialize or create the matrix with.
@@ -79,9 +79,9 @@ FastMatrix = {
 		end,
 
 		--[[#method {
-			object public @loose<@FastMatrix> FastMatrix:ToLoose()
+			object public @loose<@Matrix> Matrix:ToLoose()
 
-			Returns the loose form of the @FastMatrix, decomposing into a tuple.
+			Returns the loose form of the @Matrix, decomposing into a tuple.
 		}]]
 		ToLoose = [[
 			return function(self)
@@ -251,7 +251,7 @@ FastMatrix = {
 				return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
 			end
 
-			out = out or FastMatrix:Generate(self.RowCount, other.ColumnCount):New()
+			out = out or Matrix:Generate(self.RowCount, other.ColumnCount):New()
 
 			for i = 1, self.RowCount do
 				for j = 1, other.ColumnCount do
@@ -284,7 +284,7 @@ FastMatrix = {
 	},
 	__metatable = {
 		-- String conversion:
-		-- tostring(FastMatrix)
+		-- tostring(Matrix)
 		__tostring = [[
 			return function(self)
 				local buffer = {}
@@ -298,13 +298,13 @@ FastMatrix = {
 }
 
 --[[
-	function FastMatrix:__generate_method(string body, table arguments)
+	function Matrix:__generate_method(string body, table arguments)
 		body: Template-enabled code to return a function.
 		arguments: Arguments to the template
 
 	Generates a method using Carbon's TemplateEngine and handles errors.
 ]]
-function FastMatrix:__generate_method(body, arguments, env)
+function Matrix:__generate_method(body, arguments, env)
 	local generated, exception = self.Engine:Render(body, arguments)
 
 	if (not generated) then
@@ -322,14 +322,14 @@ function FastMatrix:__generate_method(body, arguments, env)
 end
 
 --[[
-	Class<FastMatrix> FastMatrix:Generate(uint rows, uint columns)
+	Class<Matrix> Matrix:Generate(uint rows, uint columns)
 		rows: The number of rows in the matrix
 		columns: The number of columns in the matrix
 
-	Generates a new FastMatrix class with the given keys and parameters. Results are cached, but this method may still be slow.
+	Generates a new Matrix class with the given keys and parameters. Results are cached, but this method may still be slow.
 	It performs runtime code generation and template parsing on each generated class.
 ]]
-function FastMatrix:Generate(rows, columns)
+function Matrix:Generate(rows, columns)
 	local n = rows * columns
 
 	if (self.__cache[rows] and self.__cache[rows][columns]) then
@@ -337,7 +337,7 @@ function FastMatrix:Generate(rows, columns)
 	end
 
 	local class = OOP:Class()
-	class.Is[FastMatrix] = true
+	class.Is[Matrix] = true
 
 	local body = {
 		RowCount = rows,
@@ -356,7 +356,7 @@ function FastMatrix:Generate(rows, columns)
 	}
 
 	local env = {
-		FastMatrix = self,
+		Matrix = self,
 		ffi = ffi
 	}
 
@@ -401,4 +401,4 @@ function FastMatrix:Generate(rows, columns)
 	return class
 end
 
-return FastMatrix
+return Matrix

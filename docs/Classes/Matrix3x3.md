@@ -4,7 +4,7 @@
 
 A 3x3 row-major matrix.
 
-**Inherits [Math.FastMatrix](Classes/Math.FastMatrix)**
+**Inherits [Math.Matrix](Classes/Math.Matrix)**
 
 ## Methods
 [none]

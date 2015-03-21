@@ -1,7 +1,7 @@
 --[[
 	Carbon for Lua
 	#class Math.Matrix4x4
-	#inherits Math.Matrix3x3, Math.FastMatrix
+	#inherits Math.Matrix3x3, Math.Matrix
 
 	#description {
 		A 4x4 row-major matrix.
@@ -11,7 +11,7 @@
 local Carbon = (...)
 local Quaternion = Carbon.Math.Quaternion
 
-local Matrix4x4, except = Carbon.Math.FastMatrix:Generate(4, 4)
+local Matrix4x4, except = Carbon.Math.Matrix:Generate(4, 4)
 
 local sin, cos = math.sin, math.cos
 

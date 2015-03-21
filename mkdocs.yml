@@ -20,7 +20,7 @@ pages:
 - [Classes/Math.Color.md, Classes, Math.Color]
 - [Classes/Math.ColorRGB.md, Classes, Math.ColorRGB]
 - [Classes/Math.ColorRGBA.md, Classes, Math.ColorRGBA]
-- [Classes/Math.FastMatrix.md, Classes, Math.FastMatrix]
+- [Classes/Math.Matrix.md, Classes, Math.Matrix]
 - [Classes/Math.Matrix2x2.md, Classes, Math.Matrix2x2]
 - [Classes/Math.Matrix4x4.md, Classes, Math.Matrix4x4]
 - [Classes/Math.Quaternion.md, Classes, Math.Quaternion]
