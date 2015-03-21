@@ -115,11 +115,11 @@ local Vector = {
 		]],
 
 		--[[#method {
-			public @tuple<N, unumber> Vector<N>:Components()
+			public @tuple<N, unumber> Vector<N>:GetComponents()
 
 			Returns the individual components of the @Vector<N> in order. Much faster than `unpack`.
 		}]]
-		Components = [[
+		GetComponents = [[
 			return function(self)
 				return 
 				{% for i = 1, LENGTH do

@@ -22,6 +22,11 @@ local OOP = Carbon.OOP
 local CodeGenerationException = Carbon.Exceptions.CodeGenerationException
 local TemplateEngine = Carbon.TemplateEngine
 
+local ok, ffi = pcall(require, "ffi")
+if (not ok) then
+	ffi = nil
+end
+
 local FastMatrix
 FastMatrix = {
 	Engine = TemplateEngine:New(),
@@ -83,6 +88,21 @@ FastMatrix = {
 				return
 				{% _(ROWS) _(",") _(COLUMNS) _(",")
 				for i = 1, N do
+					_(("self[%d]"):format(
+						i
+					))
+
+					if (i < N) then
+						_(",")
+					end
+				end %}
+			end
+		]],
+
+		GetComponents = [[
+			return function(self)
+				return
+				{% for i = 1, N do
 					_(("self[%d]"):format(
 						i
 					))
@@ -214,9 +234,7 @@ FastMatrix = {
 			for i = 1, self.RowCount do
 				local sum = 0
 				for k = 1, self.ColumnCount do
-					sum = sum +
-						(self:Get(i, k)) *
-						(other[k])
+					sum = sum + self:Get(i, k) * other[k]
 				end
 				out[i] = sum
 			end
@@ -239,16 +257,30 @@ FastMatrix = {
 				for j = 1, other.ColumnCount do
 					local sum = 0
 					for k = 1, self.ColumnCount do
-						sum = sum + 
-							(self:Get(i, k)) *
-							(other:Get(k, j))
+						sum = sum + self:Get(i, k) * other:Get(k, j)
 					end
 					out:Set(i, j, sum)
 				end
 			end
 
 			return out
-		end
+		end,
+
+		ToNative = [[
+			{% if (ffi) then %}
+				return function(self, out)
+					if (out) then
+						for i = 1, {%=N %} do
+							out[i - 1] = self[i]
+						end
+					else
+						return ffi.new("float[{%=N %}]", self:GetComponents())
+					end
+				end
+			{% else %}
+				return function() end
+			{% end %}
+		]]
 	},
 	__metatable = {
 		-- String conversion:
@@ -319,11 +351,13 @@ function FastMatrix:Generate(rows, columns)
 		N = n,
 		ROWS = rows,
 		COLUMNS = columns,
-		CLASS = class
+		CLASS = class,
+		ffi = ffi
 	}
 
 	local env = {
-		FastMatrix = self
+		FastMatrix = self,
+		ffi = ffi
 	}
 
 	-- Process methods for the generated class

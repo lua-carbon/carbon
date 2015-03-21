@@ -37,13 +37,13 @@ The following parameters are valid:
 - [list](Types#list)&lt;[number](Types#number)&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Components()</h4>
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:GetComponents()</h4>
 
 
 
 **Returns  [tuple](Types#tuple)&lt;N, unumber&gt;**
 
-public [tuple](Types#tuple)&lt;N, unumber&gt; Vector&lt;N&gt;:Components()
+public [tuple](Types#tuple)&lt;N, unumber&gt; Vector&lt;N&gt;:GetComponents()
 
 Returns the individual components of the [Vector](Classes/Math.Vector)&lt;N&gt; in order. Much faster than `unpack`.
 
