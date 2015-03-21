@@ -5,6 +5,8 @@
 
 	#description {
 		A 3-length vector.
+
+		The loose form of a @Vector3, `@loose<@Vector3>` is of the form `(x, y, z)`.
 	}
 ]]
 

@@ -4,7 +4,7 @@
 
 Implements a model for asynchronous tasks via promises.
 
-A type of `Promise<T>` is a Promise that returns the given type, `T`.
+A type of <code>Promise&lt;T&gt;</code> is a Promise that returns the given type, `T`.
 
 **Inherits [none]**
 

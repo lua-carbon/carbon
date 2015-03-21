@@ -7,43 +7,51 @@ Provides async and sync I/O operations that work on multiple platforms.
 **Inherits [none]**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.Open(<code>[string](Types#string) path, [[string](Types#string) mode, [Nanotube](Classes/Nanotube) tube]</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`path`: The path to the file to open.
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`mode`: The file mode to open the file with. Defaults to "rb".
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`tube`: The Nanotube object to cycle file events through with asynchronous I/O calls on this file.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.Open(<code>[string](Types#string) path, [[string](Types#string) mode, [Nanotube](Classes/Nanotube) tube]</code>)</h4>
 
-**Returns  [File](Classes/IO.File)**
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`path`: The path to the file to open.
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`mode`: The file mode to open the file with. Defaults to "rb".
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`tube`: The Nanotube object to cycle file events through with asynchronous I/O calls on this file.
 
-Opens a new [File](Classes/IO.File) object.
+**Returns  [File](Classes/File)**
+
+Opens a new [File](Classes/File) object.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.Close(<code>[File](Classes/IO.File) self</code>)
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.Close(<code>[File](Classes/File) self</code>)</h4>
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Close()</h4>
+
 
 
 **Returns  [void](Types#void)**
 
-Closes the file. The same as `File:Close()`
+Closes the file.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.Read(<code>[File](Classes/IO.File) self</code>)
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.Read(<code>[File](Classes/File) self</code>)</h4>
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Read()</h4>
+
 
 
 **Returns  [string](Types#string)**
 
-Reads the entire contents of the file. The same as `File:Read()`
+Reads the entire contents of the file.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.ReadBufferAsync(<code>[File](Classes/IO.File) self, [[list](Types#list)&lt;[string](Types#string)&gt; into]</code>)
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`into`: A list to write the output into instead of creating a new buffer.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.ReadBufferAsync(<code>[File](Classes/File) self, [[list](Types#list)&lt;[string](Types#string)&gt; into]</code>)</h4>
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:ReadBufferAsync(<code>[[list](Types#list)&lt;[string](Types#string)&gt; into]</code>)</h4>
+
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`into`: A list to write the output into instead of creating a new buffer.
 
 **Returns  [Promise](Classes/Promise)&lt;[list](Types#list)&lt;[string](Types#string)&gt;&gt;**
 
 Reads a file and amortizes its loading through an event loop.
 Returns the raw buffer, containing a series of strings.
-The same as `File:ReadBufferAsync(into)`
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.ReadBufferAsync(<code>File self</code>)
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.ReadBufferAsync(<code>File self</code>)</h4>
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:ReadBufferAsync()</h4>
+
 
 
 **Returns  [Promise](Classes/Promise)&lt;[string](Types#string)&gt;**
@@ -52,21 +60,24 @@ Reads a file and amortizes its loading through an event loop.
 The same as `File:ReadAsync()`
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.ReadFileAsync(<code>[string](Types#string) path, [[Nanotube](Classes/Nanotube) tube]</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`path`: The path to the file to read.
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`tube`: The Nanotube object to cycle events through. Defaults to the global tube.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.ReadFileAsync(<code>[string](Types#string) path, [[Nanotube](Classes/Nanotube) tube]</code>)</h4>
+
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`path`: The path to the file to read.
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`tube`: The Nanotube object to cycle events through. Defaults to the global tube.
 
 **Returns  [Promise](Classes/Promise)&lt;string&gt;**
 
 Opens a file by a path and returns its contents through a [Promise](Classes/Promise).
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) IO.Write(<code>[File](Classes/IO.File) self, [string](Types#string) contents</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`contents`: The file contents
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  IO.Write(<code>[File](Classes/File) self, [string](Types#string) contents</code>)</h4>
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Write(<code>[string](Types#string) contents</code>)</h4>
+
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`contents`: The file contents
 
 **Returns  [void](Types#void)**
 
-Writes to the file. The same as `File:Write(contents)`
+Writes to the file.
 
 
 ## Properties

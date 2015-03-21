@@ -7,8 +7,9 @@ An exception to be generated when a feature is not (yet) implemented.
 **Inherits [Exception](Classes/Exception)**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) NotImplementedException:New(<code>string method_name</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`method_name`: The name of the method that isn't yet implemented.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  NotImplementedException:New(<code>string method_name</code>)</h4>
+
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`method_name`: The name of the method that isn't yet implemented.
 
 **Returns  [NotImplementedException](Classes/Exceptions.NotImplementedException)**
 
@@ -16,6 +17,6 @@ Generates a new [NotImplementedException](Classes/Exceptions.NotImplementedExcep
 
 
 ## Properties
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) <code>string</code> MethodName
+#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> MethodName
 The name of the method that isn't implemented.
 

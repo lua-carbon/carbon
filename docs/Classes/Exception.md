@@ -7,16 +7,18 @@ Signals detailed, strongly-typed error conditions.
 **Inherits [OOP.Object](Classes/OOP.Object)**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Exception:New(<code>[string](Types#string) message</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`message`: The message to initialize the exception with.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:New(<code>[string](Types#string) message</code>)</h4>
+
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`message`: The message to initialize the exception with.
 
 **Returns  [Exception](Classes/Exception)**
 
 Creates a new generic exception with the given message.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Exception:Throw(<code>[[uint](Types#uint) level]</code>)
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`level`: An optional parameter passed onto Lua's error function.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:Throw(<code>[[uint](Types#uint) level]</code>)</h4>
+
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`level`: An optional parameter passed onto Lua's error function.
 
 **Returns  [void](Types#void)**
 
@@ -24,6 +26,6 @@ Throws the exception as a traditional Lua error.
 
 
 ## Properties
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) <code>[string](Types#string)</code> Exception.Message
+#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>[string](Types#string)</code> Exception.Message
 An error message explaining the exception.
 

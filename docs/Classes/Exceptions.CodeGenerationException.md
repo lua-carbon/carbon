@@ -7,9 +7,10 @@ An exception to be generated when generation of code fails.
 **Inherits [Exception](Classes/Exception)**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) CodeGenerationException:New(<code>string message, string code</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`message`: A message explaining why code generation failed.
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`code`: The code that was generated.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  CodeGenerationException:New(<code>string message, string code</code>)</h4>
+
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`message`: A message explaining why code generation failed.
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`code`: The code that was generated.
 
 **Returns  [CodeGenerationException](Classes/Exceptions.CodeGenerationException)**
 
@@ -17,10 +18,10 @@ Denotes that code generation failed in a metaprogramming-enabled module.
 
 
 ## Properties
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) <code>string</code> GeneratedCode
+#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> GeneratedCode
 Contains the code that was generated and failed to meet the criteria.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) <code>string</code> Message
+#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> Message
 Contains a message about what went wrong generating code.
 

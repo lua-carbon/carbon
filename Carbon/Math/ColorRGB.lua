@@ -5,6 +5,8 @@
 
 	#description {
 		Provides an RGB color class with no alpha.
+
+		The loose form of a @ColorRGB, `@loose<@ColorRGB>` is of the form `(r, g, b)`.
 	}
 ]]
 

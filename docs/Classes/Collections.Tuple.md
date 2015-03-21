@@ -7,16 +7,18 @@ A disposable List object for quick vararg transformations.
 **Inherits [OOP.Object](Classes/OOP.Object)**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Tuple:New(<code>...</code>)
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`...`: The values to initialize the Tuple with.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Tuple:New(<code>...</code>)</h4>
+
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: The values to initialize the Tuple with.
 
 **Returns  [Tuple](Classes/Collections.Tuple)**
 
 Creates a new Tuple.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Tuple:Destroy(<code>...</code>)
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`...`: Data to pipe through this method.
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Tuple:Destroy(<code>...</code>)</h4>
+
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: Data to pipe through this method.
 
 **Returns  ...**
 
@@ -24,10 +26,13 @@ Destroys the tuple, passing any arguments that it was given as return values.
 This will put the tuple back into the main buffer, usually.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Tuple:Unpack()
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Tuple:Unpack()</h4>
+
 
 
 **Returns  ...**
+
+public ... Tuple:Unpack()
 
 Unpacks and destroys the Tuple, returning all its values.
 

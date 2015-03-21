@@ -4,6 +4,8 @@
 
 A 4-length vector.
 
+The loose form of a [Vector4](Classes/Math.Vector4), <code>[loose](Types#loose)&lt;[Vector4](Classes/Math.Vector4)&gt;</code> is of the form <code>(x, y, z, w)</code>.
+
 **Inherits [Math.Vector](Classes/Math.Vector)<4>**
 
 ## Methods

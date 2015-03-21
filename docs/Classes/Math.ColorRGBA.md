@@ -4,6 +4,8 @@
 
 Provides an RGB color class with alpha.
 
+The loose form of a [ColorRGBA](Classes/Math.ColorRGBA), <code>[loose](Types#loose)&lt;[ColorRGBA](Classes/Math.ColorRGBA)&gt;</code> is of the form <code>(r, g, b, a)</code>.
+
 **Inherits [Math.Color](Classes/Math.Color), [Math.Vector](Classes/Math.Vector)<4>**
 
 ## Methods

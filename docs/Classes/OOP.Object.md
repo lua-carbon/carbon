@@ -7,35 +7,45 @@ The base object for all instancable classes.
 **Inherits [OOP.BaseClass](Classes/OOP.BaseClass)**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Class:New(<code>...</code>)
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:New(<code>...</code>)</h4>
+
 
 
 **Returns  Object**
 
+public Object Class:New(...)
+
 Creates a new object and passes parameters to its initializer.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Class:PlacementNew(<code>[indexable](Types#indexable)? target, ...</code>)
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`target`: Where to place the instance, will be provided if not given.
-- ![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)&nbsp;&nbsp;`...`: Arguments to pass to the constructor
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:PlacementNew(<code>[indexable](Types#indexable)? target, ...</code>)</h4>
+
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`target`: Where to place the instance, will be provided if not given.
+- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: Arguments to pass to the constructor
 
 **Returns  Object**
 
 Creates a new object and puts it into a given indexable object.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Object:Init(<code>...</code>)
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Init(<code>...</code>)</h4>
+
 
 
 **Returns  self**
 
+public self Object:Init(...)
+
 Initializes the object with the given parameters.
 
 <hr/>
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Object:Copy()
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Copy()</h4>
+
 
 
 **Returns  Object**
+
+public Object Object:Copy()
 
 Copies the given object.
 

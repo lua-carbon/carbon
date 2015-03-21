@@ -11,8 +11,8 @@
 		Works only for matrices smaller than 14x14.
 		For larger matrices, consider a different implementation.
 
-		The 'loose' form of a FastMatrix is a tuple of the following form `(N, M, ...)` where `N` and `M`
-		are the dimensions of the matrix and `...` are the values within it.
+		The 'loose' form of a FastMatrix, `@loose<@FastMatrix>` is of the form `(N, M, ...)` where `N` and `M`
+		are the dimensions of the matrix and `...` represents the values within it.
 	}
 ]]
 
@@ -29,6 +29,13 @@ FastMatrix = {
 	__methods = {
 		-- Initializer:
 		-- FastMatrix:Init(...)
+		--[[#method 1 {
+			class public @FastMatrix FastMatrix:New(...)
+			-alias: object public self FastMatrix:Init(...)
+				optional ...: The values to initialize the matrix with. Each value is 0 by default.
+
+			Initializes or creates a matrix with a set of row-major values.
+		}]]
 		Init = [[
 			return function(self, ...)
 				{% for i = 1, N do
@@ -43,6 +50,15 @@ FastMatrix = {
 			end
 		]],
 
+		--[[#method 1 {
+			class public @FastMatrix FastMatrix:NewFromLoose(@unumber rows, @unumber columns, ...)
+			-alias: object public self FastMatrix:InitFromLoose(@unumber rows, @unumber columns, ...)
+				required rows: The number of rows the loose data has.
+				required columns: The number of columns the loose data has.
+				optional ...: The data to initialize or create the matrix with.
+
+			Initializes or creates a matrix with a set of sized row-major values.
+		}]]
 		InitFromLoose = function(self, rows, columns, ...)
 			for i = 1, columns do
 				for j = 1, rows do
@@ -57,6 +73,11 @@ FastMatrix = {
 			return self:New():InitFromLoose(...)
 		end,
 
+		--[[#method {
+			object public @loose<@FastMatrix> FastMatrix:ToLoose()
+
+			Returns the loose form of the @FastMatrix, decomposing into a tuple.
+		}]]
 		ToLoose = [[
 			return function(self)
 				return

@@ -52,7 +52,7 @@ local function indexable(item)
 end
 
 --[[#method 1 {
-	public @Dictionary Dictionary:New([@table data])
+	class public @Dictionary Dictionary:New([@table data])
 		optional data: The data of the dictionary. Empty if not specified.
 
 	Turns the given object into a @Dictionary.
@@ -75,7 +75,8 @@ function Dictionary.Deserialize(source, out)
 end
 
 --[[#method {
-	public @List Dictionary.Keys(@table self)
+	class public @List Dictionary.Keys(@table self)
+	-alias: object public @List Dictionary:Keys()
 		required self: The table to retrieve keys for.
 
 	Returns all the keys in the table.
@@ -91,7 +92,8 @@ function Dictionary.Keys(self)
 end
 
 --[[#method {
-	public @List Dictionary.Values(@table self)
+	class public @List Dictionary.Values(@table self)
+	-alias: object public @List Dictionary:Values()
 		required self: The table to retrieve values for.
 
 	Returns all the values in the table in a @List
@@ -107,7 +109,8 @@ function Dictionary.Values(self)
 end
 
 --[[#method {
-	public @Set Dictionary.ToSet(@table self, [@table out])
+	class public @Set Dictionary.ToSet(@table self, [@table out])
+	-alias: object public @Set Dictionary:ToSet([@table out])
 		required self: The table to convert to a set.
 		optional out: Where to put the resulting set. Defaults to a new set.
 
@@ -124,7 +127,8 @@ function Dictionary.ToSet(self, out)
 end
 
 --[[#method {
-	public table Dictionary.ShallowCopy(@table self, [@table to])
+	class public table Dictionary.ShallowCopy(@table self, [@table to])
+	-alias: object public table Dictionary:ShallowCopy([@table to])
 		required self: The table to source data from
 		optional to: The table to copy into; an empty table if not given.
 
@@ -143,7 +147,8 @@ end
 Dictionary.Copy = ShallowCopy
 
 --[[#method {
-	public @Dictionary Dictionary.DeepCopy(@table self, [@table to, @bool datawise, @table map])
+	class public table Dictionary.DeepCopy(@table self, [@table to, @bool datawise, @table map])
+	-alias: object public table Dictionary:DeepCopy([@table to, @bool datawise, @table map])
 		required self: The dictionary to source data from.
 		optional to: The dictionary to copy into; an empty table if not given.
 		optional datawise: Whether the copy should ignore Copy member functions.
@@ -182,7 +187,8 @@ function Dictionary.DeepCopy(self, to, datawise, map)
 end
 
 --[[#method {
-	public table Dictionary.ShallowMerge(@table self, @table to)
+	class public table Dictionary.ShallowMerge(@table self, @table to)
+	-alias: object public table Dictionary:ShallowMerge(@table to)
 		required self: The table to source data from.
 		required to: The table to output into.
 
@@ -199,7 +205,8 @@ function Dictionary.ShallowMerge(self, to)
 end
 
 --[[#method {
-	public table Dictionary.DeepCopyMerge(@table self, @table to)
+	class public table Dictionary.DeepCopyMerge(@table self, @table to)
+	-alias: object public table Dictionary:DeepCopyMerge(@table to)
 		required self: The table to source data from.
 		required to: The table to put data into.
 

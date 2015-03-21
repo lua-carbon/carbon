@@ -23,12 +23,12 @@ local docs = {
 	generator = {},
 	classes_by_name = {},
 	shorts = {
-		optional = "![optional](https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square)",
-		required = "![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)",
-		internal = "![internal](https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square)",
-		unknown = "![unknown](https://img.shields.io/badge/%20-unknown-333333.svg?style=flat-square)",
-		public = "![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square)",
-		private = "![private](https://img.shields.io/badge/%20-private-d30500.svg?style=flat-square)"
+		optional = [[<img alt="optional" src="https://img.shields.io/badge/%%20-optional-0092e6.svg?style=flat-square" />]],
+		required = [[<img alt="required" src="https://img.shields.io/badge/%%20-required-ff9600.svg?style=flat-square" />]],
+		internal = [[<img alt="internal" src="https://img.shields.io/badge/%%20-internal-888888.svg?style=flat-square" />]],
+		unknown = [[<img alt="unknown" src="https://img.shields.io/badge/%%20-unknown-333333.svg?style=flat-square" />]],
+		public = [[<img alt="public" src="https://img.shields.io/badge/%s-public-11b237.svg?style=flat-square" />]],
+		private = [[<img alt="private" src="https://img.shields.io/badge/%s-private-d30500.svg?style=flat-square" />]]
 	},
 
 	-- Parser attributes
@@ -69,6 +69,24 @@ local function escape_html(str)
 	return (str:gsub("<", "&lt;"):gsub(">", "&gt;"))
 end
 
+local function process_string(s)
+	s = escape_html(s)
+
+	s = s:gsub("```([^\n]+)\n(.-)```", function(args, body)
+		return ("<code class=\"%s hljs\">%s</code>"):format(args, body)
+	end)
+
+	s = s:gsub("%b``", function(whole)
+		if (#whole > 3) then
+			return ("<code>%s</code>"):format(whole:sub(2, -2))
+		else
+			return whole
+		end
+	end)
+
+	return s
+end
+
 local function clean_multiline_string(a)
 	-- Strip \r, trim whitespace
 	a = a:gsub("\r", "")
@@ -79,20 +97,73 @@ local function clean_multiline_string(a)
 	a = a:sub(indent_level + 1):gsub("\n" .. ("\t"):rep(indent_level), "\n")
 	a = a:match("^%s*(.-)%s*$")
 	a = a:gsub("  +", function(whole)
-			return ("&nbsp;"):rep(#whole)
-		end)
+		return ("&nbsp;"):rep(#whole)
+	end)
 
 	return a
 end
 
-function docs.parser.method(out)
-	local start, finish, prefix, name, args = out.definition:find("(.-)%s+([^%s]-)(%b())")
-	if (not start) then
-		error("Invalid method definition: " .. tostring(out.definition))
+local function dictionary_shallow_copy(a, b)
+	b = b or {}
+
+	for key, value in pairs(a) do
+		b[key] = value
 	end
 
-	local sans_public, publics = prefix:gsub("^public", "")
-	local sans_private, privates = prefix:gsub("^private", "")
+	return b
+end
+
+local function dictionary_deep_copy(a, b)
+	b = b or {}
+
+	for key, value in pairs(a) do
+		if (type(value) == "table") then
+			b[key] = dictionary_deep_copy(value)
+		else
+			b[key] = value
+		end
+	end
+
+	return b
+end
+
+local function dictionary_shallow_merge(a, b)
+	for key, value in pairs(a) do
+		if (b[key] == nil) then
+			b[key] = value
+		end
+	end
+
+	return b
+end
+
+local function make_class_base(name)
+	return {
+		__priority = 0,
+		type = "class",
+		name = name,
+		description = "[no description]",
+		members = {},
+		inherits = {},
+		type_aliases = {
+			[name:match("([^%.]+)$")] = name
+		}
+	}
+end
+
+local function parse_method_declaration(source, out)
+	local start, finish, prefix, name, args = source:find("(.-)%s+([^%s]-)(%b())")
+	if (not start) then
+		error("Invalid method declaration: " .. tostring(source))
+	end
+
+	local sans_class, class_founds = prefix:gsub("^class%s*", "")
+	local sans_object, object_founds = prefix:gsub("^object%s*", "")
+	local sans_scope = class_founds > 0 and sans_class or sans_object
+	local scope = class_founds > 0 and "class" or object_founds > 0 and "object" or " "
+
+	local sans_public, publics = sans_scope:gsub("^public", "")
+	local sans_private, privates = sans_scope:gsub("^private", "")
 	local sans_vis = publics > 0 and sans_public or sans_private
 	local visibility = publics > 0 and "public" or privates > 0 and "private" or "unknown"
 
@@ -100,17 +171,27 @@ function docs.parser.method(out)
 		print("DOCGEN WARNING: Unknown visibility in method:", name)
 	end
 
+	out.definition = source
+	out.type = "method"
 	out.prefix = prefix
+	out.scope = scope
 	out.visibility = visibility
 	out.returns = sans_vis
 	out.name = name
 	out.args = args:sub(2, -2)
 	out.declaration = ("%s %s%s"):format(returns, name, args)
+	out.aka = {}
+end
 
+function docs.parser.method(out)
+	parse_method_declaration(out.definition, out)
+
+	-- Parse all the argument descriptions for this method.
 	out.arg_descriptions = {}
-	local start, finish, last = 0, 0, finish
+	local start, finish, last = 0, 0, 0
 	local arg = 0
 	while (true) do
+		local prefix, name, description
 		start, finish, prefix, name, description = out.definition:find("\t([^\t\n:]-)([^%s:]+):%s*([^\n]+)", finish + 1)
 
 		if (not start) then
@@ -129,8 +210,55 @@ function docs.parser.method(out)
 
 		table.insert(out.arg_descriptions, {prefix = prefix, name = name, description = description})
 	end
+
+	-- Run a routine to find the end of -alias directives.
+	-- Necessary to do *before* we calculate the description.
+	local start, finish, last = 0, 0, last
+	while (true) do
+		local alias
+		start, finish, class_target, definition = out.definition:find("%-alias%s*([^:]*):%s*([^\n]+)", finish + 1)
+
+		if (not start) then
+			break
+		end
+
+		last = math.max(last, finish)
+	end
 	
 	out.description = clean_multiline_string(out.definition:sub(last + 1))
+
+	-- Actually parse the -alias directives for this method.
+	local start, finish, last = 0, 0, 0
+	while (true) do
+		local alias
+		start, finish, class_target, definition = out.definition:find("%-alias%s*([^:]*):%s*([^\n]+)", finish + 1)
+
+		if (not start) then
+			break
+		end
+
+		last = finish
+
+		local item = {}
+		parse_method_declaration(definition, item)
+
+		dictionary_shallow_merge(out, item)
+
+		if (#class_target > 0) then
+			local class = docs.classes_by_name[class_target]
+
+			if (not class) then
+				class = make_class_base(class_target)
+				docs.classes_by_name[class_target] = class
+			end
+
+			local alt_version = dictionary_deep_copy(out)
+			dictionary_shallow_copy(item, alt_version)
+			table.insert(class.members, alt_version)
+		end
+
+		table.insert(out.aka, item)
+	end
 end
 
 function docs.parser.classes(body, class_list)
@@ -152,17 +280,7 @@ function docs.parser.classes(body, class_list)
 			object = docs.classes_by_name[class[2]]
 			existing = true
 		else
-			object = {
-				__priority = 0,
-				type = "class",
-				name = class[2],
-				description = "[no description]",
-				members = {},
-				inherits = {},
-				type_aliases = {
-					[class[2]:match("([^%.]+)$")] = class[2]
-				}
-			}
+			object = make_class_base(class[2])
 			docs.classes_by_name[class[2]] = object
 		end
 
@@ -358,6 +476,25 @@ function docs.parser.parse(path, out)
 	return nil, "Unknown file mode: " .. mode
 end
 
+function docs.generator.write_file_if_changed(path, contents)
+	table.insert(docs.files_written, path)
+	
+	local full_path = path_join(docs.doc_dir, path)
+
+	local handle, err = io.open(full_path, "rb")
+
+	if (handle) then
+		local old = handle:read("*a")
+		handle:close()
+
+		if (old == contents) then
+			return
+		end
+	end
+
+	docs.generator.write_file(path, contents)
+end
+
 function docs.generator.write_file(path, contents)
 	local handle, err = io.open(path_join(docs.doc_dir, path), "wb")
 
@@ -369,8 +506,6 @@ function docs.generator.write_file(path, contents)
 
 	handle:write(contents)
 	handle:close()
-
-	table.insert(docs.files_written, path)
 end
 
 local function do_template(template, data)
@@ -386,7 +521,7 @@ local template_class = [[
 <h1 class="class-title">{name}</h1>
 <span class="file-link">(in [{filename}]({file_link}))</span><br/>
 
-{description}
+{escaped_description}
 
 **Inherits {inherits_string}**
 
@@ -397,8 +532,12 @@ local template_class = [[
 {properties_string}
 ]]
 
+local template_method_name = [[
+<h4 class="method-name">!!{visibility}^{scope} {escaped_name}({backticked_args})</h4>
+]]
+
 local template_method = [[
-#### !!{visibility} {escaped_name}({backticked_args})
+{name_string}{aka_string}
 {arg_descriptions_string}
 
 **Returns {escaped_returns}**
@@ -414,6 +553,26 @@ local template_property = [[
 #### !!{visibility} {class_string} {name}
 {description}
 ]]
+
+local function process_method(method)
+	local arg_descriptions_buffer = {}
+	for key, description in ipairs(method.arg_descriptions) do
+		table.insert(arg_descriptions_buffer, clean_multiline_string(do_template(template_arg_description, description)))
+	end
+
+	method.arg_descriptions_string = table.concat(arg_descriptions_buffer, "\n")
+
+	-- Make args code-styled
+	method.escaped_args = method.args:gsub("<", "&lt;"):gsub(">", "&gt;")
+	method.backticked_args = #method.args > 0 and ("<code>%s</code>"):format(method.escaped_args) or ""
+
+	-- Escape the name and return types so we can use template syntax in them
+	method.escaped_name = escape_html(method.name)
+	method.escaped_returns = escape_html(method.returns)
+	method.escaped_description = escape_html(method.description)
+
+	method.name_string = do_template(template_method_name, method)
+end
 
 function docs.generator.class(class)
 	local path = path_to_class(class.name)
@@ -432,6 +591,7 @@ function docs.generator.class(class)
 	class.inherits_string = next(inherits_buffer) and table.concat(inherits_buffer, ", ") or class.inherits_string
 
 	class.file_link = docs.file_url_base .. class.filename
+	class.escaped_description = process_string(class.description)
 
 	-- Sort members based on their priority
 	table.sort(class.members, function(a, b)
@@ -447,6 +607,12 @@ function docs.generator.class(class)
 			return false
 		end
 
+		if (a.scope == "class" and b.scope ~= "class") then
+			return true
+		elseif (b.scope == "class" and a.scope ~= "class") then
+			return false
+		end
+
 		return a.name < b.name
 	end)
 
@@ -455,21 +621,15 @@ function docs.generator.class(class)
 	local properties_buffer = {}
 	for key, member in pairs(class.members) do
 		if (member.type == "method") then
-			local arg_descriptions_buffer = {}
-			for key, description in ipairs(member.arg_descriptions) do
-				table.insert(arg_descriptions_buffer, clean_multiline_string(do_template(template_arg_description, description)))
+			process_method(member)
+
+			local aka_buffer = {}
+			for key, alias in ipairs(member.aka) do
+				process_method(alias)
+				table.insert(aka_buffer, do_template(template_method_name, alias))
 			end
 
-			member.arg_descriptions_string = table.concat(arg_descriptions_buffer, "\n")
-
-			-- Make args code-styled
-			member.escaped_args = member.args:gsub("<", "&lt;"):gsub(">", "&gt;")
-			member.backticked_args = #member.args > 0 and ("<code>%s</code>"):format(member.escaped_args) or ""
-
-			-- Escape the name and return types so we can use template syntax in them
-			member.escaped_name = escape_html(member.name)
-			member.escaped_returns = escape_html(member.returns)
-			member.escaped_description = escape_html(member.description)
+			member.aka_string = table.concat(aka_buffer, "\n")
 
 			table.insert(methods_buffer, do_template(template_method, member))
 		elseif (member.type == "property") then
@@ -509,16 +669,20 @@ function docs.generator.class(class)
 		end
 	end)
 
-	-- Inserts shorts using !!image
-	body = body:gsub("!!([\\%w_]+)", function(name)
+	-- Inserts shorts using !!image&arg
+	body = body:gsub("!!([\\%w_]+)^?([%w_]*)", function(name, arg)
 		if (name:sub(1, 1) == "\\") then
 			return "!!" .. name:sub(2)
 		end
 
-		return docs.shorts[name] or "UNKNOWN SHORT"
+		if (#arg > 0) then
+			return docs.shorts[name]:format(arg) or "UNKNOWN SHORT"
+		else
+			return docs.shorts[name]:format(" ") or "UNKNOWN SHORT"
+		end
 	end)
 
-	docs.generator.write_file(path, body)
+	docs.generator.write_file_if_changed(path, body)
 end
 
 function docs.generator.root(object)

@@ -7,8 +7,9 @@ Provides configuration facilities for modules.
 **Inherits [OOP.Object](Classes/OOP.Object)**
 
 ## Methods
-#### ![public](https://img.shields.io/badge/%20-public-11b237.svg?style=flat-square) Configuration:New(<code>string name</code>)
-- ![required](https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square)&nbsp;&nbsp;`name`: The name of the configuration object
+<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Configuration:New(<code>string name</code>)</h4>
+
+- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`name`: The name of the configuration object
 
 **Returns  [Configuration](Classes/Configuration)**
 

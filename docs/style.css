@@ -30,3 +30,7 @@ h1.class-title {
 	font-size: 70%;
 	line-height: 2;
 }
+
+.method-name {
+	margin-bottom: 0;
+}

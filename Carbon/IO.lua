@@ -6,7 +6,14 @@
 		Provides async and sync I/O operations that work on multiple platforms.
 	}
 
+	#class IO.File
+
+	#description {
+		Exposes object-oriented filesystem access. See @IO for more methods.
+	}
+
 	#alias File IO.File
+	#class IO
 ]]
 
 local Carbon = (...)
@@ -96,8 +103,9 @@ end
 
 --[[#method {
 	public @void IO.Close(@File self)
+	-alias IO.File: public @void File:Close()
 	
-	Closes the file. The same as `File:Close()`
+	Closes the file.
 }]]
 function IO.Close(self)
 	return self.__handle:close()
@@ -105,8 +113,9 @@ end
 
 --[[#method {
 	public @string IO.Read(@File self)
+	-alias IO.File: public @void File:Read()
 
-	Reads the entire contents of the file. The same as `File:Read()`
+	Reads the entire contents of the file.
 }]]
 function IO.Read(self, ...)
 	return self.__handle:read(...)
@@ -114,9 +123,10 @@ end
 
 --[[#method {
 	public @void IO.Write(@File self, @string contents)
+	-alias IO.File: public @void File:Write(@string contents)
 		required contents: The file contents
 
-	Writes to the file. The same as `File:Write(contents)`
+	Writes to the file.
 }]]
 function IO.Write(self, ...)
 	return self.__handle:write(...)
@@ -124,11 +134,11 @@ end
 
 --[[#method {
 	public @Promise<@list<@string>> IO.ReadBufferAsync(@File self, [@list<@string> into])
+	-alias IO.File: public @Promise<@list<@string>> File:ReadBufferAsync([@list<@string> into])
 		optional into: A list to write the output into instead of creating a new buffer.
 
 	Reads a file and amortizes its loading through an event loop.
 	Returns the raw buffer, containing a series of strings.
-	The same as `File:ReadBufferAsync(into)`
 }]]
 function IO.ReadBufferAsync(self, into)
 	local promise = Promise:New()
@@ -151,6 +161,7 @@ end
 
 --[[#method {
 	public @Promise<@string> IO.ReadBufferAsync(File self)
+	-alias IO.File: public @Promise<@string> File:ReadBufferAsync()
 
 	Reads a file and amortizes its loading through an event loop.
 	The same as `File:ReadAsync()`
@@ -158,39 +169,5 @@ end
 function IO.ReadAsync(self)
 	return IO.ReadBufferAsync(self):Then(table.concat)
 end
-
---[[
-	IO exposes a "File" class that's a bit unusual.
-	#class IO.File
-	#description {
-		Represents a Carbon file I/O handle. See @IO for more documentation on the object.
-	}
-
-	#method {
-		public @void File:Close()
-
-		Closes the file.
-	}
-
-	#method {
-		public @string File:Read()
-
-		Reads the entire file.
-	}
-
-	#method {
-		public @void File:Write(@string contents)
-			required contents: The contents to write to the file.
-
-		Writes a contents to the file.
-	}
-
-	#method {
-		public @Promise<@list<@string>> File:ReadBufferAsync([@list<@string> into])
-			optional into: An existing buffer to read the file's contents into.
-
-		Reads the entire file into a buffer.
-	}
-]]
 
 return IO
