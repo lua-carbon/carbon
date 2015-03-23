@@ -11,8 +11,10 @@ Presently has a hard maximum component count of 26, can be expanded upon request
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:New(<code>...</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:New(<code>...</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:Init(<code>...</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
 - <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `...`: The arguments to the intialization. Should be `N` arguments long.
 
@@ -43,7 +45,7 @@ The following parameters are valid:
 Returns the individual components of the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; in order. Much faster than `unpack`.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Length()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:Length()</h4>
 **<span class="method-returns">Returns <code><a href="Types#unumber">unumber</a></code></span>**
 
 
@@ -51,7 +53,7 @@ Returns the individual components of the <a href="Classes/Math.Vector">Vector</a
 Returns the length of the vector.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:LengthSquared()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:LengthSquared()</h4>
 **<span class="method-returns">Returns <code><a href="Types#unumber">unumber</a></code></span>**
 
 
@@ -59,7 +61,7 @@ Returns the length of the vector.
 Returns the length of the vector squared.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Normalize(<code>[<a href="Classes/Math.Vector">Vector</a>&lt;N&gt; out]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:Normalize(<code>[<a href="Classes/Math.Vector">Vector</a>&lt;N&gt; out]</code>)</h4>
 **<span class="method-returns">Returns <code>out</code></span>**
 
 - <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to place the data of the normalized vector. A new `Vector<N>` if not given.
@@ -67,7 +69,9 @@ Returns the length of the vector squared.
 Normalizes the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; object, optionally outputting the data to an existing <a href="Classes/Math.Vector">Vector</a>&lt;N&gt;.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:NormalizeInPlace()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:Normalize!()</h4>
+**<span class="method-returns">Returns <code>self</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:NormalizeInPlace()</h4>
 **<span class="method-returns">Returns <code>self</code></span>**
 
 

@@ -26,7 +26,8 @@ local Vector = {
 	__cache = {},
 	__methods = {
 		--[[#method 1 {
-			public @Vector<N> Vector<N>:New(...)
+			class public @Vector<N> Vector<N>:New(...)
+			-alias: object public @void Vector<N>:Init(...)
 				optional ...: The arguments to the intialization. Should be `N` arguments long.
 
 			Creates a new @Vector with `N` components.
@@ -42,7 +43,7 @@ local Vector = {
 		]],
 
 		--[[#method {
-			public @unumber Vector<N>:Length()
+			object public @unumber Vector<N>:Length()
 
 			Returns the length of the vector.
 		}]]
@@ -58,7 +59,7 @@ local Vector = {
 		]],
 
 		--[[#method {
-			public @unumber Vector<N>:LengthSquared()
+			object public @unumber Vector<N>:LengthSquared()
 
 			Returns the length of the vector squared.
 		}]]
@@ -74,7 +75,8 @@ local Vector = {
 		]],
 
 		--[[#method {
-			public self Vector<N>:NormalizeInPlace()
+			object public self Vector<N>:Normalize!()
+			-alias: object public self Vector<N>:NormalizeInPlace()
 
 			Normalizes the vector in-place.
 
@@ -85,7 +87,7 @@ local Vector = {
 		end,
 
 		--[[#method {
-			public out Vector<N>:Normalize([@Vector<N> out])
+			object public out Vector<N>:Normalize([@Vector<N> out])
 				optional out: Where to place the data of the normalized vector. A new `Vector<N>` if not given.
 
 			Normalizes the @Vector<N> object, optionally outputting the data to an existing @Vector<N>.
@@ -130,7 +132,23 @@ local Vector = {
 					end
 				end %}
 			end
-		]]
+		]],
+
+		MultiplyMatrixInPlace = function(self, other)
+			return self:MultiplyMatrix(other, self)
+		end,
+
+		MultiplyMatrix = function(self, other, out)
+			return other:PreMultiplyVector(self, out)
+		end,
+
+		PostMultiplyMatrixInPlace = function(self, other)
+			return self:PostMultiplyMatrix(other, self)
+		end,
+
+		PostMultiplyMatrix = function(self, other, out)
+			return other:MultiplyVector(self, out)
+		end
 	},
 	__metatable = {
 		-- String conversion:
@@ -191,13 +209,9 @@ end
 	- @list<@number> DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
 }]]
 function Vector:Generate(length, parameters)
-	-- I had a good reason why this function cached based on parameters,
-	-- but I don't remember it now, so for now it does not cache.
-	--[[
 	if (self.__cache[length]) then
 		return self.__cache[length]
 	end
-	]]
 
 	parameters = parameters or {}
 
@@ -275,7 +289,7 @@ function Vector:Generate(length, parameters)
 			ExplicitInitialization = true
 		}
 
-	--self.__cache[length] = class
+	self.__cache[length] = class
 
 	return class
 end

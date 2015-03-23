@@ -134,7 +134,12 @@ function TemplateEngine:Execute(template, data)
 	env._ = append_to_buffer
 
 	--Load the function and try executing it
-	local func = Carbon.LoadString(template, template:sub(50), env)
+	local func, err = Carbon.LoadString(template, template:sub(50), env)
+
+	if (not func) then
+		return false, CodeGenerationException:New("(COMPILE) Generated method had error: " .. err, template)
+	end
+
 	local result, err = pcall(func)
 
 	--Did something go wrong? Abort!
