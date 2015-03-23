@@ -23,12 +23,12 @@ local docs = {
 	generator = {},
 	classes_by_name = {},
 	shorts = {
-		optional = [[<img alt="optional" src="https://img.shields.io/badge/%%20-optional-0092e6.svg?style=flat-square" />]],
-		required = [[<img alt="required" src="https://img.shields.io/badge/%%20-required-ff9600.svg?style=flat-square" />]],
-		internal = [[<img alt="internal" src="https://img.shields.io/badge/%%20-internal-888888.svg?style=flat-square" />]],
-		unknown = [[<img alt="unknown" src="https://img.shields.io/badge/%%20-unknown-333333.svg?style=flat-square" />]],
-		public = [[<img alt="public" src="https://img.shields.io/badge/%s-public-11b237.svg?style=flat-square" />]],
-		private = [[<img alt="private" src="https://img.shields.io/badge/%s-private-d30500.svg?style=flat-square" />]]
+		optional = [[<img class="doc-image" alt="optional" src="https://img.shields.io/badge/%%20-optional-0092e6.svg?style=flat-square" />]],
+		required = [[<img class="doc-image" alt="required" src="https://img.shields.io/badge/%%20-required-ff9600.svg?style=flat-square" />]],
+		internal = [[<img class="doc-image" alt="internal" src="https://img.shields.io/badge/%%20-internal-888888.svg?style=flat-square" />]],
+		unknown = [[<img class="doc-image" alt="unknown" src="https://img.shields.io/badge/%%20-unknown-333333.svg?style=flat-square" />]],
+		public = [[<img class="doc-image" alt="public" src="https://img.shields.io/badge/%s-public-11b237.svg?style=flat-square" />]],
+		private = [[<img class="doc-image" alt="private" src="https://img.shields.io/badge/%s-private-d30500.svg?style=flat-square" />]]
 	},
 
 	-- Parser attributes
@@ -87,7 +87,7 @@ local function process_string(s)
 	return s
 end
 
-local function clean_multiline_string(a)
+local function clean_string(a)
 	-- Strip \r, trim whitespace
 	a = a:gsub("\r", "")
 	a = a:match("^\n*(.-)\n*$")
@@ -96,9 +96,6 @@ local function clean_multiline_string(a)
 	local indent_level = #a:match("^(\t*)")
 	a = a:sub(indent_level + 1):gsub("\n" .. ("\t"):rep(indent_level), "\n")
 	a = a:match("^%s*(.-)%s*$")
-	a = a:gsub("  +", function(whole)
-		return ("&nbsp;"):rep(#whole)
-	end)
 
 	return a
 end
@@ -139,7 +136,7 @@ end
 
 local function make_class_base(name)
 	return {
-		__priority = 0,
+		__priority = math.huge,
 		type = "class",
 		name = name,
 		description = "[no description]",
@@ -162,8 +159,8 @@ local function parse_method_declaration(source, out)
 	local sans_scope = class_founds > 0 and sans_class or sans_object
 	local scope = class_founds > 0 and "class" or object_founds > 0 and "object" or " "
 
-	local sans_public, publics = sans_scope:gsub("^public", "")
-	local sans_private, privates = sans_scope:gsub("^private", "")
+	local sans_public, publics = sans_scope:gsub("^public%s*", "")
+	local sans_private, privates = sans_scope:gsub("^private%s*", "")
 	local sans_vis = publics > 0 and sans_public or sans_private
 	local visibility = publics > 0 and "public" or privates > 0 and "private" or "unknown"
 
@@ -181,14 +178,16 @@ local function parse_method_declaration(source, out)
 	out.args = args:sub(2, -2)
 	out.declaration = ("%s %s%s"):format(returns, name, args)
 	out.aka = {}
+
+	return finish
 end
 
 function docs.parser.method(out)
-	parse_method_declaration(out.definition, out)
+	local finish = parse_method_declaration(out.definition, out)
 
 	-- Parse all the argument descriptions for this method.
 	out.arg_descriptions = {}
-	local start, finish, last = 0, 0, 0
+	local start, finish, last = 0, 0, finish
 	local arg = 0
 	while (true) do
 		local prefix, name, description
@@ -224,8 +223,8 @@ function docs.parser.method(out)
 
 		last = math.max(last, finish)
 	end
-	
-	out.description = clean_multiline_string(out.definition:sub(last + 1))
+
+	out.description = clean_string(out.definition:sub(last + 1))
 
 	-- Actually parse the -alias directives for this method.
 	local start, finish, last = 0, 0, 0
@@ -291,7 +290,7 @@ function docs.parser.classes(body, class_list)
 		if (start and finish < high_bound) then
 			-- Strip braces used for matching
 			description = description:sub(2, -2)
-			description = clean_multiline_string(description)
+			description = clean_string(description)
 
 			object.description = description
 		end
@@ -334,7 +333,7 @@ function docs.parser.classes(body, class_list)
 			end
 
 			definition = definition:sub(2, -2)
-			definition = clean_multiline_string(definition)
+			definition = clean_string(definition)
 
 			local method = {
 				priority = tonumber(priority) or object.__priority,
@@ -357,7 +356,7 @@ function docs.parser.classes(body, class_list)
 			end
 
 			description = description:sub(2, -2)
-			description = clean_multiline_string(description)
+			description = clean_string(description)
 
 			if (visibility ~= "public" and visibility ~= "private") then
 				print(("DOCGEN WARNING: Unknown visibility %q in property %s!"):format(
@@ -534,13 +533,12 @@ local template_class = [[
 
 local template_method_name = [[
 <h4 class="method-name">!!{visibility}^{scope} {escaped_name}({backticked_args})</h4>
+**<span class="method-returns">Returns <code>{escaped_returns}</code></span>**
 ]]
 
 local template_method = [[
 {name_string}{aka_string}
 {arg_descriptions_string}
-
-**Returns {escaped_returns}**
 
 {escaped_description}
 ]]
@@ -557,7 +555,7 @@ local template_property = [[
 local function process_method(method)
 	local arg_descriptions_buffer = {}
 	for key, description in ipairs(method.arg_descriptions) do
-		table.insert(arg_descriptions_buffer, clean_multiline_string(do_template(template_arg_description, description)))
+		table.insert(arg_descriptions_buffer, clean_string(do_template(template_arg_description, description)))
 	end
 
 	method.arg_descriptions_string = table.concat(arg_descriptions_buffer, "\n")
@@ -595,9 +593,9 @@ function docs.generator.class(class)
 
 	-- Sort members based on their priority
 	table.sort(class.members, function(a, b)
-		if (a.priority > b.priority) then
+		if (a.priority < b.priority) then
 			return true
-		elseif (a.priority < b.priority) then
+		elseif (a.priority > b.priority) then
 			return false
 		end
 
@@ -657,13 +655,13 @@ function docs.generator.class(class)
 
 		-- Lowercase aliases are internal types, uppercase are classes.
 		if (target:sub(1, 1):lower() == target:sub(1, 1)) then
-			return ("[%s](%s)%s"):format(
-				target, link_to_type(target),
+			return ("<a href=\"%s\">%s</a>%s"):format(
+				link_to_type(target), target,
 				post
 			)
 		else
-			return ("[%s](%s)%s"):format(
-				target, link_to_class(class.type_aliases[target] or target),
+			return ("<a href=\"%s\">%s</a>%s"):format(
+				link_to_class(class.type_aliases[target] or target), target,
 				post
 			)
 		end

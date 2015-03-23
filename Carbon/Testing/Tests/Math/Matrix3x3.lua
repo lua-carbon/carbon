@@ -55,6 +55,21 @@ function Test:Run(test)
 		test:Fail("NewFromLoose failed!")
 	end
 
+	-- Test transposition:
+	local correct_a_trans = Matrix3x3:New(
+		1, 4, -7,
+		2, 5, -8,
+		3, 6, -9
+	)
+
+	local a_trans = a:Transpose()
+
+	if (matrixapproxeq(a_trans, correct_a_trans)) then
+		test:Pass()
+	else
+		test:Fail("Matrix transposition failed!")
+	end
+
 	-- WolframAlpha says the bottom row is not linearly-independent and is thus (0, 0, 0)
 	-- We don't really care I don't think, but I should research this more.
 	local correct_ortho_a = Matrix3x3:New(
@@ -69,6 +84,68 @@ function Test:Run(test)
 		test:Pass()
 	else
 		test:Fail("Failed to orthogonalize matrix!")
+	end
+
+	-- Test GetRow
+	local x1, y1, z1 = a:GetRow(1)
+	local x2, y2, z2 = a:GetRow(2)
+	local x3, y3, z3 = a:GetRow(3)
+
+	if (x1 == 1 and y1 == 2 and z1 == 3 and
+		x2 == 4 and y2 == 5 and z2 == 6 and
+		x3 == -7 and y3 == -8 and z3 == -9) then
+		test:Pass()
+	else
+		test:Fail("GetRow failed!")
+	end
+
+	-- Test SetRow
+	local aa = a:Copy()
+	aa:SetRow(1, 3, 2, 1)
+	aa:SetRow(2, 6, 5, 4)
+	aa:SetRow(3, -9, -8, -7)
+
+	local x1, y1, z1 = aa:GetRow(1)
+	local x2, y2, z2 = aa:GetRow(2)
+	local x3, y3, z3 = aa:GetRow(3)
+
+	if (x1 == 3 and y1 == 2 and z1 == 1 and
+		x2 == 6 and y2 == 5 and z2 == 4 and
+		x3 == -9 and y3 == -8 and z3 == -7) then
+		test:Pass()
+	else
+		test:Fail("SetRow failed!")
+	end
+
+	-- Test GetColumn
+	local x1, x2, x3 = a:GetColumn(1)
+	local y1, y2, y3 = a:GetColumn(2)
+	local z1, z2, z3 = a:GetColumn(3)
+
+	if (x1 == 1 and y1 == 2 and z1 == 3 and
+		x2 == 4 and y2 == 5 and z2 == 6 and
+		x3 == -7 and y3 == -8 and z3 == -9) then
+		test:Pass()
+	else
+		test:Fail("GetColumn failed!")
+	end
+
+	-- Test SetColumn
+	local aa = a:Copy()
+	aa:SetColumn(1, -7, 4, 1)
+	aa:SetColumn(2, -8, 5, 2)
+	aa:SetColumn(3, -9, 6, 3)
+
+	local x1, x2, x3 = aa:GetColumn(1)
+	local y1, y2, y3 = aa:GetColumn(2)
+	local z1, z2, z3 = aa:GetColumn(3)
+
+	if (x1 == -7 and y1 == -8 and z1 == -9 and
+		x2 == 4 and y2 == 5 and z2 == 6 and
+		x3 == 1 and y3 == 2 and z3 == 3) then
+		test:Pass()
+	else
+		test:Fail("SetColumn failed!")
 	end
 end
 

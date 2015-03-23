@@ -6,101 +6,100 @@ Provides a set of utilities to operate on dictionary structures.
 
 Most methods here are intended to be called as both OOP-style methods and on pure data objects.
 
-The [Dictionary](Classes/Collections.Dictionary) type Differs from the primtive [dictionary](Types#dictionary) type by adding methods to it.
-It is possible to use these methods with a plain [dictionary](Types#dictionary), just call them in a non-object oriented way:
+The <a href="Classes/Collections.Dictionary">Dictionary</a> type Differs from the primtive <a href="Types#dictionary">dictionary</a> type by adding methods to it.
+It is possible to use these methods with a plain <a href="Types#dictionary">dictionary</a>, just call them in a non-object oriented way:
 <code class="lua hljs">Dictionary.Keys(dictionary)
 Dictionary.ShallowCopy(dictionary)
 </code>
 
-**Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)**
+**Inherits <a href="Classes/OOP.Object">OOP.Object</a>, <a href="Classes/Serializable">Serializable</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary:New(<code>[[table](Types#table) data]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.Dictionary">Dictionary</a></code></span>**
 
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`data`: The data of the dictionary. Empty if not specified.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `data`: The data of the dictionary. Empty if not specified.
 
-**Returns  [Dictionary](Classes/Collections.Dictionary)**
-
-Turns the given object into a [Dictionary](Classes/Collections.Dictionary).
+Turns the given object into a <a href="Classes/Collections.Dictionary">Dictionary</a>.
 Allows method-style syntax to be used on the object.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.DeepCopy(<code>[table](Types#table) self, [[table](Types#table) to, [bool](Types#bool) datawise, [table](Types#table) map]</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:DeepCopy(<code>[[table](Types#table) to, [bool](Types#bool) datawise, [table](Types#table) map]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.DeepCopy(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> to, <a href="Types#bool">bool</a> datawise, <a href="Types#table">table</a> map]</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:DeepCopy(<code>[<a href="Types#table">table</a> to, <a href="Types#bool">bool</a> datawise, <a href="Types#table">table</a> map]</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The dictionary to source data from.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`to`: The dictionary to copy into; an empty table if not given.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`datawise`: Whether the copy should ignore Copy member functions.
-- <img alt="internal" src="https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square" />&nbsp;&nbsp;`map`: A map projecting original values into copied values.
-
-**Returns  table**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The dictionary to source data from.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `to`: The dictionary to copy into; an empty table if not given.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `datawise`: Whether the copy should ignore Copy member functions.
+- <img class="doc-image" alt="internal" src="https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square" />  `map`: A map projecting original values into copied values.
 
 Performs a self-reference fixing deep copy from one table into another.
 Handles self-references properly.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.DeepCopyMerge(<code>[table](Types#table) self, [table](Types#table) to</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:DeepCopyMerge(<code>[table](Types#table) to</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.DeepCopyMerge(<code><a href="Types#table">table</a> self, <a href="Types#table">table</a> to</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:DeepCopyMerge(<code><a href="Types#table">table</a> to</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The table to source data from.
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`to`: The table to put data into.
-
-**Returns  table**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The table to source data from.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `to`: The table to put data into.
 
 Performs a merge into the table, performing a deep copy on all table members.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.Keys(<code>[table](Types#table) self</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:Keys()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.Keys(<code><a href="Types#table">table</a> self</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:Keys()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The table to retrieve keys for.
-
-**Returns  [List](Classes/Collections.List)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The table to retrieve keys for.
 
 Returns all the keys in the table.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.ShallowCopy(<code>[table](Types#table) self, [[table](Types#table) to]</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:ShallowCopy(<code>[[table](Types#table) to]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.ShallowCopy(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> to]</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:ShallowCopy(<code>[<a href="Types#table">table</a> to]</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The table to source data from
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`to`: The table to copy into; an empty table if not given.
-
-**Returns  table**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The table to source data from
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `to`: The table to copy into; an empty table if not given.
 
 Shallow copies data from one table into another and returns the result.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.ShallowMerge(<code>[table](Types#table) self, [table](Types#table) to</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:ShallowMerge(<code>[table](Types#table) to</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.ShallowMerge(<code><a href="Types#table">table</a> self, <a href="Types#table">table</a> to</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:ShallowMerge(<code><a href="Types#table">table</a> to</code>)</h4>
+**<span class="method-returns">Returns <code>table</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The table to source data from.
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`to`: The table to output into.
-
-**Returns  table**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The table to source data from.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `to`: The table to output into.
 
 Performs a merge into a table without overwriting existing keys.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.ToSet(<code>[table](Types#table) self, [[table](Types#table) out]</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:ToSet(<code>[[table](Types#table) out]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.ToSet(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.Set">Set</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:ToSet(<code>[<a href="Types#table">table</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.Set">Set</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The table to convert to a set.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`out`: Where to put the resulting set. Defaults to a new set.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The table to convert to a set.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting set. Defaults to a new set.
 
-**Returns  [Set](Classes/Collections.Set)**
-
-Converts the Dictionary to a [Set](Classes/Collections.Set).
+Converts the Dictionary to a <a href="Classes/Collections.Set">Set</a>.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.Values(<code>[table](Types#table) self</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:Values()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary.Values(<code><a href="Types#table">table</a> self</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Dictionary:Values()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The table to retrieve values for.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The table to retrieve values for.
 
-**Returns  [List](Classes/Collections.List)**
-
-Returns all the values in the table in a [List](Classes/Collections.List)
+Returns all the values in the table in a <a href="Classes/Collections.List">List</a>
 
 
 ## Properties

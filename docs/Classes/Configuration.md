@@ -4,16 +4,15 @@
 
 Provides configuration facilities for modules.
 
-**Inherits [OOP.Object](Classes/OOP.Object)**
+**Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Configuration:New(<code>string name</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Configuration:New(<code>string name</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Configuration">Configuration</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`name`: The name of the configuration object
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `name`: The name of the configuration object
 
-**Returns  [Configuration](Classes/Configuration)**
-
-Creates a new [Configuration](Classes/Configuration) object for configuring modules before they're loaded.
+Creates a new <a href="Classes/Configuration">Configuration</a> object for configuring modules before they're loaded.
 
 
 ## Properties

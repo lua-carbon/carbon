@@ -4,53 +4,49 @@
 
 Provides utilities for operating on Lists and List-like data.
 
-The [List](Classes/Collections.List) type Differs from the primtive [list](Types#list) type by adding methods to it.
-It is possible to use these methods with a plain [list](Types#list), just call them in a non-object oriented way:
+The <a href="Classes/Collections.List">List</a> type Differs from the primtive <a href="Types#list">list</a> type by adding methods to it.
+It is possible to use these methods with a plain <a href="Types#list">list</a>, just call them in a non-object oriented way:
 <code class="lua hljs">List.Clear(list)
 List.ShallowCopy(list)
 </code>
 
-**Inherits [OOP.Object](Classes/OOP.Object), [Serializable](Classes/Serializable)**
+**Inherits <a href="Classes/OOP.Object">OOP.Object</a>, <a href="Classes/Serializable">Serializable</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List:New(<code>[[list](Types#list) data]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List:New(<code>[<a href="Types#list">list</a> data]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
 
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`data`: The data of the list. Empty if not given.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `data`: The data of the list. Empty if not given.
 
-**Returns  [List](Classes/Collections.List)**
-
-Turns the given object into a [List](Classes/Collections.List).
+Turns the given object into a <a href="Classes/Collections.List">List</a>.
 Allows method-style syntax.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List.Clear(<code>[List](Classes/Collections.List) self</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List.Clear(<code><a href="Classes/Collections.List">List</a> self</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The list to clear.
-
-**Returns  [void](Types#void)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The list to clear.
 
 Clears a list of all list values.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List.DeepCopy(<code>[list](Types#list) self, [[list](Types#list) to, [dictionary](Types#dictionary) map, function copy_function, ...]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List.DeepCopy(<code><a href="Types#list">list</a> self, [<a href="Types#list">list</a> to, <a href="Types#dictionary">dictionary</a> map, function copy_function, ...]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The list to source data from.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`to`: The list to copy into; an empty table if not given.
-- <img alt="internal" src="https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square" />&nbsp;&nbsp;`map`: A map projecting original values into copied values. Used internally.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`copy_function`: The function to copy members with: defaults to this method.
-
-**Returns  [List](Classes/Collections.List)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The list to source data from.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `to`: The list to copy into; an empty table if not given.
+- <img class="doc-image" alt="internal" src="https://img.shields.io/badge/%20-internal-888888.svg?style=flat-square" />  `map`: A map projecting original values into copied values. Used internally.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `copy_function`: The function to copy members with: defaults to this method.
 
 Performs a self-reference fixing deep copy from one list into another.
 Handles self-references properly.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List.ShallowCopy(<code>[list](Types#list) self, [[list](Types#list) to]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List.ShallowCopy(<code><a href="Types#list">list</a> self, [<a href="Types#list">list</a> to]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#list">list</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`self`: The list to source data from
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`to`: The list to copy into; an empty table if not given.
-
-**Returns  [list](Types#list)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The list to source data from
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `to`: The list to copy into; an empty table if not given.
 
 Shallow copies data from one table into another and returns the result.
 

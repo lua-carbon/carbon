@@ -41,6 +41,9 @@ Many types can be represented in a 'loose' form, often used for intermediate con
 ## `any`
 A generic type that any other type can fill.
 
+## `FFI<x>`
+Denotes a type designed for the LuaJIT FFI. Only available under LuaJIT.
+
 ## `void`
 An explicitly empty, or non-existent value. This is used in place of `nil` for method signatures.
 

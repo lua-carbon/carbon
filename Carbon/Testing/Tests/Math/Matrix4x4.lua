@@ -12,6 +12,8 @@ local Test = {}
 Carbon.Testing:TestFor(Matrix4x4, Test)
 
 function Test:Run(test)
+	Carbon.Testing:Requires(Carbon.Math.Matrix3x3)
+
 	local a = Matrix4x4:New(
 		1, 2, 3, 4,
 		5, 6, 7, 8,
@@ -57,11 +59,12 @@ function Test:Run(test)
 
 	-- Test Set
 	passed = true
+	local aa = a:Copy()
 	local nextone = 17
 	for i = 1, 4 do
 		for j = 1, 4 do
-			a:Set(i, j, nextone)
-			if (a:Get(i, j) ~= nextone) then
+			aa:Set(i, j, nextone)
+			if (aa:Get(i, j) ~= nextone) then
 				passed = false
 				test:Fail(("Element at (%d, %d) failed to be set correctly!"):format(i, j))
 				break

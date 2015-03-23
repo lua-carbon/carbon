@@ -4,50 +4,40 @@
 
 The base object for all instancable classes.
 
-**Inherits [OOP.BaseClass](Classes/OOP.BaseClass)**
+**Inherits <a href="Classes/OOP.BaseClass">OOP.BaseClass</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:New(<code>...</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Copy()</h4>
+**<span class="method-returns">Returns <code>Object</code></span>**
 
 
 
-**Returns  Object**
-
-public Object Class:New(...)
-
-Creates a new object and passes parameters to its initializer.
+Copies the given object.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:PlacementNew(<code>[indexable](Types#indexable)? target, ...</code>)</h4>
-
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`target`: Where to place the instance, will be provided if not given.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: Arguments to pass to the constructor
-
-**Returns  Object**
-
-Creates a new object and puts it into a given indexable object.
-
-<hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Init(<code>...</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Init(<code>...</code>)</h4>
+**<span class="method-returns">Returns <code>self</code></span>**
 
 
-
-**Returns  self**
-
-public self Object:Init(...)
 
 Initializes the object with the given parameters.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Copy()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:PlacementNew(<code><a href="Types#indexable">indexable</a>? target, ...</code>)</h4>
+**<span class="method-returns">Returns <code>Object</code></span>**
+
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `target`: Where to place the instance, will be provided if not given.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `...`: Arguments to pass to the constructor
+
+Creates a new object and puts it into a given indexable object.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:New(<code>...</code>)</h4>
+**<span class="method-returns">Returns <code>Object</code></span>**
 
 
 
-**Returns  Object**
-
-public Object Object:Copy()
-
-Copies the given object.
+Creates a new object and passes parameters to its initializer.
 
 
 ## Properties

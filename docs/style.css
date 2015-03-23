@@ -34,3 +34,13 @@ h1.class-title {
 .method-name {
 	margin-bottom: 0;
 }
+
+.method-returns {
+	margin-bottom: 0;
+	margin-left: 2em;
+}
+
+.doc-image {
+	width: auto;
+	max-height: 1.5em;
+}

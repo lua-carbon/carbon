@@ -4,7 +4,7 @@
 
 A 3x3 row-major matrix.
 
-**Inherits [Math.Matrix](Classes/Math.Matrix)**
+**Inherits <a href="Classes/Math.Matrix">Math.Matrix</a>**
 
 ## Methods
 [none]

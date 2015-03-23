@@ -10,43 +10,168 @@ This does not scale very well, but is fast for small values of `N` and `M`.
 Works only for matrices smaller than 14x14.
 For larger matrices, consider a different implementation.
 
-The 'loose' form of a Matrix, <code>[loose](Types#loose)&lt;[Matrix](Classes/Math.Matrix)&gt;</code> is of the form <code>(N, M, ...)</code> where `N` and `M`
+The 'loose' form of a Matrix, <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Matrix">Matrix</a>&gt;</code> is of the form <code>(N, M, ...)</code> where `N` and `M`
 are the dimensions of the matrix and <code>...</code> represents the values within it.
 
 **Inherits [none]**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:New(<code>...</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Init(<code>...</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:New(<code>...</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Init(<code>...</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: The values to initialize the matrix with. Each value is 0 by default.
-
-**Returns  [Matrix](Classes/Math.Matrix)**
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `...`: The values to initialize the matrix with. Each value is nil by default.
 
 Initializes or creates a matrix with a set of row-major values.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:NewFromLoose(<code>[unumber](Types#unumber) rows, [unumber](Types#unumber) columns, ...</code>)</h4>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:InitFromLoose(<code>[unumber](Types#unumber) rows, [unumber](Types#unumber) columns, ...</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:NewFromLoose(<code><a href="Types#unumber">unumber</a> rows, <a href="Types#unumber">unumber</a> columns, ...</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:InitFromLoose(<code><a href="Types#unumber">unumber</a> rows, <a href="Types#unumber">unumber</a> columns, ...</code>)</h4>
+**<span class="method-returns">Returns <code>self</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`rows`: The number of rows the loose data has.
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`columns`: The number of columns the loose data has.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: The data to initialize or create the matrix with.
-
-**Returns  [Matrix](Classes/Math.Matrix)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `rows`: The number of rows the loose data has.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `columns`: The number of columns the loose data has.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `...`: The data to initialize or create the matrix with.
 
 Initializes or creates a matrix with a set of sized row-major values.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:ToLoose()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:NewIdentity()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:InitIdentity()</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
 
 
-**Returns  [loose](Types#loose)&lt;[Matrix](Classes/Math.Matrix)&gt;**
+Creates or initializes an identity matrix.
 
-object public [loose](Types#loose)&lt;[Matrix](Classes/Math.Matrix)&gt; Matrix:ToLoose()
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:NewZero()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:InitZero()</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
-Returns the loose form of the [Matrix](Classes/Math.Matrix), decomposing into a tuple.
+
+
+Creates or initializes a matrix with all zero values.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Get(<code><a href="Types#unumber">unumber</a> i, <a href="Types#unumber">unumber</a> j</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#number">number</a>?</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `i`: The column to look up.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `j`: The row to look up.
+
+Gets a value of a cell specified by `(column, row)`.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:GetComponents()</h4>
+**<span class="method-returns">Returns <code><a href="Types#tuple">tuple</a>&lt;N, ...&gt;</code></span>**
+
+
+
+Returns the components of the <a href="Classes/Math.Matrix">Matrix</a> in row-major ordering.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Set(<code><a href="Types#unumber">unumber</a> i, <a href="Types#unumber">unumber</a> j, <a href="Types#number">number</a>? value</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `i`: The column to look up.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `j`: The row to look up.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `value`: The value to set at the cell.
+
+Sets a value of a cell specified by `(column, row)`.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:ToLoose()</h4>
+**<span class="method-returns">Returns <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Matrix">Matrix</a>&gt;</code></span>**
+
+
+
+Returns the loose form of the <a href="Classes/Math.Matrix">Matrix</a>, decomposing into a tuple.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:GetRow(<code><a href="Types#unumber">unumber</a> row</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#tuple">tuple</a>&lt;COLUMNS, ...&gt;</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `row`: The row to get values for.
+
+Returns an entire row's values from this <a href="Classes/Math.Matrix">Matrix</a>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:SetRow(<code><a href="Types#unumber">unumber</a> row, <a href="Types#tuple">tuple</a>&lt;COLUMNS, ...&gt; values</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `row`: The row to set values for
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `values`: The values to set for this row.
+
+Sets an entire row's values in the <a href="Classes/Math.Matrix">Matrix</a>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:GetColumn(<code><a href="Types#unumber">unumber</a> column</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#tuple">tuple</a>&lt;ROWS, ...&gt;</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `column`: The column to get values for.
+
+Returns an entire column's values from this <a href="Classes/Math.Matrix">Matrix</a>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:SetColumn(<code><a href="Types#unumber">unumber</a> column, <a href="Types#tuple">tuple</a>&lt;ROWS, ...&gt; values</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `column`: The column to set values for
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `values`: The values to set for this column.
+
+Sets an entire column's values in the <a href="Classes/Math.Matrix">Matrix</a>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MultiplyMatrix(<code><a href="Classes/Math.Matrix">Matrix</a> other, [<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `other`: The matrix to multiply with this one.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the data. A new matrix if not specified.
+
+Multiplies this <a href="Classes/Math.Matrix">Matrix</a> with another <a href="Classes/Math.Matrix">Matrix</a>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MultiplyMatrix!(<code><a href="Classes/Math.Matrix">Matrix</a> other</code>)</h4>
+**<span class="method-returns">Returns <code>self</code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MultiplyMatrixInPlace(<code><a href="Classes/Math.Matrix">Matrix</a> other</code>)</h4>
+**<span class="method-returns">Returns <code>self</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `other`: The matrix to multiply with.
+
+Multiplies this matrix with another matrix, outputting into this matrix.
+
+Only works with square matrices.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:ToNative(<code>[<a href="Classes/FFI">FFI</a>&lt;float[N]&gt; out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/FFI">FFI</a>&lt;float[N]&gt;</code></span>**
+
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to place the resulting data.
+
+Returns a native representation of the matrix using the LuaJIT FFI.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Transpose(<code>[<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: An optional <a href="Classes/Math.Matrix">Matrix</a> to place the data into.
+
+Transposes the <a href="Classes/Math.Matrix">Matrix</a>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Transpose!()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:TransposeInPlace()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+
+
+
+Transposes the matrix in-place.
 
 
 ## Properties

@@ -8,97 +8,81 @@ Provides a metaprogramming-driven method of generating N-length vectors.
 
 Presently has a hard maximum component count of 26, can be expanded upon request.
 
-**Inherits [OOP.Object](Classes/OOP.Object)**
+**Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:New(<code>...</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:New(<code>...</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code></span>**
 
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`...`: The arguments to the intialization. Should be `N` arguments long.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `...`: The arguments to the intialization. Should be `N` arguments long.
 
-**Returns  [Vector](Classes/Math.Vector)&lt;N&gt;**
-
-Creates a new [Vector](Classes/Math.Vector) with `N` components.
+Creates a new <a href="Classes/Math.Vector">Vector</a> with `N` components.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector:Generate(<code>[uint](Types#uint) length, [[dictionary](Types#dictionary) parameters]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector:Generate(<code><a href="Types#uint">uint</a> length, [<a href="Types#dictionary">dictionary</a> parameters]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;length&gt;</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`length`: The length of the vector.
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`parameters`: Options for generating the class:
-
-**Returns  [Vector](Classes/Math.Vector)&lt;length&gt;**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `length`: The length of the vector.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `parameters`: Options for generating the class:
 
 Generates a new Vector class with the given keys and parameters. Results are cached, but this method may still be slow.
 It performs runtime code generation and template parsing on each generated class.
 
 The following parameters are valid:
 
-- [number](Types#number) NormalizedLength (1): The length the vector reaches when normalized.
-- [number](Types#number) DefaultValue (0): The value to initialize all members to if not given.
-- [list](Types#list)&lt;[number](Types#number)&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
+- <a href="Types#number">number</a> NormalizedLength (1): The length the vector reaches when normalized.
+- <a href="Types#number">number</a> DefaultValue (0): The value to initialize all members to if not given.
+- <a href="Types#list">list</a>&lt;<a href="Types#number">number</a>&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:GetComponents()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:GetComponents()</h4>
+**<span class="method-returns">Returns <code><a href="Types#tuple">tuple</a>&lt;N, unumber&gt;</code></span>**
 
 
 
-**Returns  [tuple](Types#tuple)&lt;N, unumber&gt;**
-
-public [tuple](Types#tuple)&lt;N, unumber&gt; Vector&lt;N&gt;:GetComponents()
-
-Returns the individual components of the [Vector](Classes/Math.Vector)&lt;N&gt; in order. Much faster than `unpack`.
+Returns the individual components of the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; in order. Much faster than `unpack`.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Length()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Length()</h4>
+**<span class="method-returns">Returns <code><a href="Types#unumber">unumber</a></code></span>**
 
 
-
-**Returns  [unumber](Types#unumber)**
-
-public [unumber](Types#unumber) Vector&lt;N&gt;:Length()
 
 Returns the length of the vector.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:LengthSquared()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:LengthSquared()</h4>
+**<span class="method-returns">Returns <code><a href="Types#unumber">unumber</a></code></span>**
 
 
-
-**Returns  [unumber](Types#unumber)**
-
-public [unumber](Types#unumber) Vector&lt;N&gt;:LengthSquared()
 
 Returns the length of the vector squared.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Normalize(<code>[[Vector](Classes/Math.Vector)&lt;N&gt; out]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:Normalize(<code>[<a href="Classes/Math.Vector">Vector</a>&lt;N&gt; out]</code>)</h4>
+**<span class="method-returns">Returns <code>out</code></span>**
 
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`out`: Where to place the data of the normalized vector. A new `Vector<N>` if not given.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to place the data of the normalized vector. A new `Vector<N>` if not given.
 
-**Returns  out**
-
-Normalizes the [Vector](Classes/Math.Vector)&lt;N&gt; object, optionally outputting the data to an existing [Vector](Classes/Math.Vector)&lt;N&gt;.
+Normalizes the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; object, optionally outputting the data to an existing <a href="Classes/Math.Vector">Vector</a>&lt;N&gt;.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:NormalizeInPlace()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:NormalizeInPlace()</h4>
+**<span class="method-returns">Returns <code>self</code></span>**
 
 
-
-**Returns  self**
-
-public self Vector&lt;N&gt;:NormalizeInPlace()
 
 Normalizes the vector in-place.
 
 Called in Carbide as `Vector:Normalize!()`
 
 <hr/>
-<h4 class="method-name"><img alt="private" src="https://img.shields.io/badge/ -private-d30500.svg?style=flat-square" />  Vector:__generate_method(<code>[string](Types#string) body, [dictionary](Types#dictionary) arguments, [[dictionary](Types#dictionary) env]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="private" src="https://img.shields.io/badge/ -private-d30500.svg?style=flat-square" />  Vector:__generate_method(<code><a href="Types#string">string</a> body, <a href="Types#dictionary">dictionary</a> arguments, [<a href="Types#dictionary">dictionary</a> env]</code>)</h4>
+**<span class="method-returns">Returns <code>function</code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`body`: Template-enabled code to return a function.
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`arguments`: Arguments to the template
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`env`: The environment to generate the method under.
-
-**Returns  function**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `body`: Template-enabled code to return a function.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `arguments`: Arguments to the template
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `env`: The environment to generate the method under.
 
 Generates a method using Carbon's TemplateEngine and handles errors.
 

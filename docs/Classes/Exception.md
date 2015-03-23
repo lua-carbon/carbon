@@ -4,28 +4,26 @@
 
 Signals detailed, strongly-typed error conditions.
 
-**Inherits [OOP.Object](Classes/OOP.Object)**
+**Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:New(<code>[string](Types#string) message</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:New(<code><a href="Types#string">string</a> message</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Exception">Exception</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`message`: The message to initialize the exception with.
-
-**Returns  [Exception](Classes/Exception)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `message`: The message to initialize the exception with.
 
 Creates a new generic exception with the given message.
 
 <hr/>
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:Throw(<code>[[uint](Types#uint) level]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:Throw(<code>[<a href="Types#uint">uint</a> level]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
-- <img alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />&nbsp;&nbsp;`level`: An optional parameter passed onto Lua's error function.
-
-**Returns  [void](Types#void)**
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `level`: An optional parameter passed onto Lua's error function.
 
 Throws the exception as a traditional Lua error.
 
 
 ## Properties
-#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>[string](Types#string)</code> Exception.Message
+#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code><a href="Types#string">string</a></code> Exception.Message
 An error message explaining the exception.
 

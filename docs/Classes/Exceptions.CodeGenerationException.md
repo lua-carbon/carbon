@@ -4,24 +4,23 @@
 
 An exception to be generated when generation of code fails.
 
-**Inherits [Exception](Classes/Exception)**
+**Inherits <a href="Classes/Exception">Exception</a>**
 
 ## Methods
-<h4 class="method-name"><img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  CodeGenerationException:New(<code>string message, string code</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  CodeGenerationException:New(<code>string message, string code</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Exceptions.CodeGenerationException">CodeGenerationException</a></code></span>**
 
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`message`: A message explaining why code generation failed.
-- <img alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />&nbsp;&nbsp;`code`: The code that was generated.
-
-**Returns  [CodeGenerationException](Classes/Exceptions.CodeGenerationException)**
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `message`: A message explaining why code generation failed.
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `code`: The code that was generated.
 
 Denotes that code generation failed in a metaprogramming-enabled module.
 
 
 ## Properties
-#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> GeneratedCode
+#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> GeneratedCode
 Contains the code that was generated and failed to meet the criteria.
 
 <hr/>
-#### <img alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> Message
+#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> Message
 Contains a message about what went wrong generating code.
 

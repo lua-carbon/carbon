@@ -14,6 +14,8 @@
 		The 'loose' form of a Matrix, `@loose<@Matrix>` is of the form `(N, M, ...)` where `N` and `M`
 		are the dimensions of the matrix and `...` represents the values within it.
 	}
+
+	#alias Vector Math.Vector
 ]]
 
 local Carbon = (...)
@@ -27,17 +29,56 @@ if (not ok) then
 	ffi = nil
 end
 
+-- Helper functions for the generators
+-- This would use string.format, or string.gsub even, but percent signs make Lua throw up.
+local function SQUARE_ONLY(str)
+	return [[
+		{% if (ROWS ~= COLUMNS) then %}
+			return function()
+				return nil, "Method only exists for square matrices!"
+			end
+		{% else %}
+	]] .. str .. [[
+		{% end %}
+	]]
+end
+
+local function FFI_ONLY(str)
+	return [[
+		{% if (not ffi) then %}
+			return function()
+				return nil, "Method only works with the LuaJTI FFI!"
+			end
+		{% else %}
+	]] .. str .. [[
+		{% end %}
+	]]
+end
+
+local args = {
+	"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+	"_"
+}
+local function ULIST(count, offset)
+	offset = offset or 1
+	local buffer = {}
+	for i = offset + 1, count + offset do
+		table.insert(buffer, args[i])
+	end
+
+	return table.concat(buffer, ",")
+end
+
 local Matrix
 Matrix = {
 	Engine = TemplateEngine:New(),
 	__cache = {},
 	__methods = {
-		-- Initializer:
-		-- Matrix:Init(...)
 		--[[#method 1 {
 			class public @Matrix Matrix:New(...)
-			-alias: object public self Matrix:Init(...)
-				optional ...: The values to initialize the matrix with. Each value is 0 by default.
+			-alias: object public @void Matrix:Init(...)
+				optional ...: The values to initialize the matrix with. Each value is nil by default.
 
 			Initializes or creates a matrix with a set of row-major values.
 		}]]
@@ -78,7 +119,7 @@ Matrix = {
 			return self:New():InitFromLoose(...)
 		end,
 
-		--[[#method {
+		--[[#method 2 {
 			object public @loose<@Matrix> Matrix:ToLoose()
 
 			Returns the loose form of the @Matrix, decomposing into a tuple.
@@ -99,6 +140,11 @@ Matrix = {
 			end
 		]],
 
+		--[[#method 2 {
+			object public @tuple<N, ...> Matrix:GetComponents()
+
+			Returns the components of the @Matrix in row-major ordering.
+		}]]
 		GetComponents = [[
 			return function(self)
 				return
@@ -114,27 +160,45 @@ Matrix = {
 			end
 		]],
 
+		--[[#method {
+			object public @Matrix Matrix:Transpose!()
+			-alias: object public @Matrix Matrix:TransposeInPlace()
+
+			Transposes the matrix in-place.
+		}]]
 		TransposeInPlace = function(self)
 			return self:Transpose(self)
 		end,
 
-		Transpose = [[
-			{% if (COLUMNS == ROWS) then %}
-				return function(self, out)
-					out = out or self.class:New()
+		--[[#method {
+			object public @Matrix Matrix:Transpose([@Matrix out])
+				optional out: An optional @Matrix to place the data into.
 
-					for i = 1, {%=ROWS %} do
-						for j = 1, {%=COLUMNS %} do
-							out:Set(i, j, self:Get(j, i))
-						end
-					end
+			Transposes the @Matrix.
+		}]]
+		Transpose = SQUARE_ONLY [[
+			return function(self, out)
+				out = out or self.class:New()
 
-					return out
-				end
-			{% end %}
+				{% for i = 1, ROWS do %}
+					local {%=ULIST(COLUMNS, i * COLUMNS - COLUMNS) %} = self:GetRow({%=i %})
+				{% end %}
+
+				{% for i = 1, COLUMNS do %}
+					out:SetColumn({%=i %}, {%=ULIST(COLUMNS, i * COLUMNS - COLUMNS) %})
+				{% end %}
+
+				return out
+			end
 		]],
 
-		Zero = [[
+		--[[#method 1 {
+			class public @Matrix Matrix:NewZero()
+			-alias: object public @void Matrix:InitZero()
+
+			Creates or initializes a matrix with all zero values.
+		}]]
+		NewZero = [[
 			return function(self)
 				return self:New(
 				{% for i = 1, N do
@@ -147,42 +211,110 @@ Matrix = {
 			end
 		]],
 
-		Identity = [[
+		InitZero = [[
 			return function(self)
-				{% if (ROWS == COLUMNS) then %}
-					return self:New(
-						{% for i = 1, ROWS do
-							for j = 1, COLUMNS do
-								if (i == j) then
-									_("1")
-								else
-									_("0")
-								end
-
-								if (i < ROWS or j < COLUMNS) then
-									_(",")
-								end
-							end
-						end %}
-					)
-				{% else %}
-					return nil, "No identity exists for non-square matrices!"
-				{% end %}
+				self:Init(
+				{% for i = 1, N do
+					_("0")
+					if (i < N) then
+						_(",")
+					end
+				end %}
+				)
 			end
 		]],
 
+		NewLooseIdentity = SQUARE_ONLY [[
+			return function(self)
+				return
+				{% for i = 1, ROWS do
+					for j = 1, COLUMNS do
+						if (i == j) then
+							_("1")
+						else
+							_("0")
+						end
+
+						if (i < ROWS or j < COLUMNS) then
+							_(",")
+						end
+					end
+				end %}
+			end
+		]],
+
+		--[[#method 1 {
+			class public @Matrix Matrix:NewIdentity()
+			-alias: object public @void Matrix:InitIdentity()
+
+			Creates or initializes an identity matrix.
+		}]]
+		NewIdentity = SQUARE_ONLY [[
+			return function(self)
+				return self:New(self:NewLooseIdentity())
+			end
+		]],
+
+		InitIdentity = SQUARE_ONLY [[
+			return function(self)
+				return self:Init(self:NewLooseIdentity())
+			end
+		]],
+
+		--[[#method 2 {
+			object public @void Matrix:Set(@unumber i, @unumber j, @number? value)
+				required i: The column to look up.
+				required j: The row to look up.
+				required value: The value to set at the cell.
+
+			Sets a value of a cell specified by `(column, row)`.
+		}]]
 		Set = [[
 			return function(self, i, j, value)
 				self[(i - 1) * {%=COLUMNS %} + j] = value
 			end
 		]],
 
+		--[[#method 2 {
+			object public @number? Matrix:Get(@unumber i, @unumber j)
+				required i: The column to look up.
+				required j: The row to look up.
+
+			Gets a value of a cell specified by `(column, row)`.
+		}]]
 		Get = [[
 			return function(self, i, j)
 				return self[(i - 1) * {%=COLUMNS %} + j]
 			end
 		]],
 
+		--[[#method 2.01 {
+			object public @void Matrix:SetRow(@unumber row, @tuple<COLUMNS, ...> values)
+				required row: The row to set values for
+				required values: The values to set for this row.
+
+			Sets an entire row's values in the @Matrix.
+		}]]
+		SetRow = [[
+			return function(self, i, ...)
+				{% for j = 1, COLUMNS do
+					_(("self[(i - 1) * %d + %d]"):format(
+						COLUMNS, j
+					))
+
+					if (j < COLUMNS) then
+						_(",")
+					end
+				end %} = ...
+			end
+		]],
+
+		--[[#method 2.01 {
+			object public @tuple<COLUMNS, ...> Matrix:GetRow(@unumber row)
+				required row: The row to get values for.
+
+			Returns an entire row's values from this @Matrix.
+		}]]
 		GetRow = [[
 			return function(self, i)
 				return 
@@ -198,10 +330,54 @@ Matrix = {
 			end
 		]],
 
+		--[[#method 2.02 {
+			object public @void Matrix:SetColumn(@unumber column, @tuple<ROWS, ...> values)
+				required column: The column to set values for
+				required values: The values to set for this column.
+
+			Sets an entire column's values in the @Matrix.
+		}]]
+		SetColumn = [[
+			return function(self, j, ...)
+				{% for i = 1, ROWS do
+					_(("self[(%d - 1) * %d + j]"):format(
+						i, COLUMNS
+					))
+
+					if (i < ROWS) then
+						_(",")
+					end
+				end %} = ...
+			end
+		]],
+
+		--[[#method 2.02 {
+			object public @tuple<ROWS, ...> Matrix:GetColumn(@unumber column)
+				required column: The column to get values for.
+
+			Returns an entire column's values from this @Matrix.
+		}]]
+		GetColumn = [[
+			return function(self, j)
+				return
+				{% for i = 1, ROWS do
+					_(("self[(%d - 1) * %d + j]"):format(
+						i, COLUMNS
+					))
+
+					if (i < ROWS) then
+						_(",")
+					end
+				end %}
+			end
+		]],
+
 		MultiplyScalarInPlace = function(self, value)
 			return self:MultiplyScalar(value, self)
 		end,
 
+		--[[#method {
+		}]]
 		MultiplyScalar = [[
 			return function(self, value, out)
 				out = out or self.class:New()
@@ -224,6 +400,9 @@ Matrix = {
 			return function() end
 		]],
 
+		--[[#method {
+			object public Vector
+		}]]
 		MultiplyVector = function(self, other, out)
 			if (self.ColumnCount ~= other.ComponentCount) then
 				return nil, "Cannot multiply mismatched matrices and vectors!"
@@ -242,10 +421,26 @@ Matrix = {
 			return out
 		end,
 
-		MultiplyMatrixInPlace = function(self, other, out)
-			return self:MultiplyMatrix(other, out)
+		--[[#method {
+			object public self Matrix:MultiplyMatrix!(@Matrix other)
+			-alias: object public self Matrix:MultiplyMatrixInPlace(@Matrix other)
+				required other: The matrix to multiply with.
+
+			Multiplies this matrix with another matrix, outputting into this matrix.
+
+			Only works with square matrices.
+		}]]
+		MultiplyMatrixInPlace = function(self, other)
+			return self:MultiplyMatrix(other, self)
 		end,
 
+		--[[#method {
+			object public @Matrix Matrix:MultiplyMatrix(@Matrix other, [@Matrix out])
+				required other: The matrix to multiply with this one.
+				optional out: Where to put the data. A new matrix if not specified.
+
+			Multiplies this @Matrix with another @Matrix.
+		}]]
 		MultiplyMatrix = function(self, other, out)
 			if (self.ColumnCount ~= other.RowCount) then
 				return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
@@ -266,20 +461,38 @@ Matrix = {
 			return out
 		end,
 
-		ToNative = [[
-			{% if (ffi) then %}
-				return function(self, out)
-					if (out) then
-						for i = 1, {%=N %} do
-							out[i - 1] = self[i]
-						end
-					else
-						return ffi.new("float[{%=N %}]", self:GetComponents())
-					end
+		GetNative = FFI_ONLY [[
+			return function(self)
+				if (self.__native) then
+					{% for i = 1, N do
+						_(("self.__native[%d] = self[%d]"):format(
+							i - 1, i
+						))
+					end %}
+				else
+					self.__native = ffi.new("float[{%=N %}]", self:GetComponents())
 				end
-			{% else %}
-				return function() end
-			{% end %}
+
+				return self.__native
+			end
+		]],
+
+		--[[#method {
+			object public @FFI<float[N]> Matrix:ToNative([@FFI<float[N]> out])
+				optional out: Where to place the resulting data.
+
+			Returns a native representation of the matrix using the LuaJIT FFI.
+		}]]
+		ToNative = FFI_ONLY [[
+			return function(self, out)
+				if (out) then
+					for i = 1, {%=N %} do
+						out[i - 1] = self[i]
+					end
+				else
+					return ffi.new("float[{%=N %}]", self:GetComponents())
+				end
+			end
 		]]
 	},
 	__metatable = {
@@ -352,6 +565,7 @@ function Matrix:Generate(rows, columns)
 		ROWS = rows,
 		COLUMNS = columns,
 		CLASS = class,
+		ULIST = ULIST,
 		ffi = ffi
 	}
 
