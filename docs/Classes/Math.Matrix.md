@@ -127,6 +127,15 @@ Returns an entire column's values from this <a href="Classes/Math.Matrix">Matrix
 Sets an entire column's values in the <a href="Classes/Math.Matrix">Matrix</a>.
 
 <hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MultiplyLooseMatrix(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Matrix">Matrix</a>&gt; other, [<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `other`: A <a href="Types#loose">loose</a> <a href="Classes/Math.Matrix">Matrix</a>, (rows, columns, ...)
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data.
+
+Multiplies the <a href="Classes/Math.Matrix">Matrix</a> with a loose-representation matrix.
+
+<hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MultiplyMatrix(<code><a href="Classes/Math.Matrix">Matrix</a> other, [<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
 
@@ -148,6 +157,37 @@ Multiplies this matrix with another matrix, outputting into this matrix.
 Only works with square matrices.
 
 <hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MultiplyVector(<code><a href="Classes/Math.Vector">Vector</a> other, [<a href="Classes/Math.Vector">Vector</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `other`: The vector to multiply with.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data.
+
+Left-Multiplies the <a href="Classes/Math.Matrix">Matrix</a> with the given <a href="Classes/Math.Vector">Vector</a>.
+
+`<a href="Classes/Math.Matrix">Matrix</a> * <a href="Classes/Math.Vector">Vector</a>`
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MutiplyScalar(<code><a href="Types#number">number</a> value, [<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `value`: The scalar to scale the matrix with.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data.
+
+Multiplies the <a href="Classes/Math.Matrix">Matrix</a> by a scalar value.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:RightMultiplyVector(<code><a href="Classes/Math.Vector">Vector</a> other, [<a href="Classes/Math.Vector">Vector</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `other`: The <a href="Classes/Math.Vector">Vector</a> to multiply with.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data.
+
+Right-Multiplies the <a href="Classes/Math.Matrix">Matrix</a> and the given <a href="Classes/Math.Vector">Vector</a>.
+
+`<a href="Classes/Math.Vector">Vector</a> * <a href="Classes/Math.Matrix">Matrix</a>`
+
+<hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:ToNative(<code>[<a href="Classes/FFI">FFI</a>&lt;float[N]&gt; out]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/FFI">FFI</a>&lt;float[N]&gt;</code></span>**
 
@@ -156,7 +196,7 @@ Only works with square matrices.
 Returns a native representation of the matrix using the LuaJIT FFI.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Transpose(<code>[<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:Transpose()</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
 
 - <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: An optional <a href="Classes/Math.Matrix">Matrix</a> to place the data into.

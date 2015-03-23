@@ -171,7 +171,7 @@ Matrix = {
 		end,
 
 		--[[#method {
-			object public @Matrix Matrix:Transpose([@Matrix out])
+			object public @Matrix Matrix:Transpose()
 				optional out: An optional @Matrix to place the data into.
 
 			Transposes the @Matrix.
@@ -377,6 +377,11 @@ Matrix = {
 		end,
 
 		--[[#method {
+			object public @Matrix Matrix:MutiplyScalar(@number value, [@Matrix out])
+				required value: The scalar to scale the matrix with.
+				optional out: Where to put the resulting data.
+
+			Multiplies the @Matrix by a scalar value.
 		}]]
 		MultiplyScalar = [[
 			return function(self, value, out)
@@ -387,39 +392,97 @@ Matrix = {
 						i, i
 					))
 				end %}
-			end
-		]],
 
-		MultiplyLoose = [[
-			return function(self, rows, columns, ...)
-				local out = select(rows*columns + 1, ...) or self.class:New()
+				return out
 			end
-		]],
-
-		MultiplyLikeMatrix = [[
-			return function() end
 		]],
 
 		--[[#method {
-			object public Vector
+			object public @Matrix Matrix:MultiplyLooseMatrix(@loose<@Matrix> other, [@Matrix out])
+				required other: A @loose @Matrix, (rows, columns, ...)
+				optional out: Where to put the resulting data.
+
+			Multiplies the @Matrix with a loose-representation matrix.
 		}]]
-		MultiplyVector = function(self, other, out)
-			if (self.ColumnCount ~= other.ComponentCount) then
-				return nil, "Cannot multiply mismatched matrices and vectors!"
-			end
-
-			out = out or other.class:New()
-
-			for i = 1, self.RowCount do
-				local sum = 0
-				for k = 1, self.ColumnCount do
-					sum = sum + self:Get(i, k) * other[k]
+		MultiplyLooseMatrix = [[
+			return function(self, rows, columns, ...)
+				if ({%=COLUMNS %} ~= rows) then
+					return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
 				end
-				out[i] = sum
-			end
 
-			return out
-		end,
+				local out = select(rows*columns + 1, ...) or self.class:New()
+
+				for i = 1, {%=ROWS %} do
+					for j = 1, columns do
+						local sum = 0
+						for k = 1, {%=COLUMNS %} do
+							sum = sum + self:Get(i, k) * (other[k - 1] * columns + j)
+						end
+						out:Set(i, j, sum)
+					end
+				end
+
+				return out
+			end
+		]],
+
+		--[[#method {
+			object public @Vector Matrix:MultiplyVector(@Vector other, [@Vector out])
+				required other: The vector to multiply with.
+				optional out: Where to put the resulting data.
+
+			Left-Multiplies the @Matrix with the given @Vector.
+
+			`@Matrix * @Vector`
+		}]]
+		MultiplyVector = [[
+			return function(self, other, out)
+				if ({%=COLUMNS %} ~= other.ComponentCount) then
+					return nil, "Cannot multiply mismatched matrices and vectors!"
+				end
+
+				out = out or other.class:New()
+
+				for k = 1, {%=ROWS %} do
+					local sum = 0
+					for i = 1, {%=COLUMNS %} do
+						sum = sum + self:Get(i, k) * other[k]
+					end
+					out[i] = sum
+				end
+
+				return out
+			end
+		]],
+
+		--[[#method {
+			object public @Vector Matrix:RightMultiplyVector(@Vector other, [@Vector out])
+				required other: The @Vector to multiply with.
+				optional out: Where to put the resulting data.
+
+			Right-Multiplies the @Matrix and the given @Vector.
+
+			`@Vector * @Matrix`
+		}]]
+		RightMultiplyVector = [[
+			return function(self, other, out)
+				if ({%=COLUMNS %} ~= other.ComponentCount) then
+					return nil, "Cannot multiply mismatched matrices and vectors!"
+				end
+
+				out = out or other.class:New()
+
+				for i = 1, {%=ROWS %} do
+					local sum = 0
+					for k = 1, {%=COLUMNS %} do
+						sum = sum + self:Get(i, k) * other[k]
+					end
+					out[i] = sum
+				end
+
+				return out
+			end
+		]],
 
 		--[[#method {
 			object public self Matrix:MultiplyMatrix!(@Matrix other)
