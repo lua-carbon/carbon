@@ -235,6 +235,17 @@ Matrix = {
 			end
 		]],
 
+		PlacementNewFromLoose = [[
+			return function(self, out, rows, columns, ...)
+				if (out) then
+					out:InitFromLoose(rows, columns, ...)
+					return out
+				else
+					return self:NewFromLoose(rows, columns, ...)
+				end
+			end
+		]],
+
 		NewLooseZero = [[
 			return function(self)
 				return {%=ROWS %}, {%=COLUMNS %},
@@ -256,13 +267,13 @@ Matrix = {
 		}]]
 		NewIdentity = SQUARE_ONLY [[
 			return function(self)
-				return self:New(self:NewLooseIdentity())
+				return self:NewFromLoose(self:NewLooseIdentity())
 			end
 		]],
 
 		InitIdentity = SQUARE_ONLY [[
 			return function(self)
-				return self:Init(self:NewLooseIdentity())
+				return self:InitFromLoose(self:NewLooseIdentity())
 			end
 		]],
 
@@ -440,7 +451,7 @@ Matrix = {
 					for j = 1, columns do
 						local sum = 0
 						for k = 1, {%=COLUMNS %} do
-							sum = sum + self:Get(i, k) * (other[k - 1] * columns + j)
+							sum = sum + self:Get(i, k) * (select((k - 1) * columns + j, ...))
 						end
 						out:Set(i, j, sum)
 					end

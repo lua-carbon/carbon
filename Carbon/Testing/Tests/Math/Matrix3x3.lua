@@ -42,6 +42,18 @@ function Test:Run(test)
 		-7, -8, -9
 	)
 
+	local b = Matrix3x3:New(
+		9, 8, 7,
+		6, 5, 4,
+		3, 2, 1
+	)
+
+	local ab_correct = Matrix3x3:New(
+		30, 24, 18,
+		84, 69, 54,
+		-138, -114, -90
+	)
+
 	-- Equivalent matrix in loose 3x3 form
 	local aa = Matrix3x3:NewFromLoose(3, 3,
 		1, 2, 3,
@@ -146,6 +158,22 @@ function Test:Run(test)
 		test:Pass()
 	else
 		test:Fail("SetColumn failed!")
+	end
+
+	-- Test Multiplication
+	local ab = a:MultiplyMatrix(b)
+	if (matrixapproxeq(ab, ab_correct)) then
+		test:Pass()
+	else
+		test:Fail("Matrix multiplication failed!")
+	end
+
+	-- Test loose multiplication
+	local ab = a:MultiplyLooseMatrix(b:ToLoose())
+	if (matrixapproxeq(ab, ab_correct)) then
+		test:Pass()
+	else
+		test:Fail("Loose matrix multiplication failed!")
 	end
 end
 
