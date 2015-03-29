@@ -58,6 +58,7 @@ end
 --[[#method {
 	class public @Matrix4x4 Matrix4x4:Rotation(@number x, @number y, @number z, [@Matrix4x4 out])
 	-alias: object public @Matrix4x4 Matrix4x4:Rotate(@number x, @number y, @number z, [@Matrix4x4 out])
+	-alias: object public self Matrix4x4:Rotate!(@number x, @number y, @number z)
 		required x: The x component of the rotation.
 		required y: The y component of the rotation.
 		required z: The z component of the rotation.
@@ -82,12 +83,12 @@ function Matrix4x4:RotateInPlace(x, y, z)
 	return self:Rotate(x, y, z, self)
 end
 
-function Matrix4x4:RotateXInPlace(t, out)
-	return self:RotateX(t, self)
-end
-
 function Matrix4x4:RotateX(t, out)
 	return self:MultiplyLooseMatrix(self:LooseRotationX(t, out))
+end
+
+function Matrix4x4:RotateXInPlace(t, out)
+	return self:RotateX(t, self)
 end
 
 function Matrix4x4:LooseRotationX(t, ...)
@@ -102,12 +103,12 @@ function Matrix4x4:RotationX(t, out)
 	return self:PlacementNewFromLoose(out, self:LooseRotationX(t))
 end
 
-function Matrix4x4:RotateYInPlace(t)
-	return self:RotateY(t, self)
-end
-
 function Matrix4x4:RotateY(t, out)
 	return self:MultiplyLooseMatrix(self:LooseRotationY(t, out))
+end
+
+function Matrix4x4:RotateYInPlace(t)
+	return self:RotateY(t, self)
 end
 
 function Matrix4x4:LooseRotationY(t, ...)
@@ -122,12 +123,12 @@ function Matrix4x4:RotationY(t, out)
 	return self:PlacementNewFromLoose(out, self:LooseRotationY(t))
 end
 
-function Matrix4x4:RotateZInPlace(t)
-	return self:RotateZ(t, self)
-end
-
 function Matrix4x4:RotateZ(t, out)
 	return self:MultiplyLooseMatrix(self:LooseRotationZ(t, out))
+end
+
+function Matrix4x4:RotateZInPlace(t)
+	return self:RotateZ(t, self)
 end
 
 function Matrix4x4:LooseRotationZ(t, ...)
