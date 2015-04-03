@@ -8,7 +8,7 @@ LookupPointers themselves are copied, but the data they point to is not.
 **Inherits [none]**
 
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  LookupPointer:New(<code><a href="Types#indexable">indexable</a> parent, <a href="Types#list">list</a>&lt;string&gt; path</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> LookupPointer:New(<code><a href="Types#indexable">indexable</a> parent, <a href="Types#list">list</a>&lt;string&gt; path</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Pointers.LookupPointer">LookupPointer</a></code></span>**
 
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `parent`: The base of the lookup to be performed.
@@ -17,7 +17,15 @@ LookupPointers themselves are copied, but the data they point to is not.
 Creates a new <a href="Classes/Pointers.LookupPointer">LookupPointer</a> pointing at the given parent with a given navigation table.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  (<code><a href="Types#indexable">indexable</a>, <a href="Types#list">list</a>&lt;string&gt;</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> LookupPointer:Copy()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Pointers.LookupPointer">LookupPointer</a></code></span>**
+
+
+
+Copies the <a href="Classes/Pointers.LookupPointer">LookupPointer</a> but not the data it points to.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> (<code><a href="Types#indexable">indexable</a>, <a href="Types#list">list</a>&lt;string&gt;</code>)</h4>
 **<span class="method-returns">Returns <code></code></span>**
 
 
@@ -27,7 +35,7 @@ LookupPointer:Get()
 Returns the current parent and navigation table.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  LookupPointer:Get(<code><a href="Types#indexable">indexable</a> parent, <a href="Types#list">list</a>&lt;string&gt; path</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> LookupPointer:Get(<code><a href="Types#indexable">indexable</a> parent, <a href="Types#list">list</a>&lt;string&gt; path</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `parent`: The base of the lookup to be performed.

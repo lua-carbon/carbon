@@ -4,7 +4,6 @@
 
 	#description {
 		Wraps an object to pass it by-reference.
-		Creates an implicit copy barrier.
 	}
 ]]
 
@@ -13,10 +12,10 @@ local Carbon = (...)
 local BasicPointer = {}
 
 --[[#method 1 {
-	public @BasicPointer BasicPointer:New(@any? value)
+	class public @BasicPointer BasicPointer:New(@any? value)
 		optional value: The value the pointer should point at.
 
-	Creates a new BasicPointer, pointing at any sort of object.
+	Creates a new @BasicPointer, pointing at any sort of object.
 }]]
 function BasicPointer:New(value)
 	local instance = newproxy(true)
@@ -26,8 +25,17 @@ function BasicPointer:New(value)
 	return instance
 end
 
+--[[#method 2 {
+	object public @BasicPointer BasicPointer:Copy()
+
+	Copies the @BasicPointer, but not the value pointed to.
+}]]
+function BasicPointer:Copy()
+	return self.class:New(getmetatable(self).__value)
+end
+
 --[[#method {
-	public @any? BasicPointer:Get()
+	object public @any? BasicPointer:Get()
 
 	Returns the value currently pointed at by the BasicPointer.
 }]]
@@ -36,7 +44,7 @@ function BasicPointer:Get()
 end
 
 --[[#method {
-	public @void BasicPointer:Set(@any? value)
+	object public @void BasicPointer:Set(@any? value)
 
 	Sets a new value to be pointed at by this BasicPointer.
 }]]

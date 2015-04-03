@@ -3,20 +3,27 @@
 <span class="file-link">(in [./Carbon/Pointers/BasicPointer.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Pointers/BasicPointer.lua))</span><br/>
 
 Wraps an object to pass it by-reference.
-Creates an implicit copy barrier.
 
 **Inherits [none]**
 
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  BasicPointer:New(<code><a href="Types#any">any</a>? value</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> BasicPointer:New(<code><a href="Types#any">any</a>? value</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Pointers.BasicPointer">BasicPointer</a></code></span>**
 
 - <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `value`: The value the pointer should point at.
 
-Creates a new BasicPointer, pointing at any sort of object.
+Creates a new <a href="Classes/Pointers.BasicPointer">BasicPointer</a>, pointing at any sort of object.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  BasicPointer:Get()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> BasicPointer:Copy()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Pointers.BasicPointer">BasicPointer</a></code></span>**
+
+
+
+Copies the <a href="Classes/Pointers.BasicPointer">BasicPointer</a>, but not the value pointed to.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> BasicPointer:Get()</h4>
 **<span class="method-returns">Returns <code><a href="Types#any">any</a>?</code></span>**
 
 
@@ -24,7 +31,7 @@ Creates a new BasicPointer, pointing at any sort of object.
 Returns the value currently pointed at by the BasicPointer.
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  BasicPointer:Set(<code><a href="Types#any">any</a>? value</code>)</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> BasicPointer:Set(<code><a href="Types#any">any</a>? value</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
 
 

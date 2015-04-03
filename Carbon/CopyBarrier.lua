@@ -15,7 +15,7 @@ local Dictionary = Carbon.Collections.Dictionary
 local CopyBarrier = {}
 
 --[[#method 1 {
-	public @CopyBarrier CopyBarrier:New(@any? value)
+	class public @CopyBarrier CopyBarrier:New(@any? value)
 		required value: The value to point at.
 
 	Creates a new @CopyBarrier pointing at the given value.
@@ -37,7 +37,7 @@ function CopyBarrier:New(value)
 end
 
 --[[#method {
-	public self CopyBarrier:Copy()
+	object public self CopyBarrier:Copy()
 
 	A stub that simply returns itself to prevent copying methods from copying this.
 }]]
@@ -46,7 +46,7 @@ function CopyBarrier:Copy()
 end
 
 --[[#method {
-	public @any? CopyBarrier:Get()
+	object public @any? CopyBarrier:Get()
 
 	Returns the value pointed to by the @CopyBarrier.
 }]]
@@ -55,7 +55,7 @@ function CopyBarrier:Get()
 end
 
 --[[#method {
-	public @void CopyBarrier:Set(@any? value)
+	object public @void CopyBarrier:Set(@any? value)
 		required value: The new value for the @CopyBarrier.
 
 	Sets a new value for the @CopyBarrier.

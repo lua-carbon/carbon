@@ -97,7 +97,7 @@ local meta = {
 local LookupPointer = {}
 
 --[[#method 1 {
-	public @LookupPointer LookupPointer:New(@indexable parent, @list<string> path)
+	class public @LookupPointer LookupPointer:New(@indexable parent, @list<string> path)
 		required parent: The base of the lookup to be performed.
 		required path: A list of strings to navigate through the parent with.
 
@@ -113,8 +113,17 @@ function LookupPointer:New(parent, path)
 	return instance
 end
 
+--[[#method 2 {
+	object public @LookupPointer LookupPointer:Copy()
+
+	Copies the @LookupPointer but not the data it points to.
+}]]
+function LookupPointer:Copy()
+	return self:New(self.__parent, self.__path)
+end
+
 --[[#method {
-	public (@indexable, @list<string>) LookupPointer:Get()
+	object public (@indexable, @list<string>) LookupPointer:Get()
 
 	Returns the current parent and navigation table.
 }]]
@@ -123,7 +132,7 @@ function LookupPointer:Get()
 end
 
 --[[#method {
-	public @void LookupPointer:Get(@indexable parent, @list<string> path)
+	object public @void LookupPointer:Get(@indexable parent, @list<string> path)
 		required parent: The base of the lookup to be performed.
 		required path: A list of strings to navigate through the parent with.
 
