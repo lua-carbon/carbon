@@ -13,16 +13,9 @@
 local Carbon = (...)
 
 local Color = Carbon.Math.Color
-local Color_RGBA, except = Carbon.Math.Vector:Generate(4)
+local Vector4 = Carbon.Math.Vector4
 
-if (not Color_RGBA) then
-	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then
-		print(except.GeneratedCode)
-	end
-	
-	Carbon.Error(except)
-end
+local ColorRGBA = OOP:Class(Vector4)
+	:Inherits(Color)
 
-Color_RGBA:Inherits(Color)
-
-return Color_RGBA
+return ColorRGBA

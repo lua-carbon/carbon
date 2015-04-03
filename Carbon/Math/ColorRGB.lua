@@ -13,16 +13,9 @@
 local Carbon = (...)
 
 local Color = Carbon.Math.Color
-local ColorRGB, except = Carbon.Math.Vector:Generate(3)
+local Vector3 = Carbon.Math.Vector3
 
-if (not ColorRGB) then
-	if (except.Is[Carbon.Exceptions.CodeGenerationException]) then
-		print(except.GeneratedCode)
-	end
-	
-	Carbon.Error(except)
-end
-
-ColorRGB:Inherits(Color)
+local ColorRGB = OOP:Class(Vector3)
+	:Inherits(Color)
 
 return ColorRGB
