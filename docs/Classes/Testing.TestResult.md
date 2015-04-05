@@ -6,6 +6,7 @@ An object to signal success and failure conditions to the test engine.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  TestResult:New(<code>Test test</code>)</h4>
 **<span class="method-returns">Returns <code>TestResult</code></span>**
@@ -56,5 +57,6 @@ Marks that a component of the TestResult has passed.
 Issues a warning without failing the test.
 
 
+<hr />
 ## Properties
 [none]

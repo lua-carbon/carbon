@@ -8,6 +8,7 @@ The loose form of a <a href="Classes/Math.Quaternion">Quaternion</a>, <code><a h
 
 **Inherits <a href="Classes/Math.Vector">Math.Vector</a><4>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Quaternion:NewFromAngles(<code><a href="Classes/Math.Vector3">Vector3</a> angles</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></span>**
@@ -48,6 +49,25 @@ Converts a <a href="Classes/Math.Vector3">Vector3</a> containing Euler angles in
 
 Converts a <a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Vector3">Vector3</a>&gt; containing Euler angles into a loose <a href="Classes/Math.Quaternion">Quaternion</a>.
 
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Quaternion:Conjugate(<code>[<a href="Classes/Math.Quaternion">Quaternion</a> out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></span>**
 
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data.
+
+Returns the conjugate of the <a href="Classes/Math.Quaternion">Quaternion</a>, <code>(-i, -j, -k, w)</code>.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Quaternion:Conjugate!()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Quaternion:ConjugateInPlace()</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></span>**
+
+
+
+Conjugates the <a href="Classes/Math.Quaternion">Quaternion</a> in-place.
+
+
+<hr />
 ## Properties
 [none]

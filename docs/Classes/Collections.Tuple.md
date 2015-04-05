@@ -6,6 +6,7 @@ A disposable List object for quick vararg transformations.
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Tuple:New(<code>...</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Collections.Tuple">Tuple</a></code></span>**
@@ -32,5 +33,6 @@ This will put the tuple back into the main buffer, usually.
 Unpacks and destroys the Tuple, returning all its values.
 
 
+<hr />
 ## Properties
 [none]

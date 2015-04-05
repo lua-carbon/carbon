@@ -6,8 +6,10 @@ Templating engine targeted at metaprogramming.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

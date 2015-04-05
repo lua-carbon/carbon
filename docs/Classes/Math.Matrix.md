@@ -15,6 +15,7 @@ are the dimensions of the matrix and <code>...</code> represents the values with
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix:New(<code>...</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Matrix">Matrix</a></code></span>**
@@ -64,7 +65,7 @@ Creates or initializes a matrix with all zero values.
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `i`: The column to look up.
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `j`: The row to look up.
 
-Gets a value of a cell specified by `(column, row)`.
+Gets a value of a cell specified by <code>(column, row)</code>.
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:GetComponents()</h4>
@@ -82,7 +83,7 @@ Returns the components of the <a href="Classes/Math.Matrix">Matrix</a> in row-ma
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `j`: The row to look up.
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `value`: The value to set at the cell.
 
-Sets a value of a cell specified by `(column, row)`.
+Sets a value of a cell specified by <code>(column, row)</code>.
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:ToLoose()</h4>
@@ -165,7 +166,7 @@ Only works with square matrices.
 
 Post-Multiplies the <a href="Classes/Math.Matrix">Matrix</a> with the given <a href="Classes/Math.Vector">Vector</a>.
 
-`<a href="Classes/Math.Matrix">Matrix</a> * <a href="Classes/Math.Vector">Vector</a>`
+<code><a href="Classes/Math.Matrix">Matrix</a> * <a href="Classes/Math.Vector">Vector</a></code>
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:MutiplyScalar(<code><a href="Types#number">number</a> value, [<a href="Classes/Math.Matrix">Matrix</a> out]</code>)</h4>
@@ -185,7 +186,7 @@ Multiplies the <a href="Classes/Math.Matrix">Matrix</a> by a scalar value.
 
 Pre-multiplies the <a href="Classes/Math.Matrix">Matrix</a> and the given <a href="Classes/Math.Vector">Vector</a>.
 
-`<a href="Classes/Math.Vector">Vector</a> * <a href="Classes/Math.Matrix">Matrix</a>`
+<code><a href="Classes/Math.Vector">Vector</a> * <a href="Classes/Math.Matrix">Matrix</a></code>
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix:ToNative(<code>[<a href="Classes/FFI">FFI</a>&lt;float[N]&gt; out]</code>)</h4>
@@ -214,5 +215,6 @@ Transposes the <a href="Classes/Math.Matrix">Matrix</a>.
 Transposes the matrix in-place.
 
 
+<hr />
 ## Properties
 [none]

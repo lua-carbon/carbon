@@ -7,8 +7,10 @@ Metadata is normally handled at the Graphene level because it allows modules to 
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

@@ -6,6 +6,7 @@ Provides utilities for working with time.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Time.Get()</h4>
 **<span class="method-returns">Returns <code><a href="Types#unumber">unumber</a></code></span>**
@@ -81,5 +82,6 @@ Not very useful.
 Converts the given number of weeks to seconds.
 
 
+<hr />
 ## Properties
 [none]

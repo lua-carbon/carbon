@@ -87,22 +87,18 @@ OOP.Attributes = {
 	Registers a new custom class attribute.
 
 	- Class: `@void function(class)`
-
 		Called immediately when the attribute is added to the class.
 
 
 	- PreInitialize: `@void function(class, instance)`
-
 		Called after instance allocation but before the object's initializer is called.
 
 
 	- PostInitialize: `@void function(class, instance)`
-
 		Called after the object is fully initialized.
 
 
 	- Copy: `@void function(original, copy)`
-
 		Called after the copied object has been allocated and filled.
 }]]
 function OOP:RegisterAttribute(type, name, method)

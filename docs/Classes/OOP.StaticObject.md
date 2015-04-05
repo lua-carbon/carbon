@@ -6,8 +6,10 @@ The base class for objects that cannot be instanced, but use OOP-like functional
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

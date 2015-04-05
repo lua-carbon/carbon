@@ -6,6 +6,7 @@ Body for both <a href="Classes/OOP.Class">OOP.Class</a> and <a href="Classes/OOP
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  BaseClass:Attributes(<code><a href="Types#dictionary">dictionary</a> attributes</code>)</h4>
 **<span class="method-returns">Returns <code>self</code></span>**
@@ -42,6 +43,7 @@ Adds metatables to the class. Overwrites existing metatable entries.
 The metatable parameter is only shallow copied, keep this in mind.
 
 
+<hr />
 ## Properties
 #### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>set</code> Is
 The typecheck object for this class.

@@ -6,6 +6,7 @@ Exposes object-oriented filesystem access. See <a href="Classes/IO">IO</a> for m
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Close()</h4>
 **<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
@@ -38,7 +39,7 @@ Returns the raw buffer, containing a series of strings.
 
 
 Reads a file and amortizes its loading through an event loop.
-The same as `File:ReadAsync()`
+The same as <code>File:ReadAsync()</code>
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Write(<code><a href="Types#string">string</a> contents</code>)</h4>
@@ -49,5 +50,6 @@ The same as `File:ReadAsync()`
 Writes to the file.
 
 
+<hr />
 ## Properties
 [none]

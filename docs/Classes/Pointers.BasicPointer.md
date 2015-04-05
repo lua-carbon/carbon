@@ -6,6 +6,7 @@ Wraps an object to pass it by-reference.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> BasicPointer:New(<code><a href="Types#any">any</a>? value</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Pointers.BasicPointer">BasicPointer</a></code></span>**
@@ -39,5 +40,6 @@ Returns the value currently pointed at by the BasicPointer.
 Sets a new value to be pointed at by this BasicPointer.
 
 
+<hr />
 ## Properties
 [none]

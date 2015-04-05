@@ -7,6 +7,7 @@ Forwards indexes and newindexes to target.
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> CopyBarrier:New(<code><a href="Types#any">any</a>? value</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/CopyBarrier">CopyBarrier</a></code></span>**
@@ -40,5 +41,6 @@ Returns the value pointed to by the <a href="Classes/CopyBarrier">CopyBarrier</a
 Sets a new value for the <a href="Classes/CopyBarrier">CopyBarrier</a>.
 
 
+<hr />
 ## Properties
 [none]

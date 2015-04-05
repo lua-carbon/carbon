@@ -10,6 +10,7 @@ All methods provided by this class that are not overridden throw a <a href="Clas
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Serializable.Deserialize(<code><a href="Types#string">string</a> source, <a href="Classes/Serializable">Serializable</a> out</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Serializable">Serializable</a> out</code></span>**
@@ -17,7 +18,7 @@ All methods provided by this class that are not overridden throw a <a href="Clas
 - <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `source`: A string containing a serialized representation of an instance of this class.
 - <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to place the resulting data.
 
-Deserializes the given source string and places it into the given <a href="Classes/Serializable">Serializable</a> `out` object, if given, or a new instance of the class.
+Deserializes the given source string and places it into the given <a href="Classes/Serializable">Serializable</a> <code>out</code> object, if given, or a new instance of the class.
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Serializable:DeserializeInPlace(<code><a href="Types#string">string</a> source</code>)</h4>
@@ -29,9 +30,8 @@ Deserializes a previously serialized instance of this class.
 Places the data into the class this method is called on.
 
 Equivalent to
-```lua
-self:Deserialize(source, self)
-```
+<code class="lua hljs">self:Deserialize(source, self)
+</code>
 
 Can be called with self:Deserialize!(source) in Carbide Lua.
 
@@ -44,5 +44,6 @@ Can be called with self:Deserialize!(source) in Carbide Lua.
 Serializes the object into a string representation.
 
 
+<hr />
 ## Properties
 [none]

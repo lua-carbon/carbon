@@ -14,6 +14,7 @@ Dictionary.ShallowCopy(dictionary)
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>, <a href="Classes/Serializable">Serializable</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Dictionary:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Collections.Dictionary">Dictionary</a></code></span>**
@@ -102,5 +103,6 @@ Converts the Dictionary to a <a href="Classes/Collections.Set">Set</a>.
 Returns all the values in the table in a <a href="Classes/Collections.List">List</a>
 
 
+<hr />
 ## Properties
 [none]

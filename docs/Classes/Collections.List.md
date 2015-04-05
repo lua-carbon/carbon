@@ -12,6 +12,7 @@ List.ShallowCopy(list)
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>, <a href="Classes/Serializable">Serializable</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  List:New(<code>[<a href="Types#list">list</a> data]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
@@ -51,5 +52,6 @@ Handles self-references properly.
 Shallow copies data from one table into another and returns the result.
 
 
+<hr />
 ## Properties
 [none]

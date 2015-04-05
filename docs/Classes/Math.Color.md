@@ -8,8 +8,10 @@ Provides an abstract color class.
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

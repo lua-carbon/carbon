@@ -11,6 +11,7 @@ It is possible to use these methods with a plain <a href="Types#set">set</a>, ju
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Set:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Collections.Set">Set</a></code></span>**
@@ -30,5 +31,6 @@ Allows method-style syntax.
 Collects all members of the set and puts them in a list.
 
 
+<hr />
 ## Properties
 [none]

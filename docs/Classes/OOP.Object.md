@@ -6,6 +6,7 @@ The base object for all instancable classes.
 
 **Inherits <a href="Classes/OOP.BaseClass">OOP.BaseClass</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Copy()</h4>
 **<span class="method-returns">Returns <code>Object</code></span>**
@@ -40,5 +41,6 @@ Creates a new object and puts it into a given indexable object.
 Creates a new object and passes parameters to its initializer.
 
 
+<hr />
 ## Properties
 [none]

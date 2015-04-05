@@ -69,6 +69,19 @@ local function escape_html(str)
 	return (str:gsub("<", "&lt;"):gsub(">", "&gt;"))
 end
 
+local function clean_string(a)
+	-- Strip \r, trim whitespace
+	a = a:gsub("\r", "")
+	a = a:match("^\n*(.-)\n*$")
+
+	-- Strip excessive indentation
+	local indent_level = #a:match("^(\t*)")
+	a = a:sub(indent_level + 1):gsub("\n" .. ("\t"):rep(indent_level), "\n")
+	a = a:match("^%s*(.-)%s*$")
+
+	return a
+end
+
 local function process_string(s)
 	s = escape_html(s)
 
@@ -84,20 +97,15 @@ local function process_string(s)
 		end
 	end)
 
-	return s
-end
+	-- This is really sketchy
+	s = s .. "\n\n"
+	s = s:gsub("\n%- *(.-)\n\n", function(contents)
+		contents = contents:gsub("\n%- *([^\n]*)", "<li>%1</li>")
+		contents = contents:gsub("\n", "<br />")
+		return "\n<ul><li>" .. contents .. "</li></ul>\n"
+	end)
 
-local function clean_string(a)
-	-- Strip \r, trim whitespace
-	a = a:gsub("\r", "")
-	a = a:match("^\n*(.-)\n*$")
-
-	-- Strip excessive indentation
-	local indent_level = #a:match("^(\t*)")
-	a = a:sub(indent_level + 1):gsub("\n" .. ("\t"):rep(indent_level), "\n")
-	a = a:match("^%s*(.-)%s*$")
-
-	return a
+	return clean_string(s)
 end
 
 local function dictionary_shallow_copy(a, b)
@@ -199,7 +207,7 @@ function docs.parser.method(out)
 		arg = arg + 1
 
 		if (#prefix == 0) then
-			print(("DOCGEN WARNING: Unknown prefix %q for argument %d in method %s!"):format(
+			print(("DOCGEN WARNING: Unknown prefix %q for argument %d in method %q!"):format(
 				prefix, arg, out.name
 			))
 			prefix = "unknown"
@@ -524,9 +532,11 @@ local template_class = [[
 
 **Inherits {inherits_string}**
 
+<hr />
 ## Methods
 {methods_string}
 
+<hr />
 ## Properties
 {properties_string}
 ]]
@@ -567,7 +577,7 @@ local function process_method(method)
 	-- Escape the name and return types so we can use template syntax in them
 	method.escaped_name = escape_html(method.name)
 	method.escaped_returns = escape_html(method.returns)
-	method.escaped_description = escape_html(method.description)
+	method.escaped_description = process_string(escape_html(method.description))
 
 	method.name_string = do_template(template_method_name, method)
 end

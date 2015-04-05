@@ -6,8 +6,10 @@ A 2x2 row-major matrix.
 
 **Inherits <a href="Classes/Math.Matrix">Math.Matrix</a>**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

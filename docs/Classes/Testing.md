@@ -6,6 +6,7 @@ Manages execution of tests for Carbon.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Testing:GetResults()</h4>
 **<span class="method-returns">Returns <code>table</code></span>**
@@ -65,5 +66,6 @@ Runs a list or dictionary full of tests.
 Associates a test as necessary to prove functionality of a module.
 
 
+<hr />
 ## Properties
 [none]

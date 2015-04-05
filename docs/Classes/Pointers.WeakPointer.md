@@ -7,6 +7,7 @@ Provides an implicit copy barrier.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> WeakPointer:New(<code><a href="Types#any">any</a>? value</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Pointers.WeakPointer">WeakPointer</a></code></span>**
@@ -39,7 +40,7 @@ If this returns false, the data was probably garbage collected.
 
 
 Returns the value currently pointed to by the <a href="Classes/Pointers.WeakPointer">WeakPointer</a>.
-Use `WeakPointer:Available()` first to make sure the data is still valid.
+Use <code>WeakPointer:Available()</code> first to make sure the data is still valid.
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> WeakPointer:Set(<code><a href="Types#any">any</a>? value</code>)</h4>
@@ -50,5 +51,6 @@ Use `WeakPointer:Available()` first to make sure the data is still valid.
 Sets a new value for the <a href="Classes/Pointers.WeakPointer">WeakPointer</a>.
 
 
+<hr />
 ## Properties
 [none]

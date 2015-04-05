@@ -8,8 +8,10 @@ A type of <code>Promise&lt;T&gt;</code> is a Promise that returns the given type
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

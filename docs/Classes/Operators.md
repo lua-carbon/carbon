@@ -6,8 +6,10 @@ Provides functional forms of operators.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

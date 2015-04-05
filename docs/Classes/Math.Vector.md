@@ -10,6 +10,7 @@ Presently has a hard maximum component count of 26, can be expanded upon request
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:New(<code>...</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code></span>**
@@ -32,9 +33,7 @@ It performs runtime code generation and template parsing on each generated class
 
 The following parameters are valid:
 
-- <a href="Types#number">number</a> NormalizedLength (1): The length the vector reaches when normalized.
-- <a href="Types#number">number</a> DefaultValue (0): The value to initialize all members to if not given.
-- <a href="Types#list">list</a>&lt;<a href="Types#number">number</a>&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.
+<ul><li><a href="Types#number">number</a> NormalizedLength (1): The length the vector reaches when normalized.<li><a href="Types#number">number</a> DefaultValue (0): The value to initialize all members to if not given.</li><li><a href="Types#list">list</a>&lt;<a href="Types#number">number</a>&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.</li></li></ul>
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:GetComponents()</h4>
@@ -42,7 +41,7 @@ The following parameters are valid:
 
 
 
-Returns the individual components of the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; in order. Much faster than `unpack`.
+Returns the individual components of the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; in order. Much faster than <code>unpack</code>.
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:Length()</h4>
@@ -78,7 +77,7 @@ Normalizes the <a href="Classes/Math.Vector">Vector</a>&lt;N&gt; object, optiona
 
 Normalizes the vector in-place.
 
-Called in Carbide as `Vector:Normalize!()`
+Called in Carbide as <code>Vector:Normalize!()</code>
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="private" src="https://img.shields.io/badge/ -private-d30500.svg?style=flat-square" />  Vector:__generate_method(<code><a href="Types#string">string</a> body, <a href="Types#dictionary">dictionary</a> arguments, [<a href="Types#dictionary">dictionary</a> env]</code>)</h4>
@@ -91,5 +90,6 @@ Called in Carbide as `Vector:Normalize!()`
 Generates a method using Carbon's TemplateEngine and handles errors.
 
 
+<hr />
 ## Properties
 [none]

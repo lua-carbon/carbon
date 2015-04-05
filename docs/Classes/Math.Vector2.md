@@ -8,8 +8,10 @@ The loose form of a <a href="Classes/Math.Vector2">Vector2</a>, <code><a href="T
 
 **Inherits <a href="Classes/Math.Vector">Math.Vector</a><2>**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

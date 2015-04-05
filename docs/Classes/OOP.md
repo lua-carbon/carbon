@@ -6,6 +6,7 @@ Provides object orientation features for Carbon.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  OOP:StaticClass()</h4>
 **<span class="method-returns">Returns <code>StaticClass</code></span>**
@@ -32,24 +33,13 @@ Creates a new, empty class.
 
 Registers a new custom class attribute.
 
-- Class: `<a href="Types#void">void</a> function(class)`
+<ul><li>Class: <code><a href="Types#void">void</a> function(class)</code><br />	Called immediately when the attribute is added to the class.</li></ul>
 
-	Called immediately when the attribute is added to the class.
+<ul><li>PreInitialize: <code><a href="Types#void">void</a> function(class, instance)</code><br />	Called after instance allocation but before the object's initializer is called.</li></ul>
 
+<ul><li>PostInitialize: <code><a href="Types#void">void</a> function(class, instance)</code><br />	Called after the object is fully initialized.</li></ul>
 
-- PreInitialize: `<a href="Types#void">void</a> function(class, instance)`
-
-	Called after instance allocation but before the object's initializer is called.
-
-
-- PostInitialize: `<a href="Types#void">void</a> function(class, instance)`
-
-	Called after the object is fully initialized.
-
-
-- Copy: `<a href="Types#void">void</a> function(original, copy)`
-
-	Called after the copied object has been allocated and filled.
+<ul><li>Copy: <code><a href="Types#void">void</a> function(original, copy)</code><br />	Called after the copied object has been allocated and filled.</li></ul>
 
 <hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  OOP:SetAttributeInherited(<code><a href="Types#string">string</a> name, <a href="Types#bool">bool</a> inherited</code>)</h4>
@@ -61,5 +51,6 @@ Registers a new custom class attribute.
 Marks an attribute as inherited or not inherited explicitly.
 
 
+<hr />
 ## Properties
 [none]

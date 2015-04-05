@@ -6,8 +6,10 @@ Implements a set of Lua language extensions known as Carbide.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

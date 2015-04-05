@@ -8,8 +8,10 @@ The loose form of a <a href="Classes/Math.ColorRGBA">ColorRGBA</a>, <code><a hre
 
 **Inherits <a href="Classes/Math.Color">Math.Color</a>, <a href="Classes/Math.Vector">Math.Vector</a><4>**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

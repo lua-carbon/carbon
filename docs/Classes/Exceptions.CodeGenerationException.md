@@ -6,6 +6,7 @@ An exception to be generated when generation of code fails.
 
 **Inherits <a href="Classes/Exception">Exception</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  CodeGenerationException:New(<code>string message, string code</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Exceptions.CodeGenerationException">CodeGenerationException</a></code></span>**
@@ -16,6 +17,7 @@ An exception to be generated when generation of code fails.
 Denotes that code generation failed in a metaprogramming-enabled module.
 
 
+<hr />
 ## Properties
 #### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> GeneratedCode
 Contains the code that was generated and failed to meet the criteria.

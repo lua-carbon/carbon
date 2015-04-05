@@ -6,8 +6,10 @@ Funnels events and provides an event loop.
 
 **Inherits [none]**
 
+<hr />
 ## Methods
 [none]
 
+<hr />
 ## Properties
 [none]

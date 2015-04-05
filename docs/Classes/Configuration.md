@@ -6,6 +6,7 @@ Provides configuration facilities for modules.
 
 **Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Configuration:New(<code>string name</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Configuration">Configuration</a></code></span>**
@@ -15,5 +16,6 @@ Provides configuration facilities for modules.
 Creates a new <a href="Classes/Configuration">Configuration</a> object for configuring modules before they're loaded.
 
 
+<hr />
 ## Properties
 [none]

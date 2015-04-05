@@ -6,6 +6,7 @@ A 4x4 row-major matrix.
 
 **Inherits <a href="Classes/Math.Matrix3x3">Math.Matrix3x3</a>, <a href="Classes/Math.Matrix">Math.Matrix</a>**
 
+<hr />
 ## Methods
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:Rotation(<code><a href="Types#number">number</a> x, <a href="Types#number">number</a> y, <a href="Types#number">number</a> z, [<a href="Classes/Math.Matrix4x4">Matrix4x4</a> out]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
@@ -34,8 +35,9 @@ Creates a rotation matrix with the given Euler angles.
 - <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the data for the translation.
 
 Creates a translation matrix.
-The `Translate` form offsets from an existing matrix.
+The <code>Translate</code> form offsets from an existing matrix.
 
 
+<hr />
 ## Properties
 [none]
