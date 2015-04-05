@@ -16,9 +16,9 @@ local Carbon = (...)
 local OOP = Carbon.OOP
 local Vector4 = Carbon.Math.Vector4
 
-local Quaternion = OOP:Class(Vector4)
-
 local sin, cos = math.sin, math.cos
+
+local Quaternion = OOP:Class(Vector4)
 
 --[[#method 1 {
 	class public @Quaternion Quaternion:NewFromAngles(@Vector3 angles)
@@ -83,6 +83,26 @@ function Quaternion:NewLooseFromLooseAngles(x, y, z)
 		(s1 * c2 * c3) + (c1 * s2 * s3),
 		(c1 * s2 * c3) - (s1 * c2 * s3),
 		(c1 * c2 * c3) - (s1 * s2 * s3)
+end
+
+--[[#method {
+	object public @Quaternion Quaternion:Conjugate([@Quaternion out])
+		optional out: Where to put the resulting data.
+
+	Returns the conjugate of the @Quaternion, `(-i, -j, -k, w)`.
+}]]
+function Quaternion:Conjugate(out)
+	return self:PlacementNew(out, -self[1], -self[2], -self[3], self[4])
+end
+
+--[[#method {
+	object public @Quaternion Quaternion:Conjugate!()
+	-alias: object public @Quaternion Quaternion:ConjugateInPlace()
+
+	Conjugates the @Quaternion in-place.
+}]]
+function Quaternion:ConjugateInPlace()
+	return self:Conjugate(self)
 end
 
 return Quaternion
