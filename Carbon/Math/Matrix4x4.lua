@@ -26,6 +26,61 @@ end
 -- We want all the methods from Matrix3x3 too, since they're reusable.
 Matrix4x4:Inherits(Carbon.Math.Matrix3x3)
 
+--[[#method 2 {
+	class public @loose<Matrix4x4> Matrix4x4:NewLooseFromLooseQuaternion(@loose<@Quaternion> quaternion)
+		required quaternion: The quaternion, in loose form, to convert.
+
+	Takes a loose @Quaternion and returns a loose rotation matrix from it.
+}]]
+function Matrix4x4:NewLooseFromLooseQuaternion(x, y, z, w)
+	return
+		w^2+x^2-y^2-z^2, 2*x*y-2*w*z, 2*x*z+2*w*y, 0,
+		2*x*y+2*w*z, w^2-x^2+y^2-z^2, 2*y*z+2*w*z, 0,
+		2*x*z-2*w*y, 2*y*z-2*w*z, w^2-x^2-y^2+z^2, 0,
+		0, 0, 0, 1
+end
+
+--[[#method 2 {
+	class public @loose<Matrix4x4> Matrix4x4:NewLooseFromQuaternion(@Quaternion quaternion)
+		required quaternion: The quaternion to convert.
+
+	Takes a @Quaternion and returns a loose rotation matrix from it.
+}]]
+function Matrix4x4:NewLooseFromQuaternion(quaternion)
+	return self:NewLooseFromLooseQuaternion(quaternion[1], quaternion[2], quaternion[3], quaternion[4])
+end
+
+--[[#method 2 {
+	class public @Matrix4x4 Matrix4x4:NewFromLooseQuaternion(@loose<@Quaternion> quaternion)
+	-alias: class public @Matrix4x4 Matrix4x4:PlacementNewFromLooseQuaternion(@Matrix4x4? out, @loose<@Quaternion> quaternion)
+	-alias: object public @Matrix4x4 Matrix4x4:InitFromLooseQuaternion(@loose<@Quaternion> quaternion)
+	-alias: class public @Matrix4x4 Matrix4x4:InitFromQuaternion(@Quaternion quaternion)
+	-alias: class public @Matrix4x4 Matrix4x4:PlacementNewFromQuaternion(@Matrix4x4? out, @Quaternion quaternion)
+	-alias: object public @Matrix4x4 Matrix4x4:InitFromQuaternion(@Quaternion quaternion)
+		required quaternion: The quaternion to initialize the matrix with.
+
+	Creates a new @Matrix4x4
+}]]
+function Matrix4x4:InitFromLooseQuaternion(x, y, z, w)
+	return self:Init(self:NewLooseFromLooseQuaternion(x, y, z, w))
+end
+function Matrix4x4:NewFromLooseQuaternion(x, y, z, w)
+	return self:New(self:NewLooseFromLooseQuaternion(x, y, z, w))
+end
+function Matrix4x4:PlacementNewFromLooseQuaternion(out, x, y, z, w)
+	return self:PlacementNew(out, self:NewLooseFromLooseQuaternion(x, y, z, w))
+end
+
+function Matrix4x4:InitFromQuaternion(quaternion)
+	return self:Init(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
+end
+function Matrix4x4:NewFromQuaternion(quaternion)
+	return self:New(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
+end
+function Matrix4x4:PlacementNewFromQuaternion(out, quaternion)
+	return self:PlacementNew(out, self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
+end
+
 --[[#method {
 	class public @Matrix4x4 Matrix4x4:Translation(@number x, @number y, @number z, [@Matrix4x4 out])
 	-alias: object public @Matrix4x4 Matrix4x4:Translate(@number x, @number y, @number z, [@Matrix4x4 out])

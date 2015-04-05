@@ -8,6 +8,44 @@ A 4x4 row-major matrix.
 
 <hr />
 ## Methods
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:NewFromLooseQuaternion(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:PlacementNewFromLooseQuaternion(<code><a href="Classes/Math.Matrix4x4">Matrix4x4</a>? out, <a href="Types#loose">loose</a>&lt;<a href="Classes/Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
+
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix4x4:InitFromLooseQuaternion(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
+
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:InitFromQuaternion(<code><a href="Classes/Quaternion">Quaternion</a> quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
+
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:PlacementNewFromQuaternion(<code><a href="Classes/Math.Matrix4x4">Matrix4x4</a>? out, <a href="Classes/Quaternion">Quaternion</a> quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
+
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix4x4:InitFromQuaternion(<code><a href="Classes/Quaternion">Quaternion</a> quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `quaternion`: The quaternion to initialize the matrix with.
+
+Creates a new <a href="Classes/Math.Matrix4x4">Matrix4x4</a>
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:NewLooseFromLooseQuaternion(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#loose">loose</a>&lt;Matrix4x4&gt;</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `quaternion`: The quaternion, in loose form, to convert.
+
+Takes a loose <a href="Classes/Quaternion">Quaternion</a> and returns a loose rotation matrix from it.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:NewLooseFromQuaternion(<code><a href="Classes/Quaternion">Quaternion</a> quaternion</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Types#loose">loose</a>&lt;Matrix4x4&gt;</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `quaternion`: The quaternion to convert.
+
+Takes a <a href="Classes/Quaternion">Quaternion</a> and returns a loose rotation matrix from it.
+
+<hr/>
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/class-public-11b237.svg?style=flat-square" /> Matrix4x4:Rotation(<code><a href="Types#number">number</a> x, <a href="Types#number">number</a> y, <a href="Types#number">number</a> z, [<a href="Classes/Math.Matrix4x4">Matrix4x4</a> out]</code>)</h4>
 **<span class="method-returns">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></span>**
 <h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Matrix4x4:Rotate(<code><a href="Types#number">number</a> x, <a href="Types#number">number</a> y, <a href="Types#number">number</a> z, [<a href="Classes/Math.Matrix4x4">Matrix4x4</a> out]</code>)</h4>

@@ -22,4 +22,12 @@ if (not Vector3) then
 	Carbon.Error(except)
 end
 
+function Vector3:CrossProduct(other, out)
+	self.class:PlacementNew(out,
+		self[2] * other[3] - self[3] * other[2],
+		self[3] * other[1] - self[1] * other[3],
+		self[1] * other[2] - self[2] * other[1]
+	)
+end
+
 return Vector3

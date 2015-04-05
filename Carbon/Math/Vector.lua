@@ -93,31 +93,62 @@ local Vector = {
 			Normalizes the @Vector<N> object, optionally outputting the data to an existing @Vector<N>.
 		}]]
 		Normalize = [[
+			local abs = math.abs
+
 			return function(self, out)
 				out = out or self.class:New()
 
-				local length = self:Length()
+				local square_length = self:LengthSquared()
 
-				if (length == 0) then
-					length = 1 / {%= PARAMETERS.NormalizedLength %}
+				if (square_length == 0) then
+					square_length = 1 / {%= PARAMETERS.NormalizedLength^2 %}
 				else
 					{% if (PARAMETERS.NormalizedLength ~= 1) then %}					
-						length = length / {%= PARAMETERS.NormalizedLength %}
+						square_length = square_length / {%= PARAMETERS.NormalizedLength^2 %}
 					{% end %}
 				end
 
-				{% for i = 1, LENGTH do
-					_(("out[%d] = %g * self[%d] / length;"):format(
-						i, PARAMETERS.NormalizedLength, i
-					))
-				end %}
+				-- First-order Padé approximation for unit-ish vectors
+				if (abs(1 - square_length) < 2.107342e-8) then
+					{% for i = 1, LENGTH do
+						_(("out[%d] = self[%d] * 2 / (1 + square_length)"):format(i, i))
+					end %}
+				else
+					local length = math.sqrt(square_length)
+					{% for i = 1, LENGTH do
+						_(("out[%d] = %g * self[%d] / length;"):format(
+							i, PARAMETERS.NormalizedLength, i
+						))
+					end %}
+				end
 
 				return out
 			end
 		]],
 
+		LooseScale = [[
+			return function(self, scalar)
+				return
+				{% for i = 1, LENGTH do
+					_(("self[%d] * scalar"):format(i))
+
+					if (i < LENGTH) then
+						_(",")
+					end
+				end %}
+			end
+		]],
+
+		Scale = function(self, scalar, out)
+			return self:PlacementNew(out, self:LooseScale(scalar))
+		end,
+
+		ScaleInPlace = function(self, scalar)
+			return self:Scale(self, scalar, self)
+		end,
+
 		--[[#method {
-			public @tuple<N, unumber> Vector<N>:GetComponents()
+			object public @tuple<N, unumber> Vector<N>:GetComponents()
 
 			Returns the individual components of the @Vector<N> in order. Much faster than `unpack`.
 		}]]
@@ -131,6 +162,27 @@ local Vector = {
 						_(",")
 					end
 				end %}
+			end
+		]],
+
+		--[[#method {
+			object public @Vector<N> Vector<N>:DotMultiply(@Vector<N> other, [Vector<N> out])
+				required other: The @Vector to multiply with.
+				optional out: Where to put the resulting data.
+
+			Performs a dot product between two vectors.
+		}]]
+		DotMultiply = [[
+			return function(self, other, out)
+				return self.class:PlacementNew(out,
+					{% for i = 1, LENGTH do
+						_(("self[%d] * (other[%d] or 0)"):format(i, i))
+
+						if (i < LENGTH) then
+							_(" + ")
+						end
+					end %}
+				)
 			end
 		]],
 

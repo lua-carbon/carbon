@@ -36,7 +36,16 @@ The following parameters are valid:
 <ul><li><a href="Types#number">number</a> NormalizedLength (1): The length the vector reaches when normalized.<li><a href="Types#number">number</a> DefaultValue (0): The value to initialize all members to if not given.</li><li><a href="Types#list">list</a>&lt;<a href="Types#number">number</a>&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.</li></li></ul>
 
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Vector&lt;N&gt;:GetComponents()</h4>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:DotMultiply(<code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt; other, [Vector&lt;N&gt; out]</code>)</h4>
+**<span class="method-returns">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code></span>**
+
+- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `other`: The <a href="Classes/Math.Vector">Vector</a> to multiply with.
+- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data.
+
+Performs a dot product between two vectors.
+
+<hr/>
+<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/object-public-11b237.svg?style=flat-square" /> Vector&lt;N&gt;:GetComponents()</h4>
 **<span class="method-returns">Returns <code><a href="Types#tuple">tuple</a>&lt;N, unumber&gt;</code></span>**
 
 

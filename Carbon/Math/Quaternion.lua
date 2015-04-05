@@ -17,6 +17,9 @@ local OOP = Carbon.OOP
 local Vector4 = Carbon.Math.Vector4
 
 local sin, cos = math.sin, math.cos
+local asin, acos = math.asin, math.acos
+local sqrt = math.sqrt
+local abs = math.abs
 
 local Quaternion = OOP:Class(Vector4)
 
@@ -103,6 +106,62 @@ end
 }]]
 function Quaternion:ConjugateInPlace()
 	return self:Conjugate(self)
+end
+
+function Quaternion:Multiply(other, out)
+	local x1, y1, z1, w1 = self:GetComponents()
+	local x2, y2, z2, w2 = other:GetComponents()
+	return self:PlacementNew(out,
+		w1*x2 + x1*w2 + y1*z2 - z1*y2,
+		w1*y2 - x1*z2 + y1*w2 + z1*x2,
+		w1*z2 + x1*y2 - y1*x2 + z1*w2,
+		w1*w2 - x1*x2 - y1*y2 - z1*z2
+	)
+end
+
+function Quaternion:MultiplyInPlace(other)
+	return self:Multiply(other, self)
+end
+
+function Quaternion:GetLooseNorm()
+	return self[1] + self[2] + self[3] + self[4]
+end
+
+function Quaternion:GetNorm(out)
+	return self:PlacementNew(out, self:LooseNorm())
+end
+
+function Quaternion:Slerp(other, t, out)
+	local cos_half_theta = self:DotProduct(other)
+	if (abs(cos_half_theta) >= 1) then
+		return self.class:PlacementNew(out, self[1], self[2], self[3], self[4])
+	end
+
+	local half_theta = acos(cos_half_theta)
+	local sin_half_theta = sqrt(1 - cos_half_theta^2)
+
+	if (abs(sin_half_theta) < 1e-4) then
+		return self.class:PlacementNew(out,
+			self[1] * 0.5 + other[1] * 0.5,
+			self[2] * 0.5 + other[2] * 0.5,
+			self[3] * 0.5 + other[3] * 0.5,
+			self[4] * 0.5 + other[4] * 0.5
+		)
+	end
+
+	local r_a = sin((1 - t) * half_theta) / sin_half_theta
+	local r_b = sin(t * half_theta) / sin_half_theta
+
+	return self.class:PlacementNew(out,
+		self[1] * r_a + other[1] * r_b,
+		self[2] * r_a + other[2] * r_b,
+		self[3] * r_a + other[3] * r_b,
+		self[4] * r_a + other[4] * r_b
+	)
+end
+
+function Quaternion:SlerpInPlace(other, t, out)
+	return self:Slerp(other, t, self)
 end
 
 return Quaternion
