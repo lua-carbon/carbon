@@ -1,18 +1,37 @@
 --[[
 	Carbon for Lua
-	Core
+	#class Carbon
+
+	#description {
+		This is the Carbon core, containing all other modules and some utilities.
+	}
 ]]
 
 local libCarbon = (...)
-local Support = libCarbon:GetGraphene().Support
+local Graphene = libCarbon:GetGraphene()
+local Support = Graphene.Support
 
-local Carbon = {
-	Version = {1, 0, 0, "alpha2"},
+local Carbon = {}
 
-	Config = {
-	}
-}
+--[[#method 1 {
+	class public @void Carbon:ImportCore()
 
+	Imports Carbon's core utilities into the current file for use.
+
+	Presently imports `Async`, `Assert`, `Error`, `IsObject`, and `LoadString`.
+}]]
+function Carbon:ImportCore()
+	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString")
+end
+
+--[[#property public @list Carbon.Version {
+	Contains the current version in the form `{major, minor, revision, status}`.
+}]]
+Carbon.Version = {1, 0, 0, "beta"}
+
+--[[#property public @string Carbon.VersionString {
+	Contains a string version of the current version in the form `"major.minor.revision-status"`.
+}]]
 Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 	Carbon.Version[1],
 	Carbon.Version[2],
@@ -21,36 +40,45 @@ Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 	Carbon.Version[4] or ""
 )
 
+--[[#method {
+	class public @coroutine Carbon.Async(@function method)
+		required method: The method to get an asynchronous form of.
+
+	Returns a version of the given function that is async.
+
+	Presently an alias for Lua's `coroutine.wrap`, but this may change in the future.
+}]]
 Carbon.Async = coroutine.wrap
 
---[[
-	void Carbon.Assert(...)
+--[[#method {
+	class public @void Carbon.Assert(@bool condition, [@string message])
+		required condition: The condition to assert.
+		optional message: The message to throw if the assertion fails.
 
 	Asserts, like Lua's assert, but calls tostring on the message explicitly.
-]]
-function Carbon.Assert(...)
-	if (not (...)) then
-		error(tostring(select(2, ...)), 2)
+}]]
+function Carbon.Assert(condition, message)
+	if (not condition) then
+		error(tostring(message) or "Assertion failed!", 2)
 	end
-
-	return ...
 end
 
---[[
-	void Carbon.Error(...)
+--[[#method {
+	class public @void Carbon.Error(...)
+		required ...: Arguments to pass to Lua's `error` function.
 
 	Throws an error, calling tostring on the message explicitly.
-]]
+}]]
 function Carbon.Error(...)
 	error(tostring((...)), select(2, ...))
 end
 
---[[
-	bool Carbon.IsObject(any object)
-		object: The object to check
+--[[#method {
+	class public @bool Carbon.IsObject(@any object)
+		required object: The object to check
 
 	Returns whether the given object is a valid Carbon object.
-]]
+}]]
 function Carbon.IsObject(x)
 	local t = type(x)
 	if (t == "table" or (t == "userdata" and getmetatable(t) and getmetatable(t).__index)) then
@@ -60,14 +88,15 @@ function Carbon.IsObject(x)
 	return false
 end
 
---[[
-	loaded Carbon.LoadString(string source, table environment)
-		source: The source code to compile into a function.
-		environment: The environment to load the function into.
+--[[#method {
+	class public @function Carbon.LoadString(@string source, [@string chunkname, @table environment])
+		required source: The source code to compile into a function.
+		optional chunkname: The name of the chunk to reference if the method returns an error.
+		optional environment: The environment to load the function into.
 
 	Loads a function with a given environment.
 	Essentially backports Lua 5.2's load function to LuaJIT and Lua 5.1.
-]]
+}]]
 if (Support.lua51) then
 	function Carbon.LoadString(source, from, environment)
 		environment = environment or getfenv()
@@ -77,7 +106,9 @@ if (Support.lua51) then
 			return chunk, err
 		end
 
-		setfenv(chunk, environment)
+		if (environment) then
+			setfenv(chunk, environment)
+		end
 
 		return chunk
 	end
@@ -92,6 +123,7 @@ for key, value in pairs(Carbon) do
 	libCarbon[key] = value
 end
 
-libCarbon:GetGraphene().Config.Loaders[".clua"] = libCarbon.Carbide.Compile
+-- Register Carbide as a Graphene loader.
+Graphene.Config.Loaders[".clua"] = libCarbon.Carbide.Compile
 
 return Carbon
