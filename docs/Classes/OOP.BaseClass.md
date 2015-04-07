@@ -7,7 +7,7 @@ Body for both <a href="Classes/OOP.Class">OOP.Class</a> and <a href="Classes/OOP
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> BaseClass:Attributes(<code><a href="Types#dictionary">dictionary</a> attributes</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:Attributes(<code><a href="Types#dictionary">dictionary</a> attributes</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `attributes`: The attributes to give to the object.</li>
@@ -16,7 +16,7 @@ Body for both <a href="Classes/OOP.Class">OOP.Class</a> and <a href="Classes/OOP
 Adds attributes to the class. Overwrites existing attributes.
 The attributes parameter is only shallow copied, keep this in mind.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> BaseClass:Inherits(<code>...</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:Inherits(<code>...</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
 
@@ -24,7 +24,7 @@ The attributes parameter is only shallow copied, keep this in mind.
 
 Inherits from classes, taking on their inheritable attributes, members, metatables, and type information.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> BaseClass:Members(<code><a href="Types#dictionary">dictionary</a> members</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:Members(<code><a href="Types#dictionary">dictionary</a> members</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `members`: The member to give to instances of this class.</li>
@@ -33,7 +33,7 @@ Inherits from classes, taking on their inheritable attributes, members, metatabl
 Adds members to the class. Overwrites existing member entries.
 The members parameter is only shallow copied, keep this in mind.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> BaseClass:Metatable(<code><a href="Types#dictionary">dictionary</a> metatable</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:Metatable(<code><a href="Types#dictionary">dictionary</a> metatable</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `metatable`: The metatable to give to instances of this class.</li>

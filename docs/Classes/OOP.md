@@ -7,23 +7,23 @@ Provides object orientation features for Carbon.
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> OOP:StaticClass()</h4>
-<p class="method-returns bold">Returns <code>StaticClass</code></p>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:StaticClass()</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/StaticClass">StaticClass</a></code></p>
 <ul class="doc-arg-list">
 
 </ul>
 
 Creates a static class, enabling it to inherit from other objects without having instantiation capability.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> OOP:Class(<code>[Class based_on]</code>)</h4>
-<p class="method-returns bold">Returns <code>Class</code></p>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:Class(<code>[Class based_on]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Class">Class</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-optional">optional</span>  `based_on`: A class to make a direct copy of for the basis of this class.</li>
 </ul>
 
 Creates a new, empty class.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> OOP:RegisterAttribute(<code><a href="Types#string">string</a> type, <a href="Types#string">string</a> name, function method</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:RegisterAttribute(<code><a href="Types#string">string</a> type, <a href="Types#string">string</a> name, function method</code>)</h4>
 <p class="method-returns bold">Returns <code>void</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `type`: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).</li>
@@ -41,7 +41,7 @@ Registers a new custom class attribute.
 
 <ul><li>Copy: <code><a href="Types#void">void</a> function(original, copy)</code><br />	Called after the copied object has been allocated and filled.</li></ul>
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> OOP:SetAttributeInherited(<code><a href="Types#string">string</a> name, <a href="Types#bool">bool</a> inherited</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:SetAttributeInherited(<code><a href="Types#string">string</a> name, <a href="Types#bool">bool</a> inherited</code>)</h4>
 <p class="method-returns bold">Returns <code>void</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `name`: The name of the attribute to define a value for.</li>
