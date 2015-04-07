@@ -48,8 +48,7 @@ function Quaternion:NewLooseFromAngles(angles)
 end
 
 --[[#method 1 {
-	class public @Quaternion Quaternion:NewFromLooseAngles(@number x, @number y, @number z)
-	-alias: object public self Quaternion:InitFromLooseAngles(@number x, @number y, @number z)
+	$constructor_init_pair(FromLooseAngles Quaternion(@number x, @number y, @number z))
 		required x: The x component of the angles.
 		required y: The y component of the angles.
 		required z: The z component of the angles.

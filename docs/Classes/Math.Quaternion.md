@@ -21,7 +21,7 @@ Converts a <a href="Classes/Math.Vector3">Vector3</a> containing Euler angles in
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Quaternion:NewFromLooseAngles(<code><a href="Types#number">number</a> x, <a href="Types#number">number</a> y, <a href="Types#number">number</a> z</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:InitFromLooseAngles(<code><a href="Types#number">number</a> x, <a href="Types#number">number</a> y, <a href="Types#number">number</a> z</code>)</h4>
-<p class="method-returns bold">Returns <code>self</code></p>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `x`: The x component of the angles.</li>
 <li><span class="doc-arg-level doc-required">required</span>  `y`: The y component of the angles.</li>
