@@ -12,7 +12,7 @@ The loose form of a <a href="Classes/Math.Quaternion">Quaternion</a>, <code><a h
 ## Methods
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Quaternion:NewFromAngles(<code><a href="Classes/Math.Vector3">Vector3</a> angles</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:InitFromAngles(<code><a href="Classes/Math.Vector3">Vector3</a> angles</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `angles`: A <a href="Classes/Math.Vector3">Vector3</a> containing the angles to convert.</li>
 </ul>

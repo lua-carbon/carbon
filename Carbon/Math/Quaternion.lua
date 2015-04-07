@@ -24,8 +24,7 @@ local abs = math.abs
 local Quaternion = OOP:Class(Vector4)
 
 --[[#method 1 {
-	class public @Quaternion Quaternion:NewFromAngles(@Vector3 angles)
-	-alias: object public @Quaternion Quaternion:InitFromAngles(@Vector3 angles)
+	$constructor_init_pair(FromAngles Quaternion(@Vector3 angles))
 		required angles: A @Vector3 containing the angles to convert.
 
 	Converts a @Vector3 containing Euler angles into a @Quaternion.

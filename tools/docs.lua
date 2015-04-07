@@ -18,6 +18,11 @@ class public @{class} {class}:New({arguments})
 -alias: object public @void {class}:Init({arguments})
 ]]
 
+local template_constructor_init_pair = [[
+class public @{class} {class}:New{suffix}({arguments})
+-alias: object public @void {class}:Init{suffix}({arguments})
+]]
+
 local docs = {
 	hand_files = {
 		"index.md, Index",
@@ -43,6 +48,16 @@ local docs = {
 			local class, arguments = whole:match("^([^%(]+)%((.+)%)$")
 			return (template_typical_constructor
 				:gsub("{arg_comma}", (#arguments > 0) and ", " or "")
+				:gsub("{class}", class)
+				:gsub("{arguments}", arguments)
+			)
+		end,
+
+		constructor_init_pair = function(whole)
+			local suffix, class, arguments = whole:match("^(%S+)%s+([^%(]+)%((.+)%)$")
+			return (template_constructor_init_pair
+				:gsub("{arg_comma}", (#arguments > 0) and ", " or "")
+				:gsub("{suffix}", suffix)
 				:gsub("{class}", class)
 				:gsub("{arguments}", arguments)
 			)
