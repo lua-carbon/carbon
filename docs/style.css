@@ -20,6 +20,11 @@ p {
 	margin-bottom: 0.6em;
 }
 
+code {
+	background: inherit;
+	border: none;
+}
+
 /* Custom Classes */
 h1.class-title {
 	margin-bottom: 0.1em;

@@ -51,7 +51,7 @@ else
 end
 
 --[[#method 1 {
-	public @File IO.Open(@string path, [@string mode, @Nanotube tube])
+	class public @File IO.Open(@string path, [@string mode, @Nanotube tube])
 		required path: The path to the file to open.
 		optional mode: The file mode to open the file with. Defaults to "rb".
 		optional tube: The Nanotube object to cycle file events through with asynchronous I/O calls on this file.
@@ -78,7 +78,7 @@ function IO.Open(path, mode, tube)
 end
 
 --[[#method {
-	public @Promise<string> IO.ReadFileAsync(@string path, [@Nanotube tube])
+	class public @Promise<string> IO.ReadFileAsync(@string path, [@Nanotube tube])
 		required path: The path to the file to read.
 		optional tube: The Nanotube object to cycle events through. Defaults to the global tube.
 
@@ -102,8 +102,8 @@ function IO.ReadFileAsync(path, tube)
 end
 
 --[[#method {
-	public @void IO.Close(@File self)
-	-alias IO.File: public @void File:Close()
+	class public @void IO.Close(@File self)
+	-alias IO.File: object public @void File:Close()
 	
 	Closes the file.
 }]]
@@ -112,8 +112,8 @@ function IO.Close(self)
 end
 
 --[[#method {
-	public @string IO.Read(@File self)
-	-alias IO.File: public @void File:Read()
+	class public @string IO.Read(@File self)
+	-alias IO.File: object public @void File:Read()
 
 	Reads the entire contents of the file.
 }]]
@@ -122,8 +122,8 @@ function IO.Read(self, ...)
 end
 
 --[[#method {
-	public @void IO.Write(@File self, @string contents)
-	-alias IO.File: public @void File:Write(@string contents)
+	class public @void IO.Write(@File self, @string contents)
+	-alias IO.File: object public @void File:Write(@string contents)
 		required contents: The file contents
 
 	Writes to the file.
@@ -133,8 +133,8 @@ function IO.Write(self, ...)
 end
 
 --[[#method {
-	public @Promise<@list<@string>> IO.ReadBufferAsync(@File self, [@list<@string> into])
-	-alias IO.File: public @Promise<@list<@string>> File:ReadBufferAsync([@list<@string> into])
+	class public @Promise<@list<@string>> IO.ReadBufferAsync(@File self, [@list<@string> into])
+	-alias IO.File: object public @Promise<@list<@string>> File:ReadBufferAsync([@list<@string> into])
 		optional into: A list to write the output into instead of creating a new buffer.
 
 	Reads a file and amortizes its loading through an event loop.
@@ -160,8 +160,8 @@ function IO.ReadBufferAsync(self, into)
 end
 
 --[[#method {
-	public @Promise<@string> IO.ReadBufferAsync(File self)
-	-alias IO.File: public @Promise<@string> File:ReadBufferAsync()
+	class public @Promise<@string> IO.ReadBufferAsync(File self)
+	-alias IO.File: object public @Promise<@string> File:ReadBufferAsync()
 
 	Reads a file and amortizes its loading through an event loop.
 	The same as `File:ReadAsync()`

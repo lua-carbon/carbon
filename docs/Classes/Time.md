@@ -8,7 +8,7 @@ Provides utilities for working with time.
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Get()</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Get()</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -16,7 +16,7 @@ Provides utilities for working with time.
 
 Returns a benchmarking time using the highest precision internal timer.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Sleep(<code><a href="Types#unumber">unumber</a> seconds</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Sleep(<code><a href="Types#unumber">unumber</a> seconds</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `seconds`: The number of seconds to sleep.</li>

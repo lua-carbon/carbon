@@ -14,12 +14,19 @@ print("Running Carbon Version", Carbon.VersionString)
 *Note: You'll need `./?/init.lua` in your Lua require path. Most installations will have this.*
 
 ## Graphene Submodule (Application)
-If writing an application instead of a library, and you'd like to use Graphene's pathing options, there are a couple extra steps, but you'll get several extra features:
+If you're writing an application instead of a library, and you'd like to use Graphene's pathing options, there are a couple extra steps, but you'll get several extra features:
 - Graphene-driven namespacing
 - Carbide Lua support
 - Automatic pathing and multiple Lua support.
 
 First off, install [Graphene][graphene] into the root of your project. You can either pull the latest 1.x version from the [Graphene repository][graphene], or simply move and rename `Carbon/init.lua`. It's recommended to call the file `graphene.lua`.
+
+Your directory structure should look something like this:
+
+- Project source
+	- `Carbon`
+	- `graphene.lua` (pulled from `Carbon/init.lua`)
+	- `main.lua`
 
 From there, in the file that gets executed first in your project, like `main.lua` in LÖVE, use the following code:
 
@@ -36,9 +43,16 @@ print("Running Carbon Version", Carbon.VersionString)
 ```
 
 ## Graphene Submodule (Library)
-If writing a library using Graphene, integrating Carbon is straightforward, just like an application.
+If you're writing a library using Graphene, integrating Carbon is straightforward, just like an application.
 
 Make sure your [Graphene][graphene]-enabled library is using a version at least as new as the one Carbon uses, or just take Carbon's `init.lua` and use it in your library directly.
+
+Your directory structure should look like this:
+
+- Library folder
+	- `Carbon`
+	- `init.lua` (pulled from `Carbon/init.lua`)
+	- `_.lua` (where you'll initialize your library)
 
 In your library's root `_.lua` file, which initializes the module, use the following snippet:
 
@@ -58,7 +72,15 @@ When using multiple libraries that depend on Carbon, you might end up with sever
 
 If you have two libraries, named `A` and `B` that both embed Carbon as `A.Carbon` and `B.Carbon`, you can move one of their Carbon installations to the root and add a Graphene alias in a couple of different ways.
 
-*Note: This requires your code to have a root-level Graphene installation of its own, so follow the above section on setting that up if need be.*
+Your directory structure should look something like this:
+
+- Project source
+	- `A` (expecting Carbon as `A.Carbon`)
+	- `B` (expecting Carbon as `B.Carbon`)
+	- `Carbon`
+	- `init.lua` (if your project is a library)
+	- `graphene.lua` (if your project is an application)
+	- `main.lua` or `_.lua`
 
 In your initialization file (`_.lua` for libraries, `main.lua` for applications):
 

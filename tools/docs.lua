@@ -26,7 +26,8 @@ class public @{class} {class}:New{suffix}({arguments})
 local docs = {
 	hand_files = {
 		"index.md, Index",
-		"Getting Started.md, Tutorials, Getting Started",
+		"Getting_Started.md, Tutorials, Getting Started",
+		"Using_Carbide.md, Tutorials, Using Carbide",
 		"Types.md, Tutorials, Carbon Types"
 	},
 	files_written = {},

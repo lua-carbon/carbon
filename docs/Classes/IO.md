@@ -8,7 +8,7 @@ Provides async and sync I/O operations that work on multiple platforms.
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.Open(<code><a href="Types#string">string</a> path, [<a href="Types#string">string</a> mode, <a href="Classes/Nanotube">Nanotube</a> tube]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.Open(<code><a href="Types#string">string</a> path, [<a href="Types#string">string</a> mode, <a href="Classes/Nanotube">Nanotube</a> tube]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/File">File</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `path`: The path to the file to open.</li>
@@ -18,8 +18,8 @@ Provides async and sync I/O operations that work on multiple platforms.
 
 Opens a new <a href="Classes/File">File</a> object.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.Close(<code><a href="Classes/File">File</a> self</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p><h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:Close()</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.Close(<code><a href="Classes/File">File</a> self</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> File:Close()</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 
@@ -27,8 +27,8 @@ Opens a new <a href="Classes/File">File</a> object.
 
 Closes the file.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.Read(<code><a href="Classes/File">File</a> self</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Types#string">string</a></code></p><h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:Read()</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.Read(<code><a href="Classes/File">File</a> self</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#string">string</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> File:Read()</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 
@@ -36,8 +36,8 @@ Closes the file.
 
 Reads the entire contents of the file.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.ReadBufferAsync(<code><a href="Classes/File">File</a> self, [<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt; into]</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt;&gt;</code></p><h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:ReadBufferAsync(<code>[<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt; into]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.ReadBufferAsync(<code><a href="Classes/File">File</a> self, [<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt; into]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt;&gt;</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> File:ReadBufferAsync(<code>[<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt; into]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt;&gt;</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-optional">optional</span>  `into`: A list to write the output into instead of creating a new buffer.</li>
@@ -46,8 +46,8 @@ Reads the entire contents of the file.
 Reads a file and amortizes its loading through an event loop.
 Returns the raw buffer, containing a series of strings.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.ReadBufferAsync(<code>File self</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#string">string</a>&gt;</code></p><h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:ReadBufferAsync()</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.ReadBufferAsync(<code>File self</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#string">string</a>&gt;</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> File:ReadBufferAsync()</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#string">string</a>&gt;</code></p>
 <ul class="doc-arg-list">
 
@@ -56,7 +56,7 @@ Returns the raw buffer, containing a series of strings.
 Reads a file and amortizes its loading through an event loop.
 The same as <code>File:ReadAsync()</code>
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.ReadFileAsync(<code><a href="Types#string">string</a> path, [<a href="Classes/Nanotube">Nanotube</a> tube]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.ReadFileAsync(<code><a href="Types#string">string</a> path, [<a href="Classes/Nanotube">Nanotube</a> tube]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;string&gt;</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `path`: The path to the file to read.</li>
@@ -65,8 +65,8 @@ The same as <code>File:ReadAsync()</code>
 
 Opens a file by a path and returns its contents through a <a href="Classes/Promise">Promise</a>.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> IO.Write(<code><a href="Classes/File">File</a> self, <a href="Types#string">string</a> contents</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p><h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:Write(<code><a href="Types#string">string</a> contents</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> IO.Write(<code><a href="Classes/File">File</a> self, <a href="Types#string">string</a> contents</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> File:Write(<code><a href="Types#string">string</a> contents</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `contents`: The file contents</li>

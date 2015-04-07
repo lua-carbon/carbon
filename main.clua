@@ -1,4 +1,25 @@
 local Carbon = (...)
-local Matrix3x3 = Carbon.Math.Matrix3x3
-local mat3 = Matrix3x3:Identity()
-print(mat3:ToLooseQuaternion())
+local Vector2 = Carbon.Math.Vector2
+
+local vec2 = Vector2:New(0, 0)
+print(vec2) --> (0, 0)
+
+-- Increment the x component
+vec2->x++
+
+-- Add 2 to the y component
+vec2->y += 2
+
+print(vec2) --> (1, 2)
+
+-- Normalize the vector in-place using bang notation
+vec2:Normalize!()
+
+print(vec2) --> (0.447214, 0.894427)
+
+-- Reinitialize the vector with zero values
+vec2:Init(0, 0)
+print(vec2) --> (0, 0)
+
+print(vec2->x, vec2->y) -- 0	0
+print(vec2->u, vec2->v) -- 0	0

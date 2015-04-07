@@ -4,6 +4,8 @@
 
 	#description {
 		Implements a set of Lua language extensions known as Carbide.
+
+		This file is related to the Carbide programmatic API, for details on using Carbide, see [Using Carbide](Using_Carbide).
 	}
 ]]
 
@@ -12,6 +14,9 @@ local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
 
+--[[#property public @TemplateEngine Engine {
+	The @TemplateEngine Carbide will use.
+}]]
 local Carbide = {
 	Engine = TemplateEngine:New()
 }
@@ -150,6 +155,14 @@ local function operator_bang(source)
 	end))
 end
 
+--[[#method {
+	class public @string Carbide.ParseTemplated(@string source)
+		required source: The source to parse for templates.
+
+	Parses the source file for templates if it contains a `#TEMPLATES_ENABLED` directive.
+
+	The document can change the templating level using `#TEMPLATE_LEVEL <level>`.
+}]]
 function Carbide.ParseTemplated(source)
 	if (source:find("#TEMPLATES_ENABLED")) then
 		local level = tonumber(source:match("#TEMPLATE_LEVEL%s+(%d+)"))
@@ -165,6 +178,14 @@ function Carbide.ParseTemplated(source)
 	end
 end
 
+--[[#method {
+	class public @string Carbide.ParseCore(@string source)
+		required source: The source to parse.
+
+	Parses the given source for Carbide expressions.
+
+	The source can change the feature level with `#CARBIDE_FEATURE_LEVEL <level>`, which defaults to `2`.
+}]]
 function Carbide.ParseCore(source)
 	local feature_level = tonumber(source:match("#CARBIDE_FEATURE_LEVEL (%d+)")) or 2
 	local extensions = {}
@@ -185,6 +206,14 @@ function Carbide.ParseCore(source)
 	return source
 end
 
+--[[#method 1 {
+	class public @function Carbide.Compile(@string source, [@string chunkname, @table environment])
+		required source: The Carbide source.
+		optional chunkname: The name of the chunk for Lua errors.
+		optional environment: The environment to compile the chunk with.
+
+	Parses and compiles the given Carbide source. A drop-in replacement for Carbon.LoadString.
+}]]
 function Carbide.Compile(source, name, environment)
 	source, err = Carbide.ParseTemplated(source)
 
