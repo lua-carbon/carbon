@@ -23,12 +23,14 @@ local docs = {
 	generator = {},
 	classes_by_name = {},
 	shorts = {
-		optional = [[<img class="doc-image" alt="optional" src="https://img.shields.io/badge/%%20-optional-0092e6.svg?style=flat-square" />]],
-		required = [[<img class="doc-image" alt="required" src="https://img.shields.io/badge/%%20-required-ff9600.svg?style=flat-square" />]],
-		internal = [[<img class="doc-image" alt="internal" src="https://img.shields.io/badge/%%20-internal-888888.svg?style=flat-square" />]],
-		unknown = [[<img class="doc-image" alt="unknown" src="https://img.shields.io/badge/%%20-unknown-333333.svg?style=flat-square" />]],
-		public = [[<img class="doc-image" alt="public" src="https://img.shields.io/badge/%s-public-11b237.svg?style=flat-square" />]],
-		private = [[<img class="doc-image" alt="private" src="https://img.shields.io/badge/%s-private-d30500.svg?style=flat-square" />]]
+		required = [[<span class="doc-arg-level doc-required">required</span>]],
+		optional = [[<span class="doc-arg-level doc-optional">optional</span>]],
+		internal = [[<span class="doc-arg-level doc-internal">internal</span>]],
+		unknown = [[<span class="doc-unknown">unknown</span>]],
+		class = [[<span class="doc-scope doc-class">class</span>]],
+		object = [[<span class="doc-scope doc-object">object</span>]],
+		public = [[<span class="doc-visibility doc-public">public</span>]],
+		private = [[<span class="doc-visibility doc-private">private</span>]]
 	},
 
 	-- Parser attributes
@@ -523,14 +525,14 @@ local function do_template(template, data)
 	return template
 end
 
-local template_class = [[
+local template_class = clean_string [[
 <link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">{name}</h1>
 <span class="file-link">(in [{filename}]({file_link}))</span><br/>
 
 {escaped_description}
 
-**Inherits {inherits_string}**
+<span class="bold">Inherits {inherits_string}</span>
 
 <hr />
 ## Methods
@@ -541,23 +543,25 @@ local template_class = [[
 {properties_string}
 ]]
 
-local template_method_name = [[
-<h4 class="method-name">!!{visibility}^{scope} {escaped_name}({backticked_args})</h4>
-**<span class="method-returns">Returns <code>{escaped_returns}</code></span>**
+local template_method_name = clean_string [[
+<h4 class="method-name">!!{scope} !!{visibility} {escaped_name}({backticked_args})</h4>
+<p class="method-returns bold">Returns <code>{escaped_returns}</code></p>
 ]]
 
-local template_method = [[
+local template_method = clean_string [[
 {name_string}{aka_string}
+<ul class="doc-arg-list">
 {arg_descriptions_string}
+</ul>
 
 {escaped_description}
 ]]
 
-local template_arg_description = [[
-- !!{prefix} `{name}`: {description}
+local template_arg_description = clean_string [[
+<li>!!{prefix} `{name}`: {description}</li>
 ]]
 
-local template_property = [[
+local template_property = clean_string [[
 #### !!{visibility} {class_string} {name}
 {description}
 ]]
@@ -578,6 +582,10 @@ local function process_method(method)
 	method.escaped_name = escape_html(method.name)
 	method.escaped_returns = escape_html(method.returns)
 	method.escaped_description = process_string(escape_html(method.description))
+
+	if (#method.scope <= 1) then
+		method.scope = "unknown"
+	end
 
 	method.name_string = do_template(template_method_name, method)
 end

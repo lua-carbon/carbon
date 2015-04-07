@@ -4,7 +4,7 @@
 
 Implements a set of Lua language extensions known as Carbide.
 
-**Inherits [none]**
+<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

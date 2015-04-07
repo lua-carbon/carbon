@@ -4,51 +4,51 @@
 
 Exposes object-oriented filesystem access. See <a href="Classes/IO">IO</a> for more methods.
 
-**Inherits [none]**
+<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Close()</h4>
-**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:Close()</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
 
-
+</ul>
 
 Closes the file.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Read()</h4>
-**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:Read()</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
 
-
+</ul>
 
 Reads the entire contents of the file.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:ReadBufferAsync(<code>[<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt; into]</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt;&gt;</code></span>**
-
-- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `into`: A list to write the output into instead of creating a new buffer.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:ReadBufferAsync(<code>[<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt; into]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#list">list</a>&lt;<a href="Types#string">string</a>&gt;&gt;</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-optional">optional</span>  `into`: A list to write the output into instead of creating a new buffer.</li>
+</ul>
 
 Reads a file and amortizes its loading through an event loop.
 Returns the raw buffer, containing a series of strings.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:ReadBufferAsync()</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#string">string</a>&gt;</code></span>**
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:ReadBufferAsync()</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a>&lt;<a href="Types#string">string</a>&gt;</code></p>
+<ul class="doc-arg-list">
 
-
+</ul>
 
 Reads a file and amortizes its loading through an event loop.
 The same as <code>File:ReadAsync()</code>
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  File:Write(<code><a href="Types#string">string</a> contents</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
-
-- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `contents`: The file contents
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> File:Write(<code><a href="Types#string">string</a> contents</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `contents`: The file contents</li>
+</ul>
 
 Writes to the file.
-
 
 <hr />
 ## Properties

@@ -4,28 +4,27 @@
 
 Signals detailed, strongly-typed error conditions.
 
-**Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
+<span class="bold">Inherits <a href="Classes/OOP.Object">OOP.Object</a></span>
 
 <hr />
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:New(<code><a href="Types#string">string</a> message</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Exception">Exception</a></code></span>**
-
-- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `message`: The message to initialize the exception with.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Exception:New(<code><a href="Types#string">string</a> message</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Exception">Exception</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `message`: The message to initialize the exception with.</li>
+</ul>
 
 Creates a new generic exception with the given message.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Exception:Throw(<code>[<a href="Types#uint">uint</a> level]</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Types#void">void</a></code></span>**
-
-- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `level`: An optional parameter passed onto Lua's error function.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Exception:Throw(<code>[<a href="Types#uint">uint</a> level]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-optional">optional</span>  `level`: An optional parameter passed onto Lua's error function.</li>
+</ul>
 
 Throws the exception as a traditional Lua error.
 
-
 <hr />
 ## Properties
-#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code><a href="Types#string">string</a></code> Exception.Message
+#### <span class="doc-visibility doc-public">public</span> <code><a href="Types#string">string</a></code> Exception.Message
 An error message explaining the exception.
-

@@ -4,20 +4,19 @@
 
 An exception to be generated when a feature is not (yet) implemented.
 
-**Inherits <a href="Classes/Exception">Exception</a>**
+<span class="bold">Inherits <a href="Classes/Exception">Exception</a></span>
 
 <hr />
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  NotImplementedException:New(<code>string method_name</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Exceptions.NotImplementedException">NotImplementedException</a></code></span>**
-
-- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `method_name`: The name of the method that isn't yet implemented.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> NotImplementedException:New(<code>string method_name</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Exceptions.NotImplementedException">NotImplementedException</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `method_name`: The name of the method that isn't yet implemented.</li>
+</ul>
 
 Generates a new <a href="Classes/Exceptions.NotImplementedException">NotImplementedException</a> for a method with the given name.
 
-
 <hr />
 ## Properties
-#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> MethodName
+#### <span class="doc-visibility doc-public">public</span> <code>string</code> MethodName
 The name of the method that isn't implemented.
-

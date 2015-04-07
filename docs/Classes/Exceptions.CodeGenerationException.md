@@ -4,25 +4,23 @@
 
 An exception to be generated when generation of code fails.
 
-**Inherits <a href="Classes/Exception">Exception</a>**
+<span class="bold">Inherits <a href="Classes/Exception">Exception</a></span>
 
 <hr />
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  CodeGenerationException:New(<code>string message, string code</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Exceptions.CodeGenerationException">CodeGenerationException</a></code></span>**
-
-- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `message`: A message explaining why code generation failed.
-- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `code`: The code that was generated.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> CodeGenerationException:New(<code>string message, string code</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Exceptions.CodeGenerationException">CodeGenerationException</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `message`: A message explaining why code generation failed.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `code`: The code that was generated.</li>
+</ul>
 
 Denotes that code generation failed in a metaprogramming-enabled module.
 
-
 <hr />
 ## Properties
-#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> GeneratedCode
+#### <span class="doc-visibility doc-public">public</span> <code>string</code> GeneratedCode
 Contains the code that was generated and failed to meet the criteria.
-
 <hr/>
-#### <img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" /> <code>string</code> Message
+#### <span class="doc-visibility doc-public">public</span> <code>string</code> Message
 Contains a message about what went wrong generating code.
-

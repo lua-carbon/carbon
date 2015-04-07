@@ -4,42 +4,42 @@
 
 The base object for all instancable classes.
 
-**Inherits <a href="Classes/OOP.BaseClass">OOP.BaseClass</a>**
+<span class="bold">Inherits <a href="Classes/OOP.BaseClass">OOP.BaseClass</a></span>
 
 <hr />
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Copy()</h4>
-**<span class="method-returns">Returns <code>Object</code></span>**
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Object:Copy()</h4>
+<p class="method-returns bold">Returns <code>Object</code></p>
+<ul class="doc-arg-list">
 
-
+</ul>
 
 Copies the given object.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Object:Init(<code>...</code>)</h4>
-**<span class="method-returns">Returns <code>self</code></span>**
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Object:Init(<code>...</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
+<ul class="doc-arg-list">
 
-
+</ul>
 
 Initializes the object with the given parameters.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:PlacementNew(<code><a href="Types#indexable">indexable</a>? target, ...</code>)</h4>
-**<span class="method-returns">Returns <code>Object</code></span>**
-
-- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `target`: Where to place the instance, will be provided if not given.
-- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `...`: Arguments to pass to the constructor
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Class:PlacementNew(<code><a href="Types#indexable">indexable</a>? target, ...</code>)</h4>
+<p class="method-returns bold">Returns <code>Object</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-optional">optional</span>  `target`: Where to place the instance, will be provided if not given.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `...`: Arguments to pass to the constructor</li>
+</ul>
 
 Creates a new object and puts it into a given indexable object.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Class:New(<code>...</code>)</h4>
-**<span class="method-returns">Returns <code>Object</code></span>**
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Class:New(<code>...</code>)</h4>
+<p class="method-returns bold">Returns <code>Object</code></p>
+<ul class="doc-arg-list">
 
-
+</ul>
 
 Creates a new object and passes parameters to its initializer.
-
 
 <hr />
 ## Properties

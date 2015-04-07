@@ -6,7 +6,7 @@
 
 Provides an abstract color class.
 
-**Inherits <a href="Classes/OOP.Object">OOP.Object</a>**
+<span class="bold">Inherits <a href="Classes/OOP.Object">OOP.Object</a></span>
 
 <hr />
 ## Methods

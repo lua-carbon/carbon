@@ -9,27 +9,27 @@ It is possible to use these methods with a plain <a href="Types#set">set</a>, ju
 <code class="lua hljs">Set.ToList(set)
 </code>
 
-**Inherits [none]**
+<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Set:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Collections.Set">Set</a></code></span>**
-
-- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `data`: The data of the set. Empty if not given.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Set:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Collections.Set">Set</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-optional">optional</span>  `data`: The data of the set. Empty if not given.</li>
+</ul>
 
 Turns the given object into a Set.
 Allows method-style syntax.
-
 <hr/>
-<h4 class="method-name"><img class="doc-image" alt="public" src="https://img.shields.io/badge/ -public-11b237.svg?style=flat-square" />  Set.ToList(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> out]</code>)</h4>
-**<span class="method-returns">Returns <code><a href="Classes/Collections.List">List</a></code></span>**
-
-- <img class="doc-image" alt="required" src="https://img.shields.io/badge/%20-required-ff9600.svg?style=flat-square" />  `self`: The set to collect members for.
-- <img class="doc-image" alt="optional" src="https://img.shields.io/badge/%20-optional-0092e6.svg?style=flat-square" />  `out`: Where to put the resulting data. Put into a new <a href="Classes/Collections.List">List</a> by default.
+<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Set.ToList(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> out]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Collections.List">List</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `self`: The set to collect members for.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data. Put into a new <a href="Classes/Collections.List">List</a> by default.</li>
+</ul>
 
 Collects all members of the set and puts them in a list.
-
 
 <hr />
 ## Properties

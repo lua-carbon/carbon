@@ -26,6 +26,10 @@ h1.class-title {
 	line-height: 0.5;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .file-link {
 	font-size: 70%;
 	line-height: 2;
@@ -33,14 +37,75 @@ h1.class-title {
 
 .method-name {
 	margin-bottom: 0;
+	color: #666;
 }
 
 .method-returns {
 	margin-bottom: 0;
 	margin-left: 2em;
+	font-weight: bold;
+}
+
+.method-returns code {
+	border: none;
+	background-color: inherit;
+	color: #E74C3C;
 }
 
 .doc-image {
 	width: auto;
 	max-height: 1.5em;
+}
+
+.doc-arg-list {
+	font-size: 16px;
+}
+
+/* Visibility qualifiers */
+.doc-visibility {
+	font-weight: bold;
+}
+
+.doc-public {
+	color: #11b237;
+}
+
+.doc-private {
+	color: #d30500;
+}
+
+/* Scope qualifiers */
+.doc-scope {
+	font-weight: normal;
+	color: #888;
+}
+
+.doc-class {
+}
+
+.doc-object {
+}
+
+/* Argument level qualifiers */
+.doc-arg-level {
+	font-weight: bold;
+}
+
+.doc-required {
+	color: #ff9600;
+}
+
+.doc-optional {
+	color: #0092e6;
+}
+
+.doc-internal {
+	color: #666;
+}
+
+/* Universal qualifiers */
+
+.doc-unknown {
+	font-weight: normal;
+	color: #888;
 }

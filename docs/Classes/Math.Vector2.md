@@ -6,7 +6,7 @@ A 2-length vector.
 
 The loose form of a <a href="Classes/Math.Vector2">Vector2</a>, <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Vector2">Vector2</a>&gt;</code> is of the form <code>(x, y)</code>.
 
-**Inherits <a href="Classes/Math.Vector">Math.Vector</a><2>**
+<span class="bold">Inherits <a href="Classes/Math.Vector">Math.Vector</a><2></span>
 
 <hr />
 ## Methods
