@@ -8,7 +8,9 @@
 ![shield_prerelease_version]
 ![shield_dev_version]
 
-**Carbon is now feature-frozen for 1.0.0**
+<p align="center"><strong>
+Carbon is now feature-frozen for 1.0.0
+</strong></p>
 
 Carbon is a full suite intended to make Lua more semantic, expressive, and powerful. It aims to provide a set of functionality comparable to .NET, and runs on Lua 5.1 and above on any platform. Carbon will take advantage of a few extras if it finds that they're installed, like LuaJIT's FFI, LuaSocket, and LÖVE.
 
