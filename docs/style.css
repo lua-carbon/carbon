@@ -92,11 +92,11 @@ h1.class-title {
 }
 
 .doc-required {
-	color: #ff9600;
+	color: #0092e6;
 }
 
 .doc-optional {
-	color: #0092e6;
+	color: #ff9600;
 }
 
 .doc-internal {
