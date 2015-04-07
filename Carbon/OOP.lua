@@ -154,8 +154,8 @@ OOP:RegisterAttribute("Class", "PooledInstantiation",
 
 OOP:RegisterAttribute("Class", "SparseInstances",
 	function(class)
-		local box = Dictionary.DeepCopy(class.__base_members)
-		setmetatable(box, {__index = class.__members})
+		local box = Dictionary.DeepCopy(class.__members)
+		setmetatable(box, {__index = class.__base_members})
 		
 		class:Metatable {
 			__index = box
