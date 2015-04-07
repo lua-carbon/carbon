@@ -9,14 +9,14 @@
 
 local Carbon = (...)
 
-local ok, ffi = pcall(require, "ffi")
+local Dictionary = Carbon.Collections.Dictionary
+local List = Carbon.Collections.List
 
+local ok, ffi = pcall(require, "ffi")
 if (not ok) then
 	ffi = nil
 end
 
-local Dictionary = Carbon.Collections.Dictionary
-local List = Carbon.Collections.List
 local OOP = {
 	__attribute_inheritance = {
 		-- Inherited attributes
@@ -79,7 +79,7 @@ OOP.Attributes = {
 }
 
 --[[#method {
-	public void OOP:RegisterAttribute(@string type, @string name, function method)
+	class public void OOP:RegisterAttribute(@string type, @string name, function method)
 		required type: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).
 		required name: The name of the attribute as a class would call it.
 		required method: The class applicator. For function signatures, see below.
@@ -125,7 +125,7 @@ function OOP:RegisterAttribute(type, name, method)
 end
 
 --[[#method {
-	public void OOP:SetAttributeInherited(@string name, @bool inherited)
+	class public void OOP:SetAttributeInherited(@string name, @bool inherited)
 		required name: The name of the attribute to define a value for.
 		required inherited: Whether inheriting a class will also inherit this attribute.
 
@@ -154,11 +154,8 @@ OOP:RegisterAttribute("Class", "PooledInstantiation",
 
 OOP:RegisterAttribute("Class", "SparseInstances",
 	function(class)
-		local box = Dictionary.DeepCopy(class.__members)
-		setmetatable(box, {__index = class.__base_members})
-		
 		class:Metatable {
-			__index = box
+			__index = class.__members
 		}
 	end
 )
@@ -205,7 +202,7 @@ OOP.BaseClass = {
 }
 
 --[[#method {
-	public self BaseClass:Inherits(...)
+	class public self BaseClass:Inherits(...)
 
 	Inherits from classes, taking on their inheritable attributes, members, metatables, and type information.
 }]]
@@ -244,7 +241,7 @@ function OOP.BaseClass:Inherits(...)
 end
 
 --[[#method {
-	public self BaseClass:Attributes(@dictionary attributes)
+	class public self BaseClass:Attributes(@dictionary attributes)
 		required attributes: The attributes to give to the object.
 
 	Adds attributes to the class. Overwrites existing attributes.
@@ -263,7 +260,7 @@ function OOP.BaseClass:Attributes(attributes)
 end
 
 --[[#method {
-	public self BaseClass:Metatable(@dictionary metatable)
+	class public self BaseClass:Metatable(@dictionary metatable)
 		required metatable: The metatable to give to instances of this class.
 
 	Adds metatables to the class. Overwrites existing metatable entries.
@@ -276,7 +273,7 @@ function OOP.BaseClass:Metatable(metatable)
 end
 
 --[[#method {
-	public self BaseClass:Members(@dictionary members)
+	class public self BaseClass:Members(@dictionary members)
 		required members: The member to give to instances of this class.
 
 	Adds members to the class. Overwrites existing member entries.
@@ -301,7 +298,7 @@ OOP.Object = Dictionary.DeepCopy(OOP.BaseClass)
 OOP.Object.Is[OOP.Object] = true
 
 --[[#method 0.9 {
-	public Object Class:PlacementNew(@indexable? target, ...)
+	class public Object Class:PlacementNew(@indexable? target, ...)
 		optional target: Where to place the instance, will be provided if not given.
 		optional ...: Arguments to pass to the constructor
 
@@ -388,7 +385,7 @@ function OOP.Object:PlacementNew(instance, ...)
 end
 
 --[[#method 1 {
-	public Object Class:New(...)
+	class public Object Class:New(...)
 
 	Creates a new object and passes parameters to its initializer.
 }]]
@@ -397,7 +394,7 @@ function OOP.Object:New(...)
 end
 
 --[[#method  0.85 {
-	public self Object:Init(...)
+	object public self Object:Init(...)
 
 	Initializes the object with the given parameters.
 }]]
@@ -406,7 +403,7 @@ OOP.Object.__base_members.Init = function(self)
 end
 
 --[[#method 0.8 {
-	public Object Object:Copy()
+	object public Object Object:Copy()
 
 	Copies the given object.
 }]]
@@ -414,29 +411,18 @@ OOP.Object.__base_members.Copy = function(self)
 	local class = self.class
 	local target
 
-	-- If there is no class member, we probably want __base_members
-	if (not class) then
-		return Dictionary.DeepCopy(self)
-	end
-
 	if (class.__attributes.PooledInstantiation) then
 		target = table.remove(class.__pool, #class.__pool) or {}
 	end
 
-	local copy = Dictionary.DeepCopy(self.self, target)
-
---[[
-	if (class.__attributes.SparseInstances) then
-		setmetatable(copy, {__index = class.__members})
-	end
-]]
+	local copy = Dictionary.DeepCopy(self.self, target, true)
 
 	copy = handle_indirection(class, copy)
 	apply_metatable(class, copy)
 
 	for i, attribute in ipairs(OOP.Attributes.Copy) do
-		if (self.__attributes[attribute[1]]) then
-			attribute[2](self, copy)
+		if (class.__attributes[attribute[1]]) then
+			attribute[2](class, copy)
 		end
 	end
 
@@ -456,14 +442,18 @@ OOP.StaticObject.Is[OOP.StaticObject] = true
 
 -- #class OOP
 --[[#method 1 {
-	public Class OOP:Class([Class based_on])
+	class public @Class OOP:Class([Class based_on])
 		optional based_on: A class to make a direct copy of for the basis of this class.
 
 	Creates a new, empty class.
 }]]
 function OOP:Class(based_on)
 	based_on = based_on or self.Object
-	local class = Dictionary.DeepCopy(based_on)
+	local class = Dictionary.DeepCopy(based_on, nil, true)
+
+	setmetatable(class.__members, {
+		__index = class.__base_members
+	})
 
 	class.Is[class] = true
 
@@ -475,15 +465,14 @@ function OOP:Class(based_on)
 
 	setmetatable(class, {
 		__newindex = class.__members,
-		__index = class.__members,
-		__call = class.Template
+		__index = class.__members
 	})
 
 	return class
 end
 
 --[[#method  0.9 {
-	public StaticClass OOP:StaticClass()
+	class public @StaticClass OOP:StaticClass()
 
 	Creates a static class, enabling it to inherit from other objects without having instantiation capability.
 }]]

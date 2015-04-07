@@ -167,10 +167,10 @@ function Dictionary.DeepCopy(self, to, datawise, map)
 		local i, t = indexable(value)
 		if (i) then
 			if (not map[value]) then
-				local copy = (not datawise) and value.Copy or value.DeepCopy or value.ShallowCopy
+				local copy = (not datawise) and (value.Copy or value.DeepCopy or value.ShallowCopy)
 
 				if (copy) then
-					map[value] = copy(value)
+					map[value] = copy(value, nil, datawise, map)
 				elseif (t == "table") then
 					map[value] = {}
 					Dictionary.DeepCopy(value, map[value], datawise, map)

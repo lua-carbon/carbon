@@ -90,9 +90,6 @@ function Test:Run(test)
 		-4 / sqrt(21), -1 / sqrt(21), 2 / sqrt(21)
 	)
 
-	print(Matrix3x3.Orthonormalize)
-	print(a.Orthonormalize)
-	print(Matrix3x3.__members.Orthonormalize)
 	local ortho_a = a:Orthonormalize()
 
 	if (matrixapproxeq(ortho_a, correct_ortho_a)) then
