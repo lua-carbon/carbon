@@ -13,9 +13,9 @@ if (not ok) then
 end
 
 local template_typical_constructor = [[
-class public {class}:New({arguments})
--alias: class public {class}:PlacementNew(@{class}? out{arg_comma}{arguments})
--alias: object public {class}:Init({arguments})
+class public @{class} {class}:New({arguments})
+-alias: class public @{class} {class}:PlacementNew(@{class}? out{arg_comma}{arguments})
+-alias: object public @void {class}:Init({arguments})
 ]]
 
 local docs = {
