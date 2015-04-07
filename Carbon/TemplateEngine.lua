@@ -39,6 +39,7 @@ end
 
 function TemplateEngine:Init()
 	self.DefaultEnvironment = {
+		print = print,
 		math = math,
 		string = string,
 		table = table,
