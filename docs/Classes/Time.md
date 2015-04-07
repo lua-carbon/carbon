@@ -4,7 +4,6 @@
 
 Provides utilities for working with time.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

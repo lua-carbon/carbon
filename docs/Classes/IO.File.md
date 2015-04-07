@@ -4,7 +4,6 @@
 
 Exposes object-oriented filesystem access. See <a href="Classes/IO">IO</a> for more methods.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

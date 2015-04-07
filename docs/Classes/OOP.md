@@ -4,7 +4,6 @@
 
 Provides object orientation features for Carbon.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

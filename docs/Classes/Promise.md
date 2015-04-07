@@ -6,7 +6,6 @@ Implements a model for asynchronous tasks via promises.
 
 A type of <code>Promise&lt;T&gt;</code> is a Promise that returns the given type, `T`.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

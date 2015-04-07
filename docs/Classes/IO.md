@@ -4,7 +4,6 @@
 
 Provides async and sync I/O operations that work on multiple platforms.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

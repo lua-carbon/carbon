@@ -4,7 +4,6 @@
 
 Wraps an object to pass it by-reference.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

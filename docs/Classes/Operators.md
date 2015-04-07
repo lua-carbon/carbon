@@ -4,7 +4,6 @@
 
 Provides functional forms of operators.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

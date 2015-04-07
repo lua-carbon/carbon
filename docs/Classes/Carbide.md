@@ -6,7 +6,6 @@ Implements a set of Lua language extensions known as Carbide.
 
 This file is related to the Carbide programmatic API, for details on using Carbide, see [Using Carbide](Using_Carbide).
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

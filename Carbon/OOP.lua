@@ -425,9 +425,11 @@ OOP.Object.__base_members.Copy = function(self)
 
 	local copy = Dictionary.DeepCopy(self.self, target)
 
+--[[
 	if (class.__attributes.SparseInstances) then
 		setmetatable(copy, {__index = class.__members})
 	end
+]]
 
 	copy = handle_indirection(class, copy)
 	apply_metatable(class, copy)

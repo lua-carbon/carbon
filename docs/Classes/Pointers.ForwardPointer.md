@@ -6,7 +6,6 @@ Wraps primitives and forwards operators.
 Use <a href="Classes/Operators">Operators</a> for comparisons to ensure compatibility.
 Data pointed to by a ForwardPointer is copied.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

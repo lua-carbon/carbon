@@ -5,7 +5,6 @@
 Provides an interface to referencing a data lookup.
 LookupPointers themselves are copied, but the data they point to is not.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

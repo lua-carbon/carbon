@@ -4,7 +4,6 @@
 
 Templating engine targeted at metaprogramming.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

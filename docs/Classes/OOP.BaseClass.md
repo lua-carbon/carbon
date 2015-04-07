@@ -4,7 +4,6 @@
 
 Body for both <a href="Classes/OOP.Class">OOP.Class</a> and <a href="Classes/OOP.StaticClass">OOP.StaticClass</a> base classes.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

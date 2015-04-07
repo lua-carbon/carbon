@@ -4,7 +4,6 @@
 
 An object to signal success and failure conditions to the test engine.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

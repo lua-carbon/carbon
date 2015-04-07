@@ -9,7 +9,6 @@ It is possible to use these methods with a plain <a href="Types#set">set</a>, ju
 <code class="lua hljs">Set.ToList(set)
 </code>
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

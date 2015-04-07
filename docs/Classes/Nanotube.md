@@ -4,7 +4,6 @@
 
 Funnels events and provides an event loop.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

@@ -25,8 +25,8 @@ See [changelog.md](changelog.md) for the releases history of Carbon.
 [carbon_icon]: https://raw.githubusercontent.com/lua-carbon/carbon/master/assets/carbon-icon.png
 
 [shield_license]: https://img.shields.io/badge/license-zlib/libpng-333333.svg?style=flat-square
-[shield_build]: https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square
-[shield_tests]: https://img.shields.io/badge/tests-38/38-brightgreen.svg?style=flat-square
+[shield_build]: https://img.shields.io/badge/build-failing-red.svg?style=flat-square
+[shield_tests]: https://img.shields.io/badge/tests-31/32-yellow.svg?style=flat-square
 [shield_release_version]: https://img.shields.io/badge/release-none-lightgrey.svg?style=flat-square
 [shield_prerelease_version]: https://img.shields.io/badge/prerelease-1.0.0--alpha2-blue.svg?style=flat-square
 [shield_dev_version]: https://img.shields.io/badge/development-1.0.0--beta-orange.svg?style=flat-square

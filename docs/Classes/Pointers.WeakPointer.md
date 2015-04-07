@@ -5,7 +5,6 @@
 Stores a reference to an object without affecting its garbage collection.
 Provides an implicit copy barrier.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

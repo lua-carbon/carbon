@@ -4,7 +4,6 @@
 
 Manages execution of tests for Carbon.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

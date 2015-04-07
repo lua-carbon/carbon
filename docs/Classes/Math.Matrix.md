@@ -13,7 +13,6 @@ For larger matrices, consider a different implementation.
 The 'loose' form of a Matrix, <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Matrix">Matrix</a>&gt;</code> is of the form <code>(N, M, ...)</code> where `N` and `M`
 are the dimensions of the matrix and <code>...</code> represents the values within it.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

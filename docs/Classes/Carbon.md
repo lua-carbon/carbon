@@ -4,7 +4,6 @@
 
 This is the Carbon core, containing all other modules and some utilities.
 
-<span class="bold">Inherits [none]</span>
 
 <hr />
 ## Methods

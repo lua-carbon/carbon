@@ -581,8 +581,7 @@ local template_class = clean_string [[
 
 {escaped_description}
 
-<span class="bold">Inherits {inherits_string}</span>
-
+{inherits_string}
 <hr />
 ## Methods
 {methods_string}
@@ -590,6 +589,10 @@ local template_class = clean_string [[
 <hr />
 ## Properties
 {properties_string}
+]]
+
+local template_inherits = [[
+<span class="bold">Inherits {inherits_list}</span>
 ]]
 
 local template_method_name = clean_string [[
@@ -646,14 +649,19 @@ function docs.generator.class(class)
 	-- Default values for these lists in their string form.
 	class.methods_string = "[none]"
 	class.properties_string = "[none]"
-	class.inherits_string = "[none]"
 
 	-- Build an inhertiance string using @ directives.
 	local inherits_buffer = {}
 	for key, ancestor in ipairs(class.inherits) do
 		table.insert(inherits_buffer, "@" .. ancestor)
 	end
-	class.inherits_string = next(inherits_buffer) and table.concat(inherits_buffer, ", ") or class.inherits_string
+
+	if (#inherits_buffer > 0) then
+		class.inherits_list = table.concat(inherits_buffer, ", ")
+		class.inherits_string = do_template(template_inherits, class)
+	else
+		class.inherits_string = ""
+	end
 
 	class.file_link = docs.file_url_base .. class.filename
 	class.escaped_description = process_string(class.description)
