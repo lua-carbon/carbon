@@ -27,7 +27,7 @@ List.Is = {
 }
 
 --[[#method 1 {
-	public @List List:New([@list data])
+	class public @List List:New([@list data])
 		optional data: The data of the list. Empty if not given.
 
 	Turns the given object into a @List.
@@ -50,8 +50,9 @@ function List.Deserialize(source, out)
 end
 
 --[[#method {
-	public @void List.Clear(@List self)
-		required self: The list to clear.
+	class public @void List.Clear(@List self)
+	-alias: object public @void List:Clear()
+		required self: The list to source data from
 
 	Clears a list of all list values.
 }]]
@@ -62,7 +63,7 @@ function List.Clear(self)
 end
 
 --[[#method {
-	public @list List.ShallowCopy(@list self, [@list to])
+	class public @list List.ShallowCopy(@list self, [@list to])
 		required self: The list to source data from
 		optional to: The list to copy into; an empty table if not given.
 
@@ -81,7 +82,7 @@ end
 List.Copy = List.ShallowCopy
 
 --[[#method {
-	public @List List.DeepCopy(@list self, [@list to, @dictionary map, function copy_function, ...])
+	class public @List List.DeepCopy(@list self, [@list to, @dictionary map, function copy_function, ...])
 		required self: The list to source data from.
 		optional to: The list to copy into; an empty table if not given.
 		internal map: A map projecting original values into copied values. Used internally.

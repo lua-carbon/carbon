@@ -23,7 +23,7 @@ local NotImplementedException = Carbon.OOP:Class()
 	}
 
 --[[#method 1 {
-	public @NotImplementedException NotImplementedException:New(string method_name)
+	$typical_constructor(NotImplementedException(@string method_name))
 		required method_name: The name of the method that isn't yet implemented.
 
 	Generates a new @NotImplementedException for a method with the given name.

@@ -8,15 +8,16 @@ A disposable List object for quick vararg transformations.
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Tuple:New(<code>...</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Collections.Tuple">Tuple</a></code></p>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Tuple:New(<code>...</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Collections.Tuple">Tuple</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Tuple:Init(<code>...</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-optional">optional</span>  `...`: The values to initialize the Tuple with.</li>
 </ul>
 
 Creates a new Tuple.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Tuple:Destroy(<code>...</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Tuple:Destroy(<code>...</code>)</h4>
 <p class="method-returns bold">Returns <code>...</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-optional">optional</span>  `...`: Data to pipe through this method.</li>
@@ -25,7 +26,7 @@ Creates a new Tuple.
 Destroys the tuple, passing any arguments that it was given as return values.
 This will put the tuple back into the main buffer, usually.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Tuple:Unpack()</h4>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Tuple:Unpack()</h4>
 <p class="method-returns bold">Returns <code>...</code></p>
 <ul class="doc-arg-list">
 

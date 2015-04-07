@@ -12,6 +12,12 @@ if (not ok) then
 	error("LFS is required to use docs.lua!")
 end
 
+local template_typical_constructor = [[
+class public {class}:New({arguments})
+-alias: class public {class}:PlacementNew(@{class}? out{arg_comma}{arguments})
+-alias: object public {class}:Init({arguments})
+]]
+
 local docs = {
 	hand_files = {
 		"index.md, Index",
@@ -32,6 +38,16 @@ local docs = {
 		public = [[<span class="doc-visibility doc-public">public</span>]],
 		private = [[<span class="doc-visibility doc-private">private</span>]]
 	},
+	macros = {
+		typical_constructor = function(whole)
+			local class, arguments = whole:match("^([^%(]+)%((.+)%)$")
+			return (template_typical_constructor
+				:gsub("{arg_comma}", (#arguments > 0) and ", " or "")
+				:gsub("{class}", class)
+				:gsub("{arguments}", arguments)
+			)
+		end
+	},
 
 	-- Parser attributes
 	fs_base = "./Carbon",
@@ -41,6 +57,21 @@ local docs = {
 	doc_url_base = "carbon.lpghatguy.com",
 	doc_dir = "./docs"
 }
+
+local function do_macros(document)
+	return document:gsub("%$([%w_]+)(%b())", function(name, arg_string)
+		local arguments = arg_string:sub(2, -2)
+
+		local macro = docs.macros[name]
+
+		if (not macro) then
+			print(("WARNING: Invalid macro %q!"):format(name))
+			return
+		end
+
+		return macro(arguments)
+	end)
+end
 
 local function path_join(a, b)
 	return ((a .. "/" .. b):gsub("//+", "/"))
@@ -159,6 +190,8 @@ local function make_class_base(name)
 end
 
 local function parse_method_declaration(source, out)
+	source = do_macros(source)
+
 	local start, finish, prefix, name, args = source:find("(.-)%s+([^%s]-)(%b())")
 	if (not start) then
 		error("Invalid method declaration: " .. tostring(source))

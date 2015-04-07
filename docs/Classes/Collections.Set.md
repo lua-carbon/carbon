@@ -13,7 +13,7 @@ It is possible to use these methods with a plain <a href="Types#set">set</a>, ju
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Set:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Set:New(<code>[<a href="Types#table">table</a> data]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Collections.Set">Set</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-optional">optional</span>  `data`: The data of the set. Empty if not given.</li>
@@ -22,7 +22,8 @@ It is possible to use these methods with a plain <a href="Types#set">set</a>, ju
 Turns the given object into a Set.
 Allows method-style syntax.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Set.ToList(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> out]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Set.ToList(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> out]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Collections.List">List</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Set:ToList(<code>[<a href="Types#table">table</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Collections.List">List</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `self`: The set to collect members for.</li>

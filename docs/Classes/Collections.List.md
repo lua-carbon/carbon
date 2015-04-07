@@ -14,7 +14,7 @@ List.ShallowCopy(list)
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> List:New(<code>[<a href="Types#list">list</a> data]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> List:New(<code>[<a href="Types#list">list</a> data]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Collections.List">List</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-optional">optional</span>  `data`: The data of the list. Empty if not given.</li>
@@ -23,15 +23,16 @@ List.ShallowCopy(list)
 Turns the given object into a <a href="Classes/Collections.List">List</a>.
 Allows method-style syntax.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> List.Clear(<code><a href="Classes/Collections.List">List</a> self</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> List.Clear(<code><a href="Classes/Collections.List">List</a> self</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> List:Clear()</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `self`: The list to clear.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `self`: The list to source data from</li>
 </ul>
 
 Clears a list of all list values.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> List.DeepCopy(<code><a href="Types#list">list</a> self, [<a href="Types#list">list</a> to, <a href="Types#dictionary">dictionary</a> map, function copy_function, ...]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> List.DeepCopy(<code><a href="Types#list">list</a> self, [<a href="Types#list">list</a> to, <a href="Types#dictionary">dictionary</a> map, function copy_function, ...]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Collections.List">List</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `self`: The list to source data from.</li>
@@ -43,7 +44,7 @@ Clears a list of all list values.
 Performs a self-reference fixing deep copy from one list into another.
 Handles self-references properly.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> List.ShallowCopy(<code><a href="Types#list">list</a> self, [<a href="Types#list">list</a> to]</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> List.ShallowCopy(<code><a href="Types#list">list</a> self, [<a href="Types#list">list</a> to]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#list">list</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `self`: The list to source data from</li>

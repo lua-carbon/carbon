@@ -22,7 +22,8 @@ local Tuple = OOP:Class()
 	}
 
 --[[#method 1 {
-	public @Tuple Tuple:New(...)
+	class public @Tuple Tuple:New(...)
+	-alias: object public @void Tuple:Init(...)
 		optional ...: The values to initialize the Tuple with.
 
 	Creates a new Tuple.
@@ -36,7 +37,7 @@ function Tuple:Init(...)
 end
 
 --[[#method {
-	public ... Tuple:Unpack()
+	object public ... Tuple:Unpack()
 
 	Unpacks and destroys the Tuple, returning all its values.
 }]]
@@ -45,7 +46,7 @@ function Tuple:Unpack()
 end
 
 --[[#method {
-	public ... Tuple:Destroy(...)
+	object public ... Tuple:Destroy(...)
 		optional ...: Data to pipe through this method.
 
 	Destroys the tuple, passing any arguments that it was given as return values.

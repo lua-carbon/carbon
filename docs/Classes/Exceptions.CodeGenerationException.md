@@ -8,8 +8,11 @@ An exception to be generated when generation of code fails.
 
 <hr />
 ## Methods
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> CodeGenerationException:New(<code>string message, string code</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Exceptions.CodeGenerationException">CodeGenerationException</a></code></p>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> CodeGenerationException:New(<code><a href="Types#string">string</a> message, <a href="Types#string">string</a> code</code>)</h4>
+<p class="method-returns bold">Returns <code></code></p><h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> CodeGenerationException:PlacementNew(<code><a href="Classes/Exceptions.CodeGenerationException">CodeGenerationException</a>? out, <a href="Types#string">string</a> message, <a href="Types#string">string</a> code</code>)</h4>
+<p class="method-returns bold">Returns <code></code></p>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> CodeGenerationException:Init(<code><a href="Types#string">string</a> message, <a href="Types#string">string</a> code</code>)</h4>
+<p class="method-returns bold">Returns <code></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `message`: A message explaining why code generation failed.</li>
 <li><span class="doc-arg-level doc-required">required</span>  `code`: The code that was generated.</li>
