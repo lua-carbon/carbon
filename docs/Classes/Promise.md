@@ -65,6 +65,14 @@ Registers an action to occur after this promise resolves.
 
 Returns a promise that resolves when all of the given promises resolve.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Promise:Any(<code>...</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `...`: A list of promises to wait for.</li>
+</ul>
+
+Returns a promise that resolves when any one of the given promises resolves.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Promise&lt;T&gt;:Await()</h4>
 <p class="method-returns bold">Returns <code>T</code></p>
 <ul class="doc-arg-list">
@@ -74,14 +82,6 @@ Returns a promise that resolves when all of the given promises resolve.
 Yields until the promise has a result to give.
 
 Can only be called from an asynchronous method.
-<hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> promise:Any(<code>...</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Promise">Promise</a></code></p>
-<ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `...`: A list of promises to wait for.</li>
-</ul>
-
-Returns a promise that resolves when any one of the given promises resolves.
 
 <hr />
 ## Properties

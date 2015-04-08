@@ -77,7 +77,7 @@ function Promise:All(...)
 end
 
 --[[#method {
-	object public @Promise promise:Any(...)
+	object public @Promise Promise:Any(...)
 		required ...: A list of promises to wait for.
 
 	Returns a promise that resolves when any one of the given promises resolves.

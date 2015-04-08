@@ -64,6 +64,15 @@ Returns the conjugate of the <a href="Classes/Math.Quaternion">Quaternion</a>, <
 </ul>
 
 Conjugates the <a href="Classes/Math.Quaternion">Quaternion</a> in-place.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:Multiply(<code><a href="Classes/Math.Quaternion">Quaternion</a> other, [<a href="Classes/Math.Quaternion">Quaternion</a> out]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `other`: The quaternion to multiply with.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
+</ul>
+
+Multiplies the quaternion with another <a href="Classes/Math.Quaternion">Quaternion</a>.
 
 <hr />
 ## Properties
