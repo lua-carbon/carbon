@@ -13,6 +13,9 @@
 
 		The 'loose' form of a Matrix, `@loose<@Matrix>` is of the form `(N, M, ...)` where `N` and `M`
 		are the dimensions of the matrix and `...` represents the values within it.
+
+		Methods listed here operating on a `@Matrix<N, M>` work only on generated classes, while those
+		listed as operating on `@Matrix` operate only on the generator class.
 	}
 
 	#alias Vector Math.Vector
@@ -87,8 +90,7 @@ Matrix = {
 	__cache = {},
 	__methods = {
 		--[[#method 1 {
-			class public @Matrix Matrix:New(...)
-			-alias: object public @void Matrix:Init(...)
+			$typical_constructor(Matrix<N,M>(...))
 				optional ...: The values to initialize the matrix with. Each value is nil by default.
 
 			Initializes or creates a matrix with a set of row-major values.
@@ -108,8 +110,7 @@ Matrix = {
 		]],
 
 		--[[#method 1 {
-			class public @Matrix Matrix:NewFromLoose(@unumber rows, @unumber columns, ...)
-			-alias: object public self Matrix:InitFromLoose(@unumber rows, @unumber columns, ...)
+			$constructor_init_pair(FromLoose Matrix<N,M>(@unumber rows, @unumber columns, ...))
 				required rows: The number of rows the loose data has.
 				required columns: The number of columns the loose data has.
 				optional ...: The data to initialize or create the matrix with.
@@ -131,7 +132,7 @@ Matrix = {
 		end,
 
 		--[[#method 2 {
-			object public @loose<@Matrix> Matrix:ToLoose()
+			object public @loose<@Matrix<N,M>> Matrix<N,M>:ToLoose()
 
 			Returns the loose form of the @Matrix, decomposing into a tuple.
 		}]]
@@ -152,7 +153,7 @@ Matrix = {
 		]],
 
 		--[[#method 2 {
-			object public @tuple<N, ...> Matrix:GetComponents()
+			object public @tuple<N*M, ...> Matrix<N,M>:GetComponents()
 
 			Returns the components of the @Matrix in row-major ordering.
 		}]]
@@ -172,17 +173,7 @@ Matrix = {
 		]],
 
 		--[[#method {
-			object public @Matrix Matrix:Transpose!()
-			-alias: object public @Matrix Matrix:TransposeInPlace()
-
-			Transposes the matrix in-place.
-		}]]
-		TransposeInPlace = function(self)
-			return self:Transpose(self)
-		end,
-
-		--[[#method {
-			object public @Matrix Matrix:Transpose()
+			object public @Matrix<N,M> Matrix<N,M>:Transpose([@Matrix<N,M> out])
 				optional out: An optional @Matrix to place the data into.
 
 			Transposes the @Matrix.
@@ -203,9 +194,18 @@ Matrix = {
 			end
 		]],
 
+		--[[#method {
+			object public self Matrix<N,M>:Transpose!()
+			-alias: object public self Matrix<N,M>:TransposeInPlace()
+
+			Transposes the matrix in-place.
+		}]]
+		TransposeInPlace = function(self)
+			return self:Transpose(self)
+		end,
+
 		--[[#method 1 {
-			class public @Matrix Matrix:NewZero()
-			-alias: object public @void Matrix:InitZero()
+			$constructor_init_pair(Zero Matrix<N,M>())
 
 			Creates or initializes a matrix with all zero values.
 		}]]
@@ -246,6 +246,11 @@ Matrix = {
 			end
 		]],
 
+		--[[#method {
+			class public @loose<@Matrix<N,M>> Matrix<N,M>:NewLooseZero()
+
+			Returns a @loose<@Matrix<N,M>> full of zeroes.
+		}]]
 		NewLooseZero = [[
 			return function(self)
 				return {%=ROWS %}, {%=COLUMNS %},
@@ -260,8 +265,8 @@ Matrix = {
 		]],
 
 		--[[#method 1 {
-			class public @Matrix Matrix:NewIdentity()
-			-alias: object public @void Matrix:InitIdentity()
+			class public @Matrix<N,M> Matrix<N,M>:NewIdentity()
+			-alias: object public @void Matrix<N,M>:InitIdentity()
 
 			Creates or initializes an identity matrix.
 		}]]
@@ -277,6 +282,11 @@ Matrix = {
 			end
 		]],
 
+		--[[#method {
+			class public @loose<@Matrix<N,M>> Matrix<N,M>:NewLooseIdentity()
+
+			Returns an identity @loose<@Matrix<N,M>>.
+		}]]
 		NewLooseIdentity = SQUARE_ONLY [[
 			return function(self)
 				return {%=ROWS %}, {%=COLUMNS %},
@@ -297,7 +307,7 @@ Matrix = {
 		]],
 
 		--[[#method 2 {
-			object public @void Matrix:Set(@unumber i, @unumber j, @number? value)
+			object public @void Matrix<N,M>:Set(@unumber i, @unumber j, @number? value)
 				required i: The column to look up.
 				required j: The row to look up.
 				required value: The value to set at the cell.
@@ -311,7 +321,7 @@ Matrix = {
 		]],
 
 		--[[#method 2 {
-			object public @number? Matrix:Get(@unumber i, @unumber j)
+			object public @number? Matrix<N,M>:Get(@unumber i, @unumber j)
 				required i: The column to look up.
 				required j: The row to look up.
 
@@ -324,7 +334,7 @@ Matrix = {
 		]],
 
 		--[[#method 2.01 {
-			object public @void Matrix:SetRow(@unumber row, @tuple<COLUMNS, ...> values)
+			object public @void Matrix<N,M>:SetRow(@unumber row, @tuple<N, ...> values)
 				required row: The row to set values for
 				required values: The values to set for this row.
 
@@ -345,7 +355,7 @@ Matrix = {
 		]],
 
 		--[[#method 2.01 {
-			object public @tuple<COLUMNS, ...> Matrix:GetRow(@unumber row)
+			object public @tuple<N, ...> Matrix<N,M>:GetRow(@unumber row)
 				required row: The row to get values for.
 
 			Returns an entire row's values from this @Matrix.
@@ -366,7 +376,7 @@ Matrix = {
 		]],
 
 		--[[#method 2.02 {
-			object public @void Matrix:SetColumn(@unumber column, @tuple<ROWS, ...> values)
+			object public @void Matrix:SetColumn<N,M>(@unumber column, @tuple<M, ...> values)
 				required column: The column to set values for
 				required values: The values to set for this column.
 
@@ -387,7 +397,7 @@ Matrix = {
 		]],
 
 		--[[#method 2.02 {
-			object public @tuple<ROWS, ...> Matrix:GetColumn(@unumber column)
+			object public @tuple<M, ...> Matrix<N,M>:GetColumn(@unumber column)
 				required column: The column to get values for.
 
 			Returns an entire column's values from this @Matrix.
@@ -407,12 +417,8 @@ Matrix = {
 			end
 		]],
 
-		MultiplyScalarInPlace = function(self, value)
-			return self:MultiplyScalar(value, self)
-		end,
-
 		--[[#method {
-			object public @Matrix Matrix:MutiplyScalar(@number value, [@Matrix out])
+			object public @Matrix<N,M> Matrix<N,M>:MutiplyScalar(@number value, [@Matrix out])
 				required value: The scalar to scale the matrix with.
 				optional out: Where to put the resulting data.
 
@@ -433,7 +439,18 @@ Matrix = {
 		]],
 
 		--[[#method {
-			object public @Matrix Matrix:MultiplyLooseMatrix(@loose<@Matrix> other, [@Matrix out])
+			object public self Matrix<N,M>:MultiplyScalar!(@number value)
+			-alias: object public self Matrix<N,M>:MultiplyScalarInPlace(@number value)
+				required value: The scalar to scale the matrix with.
+
+			Multiplies the @Matrix by a scalar value in place.
+		}]]
+		MultiplyScalarInPlace = function(self, value)
+			return self:MultiplyScalar(value, self)
+		end,
+
+		--[[#method {
+			object public @Matrix<N,M> Matrix:MultiplyLooseMatrix<N,M>(@loose<@Matrix> other, [@Matrix out])
 				required other: A @loose @Matrix, (rows, columns, ...)
 				optional out: Where to put the resulting data.
 
@@ -461,6 +478,12 @@ Matrix = {
 			end
 		]],
 
+		--[[#method {
+			object public @loose<@Vector<N>> Matrix<N,M>:LooseMultiplyLooseVector(@loose<@Vector<N>>> vector)
+				required vector: The loose vector to multiply with.
+
+			Multiplies the matrix with a row vector and returns the result in loose form.
+		}]]
 		LooseMultiplyLooseVector = [[
 			return function(self, {%=ULIST(COLUMNS) %})
 				return
@@ -478,6 +501,12 @@ Matrix = {
 			end
 		]],
 
+		--[[#method {
+			object public @Vector<N> Matrix<N,M>:MultiplyLooseVector(@loose<@Vector<N>>> vector)
+				required vector: The loose vector to multiply with.
+
+			Multiplies the matrix with a row vector and returns the result in a @Vector.
+		}]]
 		MultiplyLooseVector = [[
 			local vector = Carbon.Math.Vector:Generate({%=COLUMNS %})
 
@@ -487,7 +516,7 @@ Matrix = {
 		]],
 
 		--[[#method {
-			object public @Vector Matrix:MultiplyVector(@Vector other, [@Vector out])
+			object public @Vector<N> Matrix<N,M>:MultiplyVector(@Vector<N> other, [@Vector<N> out])
 				required other: The vector to multiply with.
 				optional out: Where to put the resulting data.
 
@@ -509,7 +538,7 @@ Matrix = {
 		]],
 
 		--[[#method {
-			object public @Vector Matrix:PreMultiplyVector(@Vector other, [@Vector out])
+			object public @Vector<M> Matrix<N,M>:PreMultiplyVector(@Vector<M> other, [@Vector<M> out])
 				required other: The @Vector to multiply with.
 				optional out: Where to put the resulting data.
 
@@ -545,7 +574,7 @@ Matrix = {
 		]],
 
 		--[[#method {
-			object public self Matrix:MultiplyMatrix!(@Matrix other)
+			object public self Matrix<N,M>:MultiplyMatrix!(@Matrix other)
 			-alias: object public self Matrix:MultiplyMatrixInPlace(@Matrix other)
 				required other: The matrix to multiply with.
 
@@ -558,7 +587,7 @@ Matrix = {
 		end,
 
 		--[[#method {
-			object public @Matrix Matrix:MultiplyMatrix(@Matrix other, [@Matrix out])
+			object public @Matrix Matrix<N,M>:MultiplyMatrix(@Matrix other, [@Matrix out])
 				required other: The matrix to multiply with this one.
 				optional out: Where to put the data. A new matrix if not specified.
 
@@ -584,6 +613,11 @@ Matrix = {
 			return out
 		end,
 
+		--[[#method {
+			object public @FFI<float[N*M]> Matrix<N,M>:GetNative()
+
+			Returns this matrix's native representation. Uses the same object for every call.
+		}]]
 		GetNative = FFI_ONLY [[
 			return function(self)
 				if (self.__native) then
@@ -601,7 +635,7 @@ Matrix = {
 		]],
 
 		--[[#method {
-			object public @FFI<float[N]> Matrix:ToNative([@FFI<float[N]> out])
+			object public @FFI<float[N*M]> Matrix<N,M>:ToNative([@FFI<float[N]> out])
 				optional out: Where to place the resulting data.
 
 			Returns a native representation of the matrix using the LuaJIT FFI.
@@ -633,13 +667,13 @@ Matrix = {
 	}
 }
 
---[[
-	function Matrix:__generate_method(string body, table arguments)
-		body: Template-enabled code to return a function.
-		arguments: Arguments to the template
+--[[#method {
+	class private @function Matrix:__generate_method(string body, table arguments)
+		required body: Template-enabled code to return a function.
+		required arguments: Arguments to the template
 
 	Generates a method using Carbon's TemplateEngine and handles errors.
-]]
+}]]
 function Matrix:__generate_method(body, arguments, env, name)
 	local generated, exception = self.Engine:Render(body, arguments)
 
@@ -658,14 +692,14 @@ function Matrix:__generate_method(body, arguments, env, name)
 	return generator()
 end
 
---[[
-	Class<Matrix> Matrix:Generate(uint rows, uint columns)
-		rows: The number of rows in the matrix
-		columns: The number of columns in the matrix
+--[[#method 0 {
+	class public Class<@Matrix> Matrix:Generate(uint rows, uint columns)
+		required rows: The number of rows in the matrix
+		required columns: The number of columns in the matrix
 
-	Generates a new Matrix class with the given keys and parameters. Results are cached, but this method may still be slow.
+	Generates a new Matrix class with the given size. Results are cached, but this method may still be slow.
 	It performs runtime code generation and template parsing on each generated class.
-]]
+}]]
 function Matrix:Generate(rows, columns)
 	local n = rows * columns
 

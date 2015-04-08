@@ -24,7 +24,7 @@ Returns a benchmarking time using the highest precision internal timer.
 Sleeps using the system timer.
 If no timer providers are available, will not do anything.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Days(<code><a href="Types#unumber">unumber</a> days</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Days(<code><a href="Types#unumber">unumber</a> days</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -32,7 +32,7 @@ If no timer providers are available, will not do anything.
 
 Converts the given number of days to seconds.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Hours(<code><a href="Types#unumber">unumber</a> hours</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Hours(<code><a href="Types#unumber">unumber</a> hours</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -40,7 +40,7 @@ Converts the given number of days to seconds.
 
 Converts the given number of hours to seconds.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Milliseconds(<code><a href="Types#unumber">unumber</a> milliseconds</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Milliseconds(<code><a href="Types#unumber">unumber</a> milliseconds</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -48,7 +48,7 @@ Converts the given number of hours to seconds.
 
 Converts the given number of milliseconds to seconds.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Minutes(<code><a href="Types#unumber">unumber</a> minutes</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Minutes(<code><a href="Types#unumber">unumber</a> minutes</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -56,7 +56,7 @@ Converts the given number of milliseconds to seconds.
 
 Converts the given number of minutes to seconds.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Nanoseconds(<code><a href="Types#unumber">unumber</a> nanoseconds</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Nanoseconds(<code><a href="Types#unumber">unumber</a> nanoseconds</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -64,7 +64,7 @@ Converts the given number of minutes to seconds.
 
 Converts the given number of nanoseconds to seconds.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Seconds(<code><a href="Types#unumber">unumber</a> seconds</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Seconds(<code><a href="Types#unumber">unumber</a> seconds</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 
@@ -73,7 +73,7 @@ Converts the given number of nanoseconds to seconds.
 Converts the given number of seconds to seconds.
 Not very useful.
 <hr/>
-<h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Time.Weeks(<code><a href="Types#unumber">unumber</a> weeks</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Time.Weeks(<code><a href="Types#unumber">unumber</a> weeks</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
 <ul class="doc-arg-list">
 

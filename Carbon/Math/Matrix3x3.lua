@@ -1,11 +1,13 @@
 --[[
 	Carbon for Lua
-	#class Matrix3x3
+	#class Math.Matrix3x3
 	#inherits Math.Matrix
 
 	#description {
 		A 3x3 row-major matrix.
 	}
+
+	#alias Quaternion Math.Quaternion
 ]]
 
 local Carbon = (...)
@@ -22,6 +24,11 @@ end
 
 -- Reference:
 -- http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+--[[#method {
+	object public @loose<@Quaternion> Matrix3x3:ToLooseQuaternion()
+
+	Converts the @Matrix3x3 into a loose-form @Quaternion.
+}]]
 function Matrix3x3:ToLooseQuaternion()
 	local m11, m12, m13 = self:GetRow(1)
 	local m21, m22, m23 = self:GetRow(2)
@@ -73,6 +80,11 @@ function Matrix3x3:ToLooseQuaternion()
 	end
 end
 
+--[[#method {
+	object public @Quaternion Matrix3x3:ToQuaternion()
+
+	Converts the @Matrix3x3 into a @Quaternion.
+}]]
 function Matrix3x3:ToQuaternion()
 	if (out) then
 		out:Init(self:ToLooseQuaternion())
@@ -81,10 +93,12 @@ function Matrix3x3:ToQuaternion()
 	end
 end
 
-function Matrix3x3:OrthonormalizeInPlace()
-	return self:Orthonormalize(self)
-end
+--[[#method {
+	object public @Matrix3x3 Matrix3x3:Orthonormalize([@Matrix3x3 out])
+		optional out: Where to put the resulting data, a new matrix if not given.
 
+	Orthonormalizes the rotation matrix, optionally outputting data into an existing @Matrix3x3.
+}]]
 function Matrix3x3:Orthonormalize(out)
 	out = out or self.class:New()
 
@@ -142,6 +156,16 @@ function Matrix3x3:Orthonormalize(out)
 		m21, m22, m23,
 		m31, m32, m33
 	)
+end
+
+--[[#method {
+	object public self Matrix3x3:Orthonormalize!()
+	-alias: object public self Matrix3x3:OrthonormalizeInPlace()
+
+	Orthonormalizes the matrix in-place.
+}]]
+function Matrix3x3:OrthonormalizeInPlace()
+	return self:Orthonormalize(self)
 end
 
 return Matrix3x3

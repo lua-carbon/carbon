@@ -4,6 +4,9 @@
 
 	#description {
 		Templating engine targeted at metaprogramming.
+
+		Templates can use the `_` (single underscore) function to output a string, and the `RenderPartial` function to render a partial by name.
+		Most safe Lua functions are exposed to templates.
 	}
 ]]
 
@@ -37,6 +40,11 @@ local function strip_line_if_just_spaces(line)
 	end
 end
 
+--[[#method 1 {
+	$typical_constructor(TemplateEngine())
+
+	Creates or initializes a @TemplateEngine object.
+}]]
 function TemplateEngine:Init()
 	self.DefaultEnvironment = {
 		print = print,
@@ -64,9 +72,13 @@ function TemplateEngine:Init()
 	}
 end
 
---[[
-	Takes the contents of a templated document and compiles it to an executable template
-]]
+--[[#method 2 {
+	object public @string TemplateEngine:Compile(@string document, [@unumber level])
+		required document: The document containing templates to compile.
+		optional level: The level of template to use, defaults to 0.
+
+	Takes the contents of a templated document and compiles it to a piece of Lua code.
+}]]
 function TemplateEngine:Compile(document, level)
 	level = level or 0
 
@@ -114,10 +126,14 @@ function TemplateEngine:Compile(document, level)
 	return table.concat(output_buffer, "\n")
 end
 
---[[
-	Executes an already-compiled Soquid document with the given data
-]]
-function TemplateEngine:Execute(template, data)
+--[[#method 2 {
+	object public @string TemplateEngine:Execute(@string compiled, [@table data])
+		required compiled: A piece of Lua code that was compiled from a templated document.
+		optional data: Data to pass into the template.
+
+	Executes an already-compiled Soquid document with the given data and returns the result.
+}]]
+function TemplateEngine:Execute(compiled, data)
 	--Create a relatively sandboxed environment
 	local env = shallow_copy(self.DefaultEnvironment)
 
@@ -135,26 +151,31 @@ function TemplateEngine:Execute(template, data)
 	env._ = append_to_buffer
 
 	--Load the function and try executing it
-	local func, err = Carbon.LoadString(template, template:sub(50), env)
+	local func, err = Carbon.LoadString(compiled, compiled:sub(50), env)
 
 	if (not func) then
-		return false, CodeGenerationException:New("(COMPILE) Generated method had error: " .. err, template)
+		return false, CodeGenerationException:New("(COMPILE) Generated method had error: " .. err, compiled)
 	end
 
 	local result, err = pcall(func)
 
 	--Did something go wrong? Abort!
 	if (not result) then
-		return false, CodeGenerationException:New(err, template)
+		return false, CodeGenerationException:New(err, compiled)
 	end
 
 	--Yield the results
 	return table.concat(buffer)
 end
 
---[[
+--[[#method 1.5 {
+	object public @string TemplateEngine:Render(@string document, [@table data, @unumber level])
+		required document: The template-enabled document to render.
+		optional data: The data to pass to the template.
+		optional level: What level of templates to execute.
+
 	Compiles and executes a template-enabled document with the given data.
-]]
+}]]
 function TemplateEngine:Render(document, data, level)
 	local result, err = self:Compile(document, level)
 
@@ -171,9 +192,14 @@ function TemplateEngine:Render(document, data, level)
 	return result
 end
 
---[[
-	Adds a partial document with a given name
-]]
+--[[#method {
+	object public @void TemplateEngine:AddPartial(@string name, @string document, [@unumber level])
+		required name: The name of the partial document.
+		required document: The body of the partial document.
+		optional level: The level of templates used in the document.
+
+	Adds a partial document with a given name and body.
+}]]
 function TemplateEngine:AddPartial(name, document, level)
 	local compiled = self:Compile(document, level)
 	self.Partials[name] = compiled

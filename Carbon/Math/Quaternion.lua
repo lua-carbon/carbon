@@ -106,15 +106,30 @@ function Quaternion:ConjugateInPlace()
 	return self:Conjugate(self)
 end
 
-function Quaternion:Multiply(other, out)
+function Quaternion:LooseMultiplyLoose(x2, y2, z2, w2)
 	local x1, y1, z1, w1 = self:GetComponents()
-	local x2, y2, z2, w2 = other:GetComponents()
-	return self:PlacementNew(out,
+
+	return
 		w1*x2 + x1*w2 + y1*z2 - z1*y2,
 		w1*y2 - x1*z2 + y1*w2 + z1*x2,
 		w1*z2 + x1*y2 - y1*x2 + z1*w2,
 		w1*w2 - x1*x2 - y1*y2 - z1*z2
-	)
+end
+
+function Quaternion:MultiplyLoose(x2, y2, z2, w2)
+	return self:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
+end
+
+--[[#method {
+	object public @Quaternion Quaternion:Multiply(@Quaternion other, [@Quaternion out])
+		required other: The quaternion to multiply with.
+		optional out: Where to put the resulting data.
+
+	Multiplies the quaternion with another @Quaternion.
+}]]
+function Quaternion:Multiply(other, out)
+	local x2, y2, z2, w2 = other:GetComponents()
+	return self:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
 end
 
 function Quaternion:MultiplyInPlace(other)

@@ -46,7 +46,7 @@ local docs = {
 	},
 	macros = {
 		typical_constructor = function(whole)
-			local class, arguments = whole:match("^([^%(]+)%((.+)%)$")
+			local class, arguments = whole:match("^([^%(]+)%((.*)%)$")
 			return (template_typical_constructor
 				:gsub("{arg_comma}", (#arguments > 0) and ", " or "")
 				:gsub("{class}", class)
@@ -55,7 +55,7 @@ local docs = {
 		end,
 
 		constructor_init_pair = function(whole)
-			local suffix, class, arguments = whole:match("^(%S+)%s+([^%(]+)%((.+)%)$")
+			local suffix, class, arguments = whole:match("^(%S+)%s+([^%(]+)%((.*)%)$")
 			return (template_constructor_init_pair
 				:gsub("{arg_comma}", (#arguments > 0) and ", " or "")
 				:gsub("{suffix}", suffix)

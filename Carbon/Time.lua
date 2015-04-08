@@ -100,7 +100,7 @@ else
 end
 
 --[[#method {
-	public @unumber Time.Weeks(@unumber weeks)
+	class public @unumber Time.Weeks(@unumber weeks)
 
 	Converts the given number of weeks to seconds.
 }]]
@@ -109,7 +109,7 @@ function Time.Weeks(w)
 end
 
 --[[#method {
-	public @unumber Time.Days(@unumber days)
+	class public @unumber Time.Days(@unumber days)
 
 	Converts the given number of days to seconds.
 }]]
@@ -118,7 +118,7 @@ function Time.Days(d)
 end
 
 --[[#method {
-	public @unumber Time.Hours(@unumber hours)
+	class public @unumber Time.Hours(@unumber hours)
 
 	Converts the given number of hours to seconds.
 }]]
@@ -127,7 +127,7 @@ function Time.Hours(h)
 end
 
 --[[#method {
-	public @unumber Time.Minutes(@unumber minutes)
+	class public @unumber Time.Minutes(@unumber minutes)
 
 	Converts the given number of minutes to seconds.
 }]]
@@ -136,7 +136,7 @@ function Time.Minutes(m)
 end
 
 --[[#method {
-	public @unumber Time.Seconds(@unumber seconds)
+	class public @unumber Time.Seconds(@unumber seconds)
 
 	Converts the given number of seconds to seconds.
 	Not very useful.
@@ -146,7 +146,7 @@ function Time.Seconds(s)
 end
 
 --[[#method {
-	public @unumber Time.Milliseconds(@unumber milliseconds)
+	class public @unumber Time.Milliseconds(@unumber milliseconds)
 
 	Converts the given number of milliseconds to seconds.
 }]]
@@ -155,7 +155,7 @@ function Time.Milliseconds(ms)
 end
 
 --[[#method {
-	public @unumber Time.Nanoseconds(@unumber nanoseconds)
+	class public @unumber Time.Nanoseconds(@unumber nanoseconds)
 
 	Converts the given number of nanoseconds to seconds.
 }]]

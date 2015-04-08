@@ -27,7 +27,7 @@ local Exception = OOP:Class()
 	}
 
 --[[#method 1 {
-	public @Exception Exception:New(@string message)
+	$typical_constructor(Exception(@string message))
 		required message: The message to initialize the exception with.
 
 	Creates a new generic exception with the given message.
@@ -37,7 +37,7 @@ function Exception:Init(message)
 end
 
 --[[#method {
-	public @void Exception:Throw([@uint level])
+	object public @void Exception:Throw([@uint level])
 		optional level: An optional parameter passed onto Lua's error function.
 
 	Throws the exception as a traditional Lua error.

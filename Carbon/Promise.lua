@@ -23,12 +23,24 @@ local Promise = OOP:Class()
 		__fail_chain = {}
 	}
 
+--[[#method 1 {
+	$typical_constructor(Promise())
+
+	Creates or initializes a @Promise.
+}]]
 function Promise:Init(handler)
 	if (handler) then
 		handler(self)
 	end
 end
 
+--[[#method {
+	object public T Promise<T>:Await()
+
+	Yields until the promise has a result to give.
+
+	Can only be called from an asynchronous method.
+}]]
 function Promise:Await()
 	local running = coroutine.running()
 	self:Then(function(...)
@@ -38,6 +50,12 @@ function Promise:Await()
 	return coroutine.yield(self)
 end
 
+--[[#method {
+	object public @Promise Promise:All(...)
+		required ...: A list of promises to wait for.
+
+	Returns a promise that resolves when all of the given promises resolve.
+}]]
 function Promise:All(...)
 	local promise = Promise:New()
 	local count = 0
@@ -58,6 +76,12 @@ function Promise:All(...)
 	return promise
 end
 
+--[[#method {
+	object public @Promise promise:Any(...)
+		required ...: A list of promises to wait for.
+
+	Returns a promise that resolves when any one of the given promises resolves.
+}]]
 function Promise:Any(...)
 	local promise = Promise:New()
 	local done = false
@@ -75,6 +99,14 @@ function Promise:Any(...)
 	return promise
 end
 
+--[[#method 2 {
+	object public @void Promise:Resolve(...)
+		required ...: A list of parameters to be passed as the result.
+
+	Resolves the promise, passing along a set of results.
+
+	Counts the promise as a success.
+}]]
 function Promise:Resolve(...)
 	self.__success = true
 	self.__result = {...}
@@ -88,6 +120,14 @@ function Promise:Resolve(...)
 	end
 end
 
+--[[#method 2 {
+	object public @void Promise:Reject(...)
+		required ...: A list of parameters to be passed as the result.
+
+	Rejects the promise, passing along a set of results.
+
+	Counts the promise as a failure.
+}]]
 function Promise:Reject(...)
 	self.__success = false
 	self.__result = {...}
@@ -101,6 +141,13 @@ function Promise:Reject(...)
 	end
 end
 
+--[[#method 2 {
+	object public self Promise:Then([@function success, @function fail])
+		optional success: The function to call if this promise succeeds.
+		optional fail: The function to call if this promise fails.
+
+	Registers an action to occur after this promise resolves.
+}]]
 function Promise:Then(success, fail)
 	if (success) then
 		table.insert(self.__success_chain, success)
@@ -128,6 +175,12 @@ function Promise:Then(success, fail)
 	return self
 end
 
+--[[#method 2 {
+	object public self Promise:Catch([@function fail])
+		optional fail: The function to call if this promise fails.
+
+	Syntactical sugar for `promise:Then(nil, fail)`.
+}]]
 function Promise:Catch(fail)
 	return self:Then(nil, fail)
 end

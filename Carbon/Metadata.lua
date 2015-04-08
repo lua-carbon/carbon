@@ -13,22 +13,55 @@ local Graphene = Carbon:GetGraphene()
 
 local Metadata = {}
 
-function Metadata:Get(...)
-	return Graphene.Metadata:Get(...)
+--[[#method 1 {
+	class public @any? Metadata:Get(@any object, [@any field])
+		required object: The object to look up metadata for.
+		optional field: A field, if specified, to query the object for.
+
+	Requests metadata about the given object.
+
+	If the field argument is given, that key is returned from the object if the object exists.
+}]]
+function Metadata:Get(object, field)
+	return Graphene.Metadata:Get(object, field)
 end
 
-function Metadata:Set(...)
-	return Graphene.Metadata:Set(...)
+--[[#method 1 {
+	class public @void Metadata:Set(@any object, [@any metadata])
+		required object: The object to set metadata for.
+		optional metadata: The metadata to set for the object, specify nil to remove the object's metadata.
+
+	Associates the given object with a piece of metadata.
+}]]
+function Metadata:Set(object, metadata)
+	Graphene.Metadata:Set(object, metadata)
 end
 
+--[[#method {
+	class public @void Metadata:Enable()
+
+	Enables metadata storage.
+}]]
 function Metadata:Enable()
 	Graphene.Metadata.Enabled = true
 end
 
+--[[#method {
+	class public @void Metadata:Disable()
+
+	Disables metadata storage.
+}]]
 function Metadata:Disable()
 	Graphene.Metadata.Enabled = false
 end
 
+--[[#method {
+	class public @void Metadata:RegisterMethods(@table object, @table metadata)
+		required object: An object that contains methods to register.
+		required metadata: The metadata object associated with this object.
+
+	Automatically registers all the methods of a given object with the registry.
+}]]
 function Metadata:RegisterMethods(object, metadata)
 	for key, value in pairs(object) do
 		if (type(value) == "function") then

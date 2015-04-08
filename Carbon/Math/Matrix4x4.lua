@@ -6,6 +6,8 @@
 	#description {
 		A 4x4 row-major matrix.
 	}
+
+	#alias Quaternion Math.Quaternion
 ]]
 
 local Carbon = (...)
@@ -51,15 +53,10 @@ function Matrix4x4:NewLooseFromQuaternion(quaternion)
 end
 
 --[[#method 2 {
-	class public @Matrix4x4 Matrix4x4:NewFromLooseQuaternion(@loose<@Quaternion> quaternion)
-	-alias: class public @Matrix4x4 Matrix4x4:PlacementNewFromLooseQuaternion(@Matrix4x4? out, @loose<@Quaternion> quaternion)
-	-alias: object public @Matrix4x4 Matrix4x4:InitFromLooseQuaternion(@loose<@Quaternion> quaternion)
-	-alias: class public @Matrix4x4 Matrix4x4:InitFromQuaternion(@Quaternion quaternion)
-	-alias: class public @Matrix4x4 Matrix4x4:PlacementNewFromQuaternion(@Matrix4x4? out, @Quaternion quaternion)
-	-alias: object public @Matrix4x4 Matrix4x4:InitFromQuaternion(@Quaternion quaternion)
+	$constructor_init_pair(FromLooseQuaternion Matrix4x4(@loose<@Quaternion> quaternion))
 		required quaternion: The quaternion to initialize the matrix with.
 
-	Creates a new @Matrix4x4
+	Creates a new @Matrix4x4 from a @Quaternion.
 }]]
 function Matrix4x4:InitFromLooseQuaternion(x, y, z, w)
 	return self:Init(self:NewLooseFromLooseQuaternion(x, y, z, w))
@@ -67,18 +64,18 @@ end
 function Matrix4x4:NewFromLooseQuaternion(x, y, z, w)
 	return self:New(self:NewLooseFromLooseQuaternion(x, y, z, w))
 end
-function Matrix4x4:PlacementNewFromLooseQuaternion(out, x, y, z, w)
-	return self:PlacementNew(out, self:NewLooseFromLooseQuaternion(x, y, z, w))
-end
 
+--[[#method 2 {
+	$constructor_init_pair(FromQuaternion Matrix4x4(@Quaternion quaternion))
+		required quaternion: The quaternion to initialize the matrix with.
+
+	Creates a new @Matrix4x4 from a @Quaternion.
+}]]
 function Matrix4x4:InitFromQuaternion(quaternion)
 	return self:Init(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 function Matrix4x4:NewFromQuaternion(quaternion)
 	return self:New(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
-end
-function Matrix4x4:PlacementNewFromQuaternion(out, quaternion)
-	return self:PlacementNew(out, self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 
 --[[#method {
@@ -112,8 +109,6 @@ end
 
 --[[#method {
 	class public @Matrix4x4 Matrix4x4:Rotation(@number x, @number y, @number z, [@Matrix4x4 out])
-	-alias: object public @Matrix4x4 Matrix4x4:Rotate(@number x, @number y, @number z, [@Matrix4x4 out])
-	-alias: object public self Matrix4x4:Rotate!(@number x, @number y, @number z)
 		required x: The x component of the rotation.
 		required y: The y component of the rotation.
 		required z: The z component of the rotation.
@@ -127,6 +122,16 @@ function Matrix4x4:Rotation(x, y, z, out)
 		:RotateYInPlace(y)
 		:RotateZInPlace(z)
 end
+
+--[[#method {
+	object public @Matrix4x4 Matrix4x4:Rotate(@number x, @number y, @number z, [@Matrix4x4 out])
+		required x: The x component of the rotation.
+		required y: The y component of the rotation.
+		required z: The z component of the rotation.
+		optional out: Where to put the data for the rotation.
+
+	Rotates the @Matrix4x4 and outputs its data to `out`, or a new Matrix4x4 if not given.
+}]]
 function Matrix4x4:Rotate(x, y, z, out)
 	return
 		self:RotationX(x, out)
@@ -134,18 +139,48 @@ function Matrix4x4:Rotate(x, y, z, out)
 		:RotateZInPlace(z)
 end
 
+--[[#method {
+	object public self Matrix4x4:Rotate!(@number x, @number y, @number z)
+	-alias: object public self Matrix4x4:RotateInPlace(@number x, @number y, @number z)
+		required x: The x component of the rotation.
+		required y: The y component of the rotation.
+		required z: The z component of the rotation.
+
+	Rotates the @Matrix4x4 in place.
+}]]
 function Matrix4x4:RotateInPlace(x, y, z)
 	return self:Rotate(x, y, z, self)
 end
 
+--[[#method 10 {
+	object public @Matrix4x4 Matrix4x4:RotateX(@number t, [@Matrix4x4 out])
+		required t: The amount to rotate, in radians.
+		optional out: Where to put the resulting data.
+
+	Rotates the matrix around the X axis.
+}]]
 function Matrix4x4:RotateX(t, out)
 	return self:MultiplyLooseMatrix(self:LooseRotationX(t, out))
 end
 
+--[[#method 10 {
+	object public self Matrix4x4:RotateX!(@number t)
+	-alias: object public self Matrix4x4:RotateXInPlace(@number t)
+		required t: The amount to rotate, in radians.
+
+	Rotates the matrix around the X axis in place.
+}]]
 function Matrix4x4:RotateXInPlace(t, out)
 	return self:RotateX(t, self)
 end
 
+--[[#method 10 {
+	class public @loose<@Matrix4x4> Matrix4x4:LooseRotationX(@number t, ...)
+		required t: The amount to rotate, in radians.
+		optional ...: Data to pipe through the method.
+
+	Returns a @loose<@Matrix4x4> representing a rotation `t` radians around the X axis.
+}]]
 function Matrix4x4:LooseRotationX(t, ...)
 	return 4, 4,
 		1, 0, 0, 0,
@@ -154,18 +189,46 @@ function Matrix4x4:LooseRotationX(t, ...)
 		0, 0, 0, 1, ...
 end
 
+--[[#method 10 {
+	class public @Matrix4x4 Matrix4x4:RotationX(@number t, ...)
+		required t: The amount to rotate, in radians.
+		optional ...: Data to pipe through the method.
+
+	Returns a @Matrix4x4 representing a rotation `t` radians around the X axis.
+}]]
 function Matrix4x4:RotationX(t, out)
 	return self:PlacementNewFromLoose(out, self:LooseRotationX(t))
 end
 
+--[[#method 11 {
+	object public @Matrix4x4 Matrix4x4:RotateY(@number t, [@Matrix4x4 out])
+		required t: The amount to rotate, in radians.
+		optional out: Where to put the resulting data.
+
+	Rotates the matrix around the Y axis.
+}]]
 function Matrix4x4:RotateY(t, out)
 	return self:MultiplyLooseMatrix(self:LooseRotationY(t, out))
 end
 
+--[[#method 11 {
+	object public self Matrix4x4:RotateY!(@number t)
+	-alias: object public self Matrix4x4:RotateXInPlace(@number t)
+		required t: The amount to rotate, in radians.
+
+	Rotates the matrix around the Y axis in place.
+}]]
 function Matrix4x4:RotateYInPlace(t)
 	return self:RotateY(t, self)
 end
 
+--[[#method 11 {
+	class public @loose<@Matrix4x4> Matrix4x4:LooseRotationY(@number t, ...)
+		required t: The amount to rotate, in radians.
+		optional ...: Data to pipe through the method.
+
+	Returns a @loose<@Matrix4x4> representing a rotation `t` radians around the Y axis.
+}]]
 function Matrix4x4:LooseRotationY(t, ...)
 	return 4, 4,
 		cos(t), 0, sin(t), 0,
@@ -174,18 +237,46 @@ function Matrix4x4:LooseRotationY(t, ...)
 		0, 0, 0, 1, ...
 end
 
+--[[#method 11 {
+	class public @Matrix4x4 Matrix4x4:RotationY(@number t, ...)
+		required t: The amount to rotate, in radians.
+		optional ...: Data to pipe through the method.
+
+	Returns a @Matrix4x4 representing a rotation `t` radians around the Y axis.
+}]]
 function Matrix4x4:RotationY(t, out)
 	return self:PlacementNewFromLoose(out, self:LooseRotationY(t))
 end
 
+--[[#method 12 {
+	object public @Matrix4x4 Matrix4x4:RotateZ(@number t, [@Matrix4x4 out])
+		required t: The amount to rotate, in radians.
+		optional out: Where to put the resulting data.
+
+	Rotates the matrix around the Z axis.
+}]]
 function Matrix4x4:RotateZ(t, out)
 	return self:MultiplyLooseMatrix(self:LooseRotationZ(t, out))
 end
 
+--[[#method 12 {
+	object public self Matrix4x4:RotateZ!(@number t)
+	-alias: object public self Matrix4x4:RotateXInPlace(@number t)
+		required t: The amount to rotate, in radians.
+
+	Rotates the matrix around the Z axis in place.
+}]]
 function Matrix4x4:RotateZInPlace(t)
 	return self:RotateZ(t, self)
 end
 
+--[[#method 12 {
+	class public @loose<@Matrix4x4> Matrix4x4:LooseRotationZ(@number t, ...)
+		required t: The amount to rotate, in radians.
+		optional ...: Data to pipe through the method.
+
+	Returns a @loose<@Matrix4x4> representing a rotation `t` radians around the Z axis.
+}]]
 function Matrix4x4:LooseRotationZ(t, ...)
 	return 4, 4,
 		cos(t), -sin(t), 0, 0,
@@ -194,10 +285,25 @@ function Matrix4x4:LooseRotationZ(t, ...)
 		0, 0, 0, 1, ...
 end
 
+--[[#method 12 {
+	class public @Matrix4x4 Matrix4x4:RotationZ(@number t, ...)
+		required t: The amount to rotate, in radians.
+		optional ...: Data to pipe through the method.
+
+	Returns a @Matrix4x4 representing a rotation `t` radians around the Z axis.
+}]]
 function Matrix4x4:RotationZ(t, out)
 	return self:PlacementNewFromLoose(out, self:LooseRotationZ(t))
 end
 
+--[[#method {
+	class public @Matrix4x4 Matrix4x4:LooseScaling(@number x, @number y, @number z)
+		required x: The amount to scale on the X axis.
+		required y: The amount to scale on the Y axis.
+		required z: The amount to scale on the Z axis.
+
+	Returns a @loose<@Matrix4x4> representing a scaling transformation.
+}]]
 function Matrix4x4:LooseScaling(x, y, z)
 	return 4, 4,
 		x, 0, 0, 0,
@@ -206,10 +312,27 @@ function Matrix4x4:LooseScaling(x, y, z)
 		0, 0, 0, 1
 end
 
+--[[#method {
+	class public @Matrix4x4 Matrix4x4:Scaling(@number x, @number y, @number z)
+		required x: The amount to scale on the X axis.
+		required y: The amount to scale on the Y axis.
+		required z: The amount to scale on the Z axis.
+
+	Returns a @Matrix4x4 representing a scaling transformation.
+}]]
 function Matrix4x4:Scaling(x, y, z, out)
 	return self:PlacementNewFromLoose(out, self:LooseScaling(x, y, z))
 end
 
+--[[#method {
+	class public @Matrix4x4 Matrix4x4:Scale(@number x, @number y, @number z, [@Matrix4x4 out])
+		required x: The amount to scale on the X axis.
+		required y: The amount to scale on the Y axis.
+		required z: The amount to scale on the Z axis.
+		optional out: Where to put the resulting data.
+
+	Scales the Matrix4x4, optionally outputting to an existing @Matrix4x4.
+}]]
 function Matrix4x4:Scale(x, y, z, out)
 	return self:MultiplyLooseMatrix(4, 4,
 		x, 0, 0, 0,
@@ -218,6 +341,19 @@ function Matrix4x4:Scale(x, y, z, out)
 		0, 0, 0, 0,
 		out
 	)
+end
+
+--[[#method {
+	class public self Matrix4x4:Scale!(@number x, @number y, @number z)
+	-alias: class public self Matrix4x4:ScaleInPlace(@number x, @number y, @number z)
+		required x: The amount to scale on the X axis.
+		required y: The amount to scale on the Y axis.
+		required z: The amount to scale on the Z axis.
+
+	Scales the Matrix4x4 in place.
+}]]
+function Matrix4x4:ScaleInPlace(x, y, z)
+	return self:Scale(x, y, z, self)
 end
 
 return Matrix4x4

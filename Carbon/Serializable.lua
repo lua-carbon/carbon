@@ -21,7 +21,7 @@ local Serializable = OOP:Class()
 	}
 
 --[[#method {
-	public string Serializable:Serialize()
+	object public string Serializable:Serialize()
 
 	Serializes the object into a string representation.
 }]]
@@ -30,32 +30,28 @@ function Serializable:Serialize()
 end
 
 --[[#method {
-	public self Serializable:DeserializeInPlace(@string source)
-		required source: A string containing a serialized representation of an instance of this class.
-
-	Deserializes a previously serialized instance of this class.
-	Places the data into the class this method is called on.
-
-	Equivalent to
-	```lua
-	self:Deserialize(source, self)
-	```
-
-	Can be called with self:Deserialize!(source) in Carbide Lua.
-}]]
-function Serializable:DeserializeInPlace(source)
-	return self:Deserialize(source, self)
-end
-
---[[#method {
-	public @Serializable out Serializable.Deserialize(@string source, @Serializable out)
+	class public @Serializable out Serializable.Deserialize(@string source, @Serializable out)
 		required source: A string containing a serialized representation of an instance of this class.
 		optional out: Where to place the resulting data.
 
 	Deserializes the given source string and places it into the given @Serializable `out` object, if given, or a new instance of the class.
 }]]
-function Serializable.Deserialize(source, out)
+function Serializable:Deserialize(source, out)
 	return nil, Carbon.Exceptions.NotImplementedException("Deserialize")
+end
+
+--[[#method {
+	object public self Serializable:Deserialize!(@string source)
+	alias: object public self Serializable:DeserializeInPlace(@string source)
+		required source: A string containing a serialized representation of an instance of this class.
+
+	Deserializes a previously serialized instance of this class.
+	Places the data into the class this method is called on.
+
+	Can be called with self:Deserialize!(source) in Carbide Lua.
+}]]
+function Serializable:DeserializeInPlace(source)
+	return self.class:Deserialize(source, self)
 end
 
 Carbon.Metadata:RegisterMethods(Serializable, self)
