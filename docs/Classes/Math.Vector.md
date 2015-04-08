@@ -35,6 +35,32 @@ The following parameters are valid:
 
 <ul><li><a href="Types#number">number</a> NormalizedLength (1): The length the vector reaches when normalized.<li><a href="Types#number">number</a> DefaultValue (0): The value to initialize all members to if not given.</li><li><a href="Types#list">list</a>&lt;<a href="Types#number">number</a>&gt; DefaultValues: A list of values to initialize specific keys to. If any are given, all keys must be specified.</li></li></ul>
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector:LooseScale(<code><a href="Types#number">number</a> scalar</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#loose">loose</a>&lt;Vector&gt;</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `scalar`: The value to scale by.</li>
+</ul>
+
+Scales the <a href="Classes/Math.Vector">Vector</a> and returns it in <a href="Types#loose">loose</a> form.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector:Scale(<code><a href="Types#number">number</a> scalar, [<a href="Classes/Math.Vector">Vector</a> out]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Vector">Vector</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `scalar`: The value to scale by.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
+</ul>
+
+Scales the <a href="Classes/Math.Vector">Vector</a>, optionally outputting into an existing <a href="Classes/Math.Vector">Vector</a>.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector:Scale!(<code><a href="Types#number">number</a> scalar</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Vector">Vector</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector:ScaleInPlace(<code><a href="Types#number">number</a> scalar</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Vector">Vector</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `scalar`: The value to scale by.</li>
+</ul>
+
+Scales the <a href="Classes/Math.Vector">Vector</a> in place.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector&lt;N&gt;:DotMultiply(<code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt; other, [Vector&lt;N&gt; out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code></p>
 <ul class="doc-arg-list">

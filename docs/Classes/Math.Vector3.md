@@ -10,7 +10,14 @@ The loose form of a <a href="Classes/Math.Vector3">Vector3</a>, <code><a href="T
 
 <hr />
 ## Methods
-[none]
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector3:CrossMultiply(<code><a href="Classes/Math.Vector3">Vector3</a> other, [<a href="Classes/Math.Vector3">Vector3</a> out]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Vector3">Vector3</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `other`: The Vector3 to find the cross product with.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
+</ul>
+
+Calculates the cross product of two vectors, optionally putting the data into an existing <a href="Classes/Math.Vector3">Vector3</a>.
 
 <hr />
 ## Properties

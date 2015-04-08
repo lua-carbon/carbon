@@ -126,6 +126,12 @@ local Vector = {
 			end
 		]],
 
+		--[[#method {
+			object public @loose<Vector> Vector:LooseScale(@number scalar)
+				required scalar: The value to scale by.
+
+			Scales the @Vector and returns it in @loose form.
+		}]]
 		LooseScale = [[
 			return function(self, scalar)
 				return
@@ -139,10 +145,24 @@ local Vector = {
 			end
 		]],
 
+		--[[#method {
+			object public @Vector Vector:Scale(@number scalar, [@Vector out])
+				required scalar: The value to scale by.
+				optional out: Where to put the resulting data.
+
+			Scales the @Vector, optionally outputting into an existing @Vector.
+		}]]
 		Scale = function(self, scalar, out)
 			return self:PlacementNew(out, self:LooseScale(scalar))
 		end,
 
+		--[[#method {
+			object public @Vector Vector:Scale!(@number scalar)
+			-alias: object public @Vector Vector:ScaleInPlace(@number scalar)
+				required scalar: The value to scale by.
+
+			Scales the @Vector in place.
+		}]]
 		ScaleInPlace = function(self, scalar)
 			return self:Scale(self, scalar, self)
 		end,
