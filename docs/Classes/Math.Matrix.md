@@ -4,7 +4,7 @@
 
 Generates `N`x`M` matrices.
 
-Matrices native to Carbon are Row-Major!
+Matrices native to Carbon are row-major!
 
 This does not scale very well, but is fast for small values of `N` and `M`.
 Works only for matrices smaller than 14x14.

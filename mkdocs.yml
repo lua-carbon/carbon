@@ -16,6 +16,7 @@ pages:
 - [Classes/Exception.md, Classes, Exception]
 - [Classes/Exceptions.CodeGenerationException.md, Classes, Exceptions.CodeGenerationException]
 - [Classes/Exceptions.NotImplementedException.md, Classes, Exceptions.NotImplementedException]
+- [Classes/Functional.md, Classes, Functional]
 - [Classes/IO.md, Classes, IO]
 - [Classes/IO.File.md, Classes, IO.File]
 - [Classes/Math.Color.md, Classes, Math.Color]

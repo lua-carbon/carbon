@@ -1,21 +1,31 @@
 --[[
 	Carbon for Lua
-	OOP-Style Functional Programming Procedures
+	#class Functional
+
+	#description {
+		Provides an interface for functional programming.
+	}
 ]]
 
 local Carbon = (...)
 local Operators = Carbon.Operators
 
-identity = {
-	[Operators.Multiply] = 1,
-	[Operators.Divide] = 1,
-	[Operators.Power] = 1
-}
-
 local Functional = {}
 
+--[[#method {
+	class public @tuple Functional.Unpack(@table object)
+		required object: The table to unpack.
+
+	Unpacks the table into a tuple. The same as `unpack` and `table.unpack`.
+}]]
 Functional.Unpack = unpack or table.unpack
 
+--[[#method {
+	class public @bool Functional.AllTuple(...)
+		required ...: The values to check for truthiness.
+
+	Returns whether all the values in the tuple are truthy.
+}]]
 function Functional.AllTuple(...)
 	for i = 1, select("#", ...) do
 		if (not select(i, ...)) then
@@ -26,6 +36,12 @@ function Functional.AllTuple(...)
 	return true
 end
 
+--[[#method {
+	class public @bool Functional.All(@table objects)
+		required objects: The values to check for truthiness.
+
+	Returns whether all the values in the table are truthy.
+}]]
 function Functional.All(t)
 	for key, value in ipairs(t) do
 		if (not value) then
@@ -36,6 +52,12 @@ function Functional.All(t)
 	return true
 end
 
+--[[#method {
+	class public @bool Functional.AnyTuple(...)
+		required ...: The values to check for truthiness.
+
+	Returns whether any one of the values in the tuple is truthy.
+}]]
 function Functional.AnyTuple(...)
 	for i = 1, select("#", ...) do
 		if (select(i, ...)) then
@@ -46,6 +68,12 @@ function Functional.AnyTuple(...)
 	return false
 end
 
+--[[#method {
+	class public @bool Functional.Any(@table objects)
+		required objects: The values to check for truthiness.
+
+	Returns whether any one of the values in the table is truthy.
+}]]
 function Functional.Any(t)
 	for key, value in ipairs(t) do
 		if (value) then
@@ -56,8 +84,13 @@ function Functional.Any(t)
 	return false
 end
 
--- Creates a "view", does not reverse list
-function Functional.Reverse(list)
+--[[#method {
+	class public @userdata Functional.ViewReverse(@list list)
+		required list: The list to create a view for.
+
+	Creates a view that returns all values of the list reversed.
+}]]
+function Functional.ViewReverse(list)
 	local view = newproxy(true)
 
 	getmetatable(view).__index = function(self, key)
@@ -71,6 +104,13 @@ function Functional.Reverse(list)
 	return view
 end
 
+--[[#method {
+	class public @list Functional.Range(number a, number b)
+		required a: The number to start at.
+		required b: The number to end at.
+
+	Creates a range in the form of a @list.
+}]]
 function Functional.Range(a, b)
 	local out = {}
 
@@ -81,6 +121,13 @@ function Functional.Range(a, b)
 	return out
 end
 
+--[[#method {
+	class public T Functional.Reduce(@function T method(T total, T current), @list list)
+		required method: The method to use for reduction. Accepts the total and the current value, returns the new total.
+		required list: The list of values to reduce over.
+
+	Performs a reduction over the list with the given function.
+}]]
 function Functional.Reduce(method, list)
 	local total = list[1]
 
@@ -91,6 +138,13 @@ function Functional.Reduce(method, list)
 	return total
 end
 
+--[[#method {
+	class public @list Functional.Map(@function @any method(@any value), @list list)
+		required method: The method to use for mapping. Takes in a value and returns a transformed version of it.
+		required list: The list of values to map over.
+
+	Uses a function to perform a mapping of values.
+}]]
 function Functional.Map(method, list)
 	for key, value in ipairs(list) do
 		list[key] = method(value)
@@ -99,6 +153,13 @@ function Functional.Map(method, list)
 	return list
 end
 
+--[[#method {
+	class public @list Functional.Filter(@function @bool method(@any value), @list list)
+		required method: The method to use for filtering. Takes in a valid and returns whether it should stay.
+		required list: The list of values to filter over.
+
+	Uses a function to filter a list of values.
+}]]
 function Functional.Filter(method, list)
 	local out = {}
 
@@ -109,14 +170,6 @@ function Functional.Filter(method, list)
 	end
 
 	return out
-end
-
-function Functional.Compose(methods)
-	return function(...)
-		for key, value in ipairs(methods) do
-			value(...)
-		end
-	end
 end
 
 return Functional
