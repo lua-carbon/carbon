@@ -11,6 +11,7 @@
 ]]
 
 local Carbon = (...)
+local Vector3 = Carbon.Math.Vector3
 local Quaternion = Carbon.Math.Quaternion
 
 local Matrix4x4, except = Carbon.Math.Matrix:Generate(4, 4)
@@ -78,6 +79,39 @@ function Matrix4x4:NewFromQuaternion(quaternion)
 	return self:New(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 
+function Matrix4x4:NewOrthographic(left, right, bottom, top, near, far)
+	return self:New(
+		2 / (right - left), 0, 0, -((right + left)/(right - left)),
+		0, 2 / (top - bottom), 0, -((top + bottom)/(top - bottom)),
+		0, 0, -2 / (far - near), -(far + near)/(far - near),
+		0, 0, 0, 1
+	)
+end
+
+function Matrix4x4:NewPerspective(fov, aspect, near, far)
+	local t = math.tan(fov / 2)
+
+	return self:New(
+		1 / (aspect * t), 0, 0, 0,
+		0, 1 / t, 0, 0,
+		0, 0, -(near + far)/(near - far), (2 * far * near)/(near - far),
+		0, 0, 1, 0
+	)
+end
+
+function Matrix4x4:NewLookAt(eye, center, up)
+	local f = center:SubtractVector(eye):NormalizeInPlace()
+	local s = f:CrossMultiply(up):NormalizeInPlace()
+	local u = s:CrossMultiply(f)
+
+	return self:New(
+		s[1], s[2], s[3], 0,
+		u[1], u[2], u[3], 0,
+		-f[1], -f[2], -f[3], 0,
+		-s:DotMultiply(eye), -u:DotMultiply(eye), f:DotMultiply(eye), 1
+	)
+end
+
 --[[#method {
 	class public @Matrix4x4 Matrix4x4:Translation(@number x, @number y, @number z, [@Matrix4x4 out])
 	-alias: object public @Matrix4x4 Matrix4x4:Translate(@number x, @number y, @number z, [@Matrix4x4 out])
@@ -134,7 +168,7 @@ end
 }]]
 function Matrix4x4:Rotate(x, y, z, out)
 	return
-		self:RotationX(x, out)
+		self:RotateX(x, out)
 		:RotateYInPlace(y)
 		:RotateZInPlace(z)
 end
@@ -338,7 +372,7 @@ function Matrix4x4:Scale(x, y, z, out)
 		x, 0, 0, 0,
 		0, y, 0, 0,
 		0, 0, z, 0,
-		0, 0, 0, 0,
+		0, 0, 0, 1,
 		out
 	)
 end

@@ -21,6 +21,40 @@ local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
 
+local SIMPLE_LOOSE_BINARY_OPERATOR = function(symbol)
+	return (([[
+		return function(self, {%= ARGS_STRING %}, out)
+			return self.class:PlacementNew(out,
+				{% for i = 1, LENGTH do
+					_(("self[%d] {symbol} %s"):format(
+						i, ARGS[i]
+					))
+					
+					if (i < LENGTH) then
+						_(", ")
+					end
+				end %}
+			)
+		end
+	]]):gsub("{symbol}", symbol))
+end
+
+local SIMPLE_BINARY_OPERATOR = function(symbol)
+	return (([[
+		return function(self, other, out)
+			return self.class:PlacementNew(out,
+				{% for i = 1, LENGTH do
+					_(("self[%d] {symbol} other[%d]"):format(i, i))
+
+					if (i < LENGTH) then
+						_(", ")
+					end
+				end %}
+			)
+		end
+	]]):gsub("{symbol}", symbol))
+end
+
 local Vector = {
 	Engine = TemplateEngine:New(),
 	__cache = {},
@@ -186,15 +220,14 @@ local Vector = {
 		]],
 
 		--[[#method {
-			object public @Vector<N> Vector<N>:DotMultiply(@Vector<N> other, [Vector<N> out])
+			object public @number Vector<N>:DotMultiply(@Vector<N> other)
 				required other: The @Vector to multiply with.
-				optional out: Where to put the resulting data.
 
 			Performs a dot product between two vectors.
 		}]]
 		DotMultiply = [[
-			return function(self, other, out)
-				return self.class:PlacementNew(out,
+			return function(self, other)
+				return
 					{% for i = 1, LENGTH do
 						_(("self[%d] * (other[%d] or 0)"):format(i, i))
 
@@ -202,7 +235,6 @@ local Vector = {
 							_(" + ")
 						end
 					end %}
-				)
 			end
 		]],
 
@@ -220,7 +252,13 @@ local Vector = {
 
 		PostMultiplyMatrix = function(self, other, out)
 			return other:MultiplyVector(self, out)
-		end
+		end,
+
+		AddLooseVector = SIMPLE_LOOSE_BINARY_OPERATOR("+"),
+		AddVector = SIMPLE_BINARY_OPERATOR("+"),
+		
+		SubtractLooseVector = SIMPLE_LOOSE_BINARY_OPERATOR("-"),
+		SubtractVector = SIMPLE_BINARY_OPERATOR("-")
 	},
 	__metatable = {
 		-- String conversion:
