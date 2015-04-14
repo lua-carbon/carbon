@@ -94,15 +94,15 @@ function Matrix4x4:NewPerspective(fov, aspect, near, far)
 	return self:New(
 		1 / (aspect * t), 0, 0, 0,
 		0, 1 / t, 0, 0,
-		0, 0, -(near + far)/(near - far), (2 * far * near)/(near - far),
-		0, 0, 1, 0
+		0, 0, -(far + near)/(far - near), 0,
+		0, 0, (2 * far * near)/(far - near), 0
 	)
 end
 
 function Matrix4x4:NewLookAt(eye, center, up)
 	local f = center:SubtractVector(eye):NormalizeInPlace()
 	local s = f:CrossMultiply(up):NormalizeInPlace()
-	local u = s:CrossMultiply(f)
+	local u = s:CrossMultiply(f):NormalizeInPlace()
 
 	return self:New(
 		s[1], s[2], s[3], 0,
@@ -125,19 +125,19 @@ end
 }]]
 function Matrix4x4:Translate(x, y, z, out)
 	return self:MultiplyLooseMatrix(4, 4,
-		1, 0, 0, x,
-		0, 1, 0, y,
-		0, 0, 1, z,
-		0, 0, 0, 1,
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		x, y, z, 1,
 		out
 	)
 end
 function Matrix4x4:Translation(x, y, z, out)
 	return Matrix4x4:PlacementNew(out,
-		1, 0, 0, x,
-		0, 1, 0, y,
-		0, 0, 1, z,
-		0, 0, 0, 1
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		x, y, z, 1
 	)
 end
 
