@@ -69,11 +69,13 @@ local args = {
 }
 
 -- Generates a list of letters given a count and offset (default to 0)
-local function ULIST(count, offset)
+local function ULIST(count, offset, prefix)
 	offset = offset or 0
+	prefix = prefix or ""
+
 	local buffer = {}
 	for i = offset + 1, count + offset do
-		table.insert(buffer, args[i])
+		table.insert(buffer, prefix .. args[i])
 	end
 
 	return table.concat(buffer, ",")
@@ -457,6 +459,9 @@ Matrix = {
 			Multiplies the @Matrix with a loose-representation matrix.
 		}]]
 		MultiplyLooseMatrix = [[
+			{% local components = ULIST(N, 0, "c_") %}
+			{% print(components) %}
+
 			return function(self, rows, columns, ...)
 				if ({%=COLUMNS %} ~= rows) then
 					return nil, "Cannot multiply matrices where a.rows ~= b.columns!"
@@ -464,12 +469,18 @@ Matrix = {
 
 				local out = select(rows*columns + 1, ...) or self.class:New()
 
+				local {%=components %} = self:GetComponents()
+
 				for i = 1, {%=ROWS %} do
 					for j = 1, columns do
 						local sum = 0
+
 						for k = 1, {%=COLUMNS %} do
-							sum = sum + self:Get(i, k) * (select((k - 1) * columns + j, ...))
+							sum = sum
+								+ select((i - 1) * {%=COLUMNS %} + k, {%=components %})
+								* select((k - 1) * columns + j, ...)
 						end
+
 						out:Set(i, j, sum)
 					end
 				end
@@ -730,6 +741,8 @@ function Matrix:Generate(rows, columns)
 	}
 
 	local env = {
+		ULIST = ULIST,
+		USINGLE = USINGLE,
 		Carbon = Carbon,
 		Matrix = self,
 		ffi = ffi
