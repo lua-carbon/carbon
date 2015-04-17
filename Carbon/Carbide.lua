@@ -155,6 +155,29 @@ local function operator_bang(source)
 	end))
 end
 
+local function strip_strings(source, str_tab)
+	str_tab = str_tab or {}
+
+	local function predicate(whole)
+		table.insert(str_tab, whole)
+
+		return "\26" .. #str_tab .. "\27"
+	end
+
+	source = source
+		:gsub("%b\"\"", predicate)
+		:gsub("%b''", predicate)
+		:gsub("(%[(=*)%[.-%]%2%])", predicate)
+
+	return source, str_tab
+end
+
+local function replace_strings(source, str_tab)
+	return (source:gsub("\26(%d+)\27", function(number)
+		return str_tab[tonumber(number)]
+	end))
+end
+
 --[[#method {
 	class public @string Carbide.ParseTemplated(@string source)
 		required source: The source to parse for templates.
@@ -190,6 +213,8 @@ function Carbide.ParseCore(source)
 	local feature_level = tonumber(source:match("#CARBIDE_FEATURE_LEVEL (%d+)")) or 2
 	local extensions = {}
 
+	source, str_tab = strip_strings(source)
+
 	if (feature_level >= 1) then
 		source = operator_bang(source)
 		source = operator_dan(source)
@@ -202,6 +227,8 @@ function Carbide.ParseCore(source)
 		source = operator_mutating(source, "/")
 		source = operator_mutating(source, "^")
 	end
+
+	source = replace_strings(source, str_tab)
 
 	return source
 end

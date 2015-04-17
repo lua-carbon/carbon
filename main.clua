@@ -23,3 +23,10 @@ print(vec2) --> (0, 0)
 
 print(vec2->x, vec2->y) -- 0	0
 print(vec2->u, vec2->v) -- 0	0
+
+print("a += b")
+print("a->x++")
+print([[
+	a->x++
+	a += b
+]])
