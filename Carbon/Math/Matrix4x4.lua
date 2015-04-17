@@ -140,6 +140,9 @@ function Matrix4x4:Translation(x, y, z, out)
 		x, y, z, 1
 	)
 end
+function Matrix4x4:TranslateInPlace(x, y, z)
+	return self:Translate(x, y, z, self)
+end
 
 --[[#method {
 	class public @Matrix4x4 Matrix4x4:Rotation(@number x, @number y, @number z, [@Matrix4x4 out])
