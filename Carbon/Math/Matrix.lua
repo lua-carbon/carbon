@@ -460,7 +460,6 @@ Matrix = {
 		}]]
 		MultiplyLooseMatrix = [[
 			{% local components = ULIST(N, 0, "c_") %}
-			{% print(components) %}
 
 			return function(self, rows, columns, ...)
 				if ({%=COLUMNS %} ~= rows) then
