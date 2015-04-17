@@ -61,11 +61,10 @@ Scales the <a href="Classes/Math.Vector">Vector</a>, optionally outputting into 
 
 Scales the <a href="Classes/Math.Vector">Vector</a> in place.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector&lt;N&gt;:DotMultiply(<code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt; other, [Vector&lt;N&gt; out]</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code></p>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Vector&lt;N&gt;:DotMultiply(<code><a href="Classes/Math.Vector">Vector</a>&lt;N&gt; other</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#number">number</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `other`: The <a href="Classes/Math.Vector">Vector</a> to multiply with.</li>
-<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
 </ul>
 
 Performs a dot product between two vectors.
