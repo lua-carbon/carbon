@@ -344,8 +344,8 @@ function OOP.Object:PlacementNew(instance, ...)
 
 	-- These attributes all disable member copying
 	if (not (self.__attributes.SparseInstances or self.__attributes.ExplicitInitialization or self.__attributes.EXT_LJ_Struct)) then
-		Dictionary.DeepCopy(self.__base_members, instance)
-		Dictionary.DeepCopy(self.__members, instance)
+		Dictionary.DeepCopy(self.__base_members, instance, 1)
+		Dictionary.DeepCopy(self.__members, instance, 1)
 	end
 
 	if (not self.__attributes.EXT_LJ_Struct) then

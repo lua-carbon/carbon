@@ -15,7 +15,7 @@ local Carbon = (...)
 local Color = Carbon.Math.Color
 local Vector3 = Carbon.Math.Vector3
 
-local ColorRGB = OOP:Class(Vector3)
+local ColorRGB = Carbon.OOP:Class(Vector3)
 	:Inherits(Color)
 
 return ColorRGB

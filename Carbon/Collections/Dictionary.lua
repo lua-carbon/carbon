@@ -156,6 +156,9 @@ Dictionary.Copy = ShallowCopy
 
 	Performs a self-reference fixing deep copy from one table into another.
 	Handles self-references properly.
+
+	FIXME: datawise = 1 triggers a shallow datawise copy (only first layer is datawise)
+	This could be more elegant.
 }]]
 function Dictionary.DeepCopy(self, to, datawise, map)
 	to = to or Dictionary:New()
@@ -170,10 +173,10 @@ function Dictionary.DeepCopy(self, to, datawise, map)
 				local copy = (not datawise) and (value.Copy or value.DeepCopy or value.ShallowCopy)
 
 				if (copy) then
-					map[value] = copy(value, nil, datawise, map)
+					map[value] = copy(value, nil, datawise ~= 1 and datawise, map)
 				elseif (t == "table") then
 					map[value] = {}
-					Dictionary.DeepCopy(value, map[value], datawise, map)
+					Dictionary.DeepCopy(value, map[value], datawise ~= 1 and datawise, map)
 				end
 			end
 
@@ -238,7 +241,7 @@ function Dictionary.RawDeepCopyMerge(self, to)
 	for key, value in pairs(self) do
 		if (rawget(to, key) == nil) then
 			if (type(value) == "table") then
-				rawset(to, key, Dictionary.DeepCopy(value))
+				rawset(to, key, Dictionary.DeepCopy(value, nil, true))
 			else
 				rawset(to, key, value)
 			end

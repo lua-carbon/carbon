@@ -60,6 +60,8 @@ local function matchexpr(source, start, backwards)
 					break
 				end
 			end
+		elseif (char:match(",") and plevel == 0 and blevel == 0 and clevel == 0) then
+			break
 		else
 			target_beginning = target_beginning + direction
 			space_ok = not char:match("[%w_]")
@@ -276,7 +278,13 @@ function Carbide.Compile(source, name, environment)
 
 	source = Carbide.ParseCore(source)
 
-	return Carbon.LoadString(source, name, environment)
+	local chunk, err = Carbon.LoadString(source, name, environment)
+
+	if (Carbon.Debug and not chunk) then
+		print(source)
+	end
+
+	return chunk, err
 end
 
 Carbon.Metadata:RegisterMethods(Carbide, self)
