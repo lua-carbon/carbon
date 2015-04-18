@@ -226,6 +226,28 @@ function Dictionary.DeepCopyMerge(self, to)
 	return to
 end
 
+--[[#method {
+	class public table Dictionary.RawDeepCopyMerge(@table self, @table to)
+	-alias: object public table Dictionary:RawDeepCopyMerge(@table to)
+		required self: The table to source data from.
+		required to: The table to put data into.
+
+	Performs a merge into the table, performing a deep copy on all table members and using raw gets.
+}]]
+function Dictionary.RawDeepCopyMerge(self, to)
+	for key, value in pairs(self) do
+		if (rawget(to, key) == nil) then
+			if (type(value) == "table") then
+				rawset(to, key, Dictionary.DeepCopy(value))
+			else
+				rawset(to, key, value)
+			end
+		end
+	end
+
+	return to
+end
+
 Carbon.Metadata:RegisterMethods(Dictionary, self)
 
 return Dictionary

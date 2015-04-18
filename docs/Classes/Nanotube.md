@@ -49,15 +49,6 @@ Hook up to an event with a method. An alias to <code>Hook</code>.
 
 Hook up to an event with a method called only once.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:After(<code><a href="Types#unumber">unumber</a> time, <a href="Types#function">function</a> method</code>)</h4>
-<p class="method-returns bold">Returns <code>self</code></p>
-<ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `time`: The time to fire the method at.</li>
-<li><span class="doc-arg-level doc-required">required</span>  `method`: The method to call.</li>
-</ul>
-
-Call the method once at an exact time relative to the application timer.
-<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:After(<code><a href="Types#unumber">unumber</a> seconds, <a href="Types#function">function</a> method</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
@@ -66,6 +57,15 @@ Call the method once at an exact time relative to the application timer.
 </ul>
 
 Call the method once after a number of seconds have elapsed.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:At(<code><a href="Types#unumber">unumber</a> time, <a href="Types#function">function</a> method</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `time`: The time to fire the method at.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `method`: The method to call.</li>
+</ul>
+
+Call the method once at an exact time relative to the application timer.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:Every(<code><a href="Types#unumber">unumber</a> period, <a href="Types#function">function</a> method</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>

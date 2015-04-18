@@ -83,7 +83,7 @@ function Nanotube:After(seconds, method)
 end
 
 --[[#method 2.1 {
-	object public self Nanotube:After(@unumber time, @function method)
+	object public self Nanotube:At(@unumber time, @function method)
 		required time: The time to fire the method at.
 		required method: The method to call.
 

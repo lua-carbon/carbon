@@ -57,6 +57,16 @@ Performs a merge into the table, performing a deep copy on all table members.
 
 Returns all the keys in the table.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Dictionary.RawDeepCopyMerge(<code><a href="Types#table">table</a> self, <a href="Types#table">table</a> to</code>)</h4>
+<p class="method-returns bold">Returns <code>table</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Dictionary:RawDeepCopyMerge(<code><a href="Types#table">table</a> to</code>)</h4>
+<p class="method-returns bold">Returns <code>table</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `self`: The table to source data from.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `to`: The table to put data into.</li>
+</ul>
+
+Performs a merge into the table, performing a deep copy on all table members and using raw gets.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Dictionary.ShallowCopy(<code><a href="Types#table">table</a> self, [<a href="Types#table">table</a> to]</code>)</h4>
 <p class="method-returns bold">Returns <code>table</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Dictionary:ShallowCopy(<code>[<a href="Types#table">table</a> to]</code>)</h4>
 <p class="method-returns bold">Returns <code>table</code></p>

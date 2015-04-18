@@ -216,7 +216,7 @@ function OOP.BaseClass:Inherits(...)
 
 		-- Is this an actual class, or just a collection of members?
 		if (object.__members and object.__metatable and object.Is and object.__attributes) then
-			Dictionary.DeepCopyMerge(object.__members, self.__members)
+			Dictionary.RawDeepCopyMerge(object.__members, self.__members)
 			Dictionary.DeepCopyMerge(object.__metatable, self.__metatable)
 			Dictionary.ShallowMerge(object.Is, self.Is)
 
@@ -465,7 +465,10 @@ function OOP:Class(based_on)
 
 	setmetatable(class, {
 		__newindex = class.__members,
-		__index = class.__members
+		__index = class.__members,
+		__call = function(self, ...)
+			return self:New(...)
+		end
 	})
 
 	return class

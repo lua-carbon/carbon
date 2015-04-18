@@ -77,6 +77,11 @@ local function matchexpr(source, start, backwards)
 			elseif (char == "}") then
 				clevel = clevel - direction
 			end
+
+			if (blevel < 0 or clevel < 0 or plevel < 0) then
+				target_beginning = target_beginning - 2 * direction
+				break
+			end
 		end
 	end
 
@@ -134,17 +139,38 @@ local function operator_mutating(source, operator)
 end
 
 local function operator_dan(source)
-	-- Implement direct arrow operator
-	-- Transforms vec3->x to vec3[1], see 'direct_arrow_indices' table above
-	return (source:gsub("(([^-])%->([%w_]+))", function(whole, prec, key)
-		local index = direct_arrow_indices[key]
+	local start, finish = 0, 0
+	while (true) do
+		local prec, keys
+		start, finish, prec, keys = source:find("([^-])%->([%w_]+)", finish + 1)
 
-		if (not index) then
-			error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
+		if (not start) then
+			break
 		end
 
-		return ("%s[%d]"):format(prec, index)
-	end))
+		local target_beginning = matchexpr(source, start, true)
+		local target = source:sub(target_beginning, start):gsub("^%s+", ""):gsub("%s+$", "")
+
+		local lookups = {}
+		for i = 1, #keys do
+			local key = keys:sub(i, i)
+			local index = direct_arrow_indices[key]
+
+			if (not index) then
+				error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
+			end
+
+			table.insert(lookups, ("%s[%d]"):format(target, index))
+		end
+
+		source = ("%s%s%s"):format(
+			source:sub(1, target_beginning - 1),
+			table.concat(lookups, ", "),
+			source:sub(finish + 1)
+		)
+	end
+
+	return source
 end
 
 local function operator_bang(source)
