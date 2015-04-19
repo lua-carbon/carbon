@@ -222,7 +222,11 @@ function OOP.BaseClass:Inherits(...)
 
 			for key, value in pairs(object.__attributes) do
 				if (OOP.__attribute_inheritance[key]) then
-					self.__attributes = Dictionary.DeepCopy(value)
+					if (type(value) == "table") then
+						self.__attributes[key] = Dictionary.DeepCopy(value)
+					else
+						self.__attributes[key] = value
+					end
 				end
 			end
 
@@ -233,7 +237,7 @@ function OOP.BaseClass:Inherits(...)
 			end
 		else
 			-- This isn't really a class, but we can treat it like one!
-			Dictionary.DeepCopyMerge(object, self.__members)
+			Dictionary.RawDeepCopyMerge(object, self.__members)
 		end
 	end
 
