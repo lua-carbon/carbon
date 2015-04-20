@@ -48,7 +48,7 @@ local function matchexpr(source, start, backwards, spaces)
 				-- Crawl around to see if the next character would be illegal
 				for j = i, (backwards and 1 or #source), direction do
 					local char = source:sub(j, j)
-					if (char:match(backwards and "[%w=%)%}%];]" or "[%w=;]")) then
+					if (char:match(backwards and "[%w=%)%}%];\26\27]" or "[%w=;\26\27]")) then
 						die = true
 						break
 					elseif (char:match("%S")) then
