@@ -20,20 +20,22 @@ This file is related to the Carbide programmatic API, for details on using Carbi
 
 Parses and compiles the given Carbide source. A drop-in replacement for Carbon.LoadString.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbide.ParseCore(<code><a href="Types#string">string</a> source</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbide.ParseCore(<code><a href="Types#string">string</a> source, [<a href="Types#table">table</a> settings]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#string">string</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `source`: The source to parse.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `settings`: Settings (source directives) to pass to the parser</li>
 </ul>
 
 Parses the given source for Carbide expressions.
 
 The source can change the feature level with <code>#CARBIDE_FEATURE_LEVEL &lt;level&gt;</code>, which defaults to `2`.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbide.ParseTemplated(<code><a href="Types#string">string</a> source</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbide.ParseTemplated(<code><a href="Types#string">string</a> source, [<a href="Types#table">table</a> settings]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#string">string</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `source`: The source to parse for templates.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `settings`: Settings (source directives) to use when parsing the templates.</li>
 </ul>
 
 Parses the source file for templates if it contains a <code>#TEMPLATES_ENABLED</code> directive.

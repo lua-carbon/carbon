@@ -213,8 +213,9 @@ local function replace_strings(source, str_tab)
 end
 
 --[[#method {
-	class public @string Carbide.ParseTemplated(@string source)
+	class public @string Carbide.ParseTemplated(@string source, [@table settings])
 		required source: The source to parse for templates.
+		optional settings: Settings (source directives) to use when parsing the templates.
 
 	Parses the source file for templates if it contains a `#TEMPLATES_ENABLED` directive.
 
@@ -238,8 +239,9 @@ function Carbide.ParseTemplated(source, settings)
 end
 
 --[[#method {
-	class public @string Carbide.ParseCore(@string source)
+	class public @string Carbide.ParseCore(@string source, [@table settings])
 		required source: The source to parse.
+		optional settings: Settings (source directives) to pass to the parser
 
 	Parses the given source for Carbide expressions.
 

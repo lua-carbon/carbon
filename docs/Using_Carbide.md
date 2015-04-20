@@ -19,6 +19,8 @@ The following levels and features are exposed by Carbide Lua:
 			- `(s, t, p, q)`
 			- `(u, v)`
 		- Lookups can be mixed (`print(vec2->x, vec2->r, vec2->y)` translates to `print(vec2[1], vec2[1], vec2[2])`)
+		- Lookups can be chained (`print(vec3->xyz)` is the same as `print(vec3->x, vec3->y, vec3->z)`)
+		- Lookups can **swizzle** (`print(color3->gbr` is a fast way to switch around a color)
 
 ## Directives
 Carbide also exposes a set of directives to control the flow of compilation.
