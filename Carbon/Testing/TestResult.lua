@@ -27,7 +27,8 @@ local TestResult = {
 	__passed = true,
 	__messages = {},
 	__errors = {},
-	__warnings = {}
+	__warnings = {},
+	__notes = {}
 }
 
 --[[#method 1 {
@@ -43,6 +44,7 @@ function TestResult:New(test)
 	new.__errors = {}
 	new.__warnings = {}
 	new.__messages = {}
+	new.__notes = {}
 
 	return new
 end
@@ -66,6 +68,7 @@ end
 }]]
 function TestResult:Message(message)
 	table.insert(self.__messages, message)
+	table.insert(self.__notes, {"Message", message})
 
 	return self
 end
@@ -78,6 +81,7 @@ end
 }]]
 function TestResult:Warn(message)
 	table.insert(self.__warnings, message)
+	table.insert(self.__notes, {"Warning", message})
 
 	return self
 end
@@ -92,6 +96,7 @@ function TestResult:Fail(message)
 	self.__fails = self.__fails + 1
 	self.__passed = false
 	table.insert(self.__errors, message)
+	table.insert(self.__notes, {"Error", message})
 
 	return self
 end

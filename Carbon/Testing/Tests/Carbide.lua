@@ -14,6 +14,7 @@ Carbon.Testing:TestFor(Carbide, Test)
 -- Describes a carbide feature with a name and list of valid examples
 local function feature(test, name, ...)
 	for i = 1, select("#", ...) do
+		local dead = false
 		local case = select(i, ...)
 		local snippet, result_check
 
@@ -33,30 +34,32 @@ local function feature(test, name, ...)
 			test:Message("Input code:\n" .. snippet)
 			test:Message("Result code:\n" .. source)
 
-			return
+			dead = true
 		end
 
 		local success, result = pcall(compiled, Carbon)
 
-		if (not success) then
+		if (compiled and not success) then
 			test:Fail(("Feature %s threw error in snippet #%d"):format(name, i))
 			test:Message("Input code:\n" .. snippet)
 			test:Message("Result code:\n" .. source)
 			test:Message("Error:\n" .. result)
 
-			return
+			dead = true
 		end
 
-		if (result ~= result_check) then
+		if (success and result ~= result_check) then
 			test:Fail(("Feature %s gave a wrong result in snippet #%d: got %s, expected %s"):format(name, i, result, result_check))
 			test:Message("Input code:\n" .. snippet)
 			test:Message("Result code:\n" .. source)
 
-			return
+			dead = true
+		end
+
+		if (not dead) then
+			test:Pass()
 		end
 	end
-
-	test:Pass()
 end
 
 function Test:Run(test)
@@ -87,7 +90,29 @@ function Test:Run(test)
 		]], 5}
 	)
 
-	feature(test, "dan")
+	feature(test, "dan",
+		{[[
+			local vec = {5}
+			return vec->x
+		]], 5},
+
+		{[[
+			local vec = {5}
+			return vec->x + vec->r + vec->u + vec->s
+		]], 20},
+
+		{[[
+			local vec = {5, 10, 15}
+			local x, y, z = vec->xyz
+			return x + y + z
+		]], 30},
+
+		{[[
+			local vec = {5, 10, 15}
+			local x, y, z = vec->xyz + 5
+			return x + y + z
+		]], 45}
+	)
 
 	feature(test, "increment",
 		{[[

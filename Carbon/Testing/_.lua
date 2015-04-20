@@ -156,22 +156,19 @@ function Testing:GetResults()
 		local metadata = Graphene.Metadata:Get(value.__test)
 		local name = metadata and metadata.Path or "Unnamed"
 
-		for i, message in ipairs(value.__messages) do
-			table.insert(result.Messages, ("MESSAGE %s: %s"):format(name, message))
-		end
-
-		for i, error in ipairs(value.__errors) do
-			table.insert(result.Errors, ("ERROR %s: %s"):format(name, error))
-		end
-
-		for i, warning in ipairs(value.__warnings) do
-			table.insert(result.Warnings, ("WARNING %s: %s"):format(name, warning))
+		for i, message in ipairs(value.__notes) do
+			if (message[1] == "Message") then
+				table.insert(result.Messages, ("MESSAGE %s: %s"):format(name, message[2]))
+				table.insert(result.AllMessages, result.Messages[#result.Messages])
+			elseif (message[1] == "Error") then
+				table.insert(result.Errors, ("ERROR %s: %s"):format(name, message[2]))
+				table.insert(result.AllMessages, result.Errors[#result.Errors])
+			elseif (message[1] == "Warning") then
+				table.insert(result.Warnings, ("WARNING %s: %s"):format(name, message[2]))
+				table.insert(result.AllMessages, result.Warnings[#result.Warnings])
+			end
 		end
 	end
-
-	array_append(result.Errors, result.AllMessages)
-	array_append(result.Warnings, result.AllMessages)
-	array_append(result.Messages, result.AllMessages)
 
 	return result
 end
