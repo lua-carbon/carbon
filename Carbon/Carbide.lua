@@ -28,13 +28,13 @@ local direct_arrow_indices = {
 	s = 1, t = 2, p = 3, q = 4
 }
 
-local function matchexpr(source, start, backwards)
+local function matchexpr(source, start, backwards, spaces)
 	local direction = backwards and -1 or 1
 
 	-- parens, bracket, curly brace
 	local plevel, blevel, clevel = 0, 0, 0
 	local target_beginning = start
-	local space_ok = true
+	local space_ok = not spaces
 
 	for i = start, (backwards and 1 or #source), direction do
 		local char = source:sub(i, i)
@@ -48,7 +48,7 @@ local function matchexpr(source, start, backwards)
 				-- Crawl around to see if the next character would be illegal
 				for j = i, (backwards and 1 or #source), direction do
 					local char = source:sub(j, j)
-					if (char:match(backwards and "[%w%)%}%];]" or "[%w;]")) then
+					if (char:match(backwards and "[%w=%)%}%];]" or "[%w=;]")) then
 						die = true
 						break
 					elseif (char:match("%S")) then
@@ -101,7 +101,7 @@ local function operator_double(source, operator)
 		end
 
 		local target_beginning = matchexpr(source, start - 1, true)
-		local target = source:sub(target_beginning, start - 1):gsub("^%s+", ""):gsub("%s+$", "")
+		local target = source:sub(target_beginning, start - 1)
 
 		source = ("%s\n%s = (%s) %s 1\n%s"):format(
 			source:sub(1, target_beginning - 1),
@@ -124,10 +124,10 @@ local function operator_mutating(source, operator)
 		end
 
 		local target_beginning = matchexpr(source, start - 1, true)
-		local target = source:sub(target_beginning, start - 1):gsub("^%s+", ""):gsub("%s+$", "")
+		local target = source:sub(target_beginning, start - 1)
 
 		local value_ending = matchexpr(source, finish + 1)
-		local value = source:sub(finish + 1, value_ending):gsub("^%s+", ""):gsub("%s+$", "")
+		local value = source:sub(finish + 1, value_ending)
 
 		source = ("%s\n%s = %s %s (%s)\n%s"):format(
 			source:sub(1, target_beginning - 1),
@@ -145,14 +145,17 @@ local function operator_dan(source)
 	local start, finish = 0, 0
 	while (true) do
 		local prec, keys
-		start, finish, prec, keys = source:find("([^-])%->([%w_]+)", finish + 1)
+		start, finish, keys = source:find("%->([%w_]+)", finish + 1)
 
 		if (not start) then
 			break
 		end
 
-		local target_beginning = matchexpr(source, start, true)
-		local target = source:sub(target_beginning, start):gsub("^%s+", ""):gsub("%s+$", "")
+		local target_beginning = matchexpr(source, start - 1, true, true)
+		local target = source:sub(target_beginning, start - 1)
+
+		local mod_ending = matchexpr(source, finish + 1, false, true)
+		local mod = source:sub(finish + 1, mod_ending)
 
 		local lookups = {}
 		for i = 1, #keys do
@@ -163,13 +166,13 @@ local function operator_dan(source)
 				error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
 			end
 
-			table.insert(lookups, ("%s[%d]"):format(target, index))
+			table.insert(lookups, ("%s[%d]%s"):format(target, index, mod))
 		end
 
 		source = ("%s%s%s"):format(
 			source:sub(1, target_beginning - 1),
 			table.concat(lookups, ", "),
-			source:sub(finish + 1)
+			source:sub(mod_ending + 1)
 		)
 	end
 
