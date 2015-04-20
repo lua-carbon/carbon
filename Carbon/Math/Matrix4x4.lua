@@ -95,7 +95,7 @@ function Matrix4x4:NewPerspective(fov, aspect, near, far)
 		1 / (aspect * t), 0, 0, 0,
 		0, 1 / t, 0, 0,
 		0, 0, -(far + near)/(far - near), 0,
-		0, 0, (2 * far * near)/(far - near), 0
+		0, 0, (2 * far * near)/(far - near), 1
 	)
 end
 

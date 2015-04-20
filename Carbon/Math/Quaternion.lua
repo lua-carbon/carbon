@@ -123,12 +123,13 @@ function Quaternion:LooseMultiplyLoose(x2, y2, z2, w2)
 end
 
 --[[#method {
-	object public @Quaternion @Quaternion:MultiplyLoose(@loose<@Quaternion> quaternion)
+	object public @Quaternion @Quaternion:MultiplyLoose(@loose<@Quaternion> quaternion, [@Quaternion out])
 		required quaternion: The quaternion to multiply with.
+		optional out: Where to put the resulting data.
 
 	Multiplies the quaternion with a loose @Quaternion.
 }]]
-function Quaternion:MultiplyLoose(x2, y2, z2, w2)
+function Quaternion:MultiplyLoose(x2, y2, z2, w2, out)
 	return self:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
 end
 
@@ -141,7 +142,7 @@ end
 }]]
 function Quaternion:Multiply(other, out)
 	local x2, y2, z2, w2 = other:GetComponents()
-	return self:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
+	return self.class:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
 end
 
 --[[#method {

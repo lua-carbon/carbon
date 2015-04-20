@@ -411,11 +411,10 @@ end
 
 	Copies the given object.
 }]]
-OOP.Object.__base_members.Copy = function(self)
+OOP.Object.__base_members.Copy = function(self, target)
 	local class = self.class
-	local target
 
-	if (class.__attributes.PooledInstantiation) then
+	if (not target and class.__attributes.PooledInstantiation) then
 		target = table.remove(class.__pool, #class.__pool) or {}
 	end
 

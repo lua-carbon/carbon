@@ -56,10 +56,11 @@ Converts a <a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Vector3">Vec
 
 Multiplies the quaternion with a loose <a href="Classes/Math.Quaternion">Quaternion</a>, yielding a <a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt;.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> <a href="Classes/Math.Quaternion">Quaternion</a>:MultiplyLoose(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> <a href="Classes/Math.Quaternion">Quaternion</a>:MultiplyLoose(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt; quaternion, [<a href="Classes/Math.Quaternion">Quaternion</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `quaternion`: The quaternion to multiply with.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
 </ul>
 
 Multiplies the quaternion with a loose <a href="Classes/Math.Quaternion">Quaternion</a>.

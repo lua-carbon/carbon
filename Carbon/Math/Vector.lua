@@ -238,6 +238,20 @@ local Vector = {
 			end
 		]],
 
+		Multiply = function(self, other, out)
+			if (type(other) == "number") then
+				return self:Scale(other, out)
+			elseif (type(other) == "table") then
+				if (other.Is[Carbon.Math.Matrix]) then
+					return self:MultiplyMatrix(other, out)
+				elseif (other.Is[self.class]) then
+					return self:DotMultiply(other)
+				end
+			end
+
+			return nil
+		end,
+
 		MultiplyMatrixInPlace = function(self, other)
 			return self:MultiplyMatrix(other, self)
 		end,
@@ -254,9 +268,15 @@ local Vector = {
 			return other:MultiplyVector(self, out)
 		end,
 
+		Add = function(self, other, out)
+			return self:AddVector(other, out)
+		end,
 		AddLooseVector = SIMPLE_LOOSE_BINARY_OPERATOR("+"),
 		AddVector = SIMPLE_BINARY_OPERATOR("+"),
 		
+		Subtract = function(self, other, out)
+			return self:SubtractVector(other, out)
+		end,
 		SubtractLooseVector = SIMPLE_LOOSE_BINARY_OPERATOR("-"),
 		SubtractVector = SIMPLE_BINARY_OPERATOR("-")
 	},
@@ -272,7 +292,19 @@ local Vector = {
 					))
 				end %})
 			end
-		]]
+		]],
+
+		__add = function(self, ...)
+			return self:Add(...)
+		end,
+
+		__sub = function(self, ...)
+			return self:Subtract(...)
+		end,
+
+		__mul = function(self, ...)
+			return self:Multiply(...)
+		end
 	}
 }
 
