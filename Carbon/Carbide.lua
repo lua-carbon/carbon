@@ -117,7 +117,7 @@ end
 local function operator_mutating(source, operator)
 	local start, finish = 0, 0
 	while (true) do
-		start, finish = source:find(operator .. "=", finish + 1)
+		start, finish = source:find(operator .. "=", finish + 1, true)
 		
 		if (not start) then
 			break
@@ -129,9 +129,10 @@ local function operator_mutating(source, operator)
 		local value_ending = matchexpr(source, finish + 1)
 		local value = source:sub(finish + 1, value_ending):gsub("^%s+", ""):gsub("%s+$", "")
 
-		source = ("%s\n%s = %s + (%s)\n%s"):format(
+		source = ("%s\n%s = %s %s (%s)\n%s"):format(
 			source:sub(1, target_beginning - 1),
 			target, target,
+			operator,
 			value,
 			source:sub(value_ending + 1)
 		)
@@ -216,9 +217,11 @@ end
 
 	The document can change the templating level using `#TEMPLATE_LEVEL <level>`.
 }]]
-function Carbide.ParseTemplated(source)
-	if (source:find("#TEMPLATES_ENABLED")) then
-		local level = tonumber(source:match("#TEMPLATE_LEVEL%s+(%d+)"))
+function Carbide.ParseTemplated(source, settings)
+	settings = settings or {}
+
+	if (settings.TEMPLATES_ENABLED or source:find("#TEMPLATES_ENABLED")) then
+		local level = settings.TEMPLATE_LEVEL or tonumber(source:match("#TEMPLATE_LEVEL%s+(%d+)")) or 0
 		local result, err, template = Carbide.Engine:Render(source, {Carbon = Carbon, __engine = Carbide.Engine}, level)
 		
 		if (not result) then
@@ -239,9 +242,22 @@ end
 
 	The source can change the feature level with `#CARBIDE_FEATURE_LEVEL <level>`, which defaults to `2`.
 }]]
-function Carbide.ParseCore(source)
-	local feature_level = tonumber(source:match("#CARBIDE_FEATURE_LEVEL (%d+)")) or 2
-	local extensions = {}
+function Carbide.ParseCore(source, settings)
+	settings = settings or {}
+
+	local feature_level
+	if (settings.CARBIDE_FEATURE_LEVEL) then
+		feature_level = settings.CARBIDE_FEATURE_LEVEL
+	else
+		feature_level = tonumber(source:match("#CARBIDE_FEATURE_LEVEL (%d+)")) or 2
+	end
+
+	local extensions
+	if (settings.EXTENSIONS) then
+		extensions = settings.EXTENSIONS
+	else
+		extensions = {}
+	end
 
 	source, str_tab = strip_strings(source)
 
@@ -264,21 +280,22 @@ function Carbide.ParseCore(source)
 end
 
 --[[#method 1 {
-	class public @function Carbide.Compile(@string source, [@string chunkname, @table environment])
+	class public @function Carbide.Compile(@string source, [@string chunkname, @table environment, @table settings])
 		required source: The Carbide source.
 		optional chunkname: The name of the chunk for Lua errors.
 		optional environment: The environment to compile the chunk with.
+		optional settings: The settings to compile Carbide with.
 
 	Parses and compiles the given Carbide source. A drop-in replacement for Carbon.LoadString.
 }]]
-function Carbide.Compile(source, name, environment)
-	source, err = Carbide.ParseTemplated(source)
+function Carbide.Compile(source, name, environment, settings)
+	source, err = Carbide.ParseTemplated(source, settings)
 
 	if (not source) then
 		error(err)
 	end
 
-	source = Carbide.ParseCore(source)
+	source = Carbide.ParseCore(source, settings)
 
 	local chunk, err = Carbon.LoadString(source, name, environment)
 
