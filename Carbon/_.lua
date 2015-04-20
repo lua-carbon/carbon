@@ -7,11 +7,9 @@
 	}
 ]]
 
-local libCarbon = (...)
-local Graphene = libCarbon:GetGraphene()
+local Carbon = (...)
+local Graphene = Carbon:GetGraphene()
 local Support = Graphene.Support
-
-local Carbon = {}
 
 --[[#method 1 {
 	class public @void Carbon:ImportCore()
@@ -118,12 +116,7 @@ elseif (Support.lua52) then
 	end
 end
 
--- These shims are used for Carbide and its dependencies.
-for key, value in pairs(Carbon) do
-	libCarbon[key] = value
-end
-
 -- Register Carbide as a Graphene loader.
-Graphene.Config.Loaders[".clua"] = libCarbon.Carbide.Compile
+Graphene.Config.Loaders[".clua"] = Carbon.Carbide.Compile
 
 return Carbon

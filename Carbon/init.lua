@@ -30,7 +30,7 @@ function support:Report()
 end
 
 -- Do we have LFS?
-local ok, lfs = pcall(require, "lfs")
+--local ok, lfs = pcall(require, "lfs")
 if (not ok) then
 	lfs = nil
 end
@@ -149,7 +149,7 @@ if (support.lua51) then
 	end
 elseif (support.lua52) then
 	function load_with_env(source, from, environment)
-		return load(source, from, nil, environment)
+		return load(source, from, nil, environment or _ENV)
 	end
 end
 
@@ -161,9 +161,11 @@ if (g_file) then
 	-- Normalize slashes; this is okay for Windows
 	g_root = g_file:gsub("\\", "/"):match("^(.+)/.-$") or "./"
 else
-	print("Could not locate lua-graphene source file; is debug info stripped?")
-	print("This code path is untested.")
-	g_root = ((...):match("(.+)%..-$") or ""):gsub("%.", "/")
+	g_root = (...):gsub("graphene$", ""):gsub("%.init$", ""):gsub("%.", "/")
+
+	if (g_root == "") then
+		g_root = "./"
+	end
 end
 
 -- Contains our actual core
@@ -377,9 +379,10 @@ elseif (support.debug) then
 		level = level and level + 2 or 2
 		
 		if (is_white) then
+			local white = list
 			list = {}
 			for key, value in pairs(source) do
-				if (not is_white[key]) then
+				if (not white[key]) then
 					list[key] = true
 				end
 			end
@@ -415,7 +418,7 @@ elseif (support.debug) then
 		end
 
 		for key, value in pairs(source) do
-			if (not black[key]) then
+			if (not list[key]) then
 				cenv[key] = value
 			end
 		end
@@ -1183,7 +1186,7 @@ end
 local function xerrhand(...)
 	return ("\n%s\n%s"):format(
 		tostring(...),
-		debug.traceback()
+		debug and debug.traceback() or "[no traceback without debug]"
 	)
 end
 
@@ -1239,7 +1242,9 @@ local function load_file(file, base)
 		end
 	end
 
-	G.Metadata:Set(result, meta)
+	if (result ~= nil) then
+		G.Metadata:Set(result, meta)
+	end
 
 	return result, meta
 end
