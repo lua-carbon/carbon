@@ -197,11 +197,11 @@ local function strip_strings(source, str_tab)
 	end
 
 	source = source
+		:gsub("(%-%-%[(=*)%[.-%]%2%])", predicate) --multiline comment
+		:gsub("%-%-[^\n]+", predicate) -- single line comment
 		:gsub("%b\"\"", predicate)
 		:gsub("%b''", predicate)
 		:gsub("(%[(=*)%[.-%]%2%])", predicate)
-		:gsub("(%-%-%[(=*)%[.-%]%2%])", predicate) --multiline comment
-		:gsub("%-%-[^\n]+", predicate) -- single line comment
 
 	return source, str_tab
 end
