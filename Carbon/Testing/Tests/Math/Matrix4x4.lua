@@ -80,6 +80,12 @@ function Test:Run(test)
 	if (passed) then
 		test:Pass()
 	end
+
+	local identity = Matrix4x4:NewIdentity()
+	local inv = identity:GetInverse()
+
+	print(Matrix4x4:NewIdentity():Orthonormalize())
+	print(Matrix4x4:Rotation(1, 2, 3):GetInverse():MultiplyMatrix(Matrix4x4:Rotation(1, 2, 3)))
 end
 
 return Test

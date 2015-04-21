@@ -79,7 +79,7 @@ function Matrix4x4:NewFromQuaternion(quaternion)
 	return self:New(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 
-function Matrix4x4:NewOrthographic(left, right, bottom, top, near, far)
+function Matrix4x4:NewOrthographic(left, right, top, bottom, near, far)
 	return self:New(
 		2 / (right - left), 0, 0, -((right + left)/(right - left)),
 		0, 2 / (top - bottom), 0, -((top + bottom)/(top - bottom)),
@@ -88,14 +88,34 @@ function Matrix4x4:NewOrthographic(left, right, bottom, top, near, far)
 	)
 end
 
+function Matrix4x4:NewPerspectiveC(fovy, aspect, near, far)
+	local t = math.tan(fovy / 2)
+	local result = self:New(
+		1 / (aspect * t), 0, 0, 0,
+		0, 1 / t, 0, 0,
+		0, 0, - (far + near) / (far - near), -1,
+		0, 0, - (2 * far * near) / (far - near), 0
+	)
+
+	--[[
+	result[1] = 1 / (aspect * t)
+	result[6] = 1 / t
+	result[11] = - (far + near) / (far - near)
+	result[12] = - 1
+	result[15] = - (2 * far * near) / (far - near)
+	]]
+
+	return result
+end
+
 function Matrix4x4:NewPerspective(fov, aspect, near, far)
 	local t = math.tan(fov / 2)
 
 	return self:New(
 		1 / (aspect * t), 0, 0, 0,
 		0, 1 / t, 0, 0,
-		0, 0, -(far + near)/(far - near), 0,
-		0, 0, (2 * far * near)/(far - near), 1
+		0, 0, -(far + near)/(far - near), -1,
+		0, 0, -(2 * far * near)/(far - near), 1
 	)
 end
 
@@ -391,6 +411,61 @@ end
 }]]
 function Matrix4x4:ScaleInPlace(x, y, z)
 	return self:Scale(x, y, z, self)
+end
+
+function Matrix4x4:GetDeterminant()
+	local
+		a11, a12, a13, a14,
+		a21, a22, a23, a24,
+		a31, a32, a33, a34,
+		a41, a42, a43, a44 = self:GetComponents()
+
+	return
+		a11*a22*a33*a44 + a11*a23*a34*a42 + a11*a24*a32*a43
+		+ a12*a21*a34*a43 + a12*a23*a31*a44 + a12*a24*a33*a41
+		+ a13*a21*a32*a44 + a13*a22*a34*a41 + a13*a24*a31*a42
+		+ a14*a21*a33*a42 + a14*a22*a31*a43 + a14*a23*a32*a41
+		- a11*a22*a34*a43 - a11*a23*a32*a44 - a11*a24*a33*a42
+		- a12*a21*a33*a44 - a12*a23*a34*a41 - a12*a24*a31*a43
+		- a13*a21*a34*a42 - a13*a22*a31*a44 - a13*a24*a32*a41
+		- a14*a21*a32*a43 - a14*a22*a33*a41 - a14*a23*a31*a42
+end
+
+function Matrix4x4:GetInverse(out)
+	local
+		a11, a12, a13, a14,
+		a21, a22, a23, a24,
+		a31, a32, a33, a34,
+		a41, a42, a43, a44 = self:GetComponents()
+
+	local det = self:GetDeterminant()
+
+	local b11 = (a22*a33*a44 + a23*a34*a42 + a24*a32*a43 - a22*a34*a43 - a23*a32*a44 - a24*a33*a42) / det
+	local b12 = (a12*a34*a43 + a13*a32*a44 + a14*a33*a42 - a12*a33*a44 - a13*a34*a42 - a14*a32*a43) / det
+	local b13 = (a12*a23*a44 + a13*a24*a42 + a14*a22*a43 - a12*a24*a43 - a13*a22*a44 - a14*a23*a42) / det
+	local b14 = (a12*a24*a33 + a13*a22*a34 + a14*a23*a32 - a12*a23*a34 - a13*a24*a32 - a14*a22*a33) / det
+
+	local b21 = (a21*a34*a43 + a23*a31*a44 + a24*a33*a41 - a21*a33*a44 - a23*a34*a41 - a24*a31*a43) / det
+	local b22 = (a11*a33*a44 + a13*a34*a41 + a14*a31*a43 - a11*a34*a43 - a13*a31*a44 - a14*a33*a41) / det
+	local b23 = (a11*a24*a43 + a13*a21*a44 + a14*a23*a41 - a11*a23*a44 - a13*a24*a41 - a14*a21*a43) / det
+	local b24 = (a11*a23*a34 + a13*a24*a31 + a14*a21*a33 - a11*a24*a33 - a13*a21*a34 - a14*a23*a31) / det
+
+	local b31 = (a21*a32*a44 + a22*a34*a41 + a24*a31*a42 - a21*a34*a42 - a22*a31*a44 - a24*a32*a41) / det
+	local b32 = (a11*a34*a42 + a12*a31*a44 + a14*a32*a41 - a11*a32*a44 - a12*a34*a41 - a14*a31*a42) / det
+	local b33 = (a11*a22*a44 + a12*a24*a41 + a14*a21*a42 - a11*a24*a42 - a12*a21*a44 - a14*a22*a41) / det
+	local b34 = (a11*a24*a32 + a12*a21*a34 + a14*a22*a31 - a11*a22*a34 - a12*a24*a31 - a14*a21*a32) / det
+
+	local b41 = (a21*a33*a42 + a22*a31*a43 + a23*a32*a41 - a21*a32*a43 - a22*a33*a41 - a23*a31*a42) / det
+	local b42 = (a11*a32*a43 + a12*a33*a41 + a13*a31*a42 - a11*a33*a42 - a12*a31*a43 - a13*a32*a41) / det
+	local b43 = (a11*a23*a42 + a12*a21*a43 + a13*a22*a41 - a11*a22*a43 - a12*a23*a41 - a13*a21*a42) / det
+	local b44 = (a11*a22*a33 + a12*a23*a31 + a13*a21*a32 - a11*a23*a32 - a12*a21*a33 - a13*a22*a31) / det
+
+	return self.class:PlacementNew(out,
+		b11, b12, b13, b14,
+		b21, b22, b23, b24,
+		b31, b32, b33, b34,
+		b41, b42, b43, b44
+	)
 end
 
 return Matrix4x4

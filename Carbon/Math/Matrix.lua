@@ -120,9 +120,10 @@ Matrix = {
 			Initializes or creates a matrix with a set of sized row-major values.
 		}]]
 		InitFromLoose = function(self, rows, columns, ...)
+			self:InitIdentity()
 			for i = 1, columns do
 				for j = 1, rows do
-					self[(i - 1) * columns + j] = select((i - 1) * columns + j, ...)
+					self:Set(i, j, select((i - 1) * columns + j, ...))
 				end
 			end
 
@@ -280,7 +281,7 @@ Matrix = {
 
 		InitIdentity = SQUARE_ONLY [[
 			return function(self)
-				return self:InitFromLoose(self:NewLooseIdentity())
+				return self:Init(select(3, self:NewLooseIdentity()))
 			end
 		]],
 
