@@ -508,6 +508,10 @@ Matrix = {
 							_("+")
 						end
 					end
+
+					if (i < ROWS) then
+						_(",")
+					end
 				end %}
 			end
 		]],
@@ -675,7 +679,8 @@ Matrix = {
 				return table.concat(buffer)
 			end
 		]]
-	}
+	},
+	__generated = {}
 }
 
 --[[#method {
@@ -700,7 +705,7 @@ function Matrix:__generate_method(body, arguments, env, name)
 		return false, CodeGenerationException:New(err, generated), generated
 	end
 
-	return generator()
+	return generated, generator()
 end
 
 --[[#method 0 {
@@ -722,6 +727,7 @@ function Matrix:Generate(rows, columns)
 	class.Is[Matrix] = true
 
 	local body = {
+		__generated = {},
 		RowCount = rows,
 		ColumnCount = columns
 	}
@@ -751,11 +757,14 @@ function Matrix:Generate(rows, columns)
 	-- Process methods for the generated class
 	for name, body in pairs(self.__methods) do
 		if (type(body) == "string") then
-			class[name], err, body = self:__generate_method(body, gen_args, env, name)
+			local generated, err
+			generated, class[name], err = self:__generate_method(body, gen_args, env, name)
 
 			if (not class[name]) then
 				return nil, err, name, body
 			end
+
+			class.__generated[name] = generated
 		else
 			class[name] = body
 		end
@@ -765,7 +774,8 @@ function Matrix:Generate(rows, columns)
 
 	for name, body in pairs(self.__metatable) do
 		if (type(body) == "string") then
-			metatable[name], err, body = self:__generate_method(body, gen_args, env, name)
+			local generated, err
+			generated, metatable[name], err = self:__generate_method(body, gen_args, env, name)
 
 			if (not metatable[name]) then
 				return nil, err, name, body
