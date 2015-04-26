@@ -552,6 +552,10 @@ Matrix = {
 			end
 		]],
 
+		MultiplyVectorInPlace = function(self, other)
+			return self:MultiplyVector(other, other)
+		end,
+
 		--[[#method {
 			object public @Vector<M> Matrix<N,M>:PreMultiplyVector(@Vector<M> other, [@Vector<M> out])
 				required other: The @Vector to multiply with.
@@ -587,6 +591,10 @@ Matrix = {
 				return out
 			end
 		]],
+
+		PreMultiplyVectorInPlace = function(self, other)
+			return self:MultiplyVector(other, other)
+		end,
 
 		--[[#method {
 			object public self Matrix<N,M>:MultiplyMatrix!(@Matrix other)

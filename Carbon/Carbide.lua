@@ -64,7 +64,7 @@ local function matchexpr(source, start, backwards, spaces)
 			break
 		else
 			target_beginning = target_beginning + direction
-			space_ok = not char:match("[%w_]")
+			space_ok = not char:match("[%w_%]%)]")
 
 			if (char == "[") then
 				blevel = blevel + direction

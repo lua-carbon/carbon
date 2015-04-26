@@ -21,12 +21,14 @@ local TemplateEngine = Carbon.TemplateEngine
 
 local loadstring = loadstring or load
 
-local SIMPLE_LOOSE_BINARY_OPERATOR = function(symbol)
+local SIMPLE_LOOSE_BINARY_OPERATOR = function(symbol, default)
+	default = default or 0
+
 	return (([[
 		return function(self, {%= ARGS_STRING %}, out)
 			return self.class:PlacementNew(out,
 				{% for i = 1, LENGTH do
-					_(("self[%d] {symbol} %s"):format(
+					_(("self[%d] {symbol} (%s or {default})"):format(
 						i, ARGS[i]
 					))
 					
@@ -36,15 +38,20 @@ local SIMPLE_LOOSE_BINARY_OPERATOR = function(symbol)
 				end %}
 			)
 		end
-	]]):gsub("{symbol}", symbol))
+	]])
+		:gsub("{symbol}", symbol)
+		:gsub("{default}", default)
+	)
 end
 
-local SIMPLE_BINARY_OPERATOR = function(symbol)
+local SIMPLE_BINARY_OPERATOR = function(symbol, default)
+	default = default or 0
+
 	return (([[
 		return function(self, other, out)
 			return self.class:PlacementNew(out,
 				{% for i = 1, LENGTH do
-					_(("self[%d] {symbol} other[%d]"):format(i, i))
+					_(("self[%d] {symbol} (other[%d] or {default})"):format(i, i))
 
 					if (i < LENGTH) then
 						_(", ")
@@ -52,7 +59,10 @@ local SIMPLE_BINARY_OPERATOR = function(symbol)
 				end %}
 			)
 		end
-	]]):gsub("{symbol}", symbol))
+	]])
+		:gsub("{symbol}", symbol)
+		:gsub("{default}", default)
+	)
 end
 
 local Vector = {
@@ -187,7 +197,7 @@ local Vector = {
 			Scales the @Vector, optionally outputting into an existing @Vector.
 		}]]
 		Scale = function(self, scalar, out)
-			return self:PlacementNew(out, self:LooseScale(scalar))
+			return self.class:PlacementNew(out, self:LooseScale(scalar))
 		end,
 
 		--[[#method {
@@ -198,7 +208,7 @@ local Vector = {
 			Scales the @Vector in place.
 		}]]
 		ScaleInPlace = function(self, scalar)
-			return self:Scale(self, scalar, self)
+			return self:Scale(scalar, self)
 		end,
 
 		--[[#method {
@@ -272,13 +282,29 @@ local Vector = {
 			return self:AddVector(other, out)
 		end,
 		AddLooseVector = SIMPLE_LOOSE_BINARY_OPERATOR("+"),
+		AddLooseVectorInPlace = [[
+			return function(self, {%=ARGS_STRING %})
+				return self:AddLooseVector({%=ARGS_STRING %}, self)
+			end
+		]],
 		AddVector = SIMPLE_BINARY_OPERATOR("+"),
+		AddVectorInPlace = function(self, other)
+			return self:AddVector(other, self)
+		end,
 		
 		Subtract = function(self, other, out)
 			return self:SubtractVector(other, out)
 		end,
 		SubtractLooseVector = SIMPLE_LOOSE_BINARY_OPERATOR("-"),
-		SubtractVector = SIMPLE_BINARY_OPERATOR("-")
+		SubtractLooseVectorInPlace = [[
+			return function(self, {%=ARGS_STRING %})
+				return self:SubtractLooseVector({%=ARGS_STRING %}, self)
+			end
+		]],
+		SubtractVector = SIMPLE_BINARY_OPERATOR("-"),
+		SubtractVectorInPlace = function(self, other)
+			return self:SubtractVector(other, self)
+		end,
 	},
 	__metatable = {
 		-- String conversion:
@@ -333,7 +359,7 @@ function Vector:__generate_method(body, arguments, env)
 		return false, CodeGenerationException:New(err, generated), generated
 	end
 
-	return generator()
+	return generated, generator()
 end
 
 --[[#method {
@@ -379,6 +405,7 @@ function Vector:Generate(length, parameters)
 	parameters.NormalizedLength = parameters.NormalizedLength or 1
 
 	local class = OOP:Class()
+	class.__generated = {}
 	class.Is[Vector] = true
 
 	local body = {
@@ -399,7 +426,10 @@ function Vector:Generate(length, parameters)
 	-- Process methods for the generated class
 	for name, body in pairs(self.__methods) do
 		if (type(body) == "string") then
-			class[name], err, body = self:__generate_method(body, gen_args)
+			local generated
+			generated, class[name] = self:__generate_method(body, gen_args)
+
+			class.__generated[name] = generated
 
 			if (not class[name]) then
 				return false, err, body
@@ -413,7 +443,10 @@ function Vector:Generate(length, parameters)
 
 	for name, body in pairs(self.__metatable) do
 		if (type(body) == "string") then
-			metatable[name], err, body = self:__generate_method(body, gen_args)
+			local generated
+			generated, metatable[name] = self:__generate_method(body, gen_args)
+
+			class.__generated[name] = generated
 
 			if (not metatable[name]) then
 				return false, err, body
