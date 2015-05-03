@@ -43,6 +43,8 @@ local function matchexpr(source, start, backwards, spaces)
 			if (space_ok) then
 				target_beginning = target_beginning + direction
 			elseif (plevel == 0 and blevel == 0 and clevel == 0) then
+				target_beginning = target_beginning + 1
+
 				local die = false
 
 				-- Crawl around to see if the next character would be illegal
@@ -81,7 +83,8 @@ local function matchexpr(source, start, backwards, spaces)
 			end
 
 			if (blevel < 0 or clevel < 0 or plevel < 0) then
-				target_beginning = target_beginning - direction
+				target_beginning = target_beginning - 2 * direction
+
 				break
 			end
 		end
