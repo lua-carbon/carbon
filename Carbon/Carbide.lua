@@ -43,8 +43,6 @@ local function matchexpr(source, start, backwards, spaces)
 			if (space_ok) then
 				target_beginning = target_beginning + direction
 			elseif (plevel == 0 and blevel == 0 and clevel == 0) then
-				target_beginning = target_beginning + 1
-
 				local die = false
 
 				-- Crawl around to see if the next character would be illegal
@@ -54,6 +52,7 @@ local function matchexpr(source, start, backwards, spaces)
 						die = true
 						break
 					elseif (char:match("%S")) then
+						target_beginning = target_beginning + direction
 						break
 					end
 				end
@@ -66,7 +65,7 @@ local function matchexpr(source, start, backwards, spaces)
 			break
 		else
 			target_beginning = target_beginning + direction
-			space_ok = not char:match("[%w_%]%)]")
+			space_ok = not char:match("[%w_]")
 
 			if (char == "[") then
 				blevel = blevel + direction
@@ -269,7 +268,7 @@ function Carbide.ParseCore(source, settings)
 	if (settings.REPORT_COMPILED_SOURCE) then
 		report_out = settings.REPORT_COMPILED_SOURCE
 	else
-		local out = source:match("#REPORT_COMPILED_SOURCE ([^\n]+)")
+		local out = source:match("#REPORT_COMPILED_SOURCE ([^\r\n]+)")
 		report_out = out
 	end
 
@@ -294,9 +293,10 @@ function Carbide.ParseCore(source, settings)
 		if (report_out == "stdout") then
 			print(source)
 		else
+			print(report_out)
 			local handle, err = io.open(report_out, "wb")
 			if (not handle) then
-				error("Couldn't write file to '" .. tostring(report_out) .. "'")
+				error(("Couldn't write compiled output to %q: %s"):format(tostring(report_out), err))
 			end
 
 			handle:write(source)

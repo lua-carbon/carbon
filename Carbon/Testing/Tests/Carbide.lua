@@ -118,6 +118,13 @@ function Test:Run(test)
 			local vecn = {vec->xyz + 5}
 			local x, y, z = vecn->xyz
 			return x + y + z
+		]], 45},
+
+		{[[
+			local vec = {5, 10, 15}
+			local vecn = { vec->xyz + 5 }
+			local x, y, z = vecn->xyz
+			return x + y + z
 		]], 45}
 	)
 
