@@ -81,7 +81,7 @@ local function matchexpr(source, start, backwards, spaces)
 			end
 
 			if (blevel < 0 or clevel < 0 or plevel < 0) then
-				target_beginning = target_beginning - 2 * direction
+				target_beginning = target_beginning - direction
 				break
 			end
 		end

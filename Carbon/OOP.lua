@@ -414,6 +414,12 @@ end
 OOP.Object.__base_members.Copy = function(self, target)
 	local class = self.class
 
+	-- Hotfix for Kyle
+	-- TODO: Investigate
+	if (not class) then
+		return self
+	end
+
 	if (not target and class.__attributes.PooledInstantiation) then
 		target = table.remove(class.__pool, #class.__pool) or {}
 	end
