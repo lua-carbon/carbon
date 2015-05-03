@@ -132,16 +132,8 @@ function Nanotube:Hook(name, method, priority, once)
 	return self
 end
 
---[[#method 1.1 {
-	object public @unumber Nanotube:Fire(@string name, ...)
-		required name: The name of the event to fire.
-		optional ...: The arguments to pass to handlers for this event.
-
-	Fires an event by name and passes parameters to the handlers registered to it.
-
-	Returns the number of handlers that were triggered by this event.
-}]]
-function Nanotube:Fire(name, ...)
+-- Does the bulk of the work for Nanotube:Fire
+local function fire_predicate(self, name, ...)
 	local container = self.__events[name]
 
 	if (not container) then
@@ -164,6 +156,47 @@ function Nanotube:Fire(name, ...)
 	end
 
 	return count
+end
+
+--[[#method 1.1 {
+	object public @unumber Nanotube:Fire(@string name, ...)
+		required name: The name of the event to fire.
+		optional ...: The arguments to pass to handlers for this event.
+
+	Fires an event by name and passes parameters to the handlers registered to it.
+
+	Returns the number of handlers that were triggered by this event.
+}]]
+function Nanotube:Fire(name, ...)
+	fire_predicate(self, "*", name, ...)
+	fire_predicate(self, name, ...)
+end
+
+--[[#method {
+	object public self Nanotube:MirrorAll(@Nanotube tube)
+		required tube: The @Nanotube to mirror events to.
+
+	Mirrors all events onto another Nanotube so that they will be executed there as well as here.
+}]]
+function Nanotube:MirrorAll(tube)
+	return self:On("*", function(name, ...)
+		tube:Fire(name, ...)
+	end)
+end
+
+--[[#method {
+	object public self Nanotube:Mirror(@string name, @Nanotube tube)
+		required name: The event to mirror.
+		required tube: The @Nanotube to mirror the event to.
+
+	Mirrors an event onto another Nanotube so that it will be executed there as well as here.
+
+	For mirroring all events, use `MirrorAll`.
+}]]
+function Nanotube:Mirror(name, tube)
+	return self:On(name, function(...)
+		tube:Fire(name, ...)
+	end)
 end
 
 --[[#method {

@@ -94,6 +94,25 @@ Generic hook method used by <code>Once</code> and <code>On</code>.
 
 Starts an event loop that automatically calls events.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:Mirror(<code><a href="Types#string">string</a> name, <a href="Classes/Nanotube">Nanotube</a> tube</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `name`: The event to mirror.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `tube`: The <a href="Classes/Nanotube">Nanotube</a> to mirror the event to.</li>
+</ul>
+
+Mirrors an event onto another Nanotube so that it will be executed there as well as here.
+
+For mirroring all events, use <code>MirrorAll</code>.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:MirrorAll(<code><a href="Classes/Nanotube">Nanotube</a> tube</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `tube`: The <a href="Classes/Nanotube">Nanotube</a> to mirror events to.</li>
+</ul>
+
+Mirrors all events onto another Nanotube so that they will be executed there as well as here.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:Step(<code>...</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">

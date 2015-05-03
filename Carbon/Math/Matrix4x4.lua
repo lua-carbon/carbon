@@ -88,26 +88,6 @@ function Matrix4x4:NewOrthographic(left, right, top, bottom, near, far)
 	)
 end
 
-function Matrix4x4:NewPerspectiveC(fovy, aspect, near, far)
-	local t = math.tan(fovy / 2)
-	local result = self:New(
-		1 / (aspect * t), 0, 0, 0,
-		0, 1 / t, 0, 0,
-		0, 0, - (far + near) / (far - near), -1,
-		0, 0, - (2 * far * near) / (far - near), 0
-	)
-
-	--[[
-	result[1] = 1 / (aspect * t)
-	result[6] = 1 / t
-	result[11] = - (far + near) / (far - near)
-	result[12] = - 1
-	result[15] = - (2 * far * near) / (far - near)
-	]]
-
-	return result
-end
-
 function Matrix4x4:NewPerspective(fov, aspect, near, far)
 	local t = math.tan(fov / 2)
 
