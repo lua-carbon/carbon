@@ -1,10 +1,10 @@
 --[[
-	Graphene 1.1.0
+	Graphene 1.1.1
 	https://github.com/lua-carbon/graphene
 ]]
 
 -- Current graphene version
-local g_version = {1, 1, 0}
+local g_version = {1, 1, 1}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -36,9 +36,13 @@ function support:Report()
 end
 
 -- Do we have LFS?
-local ok, lfs = pcall(require, "lfs")
-if (not ok) then
-	lfs = nil
+local lfs
+if (not NO_LFS) then
+	local ok
+	ok, lfs = pcall(require, "lfs")
+	if (not ok) then
+		lfs = nil
+	end
 end
 
 -- What Lua are we running under?
@@ -676,13 +680,39 @@ if (support.io) then
 		end
 
 		local execute_success
-		if (support.lua51) then
-			function execute_success(...)
-				return os.execute(...) == 0
+		if (support.jit) then
+			local ffi = require("ffi")
+
+			if (support.windows) then
+				ffi.cdef([[
+					typedef struct _iobuf FILE;
+					FILE* _popen(const char* command, const char* mode);
+					int _pclose(FILE* stream);
+				]])
+
+				function execute_success(cmd)
+					local f = ffi.C._popen(cmd, "rb")
+					return (ffi.C._pclose(f) == 0)
+				end
+			else
+				ffi.cdef([[
+					typedef struct _iobuf FILE;
+					FILE* popen(const char* command, const char* mode);
+					int pclose(FILE* stream);
+				]])
+
+				function execute_success(cmd)
+					local f = ffi.C.popen(cmd, "rb")
+					return (ffi.C.pclose(f) == 0)
+				end
+			end
+		elseif (support.lua51) then
+			function execute_success(cmd)
+				return os.execute(cmd) == 0
 			end
 		else
-			function execute_success(...)
-				return os.execute(...)
+			function execute_success(cmd)
+				return os.execute(cmd)
 			end
 		end
 
