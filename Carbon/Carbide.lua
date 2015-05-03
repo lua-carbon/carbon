@@ -265,6 +265,14 @@ function Carbide.ParseCore(source, settings)
 		extensions = {}
 	end
 
+	local report_out
+	if (settings.REPORT_COMPILED_SOURCE) then
+		report_out = settings.REPORT_COMPILED_SOURCE
+	else
+		local out = source:match("#REPORT_COMPILED_SOURCE ([^\n]+)")
+		report_out = out
+	end
+
 	source, str_tab = strip_strings(source)
 
 	if (feature_level >= 1) then
@@ -281,6 +289,20 @@ function Carbide.ParseCore(source, settings)
 	end
 
 	source = replace_strings(source, str_tab)
+
+	if (report_out) then
+		if (report_out == "stdout") then
+			print(source)
+		else
+			local handle, err = io.open(report_out, "wb")
+			if (not handle) then
+				error("Couldn't write file to '" .. tostring(report_out) .. "'")
+			end
+
+			handle:write(source)
+			handle:close()
+		end
+	end
 
 	return source
 end
