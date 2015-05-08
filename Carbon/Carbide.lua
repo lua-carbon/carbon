@@ -341,10 +341,10 @@ function Carbide.ParseCore(source, settings)
 	end
 
 	local report_out
-	if (settings.REPORT_COMPILED_SOURCE) then
-		report_out = settings.REPORT_COMPILED_SOURCE
+	if (settings.COMPILE_TO) then
+		report_out = settings.COMPILE_TO
 	else
-		local out = source:match("#REPORT_COMPILED_SOURCE ([^\r\n]+)")
+		local out = source:match("#COMPILE_TO ([^\r\n]+)")
 		report_out = out
 	end
 
