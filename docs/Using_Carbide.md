@@ -36,6 +36,10 @@ Directives can appear in any place in the file, they affect compilation globally
 - `#TEMPLATE_LEVEL <level>`
 	- Lets the templating engine know what level of templates to use.
 	- Default: `#TEMPLATE_LEVEL 0`
+- `#COMPILE_TO <target>`
+	- Ouputs the source to a given target.
+		- `stdout` writes out using `print`.
+		- Other values write out to files.
 
 ## Using Carbide Features
 Carbide's additions can be very helpful, especially when working with vectors:
@@ -43,8 +47,9 @@ Carbide's additions can be very helpful, especially when working with vectors:
 ```lua
 local Carbon = (...)
 local Vector2 = Carbon.Math.Vector2
+local Vector3 = Carbon.Math.Vector3
 
-local vec2 = Vector2:New(0, 0)
+local vec2 = Vector2(0, 0)
 print(vec2) --> (0, 0)
 
 -- Increment the x component
@@ -66,6 +71,15 @@ print(vec2) --> (0, 0)
 
 print(vec2->x, vec2->y) -- 0	0
 print(vec2->u, vec2->v) -- 0	0
+
+-- Reverse the vector in-place
+vec2:Init(vec2->yx)
+
+-- Initialize a Vector3 with a Vector2 and an extra value
+local vec3 = Vector3(vec2->xy, 3)
+
+-- Collapse this Vector3's Y/Z down into a Vector2
+vec2:Init(vec3->yz)
 ```
 
 ## Using Templates
