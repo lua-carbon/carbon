@@ -28,81 +28,157 @@ local direct_arrow_indices = {
 	s = 1, t = 2, p = 3, q = 4
 }
 
-local function matchexpr(source, start, backwards, spaces)
-	local direction = backwards and -1 or 1
+--[[
+	lineno
 
-	-- parens, bracket, curly brace
-	local plevel, blevel, clevel = 0, 0, 0
-	local target_beginning = start
-	local space_ok = not spaces
+	Returns the line and column a given index is at in a string.
+]]
+local function lineno(source, pos)
+	local line = 1
+	local column = 1
 
-	for i = start, (backwards and 1 or #source), direction do
+	for i = 1, pos do
 		local char = source:sub(i, i)
 
-		if (char:match("%s")) then
-			if (space_ok) then
-				target_beginning = target_beginning + direction
-			elseif (plevel == 0 and blevel == 0 and clevel == 0) then
-				local die = false
+		if (char:match("\n")) then
+			line = line + 1
+			column = 1
+		else
+			column = column + 1
+		end
 
-				-- Crawl around to see if the next character would be illegal
-				for j = i, (backwards and 1 or #source), direction do
-					local char = source:sub(j, j)
-					if (char:match(backwards and "[%w=%)%}%];\26\27]" or "[%w=;\26\27]")) then
-						die = true
-						break
-					elseif (char:match("%S")) then
-						target_beginning = target_beginning + direction
-						break
+		if (i == pos) then
+			return line, column
+		end
+	end
+
+	return false
+end
+
+--[[
+	linecount
+
+	Returns the number of lines in a string.
+]]
+local function linecount(source)
+	return select(2, source:gsub("\n", ""))
+end
+
+--[[
+	matchexpr
+
+	The powerhouse of the Carbide parser!
+	Used when we want to match a whole expression, but no more.
+]]
+local function matchexpr(source, start, backwards, last_nspace)
+	local forwards = not backwards
+	local direction = backwards and -1 or 1
+	local target = (backwards and 1 or #source)
+
+	local elevel = 0 -- Current stack state of parens/brackets/braces
+
+	for i = start, target, direction do
+		local char = source:sub(i, i)
+
+		if (not char:match("%s")) then
+			last_nspace = char
+		end
+
+		local elevelc = false
+		if (char:match("[%[%(%{]")) then
+			elevelc = true
+
+			if (forwards) then
+				elevel = elevel + 1
+			else
+				elevel = elevel - 1
+			end
+		elseif (char:match("[%]%)%}]")) then
+			elevelc = true
+
+			if (forwards) then
+				elevel = elevel - 1
+			else
+				elevel = elevel + 1
+			end
+		elseif (char:match(";")) then
+			-- Explicit expression termination!
+
+			if (elevel == 0) then
+				return i - direction
+			else
+				-- FIXME: This line is not necessarily accurate if the source is transformed.
+				local line = lineno(source, i)
+				return false, "Cannot have semicolon (';') when elevel ~= 0!"
+			end
+		elseif (elevel == 0 and char:match(",")) then
+			return i - direction
+		elseif (char:match("%s")) then
+			-- Can we have a space right now?
+
+			if (last_nspace) then
+				-- Crawl to see if the next few characters are legal
+				local illegal_set = "=;"
+
+				if (last_nspace:match("[%w_]")) then
+					illegal_set = illegal_set .. "%w_\26\27"
+				end
+
+				if (elevel == 0) then
+					if (forwards) then
+						illegal_set = illegal_set .. "%{"
+					else
+						illegal_set = illegal_set .. "%}"
 					end
 				end
-				
-				if (die) then
-					break
+
+				local illegal
+				if (illegal_set:len() > 0) then
+					illegal = "[" .. illegal_set .. "]"
+				end
+
+				local prospective = i
+				for j = i, target, direction do
+					local jchar = source:sub(j, j)
+
+					if (jchar:match("%s")) then
+						prospective = j
+					else
+						if (illegal and jchar:match(illegal)) then
+							return i
+						else
+							i = prospective
+							break
+						end
+					end
 				end
 			end
-		elseif (char:match(",") and plevel == 0 and blevel == 0 and clevel == 0) then
-			break
-		else
-			target_beginning = target_beginning + direction
-			space_ok = not char:match("[%w_]")
+		end
 
-			if (char == "[") then
-				blevel = blevel + direction
-			elseif (char == "]") then
-				blevel = blevel - direction
-			elseif (char == "(") then
-				plevel = plevel + direction
-			elseif (char == ")") then
-				plevel = plevel - direction
-			elseif (char == "{") then
-				clevel = clevel + direction
-			elseif (char == "}") then
-				clevel = clevel - direction
-			end
+		if (elevelc) then
+			if (elevel == 0) then
+			elseif (elevel > 0) then
 
-			if (blevel < 0 or clevel < 0 or plevel < 0) then
-				target_beginning = target_beginning - 2 * direction
-
-				break
+			else
+				return i - direction
 			end
 		end
 	end
 
-	return target_beginning
+	return target
 end
 
 local function operator_double(source, operator)
-	local double_operator = "%" .. operator .. "%" .. operator
+	local double_operator = operator .. operator
 	local start, finish = 0, 0
 	while (true) do
-		start, finish = source:find(double_operator, finish + 1)
+		start, finish = source:find(double_operator, finish + 1, true)
 
 		if (not start) then
 			break
 		end
 
-		local target_beginning = matchexpr(source, start - 1, true)
+		local target_beginning = matchexpr(source, start - 1, true, operator)
 		local target = source:sub(target_beginning, start - 1)
 
 		source = ("%s\n%s = (%s) %s 1\n%s"):format(
@@ -125,7 +201,7 @@ local function operator_mutating(source, operator)
 			break
 		end
 
-		local target_beginning = matchexpr(source, start - 1, true)
+		local target_beginning = matchexpr(source, start - 1, true, operator)
 		local target = source:sub(target_beginning, start - 1)
 
 		local value_ending = matchexpr(source, finish + 1)
@@ -153,10 +229,10 @@ local function operator_dan(source)
 			break
 		end
 
-		local target_beginning = matchexpr(source, start - 1, true, true)
+		local target_beginning = matchexpr(source, start - 1, true, "-")
 		local target = source:sub(target_beginning, start - 1)
 
-		local mod_ending = matchexpr(source, finish + 1, false, true)
+		local mod_ending = matchexpr(source, finish + 1, false, "a")
 		local mod = source:sub(finish + 1, mod_ending)
 
 		local lookups = {}
@@ -165,7 +241,7 @@ local function operator_dan(source)
 			local index = direct_arrow_indices[key]
 
 			if (not index) then
-				error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "'", 2)
+				error("Cannot compile Carbide Lua: invalid array lookup '" .. key .. "' in '" .. keys .. "'", 2)
 			end
 
 			table.insert(lookups, ("%s[%d]%s"):format(target, index, mod))

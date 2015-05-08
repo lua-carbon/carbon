@@ -1,15 +1,8 @@
 local Carbon = (...)
 local Vector2 = Carbon.Math.Vector2
 
-local Bloop = Carbon.OOP:Class()
-	:Members {
-		Center = Vector2(0, 0),
-		Radius = 1
-	}
+local vec_a = Vector2(5, 6)
+local vec_b = Vector2(6, 5)
 
-function Bloop:GetExtents()
-	return Vector2(self.Center->xy - self.Radius), Vector2(self.Center->xy + self.Radius)
-end
-
-local a = Bloop:New()
-print(a:GetExtents())
+print((vec_a * 5)->xy)
+print(vec_a->xy * 5)
