@@ -26,7 +26,7 @@ See [changelog.md](changelog.md) for the releases history of Carbon.
 
 [shield_license]: https://img.shields.io/badge/license-zlib/libpng-333333.svg?style=flat-square
 [shield_build]: https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square
-[shield_tests]: https://img.shields.io/badge/tests-54/54-brightgreen.svg?style=flat-square
+[shield_tests]: https://img.shields.io/badge/tests-59/59-brightgreen.svg?style=flat-square
 [shield_release_version]: https://img.shields.io/badge/release-none-lightgrey.svg?style=flat-square
 [shield_prerelease_version]: https://img.shields.io/badge/prerelease-1.0.0--beta3-blue.svg?style=flat-square
 [shield_dev_version]: https://img.shields.io/badge/development-1.0.0-orange.svg?style=flat-square
