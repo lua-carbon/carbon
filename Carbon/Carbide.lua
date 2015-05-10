@@ -275,6 +275,8 @@ local function strip_strings(source, str_tab)
 	end
 
 	source = source
+		:gsub("(%-%-%[(=*)%[.-%]%2%])", "")
+		:gsub("%-%-[^\r\n]+\r?\n?", "")
 		:gsub("%b\"\"", predicate)
 		:gsub("%b''", predicate)
 		:gsub("(%[(=*)%[.-%]%2%])", predicate)
@@ -283,7 +285,7 @@ local function strip_strings(source, str_tab)
 end
 
 local function replace_strings(source, str_tab)
-	return (source:gsub("\26(%d+)\27", function(number)
+	return (source:gsub("\26(%d-)\27", function(number)
 		return str_tab[tonumber(number)]
 	end))
 end
