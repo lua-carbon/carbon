@@ -8,7 +8,7 @@
 	}
 ]]
 
-local Carbon = (...)
+local Carbon, self = ...
 local OOP = Carbon.OOP
 
 local unpack = unpack or table.unpack
@@ -31,6 +31,7 @@ local Tuple = OOP:Class()
 function Tuple:Init(...)
 	self.Unpack = self.class.Unpack
 	self.Destroy = self.class.Destroy
+	
 	for i = 1, select("#", ...) do
 		self[i] = select(i, ...)
 	end
@@ -59,5 +60,7 @@ function Tuple:Destroy(...)
 
 	return ...
 end
+
+Carbon.Metadata:RegisterMethods(Tuple, self)
 
 return Tuple
