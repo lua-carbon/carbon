@@ -44,10 +44,12 @@ local badges = {
 		end,
 
 		-- Current dev version
+		--[[
 		function(self, body, data)
 			return body
 				:gsub("%[shield_dev_version%]:[^\n]*", self.shields.dev_version:format((data.Version:gsub("%-", "--"))))
 		end
+		]]
 	}
 }
 

@@ -1,8 +1,0 @@
-local Carbon = (...)
-local Vector2 = Carbon.Math.Vector2
-
-local vec_a = Vector2(5, 6)
-local vec_b = Vector2(6, 5)
-
-print((vec_a * 5)->xy)
-print(vec_a->xy * 5)
