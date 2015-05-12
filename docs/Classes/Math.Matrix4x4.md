@@ -26,6 +26,16 @@ Creates a new <a href="Classes/Math.Matrix4x4">Matrix4x4</a> from a <a href="Cla
 
 Creates a new <a href="Classes/Math.Matrix4x4">Matrix4x4</a> from a <a href="Classes/Math.Quaternion">Quaternion</a>.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:NewLookAt(<code><a href="Classes/Vector3">Vector3</a> eye, <a href="Classes/Vector3">Vector3</a> center, <a href="Classes/Vector3">Vector3</a> up</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `eye`: The position of the observer.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `center`: The focus of the observer.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `up`: The upwards direction for the observer.</li>
+</ul>
+
+Creates a projection to look at a point from another.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:NewLooseFromLooseQuaternion(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#loose">loose</a>&lt;Matrix4x4&gt;</code></p>
 <ul class="doc-arg-list">
@@ -41,6 +51,30 @@ Takes a loose <a href="Classes/Math.Quaternion">Quaternion</a> and returns a loo
 </ul>
 
 Takes a <a href="Classes/Math.Quaternion">Quaternion</a> and returns a loose rotation matrix from it.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:NewOrthographic(<code><a href="Types#number">number</a> l, <a href="Types#number">number</a> r, <a href="Types#number">number</a> t, <a href="Types#number">number</a> b, <a href="Types#number">number</a> near, <a href="Types#number">number</a> far</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `l`: The left edge of the projection.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `r`: The right edge of the projection.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `t`: The top edge of the projection.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `b`: The bottom edge of the projection.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `near`: The near plane of the projection.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `far`: The far plane of the projection.</li>
+</ul>
+
+Creates an orthographic projection matrix with the given properties
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:NewPerspective(<code><a href="Types#number">number</a> fov, <a href="Types#number">number</a> aspect, <a href="Types#number">number</a> near, <a href="Types#number">number</a> far</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `fov`: The field of view in radians.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `aspect`: The aspect ratio of the observer.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `near`: The near plane of the projection.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `far`: The far plane of the projection.</li>
+</ul>
+
+Creates a perspective matrix with the given properties.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:LooseRotationX(<code><a href="Types#number">number</a> t, ...</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Matrix4x4">Matrix4x4</a>&gt;</code></p>
@@ -215,6 +249,22 @@ Returns a <a href="Classes/Math.Matrix4x4">Matrix4x4</a> representing a scaling 
 
 Creates a translation matrix.
 The <code>Translate</code> form offsets from an existing matrix.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:GetDeterminant()</h4>
+<p class="method-returns bold">Returns <code><a href="Types#number">number</a></code></p>
+<ul class="doc-arg-list">
+
+</ul>
+
+Returns the determinant of the matrix.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:GetInverse(<code>[<a href="Classes/Math.Matrix4x4">Matrix4x4</a> out]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the data, a new matrix if not specified.</li>
+</ul>
+
+Yields the inverse of the matrix, optionally outputting into an existing matrix.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Matrix4x4:Rotate(<code><a href="Types#number">number</a> x, <a href="Types#number">number</a> y, <a href="Types#number">number</a> z, [<a href="Classes/Math.Matrix4x4">Matrix4x4</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Matrix4x4">Matrix4x4</a></code></p>

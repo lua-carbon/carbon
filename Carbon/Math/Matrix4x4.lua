@@ -79,6 +79,17 @@ function Matrix4x4:NewFromQuaternion(quaternion)
 	return self:New(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 
+--[[#method 2 {
+	class public @Matrix4x4 Matrix4x4:NewOrthographic(@number l, @number r, @number t, @number b, @number near, @number far)
+		required l: The left edge of the projection.
+		required r: The right edge of the projection.
+		required t: The top edge of the projection.
+		required b: The bottom edge of the projection.
+		required near: The near plane of the projection.
+		required far: The far plane of the projection.
+
+	Creates an orthographic projection matrix with the given properties
+}]]
 function Matrix4x4:NewOrthographic(left, right, top, bottom, near, far)
 	return self:New(
 		2 / (right - left), 0, 0, -((right + left)/(right - left)),
@@ -88,6 +99,15 @@ function Matrix4x4:NewOrthographic(left, right, top, bottom, near, far)
 	)
 end
 
+--[[#method 2 {
+	class public @Matrix4x4 Matrix4x4:NewPerspective(@number fov, @number aspect, @number near, @number far)
+		required fov: The field of view in radians.
+		required aspect: The aspect ratio of the observer.
+		required near: The near plane of the projection.
+		required far: The far plane of the projection.
+
+	Creates a perspective matrix with the given properties.
+}]]
 function Matrix4x4:NewPerspective(fov, aspect, near, far)
 	local t = math.tan(fov / 2)
 
@@ -99,6 +119,14 @@ function Matrix4x4:NewPerspective(fov, aspect, near, far)
 	)
 end
 
+--[[#method 2 {
+	class public @Matrix4x4 Matrix4x4:NewLookAt(@Vector3 eye, @Vector3 center, @Vector3 up)
+		required eye: The position of the observer.
+		required center: The focus of the observer.
+		required up: The upwards direction for the observer.
+
+	Creates a projection to look at a point from another.
+}]]
 function Matrix4x4:NewLookAt(eye, center, up)
 	local f = center:SubtractVector(eye):NormalizeInPlace()
 	local s = f:CrossMultiply(up):NormalizeInPlace()
@@ -393,6 +421,11 @@ function Matrix4x4:ScaleInPlace(x, y, z)
 	return self:Scale(x, y, z, self)
 end
 
+--[[#method {
+	object public @number Matrix4x4:GetDeterminant()
+
+	Returns the determinant of the matrix.
+}]]
 function Matrix4x4:GetDeterminant()
 	local
 		a11, a12, a13, a14,
@@ -411,6 +444,12 @@ function Matrix4x4:GetDeterminant()
 		- a14*a21*a32*a43 - a14*a22*a33*a41 - a14*a23*a31*a42
 end
 
+--[[#method {
+	object public @Matrix4x4 Matrix4x4:GetInverse([@Matrix4x4 out])
+		optional out: Where to put the data, a new matrix if not specified.
+
+	Yields the inverse of the matrix, optionally outputting into an existing matrix.
+}]]
 function Matrix4x4:GetInverse(out)
 	local
 		a11, a12, a13, a14,
