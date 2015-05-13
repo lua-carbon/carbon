@@ -248,6 +248,11 @@ local Vector = {
 			end
 		]],
 
+		--[[#method {
+			object public (@number, @Vector<N>) Vector<N>:Multiply((@number, @Vector<N>) other, [@Vector<N> out])
+				required other: The object to multiply with; a vector, matrix, or number.
+				optional out: Where to put the resulting data, if specified.
+		}]]
 		Multiply = function(self, other, out)
 			if (type(other) == "number") then
 				return self:Scale(other, out)

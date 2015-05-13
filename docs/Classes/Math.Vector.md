@@ -21,6 +21,15 @@ Presently has a hard maximum component count of 26, can be expanded upon request
 
 Creates a new <a href="Classes/Math.Vector">Vector</a> with `N` components.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> (<code><a href="Types#number">number</a>, <a href="Classes/Math.Vector">Vector</a>&lt;N&gt;</code>)</h4>
+<p class="method-returns bold">Returns <code></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `other`: The object to multiply with; a vector, matrix, or number.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data, if specified.</li>
+</ul>
+
+
+<hr/>
 <h4 class="method-name"><span class="doc-unknown">unknown</span> <span class="doc-visibility doc-public">public</span> Vector:Generate(<code><a href="Types#uint">uint</a> length, [<a href="Types#dictionary">dictionary</a> parameters]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Vector">Vector</a>&lt;length&gt;</code></p>
 <ul class="doc-arg-list">
