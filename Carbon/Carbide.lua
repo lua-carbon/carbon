@@ -366,43 +366,43 @@ function Carbide.ParseCore(source, settings)
 			return nil, err
 		end
 
-		source = operator_dan(source)
+		source, err = operator_dan(source)
 
 		if (not source) then
 			return nil, err
 		end
 
-		source = operator_double(source, "+")
+		source, err = operator_double(source, "+")
 
 		if (not source) then
 			return nil, err
 		end
 
-		source = operator_mutating(source, "+")
+		source, err = operator_mutating(source, "+")
 
 		if (not source) then
 			return nil, err
 		end
 
-		source = operator_mutating(source, "-")
+		source, err = operator_mutating(source, "-")
 
 		if (not source) then
 			return nil, err
 		end
 
-		source = operator_mutating(source, "*")
+		source, err = operator_mutating(source, "*")
 
 		if (not source) then
 			return nil, err
 		end
 
-		source = operator_mutating(source, "/")
+		source, err = operator_mutating(source, "/")
 
 		if (not source) then
 			return nil, err
 		end
 
-		source = operator_mutating(source, "^")
+		source, err = operator_mutating(source, "^")
 
 		if (not source) then
 			return nil, err
