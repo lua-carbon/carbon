@@ -110,8 +110,14 @@ do
 		return loadstring(("return function(arr) return %s end"):format(str))()
 	end
 
+	local vunpack = unpack or table.unpack
+
 	function Carbon.Unpack(t)
 		local n = #t
+
+		if (n > 8) then
+			return vunpack(t)
+		end
 
 		if (not _cache[n]) then
 			_cache[n] = _generate(n)

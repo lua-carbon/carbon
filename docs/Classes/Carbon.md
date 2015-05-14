@@ -62,9 +62,20 @@ Returns whether the given object is a valid Carbon object.
 
 Loads a function with a given environment.
 Essentially backports Lua 5.2's load function to LuaJIT and Lua 5.1.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Unpack(<code><a href="Types#table">table</a> t</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#function">function</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `t`: The table to unpack</li>
+</ul>
+
+Performs a fast
 
 <hr />
 ## Properties
+#### <span class="doc-visibility doc-public">public</span> <code><a href="Types#dictionary">dictionary</a></code> Carbon.Support
+Contains the support information provided by Graphene.
+<hr/>
 #### <span class="doc-visibility doc-public">public</span> <code><a href="Types#list">list</a></code> Carbon.Version
 Contains the current version in the form `{major, minor, revision, status}`.
 <hr/>
