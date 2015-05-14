@@ -247,7 +247,7 @@ local function operator_dan(source)
 				return false, SyntaxErrorException(
 					"Cannot compile Carbide Lua: invalid array lookup '" .. key .. "' in '" .. keys .. "'",
 					lineno(source, target_beginning)
-				)f
+				)
 			end
 
 			table.insert(lookups, ("%s[%d]%s"):format(target, index, mod))
