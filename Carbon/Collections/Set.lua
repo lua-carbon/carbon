@@ -64,7 +64,7 @@ function Set.ToList(self, out)
 
 	for key, value in pairs(self) do
 		if (value) then
-			table.insert(out, value)
+			table.insert(out, key)
 		end
 	end
 

@@ -22,6 +22,11 @@ function Carbon:ImportCore()
 	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString")
 end
 
+--[[#property public @dictionary Carbon.Support {
+	Contains the support information provided by Graphene.
+}]]
+Carbon.Support = Graphene.Support
+
 --[[#property public @list Carbon.Version {
 	Contains the current version in the form `{major, minor, revision, status}`.
 }]]
@@ -84,6 +89,36 @@ function Carbon.IsObject(x)
 	end
 
 	return false
+end
+
+--[[#method {
+	class public @function Carbon.Unpack(@table t)
+		required t: The table to unpack
+
+	Performs a fast
+}]]
+do
+	local _cache = {}
+	local function _generate(n)
+		local str_buffer = {}
+
+		for i = 1, n do
+			table.insert(str_buffer, ("arr[%d]"):format(i))
+		end
+		local str = table.concat(str_buffer, ",")
+
+		return loadstring(("return function(arr) return %s end"):format(str))()
+	end
+
+	function Carbon.Unpack(t)
+		local n = #t
+
+		if (not _cache[n]) then
+			_cache[n] = _generate(n)
+		end
+		
+		return _cache[n](t)
+	end
 end
 
 --[[#method {

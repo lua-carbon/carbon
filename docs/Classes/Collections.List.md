@@ -24,8 +24,8 @@ Turns the given object into a <a href="Classes/Collections.List">List</a>.
 Allows method-style syntax.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> List.Clear(<code><a href="Classes/Collections.List">List</a> self</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> List:Clear()</h4>
-<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<p class="method-returns bold">Returns <code>self</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> List:Clear()</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `self`: The list to source data from</li>
 </ul>

@@ -50,8 +50,8 @@ function List.Deserialize(source, out)
 end
 
 --[[#method {
-	class public @void List.Clear(@List self)
-	-alias: object public @void List:Clear()
+	class public self List.Clear(@List self)
+	-alias: object public self List:Clear()
 		required self: The list to source data from
 
 	Clears a list of all list values.
@@ -60,6 +60,8 @@ function List.Clear(self)
 	for i = 1, #self do
 		self[i] = nil
 	end
+
+	return self
 end
 
 --[[#method {
