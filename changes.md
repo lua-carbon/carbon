@@ -5,6 +5,7 @@
 ![1.0.1](https://img.shields.io/badge/1.0.1-in_development-orange.svg?style=flat-square)
 - Added missing `Carbon.Unpack` method for faster unpacking
 - Added alias to `Graphene.Support` as `Carbon.Support`
+- Added `SyntaxErrorException` for Carbide
 - Fixed `List:Clear` not returning self
 - Fixed `Set:ToList`
 - Improved Carbide to throw exceptions when faults occur.
