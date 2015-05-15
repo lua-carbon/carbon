@@ -30,7 +30,7 @@ Carbon.Support = Graphene.Support
 --[[#property public @list Carbon.Version {
 	Contains the current version in the form `{major, minor, revision, status}`.
 }]]
-Carbon.Version = {1, 0, 1, "tip"}
+Carbon.Version = {1, 0, 1}
 
 --[[#property public @string Carbon.VersionString {
 	Contains a string version of the current version in the form `"major.minor.revision-status"`.
