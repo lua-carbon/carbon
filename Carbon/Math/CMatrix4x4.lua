@@ -26,15 +26,4 @@ CMatrix4x4 = Carbon.OOP:Class()
 		__tostring = Carbon.Math.Matrix4x4.__metatable.__tostring
 	}
 
-function CMatrix4x4:NewZero()
-	self = self:New(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0
-	)
-
-	return self
-end
-
 return CMatrix4x4
