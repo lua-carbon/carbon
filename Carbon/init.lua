@@ -1,10 +1,14 @@
 --[[
-	Graphene 1.1.2
+	Graphene 1.1.3
 	https://github.com/lua-carbon/graphene
 ]]
 
+if (type((...)) ~= "string") then
+	return
+end
+
 -- Current graphene version
-local g_version = {1, 1, 2}
+local g_version = {1, 1, 3}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
