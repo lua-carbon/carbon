@@ -5,6 +5,8 @@
 
 ![1.0.2](https://img.shields.io/badge/1.0.1-in_development-orange.svg?style=flat-square)
 - Fixed attributes applying when they aren't inherited
+- Fixed Matrix3x3 quaternion methods
+- Improved matrix performance
 
 ![1.0.1](https://img.shields.io/badge/1.0.1-latest-brightgreen.svg?style=flat-square)
 - Upgraded to Graphene 1.1.3, fixes several issues

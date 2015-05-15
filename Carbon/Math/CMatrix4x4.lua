@@ -18,7 +18,7 @@ local ffi = require("ffi")
 
 ffi.cdef([[
 typedef struct {
-	float __[16];
+	double __[16];
 } __C_mat4;
 ]])
 

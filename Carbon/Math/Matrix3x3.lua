@@ -12,6 +12,7 @@
 
 local Carbon = (...)
 
+local Quaternion = Carbon.Math.Quaternion
 local Matrix3x3, except = Carbon.Math.Matrix:Generate(3, 3)
 
 if (not Matrix3x3) then
@@ -81,11 +82,12 @@ function Matrix3x3:ToLooseQuaternion()
 end
 
 --[[#method {
-	object public @Quaternion Matrix3x3:ToQuaternion()
+	object public @Quaternion Matrix3x3:ToQuaternion([@Quaternion out])
+		optional out: Where to put the resulting data.
 
 	Converts the @Matrix3x3 into a @Quaternion.
 }]]
-function Matrix3x3:ToQuaternion()
+function Matrix3x3:ToQuaternion(out)
 	if (out) then
 		out:Init(self:ToLooseQuaternion())
 	else

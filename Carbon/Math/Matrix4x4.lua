@@ -459,6 +459,10 @@ function Matrix4x4:GetInverse(out)
 
 	local det = self:GetDeterminant()
 
+	if (det == 0) then
+		return self:Copy()
+	end
+
 	local b11 = (a22*a33*a44 + a23*a34*a42 + a24*a32*a43 - a22*a34*a43 - a23*a32*a44 - a24*a33*a42) / det
 	local b12 = (a12*a34*a43 + a13*a32*a44 + a14*a33*a42 - a12*a33*a44 - a13*a34*a42 - a14*a32*a43) / det
 	local b13 = (a12*a23*a44 + a13*a24*a42 + a14*a22*a43 - a12*a24*a43 - a13*a22*a44 - a14*a23*a42) / det
