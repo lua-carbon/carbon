@@ -1,6 +1,10 @@
 # Carbon Change Log
 
 ![1.1.0](https://img.shields.io/badge/1.1.0-in_development-orange.svg?style=flat-square)
+- Added custom allocators in the form of the `Allocator` attribute
+
+![1.0.2](https://img.shields.io/badge/1.0.1-in_development-orange.svg?style=flat-square)
+- Fixed attributes applying when they aren't inherited
 
 ![1.0.1](https://img.shields.io/badge/1.0.1-latest-brightgreen.svg?style=flat-square)
 - Upgraded to Graphene 1.1.3, fixes several issues
