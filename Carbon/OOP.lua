@@ -29,6 +29,7 @@ local OOP = {
 		PoolSize = false,
 		Abstract = false,
 		ExplicitInitialization = false,
+		Allocator = false,
 		EXT_LJ_Struct = false
 	}
 }
@@ -149,6 +150,12 @@ OOP:RegisterAttribute("Class", "PooledInstantiation",
 
 		class.__members.Destroy = class.__members.Destroy or class.__pool_destructor
 		class.__metatable.__gc = class.__metatable.__gc or class.__pool_destructor
+
+		class:Attributes {
+			Allocator = function(self)
+				return table.remove(self.__pool, #self.__pool) or {}
+			end
+		}
 	end
 )
 
@@ -231,7 +238,7 @@ function OOP.BaseClass:Inherits(...)
 			end
 
 			for i, attribute in ipairs(OOP.Attributes.Class) do
-				if (object.__attributes[attribute[1]]) then
+				if (object.__attributes[attribute[1]] and OOP.__attribute_inheritance[attribute[1]]) then
 					attribute[2](self)
 				end
 			end
@@ -314,8 +321,8 @@ function OOP.Object:PlacementNew(instance, ...)
 	end
 
 	if (not instance) then
-		if (self.__attributes.PooledInstantiation) then
-			instance = table.remove(self.__pool, #self.__pool) or {}
+		if (self.__attributes.Allocator) then
+			instance = self.__attributes.Allocator(self, ...)
 		elseif (ffi and self.__attributes.EXT_LJ_Struct) then
 			if (not self.__ext_ffi_metatype) then
 				local index = Dictionary.ShallowCopy(self.__base_members)
@@ -406,6 +413,14 @@ OOP.Object.__base_members.Init = function(self)
 	return self
 end
 
+--[[#method 0.86 {
+	object public @void Object:Destroy()
+
+	Destroys the object.
+}]]
+OOP.Object.__base_members.Destroy = function(self)
+end
+
 --[[#method 0.8 {
 	object public Object Object:Copy()
 
@@ -420,8 +435,8 @@ OOP.Object.__base_members.Copy = function(self, target)
 		return self
 	end
 
-	if (not target and class.__attributes.PooledInstantiation) then
-		target = table.remove(class.__pool, #class.__pool) or {}
+	if (not target and class.__attributes.Allocator) then
+		target = class.__attributes.Allocator(self)
 	end
 
 	local copy = Dictionary.DeepCopy(self.self, target, true)
