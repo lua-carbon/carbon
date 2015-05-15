@@ -339,6 +339,7 @@ function OOP.Object:PlacementNew(instance, ...)
 				self.__ext_ffi_metatype = {
 					__index = index
 				}
+				self.__ext_ffi_index = index
 				Dictionary.ShallowCopy(self.__metatable, self.__ext_ffi_metatype)
 				ffi.metatype(self.__attributes.EXT_LJ_Struct, self.__ext_ffi_metatype)
 			end
