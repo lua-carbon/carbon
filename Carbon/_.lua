@@ -30,7 +30,7 @@ Carbon.Support = Graphene.Support
 --[[#property public @list Carbon.Version {
 	Contains the current version in the form `{major, minor, revision, status}`.
 }]]
-Carbon.Version = {1, 0, 1}
+Carbon.Version = {1, 0, 1, "tip"}
 
 --[[#property public @string Carbon.VersionString {
 	Contains a string version of the current version in the form `"major.minor.revision-status"`.
@@ -42,6 +42,43 @@ Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 	Carbon.Version[4] and "-" or "",
 	Carbon.Version[4] or ""
 )
+
+--[[#property public @map Carbon.Features {
+	Contains a set of features and whether they are enabled or disabled.
+}]]
+Carbon.Features = {
+	Debug = false
+}
+
+--[[#method {
+	class public @void Carbon.Enable(@any feature)
+		required feature: The feature to enable
+
+	Enables a feature by name.
+}]]
+function Carbon.Enable(feature)
+	Carbon.Features[feature] = true
+end
+
+--[[#method {
+	class public @void Carbon.Disable(@any feature)
+		required feature: The feature to disable
+
+	Disables a feature by name.
+}]]
+function Carbon.Disable(feature)
+	Carbon.Features[feature] = false
+end
+
+--[[#method {
+	class public @void Carbon.Enabled(@any feature)
+		required feature: The feature to check
+
+	Returns whether a feature is enabled.
+}]]
+function Carbon.Enabled(feature)
+	return (not not Carbon.Features[feature])
+end
 
 --[[#method {
 	class public @coroutine Carbon.Async(@function method)

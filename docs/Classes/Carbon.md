@@ -36,6 +36,30 @@ Returns a version of the given function that is async.
 
 Presently an alias for Lua's <code>coroutine.wrap</code>, but this may change in the future.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Disable(<code><a href="Types#any">any</a> feature</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `feature`: The feature to disable</li>
+</ul>
+
+Disables a feature by name.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Enable(<code><a href="Types#any">any</a> feature</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `feature`: The feature to enable</li>
+</ul>
+
+Enables a feature by name.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Enabled(<code><a href="Types#any">any</a> feature</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `feature`: The feature to check</li>
+</ul>
+
+Returns whether a feature is enabled.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Error(<code>...</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
@@ -73,6 +97,9 @@ Performs a fast
 
 <hr />
 ## Properties
+#### <span class="doc-visibility doc-public">public</span> <code><a href="Types#map">map</a></code> Carbon.Features
+Contains a set of features and whether they are enabled or disabled.
+<hr/>
 #### <span class="doc-visibility doc-public">public</span> <code><a href="Types#dictionary">dictionary</a></code> Carbon.Support
 Contains the support information provided by Graphene.
 <hr/>

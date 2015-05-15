@@ -7,9 +7,11 @@
 - Added missing `Carbon.Unpack` method for faster unpacking
 - Added alias to `Graphene.Support` as `Carbon.Support`
 - Added `SyntaxErrorException` for Carbide
+- Added the notion of 'features' for supporting edge features
+	- Added `Carbon.Features`, `Carbon.Enable`, `Carbon.Disable`, and `Carbon.Enabled`
 - Fixed `List:Clear` not returning self
 - Fixed `Set:ToList`
-- Improved Carbide to throw exceptions when faults occur.
+- Improved Carbide to throw exceptions when faults occur
 - Improved documentation on matrix methods
 - Improved test coverage
 

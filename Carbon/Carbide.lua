@@ -449,10 +449,6 @@ function Carbide.Compile(source, name, environment, settings)
 
 	local chunk, err = Carbon.LoadString(source, name, environment)
 
-	if (Carbon.Debug and not chunk) then
-		print(source)
-	end
-
 	if (not chunk) then
 		return false, SyntaxErrorException(err)
 	end
