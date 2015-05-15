@@ -1,10 +1,10 @@
 --[[
-	Graphene 1.1.1
+	Graphene 1.1.2
 	https://github.com/lua-carbon/graphene
 ]]
 
 -- Current graphene version
-local g_version = {1, 1, 1}
+local g_version = {1, 1, 2}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -161,6 +161,10 @@ elseif (support.lua52) then
 	function load_with_env(source, from, environment)
 		return load(source, from, nil, environment or _ENV)
 	end
+end
+
+if (support.jit or support.lua51) then
+	support.xpcallargs = true
 end
 
 -- Find out a path for the directory above graphene
@@ -436,6 +440,20 @@ elseif (support.debug) then
 else
 	function import_dict()
 		error("Importing requires Lua 5.1, or Lua 5.2+ with the debug library enabled!", 2)
+	end
+end
+
+-- xpcall with argument passing
+local xpcallargs
+if (support.xpcallargs) then
+	xpcallargs = xpcall
+else
+	xpcallargs = function(method, errhand, ...)
+		local varg = {...}
+
+		return xpcall(function()
+			method(unpack(varg))
+		end, errhand)
 	end
 end
 
@@ -1265,7 +1283,7 @@ local function load_file(file, base)
 		end
 	end
 
-	local ok, result = xpcall(method, xerrhand, base or G.base, meta)
+	local ok, result = xpcallargs(method, xerrhand, base or G.base, meta)
 	if (not ok) then
 		if (G.__error_callback) then
 			G.__error_callback("run", result)
