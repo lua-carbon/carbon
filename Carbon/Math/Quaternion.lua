@@ -14,6 +14,7 @@
 
 local Carbon = (...)
 local OOP = Carbon.OOP
+local Vector3 = Carbon.Math.Vector3
 local Vector4 = Carbon.Math.Vector4
 
 local sin, cos = math.sin, math.cos
@@ -93,7 +94,7 @@ end
 	Returns the conjugate of the @Quaternion, `(-i, -j, -k, w)`.
 }]]
 function Quaternion:Conjugate(out)
-	return self:PlacementNew(out, -self[1], -self[2], -self[3], self[4])
+	return self.class:PlacementNew(out, -self[1], -self[2], -self[3], self[4])
 end
 
 --[[#method {
@@ -130,7 +131,7 @@ end
 	Multiplies the quaternion with a loose @Quaternion.
 }]]
 function Quaternion:MultiplyLoose(x2, y2, z2, w2, out)
-	return self:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
+	return self.class:PlacementNew(out, self:LooseMultiplyLoose(x2, y2, z2, w2))
 end
 
 --[[#method {
@@ -194,7 +195,7 @@ function Quaternion:Slerp(other, t, out)
 end
 
 --[[#method {
-	object public self @Quaternion:Slerp!(@Quaternion other, @number t)
+	object public self Quaternion:Slerp!(@Quaternion other, @number t)
 	-alias: object public self @Quaternion:SlerpInPlace(@Quaternion other, @number t)
 		required other: The @Quaternion to slerp with.
 		required t: A number, normally on [0, 1], that determines the mixing ratio of the quaternions.
@@ -204,5 +205,32 @@ end
 function Quaternion:SlerpInPlace(other, t, out)
 	return self:Slerp(other, t, self)
 end
+
+--[[#method {
+	object public self Quaternion:TransformVector(@Vector3 vec)
+		required vec: The vector to rotate.
+
+	Transforms a vector by rotating it.
+}]]
+function Quaternion:TransformVector(vec)
+	return self:MultiplyLoose(vec[1], vec[2], vec[3], 0):Multiply(self:Conjugate())
+end
+
+-- function Quaternion:TransformVector(vec)
+-- 	local s3 = Vector3(self[1], self[2], self[3])
+-- 	local t = s3:CrossMultiply(vec):Scale(2)
+-- 	return vec:AddVector(t:Scale(self[4])):AddVector(s3:CrossMultiply(t))
+-- end
+
+-- function Quaternion:TransformVector(vec)
+-- 	local uv, uuv
+-- 	local q_vec = Vector3(self[1], self[2], self[3])
+-- 	uv = q_vec:CrossMultiply(q_vec)
+-- 	uuv = q_vec:CrossMultiply(uv)
+-- 	uv = uv:Scale(self[4] * 2)
+-- 	uuv = uuv:Scale(2)
+
+-- 	return vec:AddVector(uv:AddVector(uuv))
+-- end
 
 return Quaternion

@@ -36,10 +36,26 @@ Matrix4x4:Inherits(Carbon.Math.Matrix3x3)
 	Takes a loose @Quaternion and returns a loose rotation matrix from it.
 }]]
 function Matrix4x4:NewLooseFromLooseQuaternion(x, y, z, w)
-	return
-		w^2+x^2-y^2-z^2, 2*x*y-2*w*z, 2*x*z+2*w*y, 0,
-		2*x*y+2*w*z, w^2-x^2+y^2-z^2, 2*y*z+2*w*z, 0,
-		2*x*z-2*w*y, 2*y*z-2*w*z, w^2-x^2-y^2+z^2, 0,
+	local tx = x + x
+	local ty = y + y
+	local tz = z + z
+	
+	local twx = tx * w
+	local twy = ty * w
+	local twz = tz * w
+
+	local txx = tx * x
+	local txy = ty * x
+	local txz = tz * x
+
+	local tyy = ty * y
+	local tyz = tz * y
+	local tzz = tz * z
+
+	return 4, 4,
+		1 - (tyy + tzz), txy - twz, txz + twy, 0,
+		txy + twz, 1 - (txx + tzz), tyz - twx, 0,
+		txz - twy, tyz + twx, 1 - (txx + tyy), 0,
 		0, 0, 0, 1
 end
 
@@ -76,7 +92,7 @@ function Matrix4x4:InitFromQuaternion(quaternion)
 	return self:Init(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 function Matrix4x4:NewFromQuaternion(quaternion)
-	return self:New(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
+	return self:NewFromLoose(self:NewLooseFromLooseQuaternion(quaternion:GetComponents()))
 end
 
 --[[#method 2 {

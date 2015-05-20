@@ -131,7 +131,7 @@ Matrix = {
 		end,
 
 		NewFromLoose = function(self, ...)
-			return self:New():InitFromLoose(...)
+			return self:NewZero():InitFromLoose(...)
 		end,
 
 		--[[#method 2 {
