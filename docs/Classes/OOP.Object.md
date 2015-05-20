@@ -24,6 +24,14 @@ Copies the given object.
 
 Initializes the object with the given parameters.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Object:Destroy()</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+
+</ul>
+
+Destroys the object.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Class:PlacementNew(<code><a href="Types#indexable">indexable</a>? target, ...</code>)</h4>
 <p class="method-returns bold">Returns <code>Object</code></p>
 <ul class="doc-arg-list">

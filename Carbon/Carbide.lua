@@ -125,6 +125,12 @@ local function matchexpr(source, start, backwards, last_nspace)
 
 				if (last_nspace:match("[%w_]")) then
 					illegal_set = illegal_set .. "%w_\26\27"
+
+					if (backwards) then
+						illegal_set = illegal_set .. "%)"
+					end
+				elseif (forwards and last_nspace:match("%)")) then
+					illegal_set = illegal_set .. "%w"
 				end
 
 				if (elevel == 0) then

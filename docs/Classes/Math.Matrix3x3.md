@@ -33,10 +33,10 @@ Orthonormalizes the matrix in-place.
 
 Converts the <a href="Classes/Math.Matrix3x3">Matrix3x3</a> into a loose-form <a href="Classes/Math.Quaternion">Quaternion</a>.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Matrix3x3:ToQuaternion()</h4>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Matrix3x3:ToQuaternion(<code>[<a href="Classes/Math.Quaternion">Quaternion</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p>
 <ul class="doc-arg-list">
-
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
 </ul>
 
 Converts the <a href="Classes/Math.Matrix3x3">Matrix3x3</a> into a <a href="Classes/Math.Quaternion">Quaternion</a>.

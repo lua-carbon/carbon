@@ -75,16 +75,6 @@ Multiplies the quaternion with a loose <a href="Classes/Math.Quaternion">Quatern
 
 Performs a <a href="Classes/Math.Quaternion">Quaternion</a> slerp (spherical interpolation).
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> <a href="Classes/Math.Quaternion">Quaternion</a>:Slerp!(<code><a href="Classes/Math.Quaternion">Quaternion</a> other, <a href="Types#number">number</a> t</code>)</h4>
-<p class="method-returns bold">Returns <code>self</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> <a href="Classes/Math.Quaternion">Quaternion</a>:SlerpInPlace(<code><a href="Classes/Math.Quaternion">Quaternion</a> other, <a href="Types#number">number</a> t</code>)</h4>
-<p class="method-returns bold">Returns <code>self</code></p>
-<ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `other`: The <a href="Classes/Math.Quaternion">Quaternion</a> to slerp with.</li>
-<li><span class="doc-arg-level doc-required">required</span>  `t`: A number, normally on [0, 1], that determines the mixing ratio of the quaternions.</li>
-</ul>
-
-Performs a <a href="Classes/Math.Quaternion">Quaternion</a> slerp (spherical interpolation) in place.
-<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:Conjugate(<code>[<a href="Classes/Math.Quaternion">Quaternion</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p>
 <ul class="doc-arg-list">
@@ -119,6 +109,24 @@ Multiplies the quaternion with another <a href="Classes/Math.Quaternion">Quatern
 </ul>
 
 Multiplies the quaternion with another <a href="Classes/Math.Quaternion">Quaternion</a> and puts the result in the first <a href="Classes/Math.Quaternion">Quaternion</a>.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:Slerp!(<code><a href="Classes/Math.Quaternion">Quaternion</a> other, <a href="Types#number">number</a> t</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> <a href="Classes/Math.Quaternion">Quaternion</a>:SlerpInPlace(<code><a href="Classes/Math.Quaternion">Quaternion</a> other, <a href="Types#number">number</a> t</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `other`: The <a href="Classes/Math.Quaternion">Quaternion</a> to slerp with.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `t`: A number, normally on [0, 1], that determines the mixing ratio of the quaternions.</li>
+</ul>
+
+Performs a <a href="Classes/Math.Quaternion">Quaternion</a> slerp (spherical interpolation) in place.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:TransformVector(<code><a href="Classes/Math.Vector3">Vector3</a> vec</code>)</h4>
+<p class="method-returns bold">Returns <code>self</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `vec`: The vector to rotate.</li>
+</ul>
+
+Transforms a vector by rotating it.
 
 <hr />
 ## Properties

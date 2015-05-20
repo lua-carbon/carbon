@@ -20,6 +20,7 @@ pages:
 - [Classes/Functional.md, Classes, Functional]
 - [Classes/IO.md, Classes, IO]
 - [Classes/IO.File.md, Classes, IO.File]
+- [Classes/Math.CMatrix4x4.md, Classes, Math.CMatrix4x4]
 - [Classes/Math.Color.md, Classes, Math.Color]
 - [Classes/Math.ColorRGB.md, Classes, Math.ColorRGB]
 - [Classes/Math.ColorRGBA.md, Classes, Math.ColorRGBA]
