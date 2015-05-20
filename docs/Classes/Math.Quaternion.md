@@ -48,6 +48,15 @@ Converts a <a href="Classes/Math.Vector3">Vector3</a> containing Euler angles in
 
 Converts a <a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Vector3">Vector3</a>&gt; containing Euler angles into a loose <a href="Classes/Math.Quaternion">Quaternion</a>.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Quaternion:LooseMultiplyLooseLoose(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt; a, <a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt; b</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt;</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `a`: The left operand on the multiply.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `b`: The right operand on the multiply.</li>
+</ul>
+
+Multiplies two loose quaternions together and returns the result in loose form.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> <a href="Classes/Math.Quaternion">Quaternion</a>:LooseMultiplyLoose(<code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt; quaternion</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt;</code></p>
 <ul class="doc-arg-list">
@@ -92,6 +101,14 @@ Returns the conjugate of the <a href="Classes/Math.Quaternion">Quaternion</a>, <
 
 Conjugates the <a href="Classes/Math.Quaternion">Quaternion</a> in-place.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:LooseConjugate()</h4>
+<p class="method-returns bold">Returns <code><a href="Types#loose">loose</a>&lt;<a href="Classes/Math.Quaternion">Quaternion</a>&gt;</code></p>
+<ul class="doc-arg-list">
+
+</ul>
+
+Returns the conjugate of the quaternion in loose form.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:Multiply(<code><a href="Classes/Math.Quaternion">Quaternion</a> other, [<a href="Classes/Math.Quaternion">Quaternion</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Classes/Math.Quaternion">Quaternion</a></code></p>
 <ul class="doc-arg-list">
@@ -120,10 +137,11 @@ Multiplies the quaternion with another <a href="Classes/Math.Quaternion">Quatern
 
 Performs a <a href="Classes/Math.Quaternion">Quaternion</a> slerp (spherical interpolation) in place.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:TransformVector(<code><a href="Classes/Math.Vector3">Vector3</a> vec</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Quaternion:TransformVector(<code><a href="Classes/Math.Vector3">Vector3</a> vec, [<a href="Classes/Math.Vector3">Vector3</a> out]</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `vec`: The vector to rotate.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `out`: Where to put the resulting data.</li>
 </ul>
 
 Transforms a vector by rotating it.

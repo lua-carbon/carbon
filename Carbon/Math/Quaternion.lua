@@ -88,13 +88,26 @@ function Quaternion:NewLooseFromLooseAngles(x, y, z)
 end
 
 --[[#method {
+	object public @loose<@Quaternion> Quaternion:LooseConjugate()
+
+	Returns the conjugate of the quaternion in loose form.
+}]]
+function Quaternion:LooseConjugate()
+	return -self[1], -self[2], -self[3], self[4]
+end
+
+--[[#method {
 	object public @Quaternion Quaternion:Conjugate([@Quaternion out])
 		optional out: Where to put the resulting data.
 
 	Returns the conjugate of the @Quaternion, `(-i, -j, -k, w)`.
 }]]
 function Quaternion:Conjugate(out)
-	return self.class:PlacementNew(out, -self[1], -self[2], -self[3], self[4])
+	if (out) then
+		out:Init(self:LooseConjugate())
+	else
+		self.class:New(self:LooseConjugate())
+	end
 end
 
 --[[#method {
@@ -108,6 +121,21 @@ function Quaternion:ConjugateInPlace()
 end
 
 --[[#method {
+	class public @loose<@Quaternion> Quaternion:LooseMultiplyLooseLoose(@loose<@Quaternion> a, @loose<@Quaternion> b)
+		required a: The left operand on the multiply.
+		required b: The right operand on the multiply.
+
+	Multiplies two loose quaternions together and returns the result in loose form.
+}]]
+function Quaternion:LooseMultiplyLooseLoose(x1, y1, z1, w1, x2, y2, z2, w2)
+	return
+		w1*x2 + x1*w2 + y1*z2 - z1*y2,
+		w1*y2 - x1*z2 + y1*w2 + z1*x2,
+		w1*z2 + x1*y2 - y1*x2 + z1*w2,
+		w1*w2 - x1*x2 - y1*y2 - z1*z2
+end
+
+--[[#method {
 	object public @loose<@Quaternion> @Quaternion:LooseMultiplyLoose(@loose<@Quaternion> quaternion)
 		required quaternion: The quaternion to multiply with.
 
@@ -116,11 +144,7 @@ end
 function Quaternion:LooseMultiplyLoose(x2, y2, z2, w2)
 	local x1, y1, z1, w1 = self:GetComponents()
 
-	return
-		w1*x2 + x1*w2 + y1*z2 - z1*y2,
-		w1*y2 - x1*z2 + y1*w2 + z1*x2,
-		w1*z2 + x1*y2 - y1*x2 + z1*w2,
-		w1*w2 - x1*x2 - y1*y2 - z1*z2
+	return self:LooseMultiplyLooseLoose(x1, y1, z1, w1, x2, y2, z2, w2)
 end
 
 --[[#method {
@@ -207,30 +231,24 @@ function Quaternion:SlerpInPlace(other, t, out)
 end
 
 --[[#method {
-	object public self Quaternion:TransformVector(@Vector3 vec)
+	object public self Quaternion:TransformVector(@Vector3 vec, [@Vector3 out])
 		required vec: The vector to rotate.
+		optional out: Where to put the resulting data.
 
 	Transforms a vector by rotating it.
 }]]
-function Quaternion:TransformVector(vec)
-	return self:MultiplyLoose(vec[1], vec[2], vec[3], 0):Multiply(self:Conjugate())
+function Quaternion:TransformVector(vec, out)
+	local x, y, z, w = self:LooseMultiplyLoose(vec[1], vec[2], vec[3], 0)
+	x, y, z = self.class:LooseMultiplyLooseLoose(
+		x, y, z, w,
+		self:LooseConjugate()
+	)
+
+	if (out) then
+		out:Init(x, y, z)
+	else
+		return Vector3(x, y, z)
+	end
 end
-
--- function Quaternion:TransformVector(vec)
--- 	local s3 = Vector3(self[1], self[2], self[3])
--- 	local t = s3:CrossMultiply(vec):Scale(2)
--- 	return vec:AddVector(t:Scale(self[4])):AddVector(s3:CrossMultiply(t))
--- end
-
--- function Quaternion:TransformVector(vec)
--- 	local uv, uuv
--- 	local q_vec = Vector3(self[1], self[2], self[3])
--- 	uv = q_vec:CrossMultiply(q_vec)
--- 	uuv = q_vec:CrossMultiply(uv)
--- 	uv = uv:Scale(self[4] * 2)
--- 	uuv = uuv:Scale(2)
-
--- 	return vec:AddVector(uv:AddVector(uuv))
--- end
 
 return Quaternion
