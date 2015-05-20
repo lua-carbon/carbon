@@ -526,7 +526,11 @@ Matrix = {
 			local vector = Carbon.Math.Vector:Generate({%=COLUMNS %})
 
 			return function(self, {%=ULIST(COLUMNS) %}, out)
-				return vector:PlacementNew(out, self:LooseMultiplyLooseVector({%=ULIST(COLUMNS) %}))
+				if (out) then
+					out:Init(self:LooseMultiplyLooseVector({%=ULIST(COLUMNS) %}))
+				else
+					vector:New(self:LooseMultiplyLooseVector({%=ULIST(COLUMNS) %}))
+				end
 			end
 		]],
 

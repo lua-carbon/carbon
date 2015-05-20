@@ -2,7 +2,7 @@
 
 ![1.1.0](https://img.shields.io/badge/1.1.0-in_development-orange.svg?style=flat-square)
 - Improved Carbide parsing rigidity
-- Improved overall matrix performance
+- Improved overall math performance
 - Added custom allocators in the form of the `Allocator` attribute
 - Added new Quaternion methods:
 	- `Quaternion:LooseConjugate`
