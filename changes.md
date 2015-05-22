@@ -8,7 +8,7 @@
 	- `Quaternion:LooseConjugate`
 	- `Quaternion:LooseMultiplyLooseLoose`
 	- `Quaternion:TransformVector`
-	- `Quaternion:MultiplyLoose!` (needs documentation)
+	- `Quaternion:MultiplyLoose!`
 - Fixed attributes applying when they aren't inherited
 - Fixed Matrix3x3 quaternion methods
 
