@@ -17,6 +17,8 @@ local Functional = {}
 		required object: The table to unpack.
 
 	Unpacks the table into a tuple. The same as `unpack` and `table.unpack`.
+
+	**DEPRECATED**: Use Carbon.Unpack (1.0.1)
 }]]
 Functional.Unpack = unpack or table.unpack
 
