@@ -12,6 +12,7 @@
 	- `Quaternion:TransformVector`
 	- `Quaternion:MultiplyLoose!`
 - Deprecated `Functional.Unpack`; use `Carbon.Unpack` instead
+- Fixed `Carbon.IsObject` failing to detect `Is` object.
 - Fixed attributes applying when they aren't inherited
 - Fixed Matrix3x3 quaternion methods
 

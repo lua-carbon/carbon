@@ -122,7 +122,7 @@ end
 function Carbon.IsObject(x)
 	local t = type(x)
 	if (t == "table" or (t == "userdata" and getmetatable(t) and getmetatable(t).__index)) then
-		return not not t.Is
+		return not not x.Is
 	end
 
 	return false
