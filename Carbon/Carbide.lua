@@ -269,6 +269,30 @@ local function operator_dan(source)
 	return source
 end
 
+local function operator_lambda(source)
+	local start, finish = 0, 0
+	while (true) do
+		local prec, keys
+		start, finish, name, args = source:find("(%w*)%s*(%b())%s*=>%s*", finish + 1)
+
+		if (not start) then
+			break
+		end
+
+		local body_ending = matchexpr(source, finish + 1, false, " ")
+		local body = source:sub(finish + 1, body_ending)
+
+		source = ("%sfunction %s%s return %s end%s"):format(
+			source:sub(1, start - 1),
+			name, args,
+			body,
+			source:sub(body_ending + 1)
+		)
+	end
+
+	return source
+end
+
 local function operator_bang(source)
 	return (source:gsub("([%.:%->]+)(%w+)!", function(convention, method)
 		return ("%s%sInPlace"):format(
@@ -409,6 +433,12 @@ function Carbide.ParseCore(source, settings)
 		end
 
 		source, err = operator_mutating(source, "^")
+
+		if (not source) then
+			return nil, err
+		end
+
+		source, err = operator_lambda(source)
 
 		if (not source) then
 			return nil, err
