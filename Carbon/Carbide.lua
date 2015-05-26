@@ -390,6 +390,12 @@ function Carbide.ParseCore(source, settings)
 
 	local err
 	if (feature_level >= 1) then
+		source, err = operator_lambda(source)
+
+		if (not source) then
+			return nil, err
+		end
+		
 		source, err = operator_bang(source)
 
 		if (not source) then
@@ -433,12 +439,6 @@ function Carbide.ParseCore(source, settings)
 		end
 
 		source, err = operator_mutating(source, "^")
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_lambda(source)
 
 		if (not source) then
 			return nil, err
