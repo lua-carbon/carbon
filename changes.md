@@ -3,12 +3,14 @@
 ![1.1.0](https://img.shields.io/badge/1.1.0-in_development-orange.svg?style=flat-square)
 - Improved Carbide parsing rigidity
 - Improved overall math performance
+- Added `Bench` class for benchmarking
 - Added custom allocators in the form of the `Allocator` attribute
 - Added new Quaternion methods:
 	- `Quaternion:LooseConjugate`
 	- `Quaternion:LooseMultiplyLooseLoose`
 	- `Quaternion:TransformVector`
 	- `Quaternion:MultiplyLoose!`
+- Deprecated `Functional.Unpack`; use `Carbon.Unpack` instead
 - Fixed attributes applying when they aren't inherited
 - Fixed Matrix3x3 quaternion methods
 
