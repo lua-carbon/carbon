@@ -352,6 +352,32 @@ function Carbide.ParseTemplated(source, settings)
 	end
 end
 
+local features = {
+	[1] = {
+		operator_lambda,
+		operator_bang,
+		operator_dan,
+		function(source)
+			return operator_double(source, "+")
+		end,
+		function(source)
+			return operator_mutating(source, "+")
+		end,
+		function(source)
+			return operator_mutating(source, "-")
+		end,
+		function(source)
+			return operator_mutating(source, "*")
+		end,
+		function(source)
+			return operator_mutating(source, "/")
+		end,
+		function(source)
+			return operator_mutating(source, "^")
+		end
+	}
+}
+
 --[[#method {
 	class public @string Carbide.ParseCore(@string source, [@table settings])
 		required source: The source to parse.
@@ -386,62 +412,19 @@ function Carbide.ParseCore(source, settings)
 		report_out = out
 	end
 
+	local str_tab
 	source, str_tab = strip_strings(source)
 
 	local err
-	if (feature_level >= 1) then
-		source, err = operator_lambda(source)
+	for level, set in ipairs(features) do
+		if (feature_level >= level) then
+			for key, operator in ipairs(set) do
+				source, err = operator(source)
 
-		if (not source) then
-			return nil, err
-		end
-		
-		source, err = operator_bang(source)
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_dan(source)
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_double(source, "+")
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_mutating(source, "+")
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_mutating(source, "-")
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_mutating(source, "*")
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_mutating(source, "/")
-
-		if (not source) then
-			return nil, err
-		end
-
-		source, err = operator_mutating(source, "^")
-
-		if (not source) then
-			return nil, err
+				if (not source) then
+					return nil, err
+				end
+			end
 		end
 	end
 
