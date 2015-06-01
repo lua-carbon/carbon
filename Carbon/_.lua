@@ -102,6 +102,10 @@ function Carbon.Deprecated(thing, name)
 		return nil
 	end
 
+	if (not Carbon.Features.Debug) then
+		return thing
+	end
+
 	local t = type(thing)
 
 	if (t == "function") then
