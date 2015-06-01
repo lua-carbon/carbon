@@ -114,7 +114,7 @@ Performs a fast unpack on the table.
 
 <hr />
 ## Properties
-#### <span class="doc-visibility doc-public">public</span> <code><a href="Types#map">map</a></code> Carbon.Features
+#### <span class="doc-visibility doc-public">public</span> <code><a href="Types#set">set</a></code> Carbon.Features
 Contains a set of features and whether they are enabled or disabled.
 <hr/>
 #### <span class="doc-visibility doc-public">public</span> <code><a href="Types#dictionary">dictionary</a></code> Carbon.Support

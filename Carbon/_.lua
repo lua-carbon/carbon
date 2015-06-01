@@ -49,7 +49,7 @@ Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 	Carbon.Version[4] or ""
 )
 
---[[#property public @map Carbon.Features {
+--[[#property public @set Carbon.Features {
 	Contains a set of features and whether they are enabled or disabled.
 }]]
 Carbon.Features = {
