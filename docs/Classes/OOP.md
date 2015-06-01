@@ -4,6 +4,8 @@
 
 Provides object orientation features for Carbon.
 
+TODO: migrate advanced attributes to <code>Allocator</code> attribute.
+
 
 <hr />
 ## Methods

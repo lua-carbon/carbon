@@ -4,6 +4,8 @@
 
 	#description {
 		Provides object orientation features for Carbon.
+
+		TODO: migrate advanced attributes to `Allocator` attribute.
 	}
 ]]
 
@@ -436,9 +438,11 @@ OOP.Object.__base_members.Copy = function(self, target, datawise, map)
 
 	if (not target and class.__attributes.Allocator) then
 		target = class.__attributes.Allocator(self)
+	else
+		target = {}
 	end
 
-	-- Ensure that 
+	-- Ensure that class isn't copied
 	if (not map) then
 		map = {}
 	end
