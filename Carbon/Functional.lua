@@ -18,9 +18,9 @@ local Functional = {}
 
 	Unpacks the table into a tuple. The same as `unpack` and `table.unpack`.
 
-	**DEPRECATED**: Use Carbon.Unpack (1.0.1)
+	**DEPRECATED** in 1.1: Use Carbon.Unpack (added in 1.0.1)
 }]]
-Functional.Unpack = unpack or table.unpack
+Functional.Unpack = Carbon.Deprecated(unpack or table.unpack, "Functional.Unpack")
 
 --[[#method {
 	class public @bool Functional.AllTuple(...)

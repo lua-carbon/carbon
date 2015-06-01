@@ -16,10 +16,16 @@ local Support = Graphene.Support
 
 	Imports Carbon's core utilities into the current file for use.
 
-	Presently imports `Async`, `Assert`, `Error`, `IsObject`, and `LoadString`.
+	Presently imports:
+	- Async
+	- Assert
+	- Error
+	- IsObject
+	- LoadString
+	- Deprecated
 }]]
 function Carbon:ImportCore()
-	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString")
+	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString", "Deprecated")
 end
 
 --[[#property public @dictionary Carbon.Support {
@@ -47,7 +53,8 @@ Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 	Contains a set of features and whether they are enabled or disabled.
 }]]
 Carbon.Features = {
-	Debug = false
+	Debug = false,
+	RemoveDeprecated = false
 }
 
 --[[#method {
@@ -81,6 +88,35 @@ function Carbon.Enabled(feature)
 end
 
 --[[#method {
+	class public @any? Carbon.Deprecated(@any? thing)
+		required thing: The thing to mark as deprecated.
+
+	Wraps an object in a deprecation handler.
+
+	If the `RemoveDeprecated` feature is enabled, this method will return nil.
+
+	If `thing` is a function, it will throw a one-time warning on the first call.
+}]]
+function Carbon.Deprecated(thing, name)
+	if (Carbon.Features.RemoveDeprecated) then
+		return nil
+	end
+
+	local t = type(thing)
+
+	if (t == "function") then
+		name = name or debug.getinfo(thing, "n").name or "[unknown function]"
+
+		return function(...)
+			Carbon.Logging.WarnOnce(name .. " is deprecated")
+			return thing(...)
+		end
+	end
+
+	return thing
+end
+
+--[[#method {
 	class public @coroutine Carbon.Async(@function method)
 		required method: The method to get an asynchronous form of.
 
@@ -96,22 +132,28 @@ Carbon.Async = coroutine.wrap
 		optional message: The message to throw if the assertion fails.
 
 	Asserts, like Lua's assert, but calls tostring on the message explicitly.
+
+	**DEPRECATED** in 1.1: Use `assert` or `Exception:ThrowIf` (added in 1.1)
 }]]
 function Carbon.Assert(condition, message)
 	if (not condition) then
 		error(tostring(message) or "Assertion failed!", 2)
 	end
 end
+Carbon.Assert = Carbon.Deprecated(Carbon.Assert, "Carbon.Assert")
 
 --[[#method {
 	class public @void Carbon.Error(...)
 		required ...: Arguments to pass to Lua's `error` function.
 
 	Throws an error, calling tostring on the message explicitly.
+
+	**DEPRECATED** in 1.1: Use `error` or `Exception:Throw` (added in 1.0)
 }]]
 function Carbon.Error(...)
 	error(tostring((...)), select(2, ...))
 end
+Carbon.Error = Carbon.Deprecated(Carbon.Error, "Carbon.Error")
 
 --[[#method {
 	class public @bool Carbon.IsObject(@any object)
@@ -132,7 +174,7 @@ end
 	class public @function Carbon.Unpack(@table t)
 		required t: The table to unpack
 
-	Performs a fast
+	Performs a fast unpack on the table.
 }]]
 do
 	local _cache = {}

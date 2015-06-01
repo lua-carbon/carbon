@@ -83,7 +83,7 @@ Performs a reduction over the list with the given function.
 
 Unpacks the table into a tuple. The same as <code>unpack</code> and <code>table.unpack</code>.
 
-**DEPRECATED**: Use Carbon.Unpack (1.0.1)
+**DEPRECATED** in 1.1: Use Carbon.Unpack (added in 1.0.1)
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Functional.ViewReverse(<code><a href="Types#list">list</a> list</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#userdata">userdata</a></code></p>

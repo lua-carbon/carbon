@@ -13,6 +13,8 @@ local Carbon, self = ...
 local TemplateEngine = Carbon.TemplateEngine
 local SyntaxErrorException = Carbon.Exceptions.SyntaxErrorException
 
+Carbon.Logging:ImportAll()
+
 local loadstring = loadstring or load
 
 --[[#property public @TemplateEngine Engine {
@@ -352,7 +354,7 @@ function Carbide.ParseTemplated(source, settings)
 	end
 end
 
-local features = {
+Carbide.FeaturesByLevel = {
 	[1] = {
 		operator_lambda,
 		operator_bang,
@@ -378,6 +380,13 @@ local features = {
 	}
 }
 
+Carbide.Extensions = {
+	Annotations = function(source)
+		WarnOnce("Annotations have been enabled but are not implemented!")
+		return source
+	end
+}
+
 --[[#method {
 	class public @string Carbide.ParseCore(@string source, [@table settings])
 		required source: The source to parse.
@@ -398,10 +407,16 @@ function Carbide.ParseCore(source, settings)
 	end
 
 	local extensions
-	if (settings.EXTENSIONS) then
-		extensions = settings.EXTENSIONS
+	if (settings.CARBIDE_EXTENSIONS) then
+		extensions = settings.CARBIDE_EXTENSIONS
 	else
 		extensions = {}
+
+		for nameset in source:gmatch("#CARBIDE_EXTENSIONS ([^\r\n]+)") do
+			for name in nameset:gmatch("[^%s,]+") do
+				table.insert(extensions, name)
+			end
+		end
 	end
 
 	local report_out
@@ -416,7 +431,7 @@ function Carbide.ParseCore(source, settings)
 	source, str_tab = strip_strings(source)
 
 	local err
-	for level, set in ipairs(features) do
+	for level, set in ipairs(Carbide.FeaturesByLevel) do
 		if (feature_level >= level) then
 			for key, operator in ipairs(set) do
 				source, err = operator(source)
@@ -428,14 +443,28 @@ function Carbide.ParseCore(source, settings)
 		end
 	end
 
+	for key, name in ipairs(extensions) do
+		local extension = Carbide.Extensions[name]
+
+		if (extension) then
+			source, err = extension(source)
+
+			if (not source) then
+				return nil, err
+			end
+		else
+			WarnOnce(("Unknown extension '%s'!"):format(name))
+		end
+	end
+
 	source = replace_strings(source, str_tab)
 
 	if (report_out) then
 		if (report_out == "stdout") then
 			print(source)
 		else
-			print(report_out)
 			local handle, err = io.open(report_out, "wb")
+
 			if (not handle) then
 				error(("Couldn't write compiled output to %q: %s"):format(tostring(report_out), err))
 			end

@@ -23,11 +23,11 @@ Creates a static class, enabling it to inherit from other objects without having
 
 Creates a new, empty class.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:RegisterAttribute(<code><a href="Types#string">string</a> type, <a href="Types#string">string</a> name, function method</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:RegisterAttribute(<code><a href="Types#string">string</a> type, <a href="Types#any">any</a> identifier, function method</code>)</h4>
 <p class="method-returns bold">Returns <code>void</code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `type`: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).</li>
-<li><span class="doc-arg-level doc-required">required</span>  `name`: The name of the attribute as a class would call it.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `identifier`: The identifier of the attribute.</li>
 <li><span class="doc-arg-level doc-required">required</span>  `method`: The class applicator. For function signatures, see below.</li>
 </ul>
 
@@ -41,10 +41,10 @@ Registers a new custom class attribute.
 
 <ul><li>Copy: <code><a href="Types#void">void</a> function(original, copy)</code><br />	Called after the copied object has been allocated and filled.</li></ul>
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:SetAttributeInherited(<code><a href="Types#string">string</a> name, <a href="Types#bool">bool</a> inherited</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> OOP:SetAttributeInherited(<code><a href="Types#any">any</a> identifier, <a href="Types#bool">bool</a> inherited</code>)</h4>
 <p class="method-returns bold">Returns <code>void</code></p>
 <ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `name`: The name of the attribute to define a value for.</li>
+<li><span class="doc-arg-level doc-required">required</span>  `identifier`: The identifier of the attribute to define a value for.</li>
 <li><span class="doc-arg-level doc-required">required</span>  `inherited`: Whether inheriting a class will also inherit this attribute.</li>
 </ul>
 

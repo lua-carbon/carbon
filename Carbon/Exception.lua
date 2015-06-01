@@ -46,4 +46,17 @@ function Exception:Throw(level)
 	error(self.Message, (level or 0) + 1)
 end
 
+--[[#method {
+	object public @void Exception:ThrowIf(@bool condition, [@uint level])
+		required condition: The condition determining whether this exception should throw.
+		optional level: Passed onto Lua's error method determining the level of the error.
+
+	Throws the exception if a given condition is truthy. Similar to Lua's `assert`.
+}]]
+function Exception:ThrowIf(condition, level)
+	if (condition) then
+		self:Throw(level)
+	end
+end
+
 return Exception

@@ -15,7 +15,8 @@ This is the Carbon core, containing all other modules and some utilities.
 
 Imports Carbon's core utilities into the current file for use.
 
-Presently imports <code>Async</code>, <code>Assert</code>, <code>Error</code>, <code>IsObject</code>, and <code>LoadString</code>.
+Presently imports:
+<ul><li>Async<li>Assert</li><li>Error</li><li>IsObject</li><li>LoadString</li><li>Deprecated</li></li></ul>
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Assert(<code><a href="Types#bool">bool</a> condition, [<a href="Types#string">string</a> message]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
@@ -25,6 +26,8 @@ Presently imports <code>Async</code>, <code>Assert</code>, <code>Error</code>, <
 </ul>
 
 Asserts, like Lua's assert, but calls tostring on the message explicitly.
+
+**DEPRECATED** in 1.1: Use <code>assert</code> or <code>Exception:ThrowIf</code> (added in 1.1)
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Async(<code><a href="Types#function">function</a> method</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#coroutine">coroutine</a></code></p>
@@ -35,6 +38,18 @@ Asserts, like Lua's assert, but calls tostring on the message explicitly.
 Returns a version of the given function that is async.
 
 Presently an alias for Lua's <code>coroutine.wrap</code>, but this may change in the future.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Deprecated(<code><a href="Types#any">any</a>? thing</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#any">any</a>?</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `thing`: The thing to mark as deprecated.</li>
+</ul>
+
+Wraps an object in a deprecation handler.
+
+If the <code>RemoveDeprecated</code> feature is enabled, this method will return nil.
+
+If <code>thing</code> is a function, it will throw a one-time warning on the first call.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Disable(<code><a href="Types#any">any</a> feature</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
@@ -67,6 +82,8 @@ Returns whether a feature is enabled.
 </ul>
 
 Throws an error, calling tostring on the message explicitly.
+
+**DEPRECATED** in 1.1: Use <code>error</code> or <code>Exception:Throw</code> (added in 1.0)
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.IsObject(<code><a href="Types#any">any</a> object</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#bool">bool</a></code></p>
@@ -93,7 +110,7 @@ Essentially backports Lua 5.2's load function to LuaJIT and Lua 5.1.
 <li><span class="doc-arg-level doc-required">required</span>  `t`: The table to unpack</li>
 </ul>
 
-Performs a fast
+Performs a fast unpack on the table.
 
 <hr />
 ## Properties

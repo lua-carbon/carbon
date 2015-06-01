@@ -80,9 +80,9 @@ OOP.Attributes = {
 }
 
 --[[#method {
-	class public void OOP:RegisterAttribute(@string type, @string name, function method)
+	class public void OOP:RegisterAttribute(@string type, @any identifier, function method)
 		required type: The type of attribute (Class, PreInitialize, PostInitialize, or Copy).
-		required name: The name of the attribute as a class would call it.
+		required identifier: The identifier of the attribute.
 		required method: The class applicator. For function signatures, see below.
 
 	Registers a new custom class attribute.
@@ -102,7 +102,7 @@ OOP.Attributes = {
 	- Copy: `@void function(original, copy)`
 		Called after the copied object has been allocated and filled.
 }]]
-function OOP:RegisterAttribute(type, name, method)
+function OOP:RegisterAttribute(type, identifier, method)
 	local typeset = self.Attributes[type]
 
 	if (not typeset) then
@@ -111,14 +111,14 @@ function OOP:RegisterAttribute(type, name, method)
 
 	local out
 	for i, attribute in ipairs(typeset) do
-		if (attribute[1] == name) then
+		if (attribute[1] == identifier) then
 			out = attribute
 			break
 		end
 	end
 
 	if (not out) then
-		out = {name}
+		out = {identifier}
 		table.insert(typeset, out)
 	end
 
@@ -126,14 +126,14 @@ function OOP:RegisterAttribute(type, name, method)
 end
 
 --[[#method {
-	class public void OOP:SetAttributeInherited(@string name, @bool inherited)
-		required name: The name of the attribute to define a value for.
+	class public void OOP:SetAttributeInherited(@any identifier, @bool inherited)
+		required identifier: The identifier of the attribute to define a value for.
 		required inherited: Whether inheriting a class will also inherit this attribute.
 
 	Marks an attribute as inherited or not inherited explicitly.
 }]]
-function OOP:SetAttributeInherited(name, inherited)
-	self.__attribute_inheritance[name] = not not inherited
+function OOP:SetAttributeInherited(identifier, inherited)
+	self.__attribute_inheritance[identifier] = not not inherited
 end
 
 -- PooledInstantiation attribute
@@ -361,14 +361,14 @@ function OOP.Object:PlacementNew(instance, ...)
 	end
 
 	if (not self.__attributes.EXT_LJ_Struct) then
-		instance.self = instance.self or instance
+		instance.self = Carbon.Deprecated(instance.self or instance)
+
 		instance.class = instance.class or self.__class_reference
 		instance.Is = instance.Is or self.__is_reference
 
 		-- InstanceIndirection attribute wraps the object in a userdata
 		-- This allows a __gc metamethod with Lua 5.1 and LuaJIT.
 		-- As a side effect, 'self' becomes a userdata
-		-- Get the internal table with self.self
 		instance = handle_indirection(self, instance)
 		apply_metatable(self, instance)
 	end

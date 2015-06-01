@@ -26,6 +26,15 @@ Creates a new generic exception with the given message.
 </ul>
 
 Throws the exception as a traditional Lua error.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Exception:ThrowIf(<code><a href="Types#bool">bool</a> condition, [<a href="Types#uint">uint</a> level]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `condition`: The condition determining whether this exception should throw.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `level`: Passed onto Lua's error method determining the level of the error.</li>
+</ul>
+
+Throws the exception if a given condition is truthy. Similar to Lua's <code>assert</code>.
 
 <hr />
 ## Properties

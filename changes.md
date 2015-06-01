@@ -1,20 +1,29 @@
 # Carbon Change Log
 
 ![1.1.0](https://img.shields.io/badge/1.1.0-in_development-orange.svg?style=flat-square)
-- Improved Carbide parsing rigidity
-- Improved overall math performance
+- Improved Carbide parsing rigidity.
+- Improved overall math performance.
+- Attribute identifiers now do not have to be strings.
+- Added `Carbon.Deprecated` to handle deprecated things.
+- Added `#CARBIDE_EXTENSIONS` directive to enable optional extensions.
+- Added `Logging` module for advanced logging.
+- Added `Bench` class for benchmarking.
+- Added `Exception:ThrowIf` as a `Carbon.Assert` replacement.
 - Added fat-arrow lambda syntax (`=>`)
-- Added `Bench` class for benchmarking
-- Added custom allocators in the form of the `Allocator` attribute
+- Added custom allocators in the form of the `Allocator` attribute.
 - Added new Quaternion methods:
 	- `Quaternion:LooseConjugate`
 	- `Quaternion:LooseMultiplyLooseLoose`
 	- `Quaternion:TransformVector`
 	- `Quaternion:MultiplyLoose!`
-- Deprecated `Functional.Unpack`; use `Carbon.Unpack` instead
+- Deprecated `Functional.Unpack`; use `Carbon.Unpack` instead.
+- Deprecated `Object.self` for indirected instances.
+- Deprecated `Carbon.Error` and `Carbon.Assert`:
+	- Use `Exception:Throw` and `Exception:ThrowIf` instead with exceptions.
+	- Use `error` and `assert` for other objects.
 - Fixed `Carbon.IsObject` failing to detect `Is` object.
-- Fixed attributes applying when they aren't inherited
-- Fixed Matrix3x3 quaternion methods
+- Fixed attributes applying when they aren't inherited.
+- Fixed Matrix3x3 quaternion methods.
 
 ![1.0.1](https://img.shields.io/badge/1.0.1-latest-brightgreen.svg?style=flat-square)
 - Upgraded to Graphene 1.1.3, fixes several issues
