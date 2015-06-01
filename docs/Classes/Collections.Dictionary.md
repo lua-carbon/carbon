@@ -37,9 +37,6 @@ Allows method-style syntax to be used on the object.
 
 Performs a self-reference fixing deep copy from one table into another.
 Handles self-references properly.
-
-FIXME: datawise = 1 triggers a shallow datawise copy (only first layer is datawise)
-This could be more elegant.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Dictionary.DeepCopyMerge(<code><a href="Types#table">table</a> self, <a href="Types#table">table</a> to</code>)</h4>
 <p class="method-returns bold">Returns <code>table</code></p><h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Dictionary:DeepCopyMerge(<code><a href="Types#table">table</a> to</code>)</h4>
