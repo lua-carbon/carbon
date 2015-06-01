@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.3
+	Graphene 1.1.4
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 3}
+local g_version = {1, 1, 4}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -167,7 +167,7 @@ elseif (support.lua52) then
 	end
 end
 
-if (support.jit or support.lua51) then
+if (support.jit) then
 	support.xpcallargs = true
 end
 
@@ -456,7 +456,7 @@ else
 		local varg = {...}
 
 		return xpcall(function()
-			method(unpack(varg))
+			return method((unpack or table.unpack)(varg))
 		end, errhand)
 	end
 end

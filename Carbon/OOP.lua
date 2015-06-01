@@ -356,12 +356,12 @@ function OOP.Object:PlacementNew(instance, ...)
 
 	-- These attributes all disable member copying
 	if (not (self.__attributes.SparseInstances or self.__attributes.ExplicitInitialization or self.__attributes.EXT_LJ_Struct)) then
-		Dictionary.DeepCopy(self.__base_members, instance, 1)
-		Dictionary.DeepCopy(self.__members, instance, 1)
+		Dictionary.DeepCopy(self.__base_members, instance, false)
+		Dictionary.DeepCopy(self.__members, instance, false)
 	end
 
 	if (not self.__attributes.EXT_LJ_Struct) then
-		instance.self = Carbon.Deprecated(instance.self or instance)
+		instance.self = instance.self or instance
 
 		instance.class = instance.class or self.__class_reference
 		instance.Is = instance.Is or self.__is_reference
@@ -427,11 +427,9 @@ end
 
 	Copies the given object.
 }]]
-OOP.Object.__base_members.Copy = function(self, target)
+OOP.Object.__base_members.Copy = function(self, target, datawise, map)
 	local class = self.class
 
-	-- Hotfix for Kyle
-	-- TODO: Investigate
 	if (not class) then
 		return self
 	end
@@ -440,7 +438,13 @@ OOP.Object.__base_members.Copy = function(self, target)
 		target = class.__attributes.Allocator(self)
 	end
 
-	local copy = Dictionary.DeepCopy(self.self, target, true)
+	-- Ensure that 
+	if (not map) then
+		map = {}
+	end
+	map[class] = class
+
+	local copy = Dictionary.DeepCopy(self, target, false, map)
 
 	copy = handle_indirection(class, copy)
 	apply_metatable(class, copy)
@@ -507,5 +511,13 @@ end
 function OOP:StaticClass()
 	return OOP:Class(self.StaticObject)
 end
+
+Carbon.Metadata:Set(OOP.Object, {
+	Name = "OOP.Object"
+})
+
+Carbon.Metadata:Set(OOP.StaticObject, {
+	Name = "OOP.StaticObject"
+})
 
 return OOP

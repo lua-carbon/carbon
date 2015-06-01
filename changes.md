@@ -1,6 +1,7 @@
 # Carbon Change Log
 
 ![1.1.0](https://img.shields.io/badge/1.1.0-in_development-orange.svg?style=flat-square)
+- Update to Graphene 1.1.4, fixes Lua 5.1 compatibility
 - Improved Carbide parsing rigidity.
 - Improved overall math performance.
 - Attribute identifiers now do not have to be strings.
@@ -22,6 +23,7 @@
 - Deprecated `Carbon.Error` and `Carbon.Assert`:
 	- Use `Exception:Throw` and `Exception:ThrowIf` instead with exceptions.
 	- Use `error` and `assert` for other objects.
+- Fixed several OOP issues relating to copying.
 - Fixed `Carbon.IsObject` failing to detect `Is` object.
 - Fixed attributes applying when they aren't inherited.
 - Fixed Matrix3x3 quaternion methods.
