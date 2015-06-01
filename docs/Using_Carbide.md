@@ -40,6 +40,8 @@ Directives can appear in any place in the file, they affect compilation globally
 - `#CARBIDE_FEATURE_LEVEL <level>`
 	- Denotes that this file uses the given Carbide feature level
 	- Default: `#CARBIDE_FEATURE_LEVEL 2`
+- `#CARBIDE_EXTENSIONS <extension>, <extension>, ...`
+	- Enables Carbide extensions with given names.
 - `#TEMPLATES_ENABLED`
 	- Enables the templating engine for inline metaprogramming.
 	- Templates can output Carbide Lua and it will be parsed correctly.
