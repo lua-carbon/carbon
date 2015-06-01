@@ -6,8 +6,6 @@ local function main()
 
 	print("Test Suite for Carbon " .. Carbon.VersionString)
 
-	local pass, fail = 0, 0
-
 	local Testing = Carbon.Testing
 	Testing:RunAllTests()
 	local result = Testing:GetResults()
