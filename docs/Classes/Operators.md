@@ -4,6 +4,8 @@
 
 Provides functional forms of operators. Useful for having a common base.
 
+**DEPRECATED** in 1.1: Use fat-arrow lambdas or your own functions instead.
+
 
 <hr />
 ## Methods

@@ -4,11 +4,13 @@
 
 	#description {
 		Provides functional forms of operators. Useful for having a common base.
+
+		**DEPRECATED** in 1.1: Use fat-arrow lambdas or your own functions instead.
 	}
 ]]
 
 local Carbon, self = ...
-local Operators = {}
+local Operators = Carbon.Deprecated {}
 
 local Graphene = Carbon:GetGraphene()
 local lua52 = Graphene.Support.lua52

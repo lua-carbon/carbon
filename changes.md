@@ -18,12 +18,14 @@
 	- `Quaternion:MultiplyLoose!`
 - Deprecated `Functional.Unpack`; use `Carbon.Unpack` instead.
 - Deprecated `Object.self` for indirected instances.
+- Deprecated `Operators` now that lambdas are within reach.
 - Deprecated `Carbon.Error` and `Carbon.Assert`:
 	- Use `Exception:Throw` and `Exception:ThrowIf` instead with exceptions.
 	- Use `error` and `assert` for other objects.
 - Fixed `Carbon.IsObject` failing to detect `Is` object.
 - Fixed attributes applying when they aren't inherited.
 - Fixed Matrix3x3 quaternion methods.
+- Fixed `Functional.Map` changing the original list.
 
 ![1.0.1](https://img.shields.io/badge/1.0.1-latest-brightgreen.svg?style=flat-square)
 - Upgraded to Graphene 1.1.3, fixes several issues

@@ -4,6 +4,8 @@
 
 	#description {
 		Provides an interface for functional programming.
+
+		*This module may be slated for significant changes in the future.*
 	}
 ]]
 
@@ -146,13 +148,17 @@ end
 		required list: The list of values to map over.
 
 	Uses a function to perform a mapping of values.
+
+	This method (erroneously) modified the list before 1.1.
 }]]
 function Functional.Map(method, list)
+	local out = {}
+
 	for key, value in ipairs(list) do
-		list[key] = method(value)
+		out[key] = method(value)
 	end
 
-	return list
+	return out
 end
 
 --[[#method {

@@ -4,6 +4,8 @@
 
 Provides an interface for functional programming.
 
+*This module may be slated for significant changes in the future.*
+
 
 <hr />
 ## Methods
@@ -56,6 +58,8 @@ Uses a function to filter a list of values.
 </ul>
 
 Uses a function to perform a mapping of values.
+
+This method (erroneously) modified the list before 1.1.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Functional.Range(<code>number a, number b</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#list">list</a></code></p>
