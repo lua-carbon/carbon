@@ -10,7 +10,12 @@
 local Carbon = (...)
 local Graphene = Carbon:GetGraphene()
 
-local write = io.write
+local out = io.stdout
+
+local eol = "\n"
+if (Carbon.Support.windows) then
+	eol = "\r\n"
+end
 
 local Logging = Graphene:MakeImportable {
 	ReportingLevel = 2,
@@ -19,10 +24,14 @@ local Logging = Graphene:MakeImportable {
 	OncedWarnings = {}
 }
 
+function Logging.SetOutputHandle(handle)
+	out = handle
+end
+
 function Logging.Message(msg)
-	write("MESSAGE: ")
-	write(msg)
-	write("\n")
+	out:write("MESSAGE: ")
+	out:write(msg)
+	out:write(eol)
 end
 
 function Logging.MessageOnce(msg)
@@ -35,9 +44,9 @@ function Logging.MessageOnce(msg)
 end
 
 function Logging.Notice(msg)
-	write("NOTICE: ")
-	write(msg)
-	write("\n")
+	out:write("NOTICE: ")
+	out:write(msg)
+	out:write(eol)
 end
 
 function Logging.NoticeOnce(msg)
@@ -50,9 +59,9 @@ function Logging.NoticeOnce(msg)
 end
 
 function Logging.Warn(msg)
-	write("WARNING: ")
-	write(msg)
-	write("\n")
+	out:write("WARNING: ")
+	out:write(msg)
+	out:write(eol)
 end
 
 function Logging.WarnOnce(msg)
@@ -65,9 +74,9 @@ function Logging.WarnOnce(msg)
 end
 
 function Logging.Err(msg)
-	write("ERROR: ")
-	write(msg)
-	write("\n")
+	out:write("ERROR: ")
+	out:write(msg)
+	out:write(eol)
 
 	error(msg, 2)
 end
