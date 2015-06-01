@@ -3,24 +3,34 @@ Once you have a [Carbon application or library set up](Getting_Started) you can 
 
 Carbide Lua is a direct superset of Lua, implementing features in 'levels' that add various functionality at the compiler level. Files that end in a `.clua` extension are Carbide Lua files.
 
-## Features and Levels
-The following levels and features are exposed by Carbide Lua:
+## Feature Levels and Extensions
+The following feature levels are exposed by Carbide Lua:
 
 - Level 1:
-	- Bang methods for in-place operations (`object:Bang!()` translates to `object:BangInPlace()`)
-	- Increment operator (`number++` translates to `number = number + 1`, properly handles sub-expressions)
-	- Mutating operators (`number += 2` translates to `number = number + 2`, properly handles sub-expressions)
+	- Bang methods for in-place operations
+		- `object:Bang!()` translates to `object:BangInPlace()`
+	- Increment operator
+		- `number++` translates to `number = number + 1`
+	- Mutating operators
+		- `number += 2` translates to `number = number + 2`
 		- Supported operators: `+=`, `-=`, `*=`, `/=`, `^=`
-	- Direct Arrow Notation (DAN) for array lookups (`print(vec2->x, vec2->y)` translates to `print(vec2[1], vec2[2])`)
+	- Direct Arrow Notation (DAN) for array lookups
+		- `print(vec2->x, vec2->y)` translates to `print(vec2[1], vec2[2])`
 		- Similar to GLSL's vector member lookups
 		- Supports the following sets of lookups:
 			- `(x, y, z, w)`
 			- `(r, g, b, a)`
 			- `(s, t, p, q)`
 			- `(u, v)`
-		- Lookups can be mixed (`print(vec2->x, vec2->r, vec2->y)` translates to `print(vec2[1], vec2[1], vec2[2])`)
-		- Lookups can be chained (`print(vec3->xyz)` is the same as `print(vec3->x, vec3->y, vec3->z)`)
-		- Lookups can **swizzle** (`print(color3->gbr` is a fast way to switch around a color)
+		- Lookups can be mixed
+			- `print(vec2->x, vec2->r, vec2->y)` translates to `print(vec2[1], vec2[1], vec2[2])`
+		- Lookups can be chained
+			- `print(vec3->xyz)` is the same as `print(vec3->x, vec3->y, vec3->z)`
+		- Lookups can **swizzle** 
+			- `print(color3->gbr` is a fast way to switch around a color
+	- Fat-arrow lambdas (added in 1.1)
+		- `(x) => x^2` translates to `function(x) return x^2 end`
+		- Parentheses are required for both definitions and calls
 
 ## Directives
 Carbide also exposes a set of directives to control the flow of compilation.
