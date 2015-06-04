@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.5
+	Graphene 1.1.7
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 5}
+local g_version = {1, 1, 7}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -607,6 +607,8 @@ if (support.love) then
 		local paths = file_paths(path, false, self.Path)
 
 		for i, filepath in ipairs(paths) do
+			filepath = filepath:gsub("^%./", "")
+
 			if (is_file(filepath)) then
 				local loader = global_loader or loader_for_filepath(filepath)
 
@@ -637,6 +639,8 @@ if (support.love) then
 		local paths = file_paths(path, true, self.Path)
 
 		for i, filepath in ipairs(paths) do
+			filepath = filepath:gsub("^%./", "")
+			
 			if (is_directory(filepath)) then
 				local directory = directory_buffer[#directory_buffer]
 				directory_buffer[#directory_buffer] = nil
@@ -666,7 +670,7 @@ end
 -- Only support the full filesystem if we have IO
 -- No FullyLoad method without LFS
 -- FS provider to read from the actual filesystem
-if (support.io) then
+if (support.io and (not support.love or USE_IO)) then
 	local full_fs = {
 		ID = "io",
 		Name = "Full Filesystem",
@@ -732,7 +736,7 @@ if (support.io) then
 			end
 		else
 			function is_directory(path)
-				return execute_success(("stat %q"):format(path))
+				return execute_success(("stat %q >/dev/null"):format(path))
 			end
 		end
 	end
