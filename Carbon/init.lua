@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.4
+	Graphene 1.1.5
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 4}
+local g_version = {1, 1, 5}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -570,7 +570,7 @@ if (support.love) then
 	local love_fs = {
 		ID = "love",
 		Name = "LOVE Filesystem",
-		Path = {"", g_root}
+		Path = {g_root}
 	}
 
 	table.insert(G.FS.Providers, love_fs)
@@ -670,7 +670,7 @@ if (support.io) then
 	local full_fs = {
 		ID = "io",
 		Name = "Full Filesystem",
-		Path = {"", g_root}
+		Path = {g_root}
 	}
 
 	table.insert(G.FS.Providers, full_fs)
@@ -702,31 +702,19 @@ if (support.io) then
 		end
 
 		local execute_success
-		if (support.jit) then
+		if (support.jit and support.windows) then
+
 			local ffi = require("ffi")
 
-			if (support.windows) then
-				ffi.cdef([[
-					typedef struct _iobuf FILE;
-					FILE* _popen(const char* command, const char* mode);
-					int _pclose(FILE* stream);
-				]])
+			ffi.cdef([[
+				typedef struct _iobuf FILE;
+				FILE* _popen(const char* command, const char* mode);
+				int _pclose(FILE* stream);
+			]])
 
-				function execute_success(cmd)
-					local f = ffi.C._popen(cmd, "rb")
-					return (ffi.C._pclose(f) == 0)
-				end
-			else
-				ffi.cdef([[
-					typedef struct _iobuf FILE;
-					FILE* popen(const char* command, const char* mode);
-					int pclose(FILE* stream);
-				]])
-
-				function execute_success(cmd)
-					local f = ffi.C.popen(cmd, "rb")
-					return (ffi.C.pclose(f) == 0)
-				end
+			function execute_success(cmd)
+				local f = ffi.C._popen(cmd, "rb")
+				return (ffi.C._pclose(f) == 0)
 			end
 		elseif (support.lua51) then
 			function execute_success(cmd)
@@ -744,7 +732,7 @@ if (support.io) then
 			end
 		else
 			function is_directory(path)
-				return execute_success(("stat %q"):format(path)) == 0
+				return execute_success(("stat %q"):format(path))
 			end
 		end
 	end
