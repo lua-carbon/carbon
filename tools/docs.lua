@@ -235,7 +235,7 @@ local function parse_method_declaration(source, out)
 	out.returns = sans_vis
 	out.name = name
 	out.args = args:sub(2, -2)
-	out.declaration = ("%s %s%s"):format(returns, name, args)
+	out.declaration = ("%s %s%s"):format(sans_vis, name, args)
 	out.aka = {}
 
 	return finish

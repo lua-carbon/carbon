@@ -1,7 +1,7 @@
 # Carbon Change Log
 
-![1.1.0](https://img.shields.io/badge/1.1.0-in_development-orange.svg?style=flat-square)
-- Update to Graphene 1.1.4, fixes Lua 5.1 compatibility
+![1.1.0](https://img.shields.io/badge/1.1.0-latest-brightgreen.svg?style=flat-square)
+- Update to Graphene 1.1.7, fixes Lua 5.1 and LOVE compatibility
 - Improved Carbide parsing rigidity.
 - Improved overall math performance.
 - Attribute identifiers now do not have to be strings.
@@ -29,7 +29,7 @@
 - Fixed Matrix3x3 quaternion methods.
 - Fixed `Functional.Map` changing the original list.
 
-![1.0.1](https://img.shields.io/badge/1.0.1-latest-brightgreen.svg?style=flat-square)
+![1.0.1](https://img.shields.io/badge/1.0.1-unsupported-red.svg?style=flat-square)
 - Upgraded to Graphene 1.1.3, fixes several issues
 - Added missing `Carbon.Unpack` method for faster unpacking
 - Added alias to `Graphene.Support` as `Carbon.Support`

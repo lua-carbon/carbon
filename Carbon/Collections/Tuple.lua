@@ -11,11 +11,12 @@
 local Carbon, self = ...
 local OOP = Carbon.OOP
 
+local vunpack = unpack
 local unpack
 if (Carbon.Support.jit and jit.status()) then
 	unpack = Carbon.Unpack
 else
-	unpack = unpack or table.unpack
+	unpack = vunpack or table.unpack
 end
 
 local Tuple = OOP:Class()
