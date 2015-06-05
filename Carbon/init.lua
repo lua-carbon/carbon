@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.7
+	Graphene 1.1.8
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 7}
+local g_version = {1, 1, 8}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -318,6 +318,50 @@ local function loader_for_filepath(filepath)
 
 	-- We couldn't find a loader
 	return nil
+end
+
+--[[
+	table dictionary_deep_copy(table from, [table to])
+		from: The table to source data from.
+		to: The table to copy data into.
+
+	Performs a deep copymerge from one table to another.
+]]
+local function dictionary_deep_copy(from, to)
+	to = to or {}
+
+	for key, value in pairs(from) do
+		if (type(value) == "table") then
+			to[key] = dictionary_deep_copy(value)
+		else
+			to[key] = value
+		end
+	end
+
+	return to
+end
+
+--[[
+	table dictionary_deep_copymerge(table from, [table to])
+		from: The table to source data from.
+		to: The table to copy data into.
+
+	Performs a deep copymerge from one table to another.
+]]
+local function dictionary_deep_copymerge(from, to)
+	to = to or {}
+
+	for key, value in pairs(from) do
+		if (to[key] == nil) then
+			if (type(value) == "table") then
+				to[key] = dictionary_deep_copy(value)
+			else
+				to[key] = value
+			end
+		end
+	end
+
+	return to
 end
 
 --[[
@@ -1310,9 +1354,7 @@ end
 	Makes an object an Importable.
 ]]
 function G:MakeImportable(object)
-	setmetatable(object, {
-		__index = self.Importable
-	})
+	dictionary_deep_copymerge(self.Importable, object)
 
 	return object
 end
