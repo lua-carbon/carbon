@@ -1,6 +1,10 @@
 # Carbon Change Log
 
-![1.1.0](https://img.shields.io/badge/1.1.0-latest-brightgreen.svg?style=flat-square)
+![1.1.1](https://img.shields.io/badge/1.1.1-latest-brightgreen.svg?style=flat-square)
+- Added `Object.Class` and `Class.ClassPointer` for referencing classes
+- Deprecated `Object.class` and `Class.__class_reference`
+
+![1.1.0](https://img.shields.io/badge/1.1.0-unsupported-red.svg?style=flat-square)
 - Update to Graphene 1.1.7, fixes Lua 5.1 and LOVE compatibility
 - Improved Carbide parsing rigidity.
 - Improved overall math performance.

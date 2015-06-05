@@ -330,6 +330,10 @@ function OOP.Object:PlacementNew(instance, ...)
 				local index = Dictionary.ShallowCopy(self.__base_members)
 				Dictionary.ShallowCopy(self.__members, index)
 
+				if (not index.Class) then
+					index.Class = self.ClassPointer
+				end
+
 				if (not index.class) then
 					index.class = self.__class_reference
 				end
@@ -363,8 +367,9 @@ function OOP.Object:PlacementNew(instance, ...)
 	end
 
 	if (not self.__attributes.EXT_LJ_Struct) then
-		instance.self = instance.self or instance
+		instance.self = Carbon.Deprecated(instance.self or instance)
 
+		instance.Class = instance.Class or self.ClassPointer
 		instance.class = instance.class or self.__class_reference
 		instance.Is = instance.Is or self.__is_reference
 
@@ -430,11 +435,13 @@ end
 	Copies the given object.
 }]]
 OOP.Object.__base_members.Copy = function(self, target, datawise, map)
-	local class = self.class
+	local class_pointer = self.Class
 
-	if (not class) then
+	if (not class_pointer) then
 		return self
 	end
+
+	local class = class_pointer()
 
 	if (not target and class.__attributes.Allocator) then
 		target = class.__attributes.Allocator(self)
@@ -490,8 +497,12 @@ function OOP:Class(based_on)
 
 	class.Is[class] = true
 
-	class.__class_reference = newproxy(true)
+	class.__class_reference = Carbon.Deprecated(newproxy(true))
 	getmetatable(class.__class_reference).__index = class
+
+	class.ClassPointer = function()
+		return class
+	end
 
 	class.__is_reference = newproxy(true)
 	getmetatable(class.__is_reference).__index = class.Is
