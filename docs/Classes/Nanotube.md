@@ -17,8 +17,8 @@ Funnels events and provides an event loop.
 
 Creates or initializes a <a href="Classes/Nanotube">Nanotube</a> object.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:Fire(<code><a href="Types#string">string</a> name, ...</code>)</h4>
-<p class="method-returns bold">Returns <code><a href="Types#unumber">unumber</a></code></p>
+<h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> (<code><a href="Types#unumber">unumber</a>, <a href="Types#bool">bool</a>?</code>)</h4>
+<p class="method-returns bold">Returns <code></code></p>
 <ul class="doc-arg-list">
 <li><span class="doc-arg-level doc-required">required</span>  `name`: The name of the event to fire.</li>
 <li><span class="doc-arg-level doc-optional">optional</span>  `...`: The arguments to pass to handlers for this event.</li>
@@ -27,6 +27,8 @@ Creates or initializes a <a href="Classes/Nanotube">Nanotube</a> object.
 Fires an event by name and passes parameters to the handlers registered to it.
 
 Returns the number of handlers that were triggered by this event.
+
+A second parameter will be returned if the event was canceled.
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-object">object</span> <span class="doc-visibility doc-public">public</span> Nanotube:On(<code><a href="Types#string">string</a> name, <a href="Types#function">function</a> method, [<a href="Types#number">number</a> priority]</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>

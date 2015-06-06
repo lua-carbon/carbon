@@ -141,13 +141,19 @@ local function fire_predicate(self, name, ...)
 	end
 
 	local count = 0
+	local died = false
 	local remove = {}
 	for key, hooked in ipairs(container) do
 		local result = hooked[1](...)
 		count = count + 1
 
-		if (hooked[3] or result == "unhook") then
+		if (hooked[3] or result == "unhook" or result == "die") then
 			table.insert(remove, key)
+		end
+
+		if (result == "cancel" or result == "die") then
+			died = true
+			break
 		end
 	end
 
@@ -155,21 +161,32 @@ local function fire_predicate(self, name, ...)
 		table.remove(container, key)
 	end
 
-	return count
+	return count, died
 end
 
 --[[#method 1.1 {
-	object public @unumber Nanotube:Fire(@string name, ...)
+	object public (@unumber, @bool?) Nanotube:Fire(@string name, ...)
 		required name: The name of the event to fire.
 		optional ...: The arguments to pass to handlers for this event.
 
 	Fires an event by name and passes parameters to the handlers registered to it.
 
 	Returns the number of handlers that were triggered by this event.
+
+	A second parameter will be returned if the event was canceled.
 }]]
 function Nanotube:Fire(name, ...)
-	fire_predicate(self, "*", name, ...)
-	fire_predicate(self, name, ...)
+	local count = 0
+	local add_star, cancel = fire_predicate(self, "*", name, ...)
+
+	count = count + add_star
+	if (cancel) then
+		return count
+	end
+
+	count = count + fire_predicate(self, name, ...)
+
+	return count
 end
 
 --[[#method {

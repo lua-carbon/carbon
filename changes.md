@@ -1,5 +1,9 @@
 # Carbon Change Log
 
+![1.2.0](https://img.shields.io/badge/1.1.2-in_development-orange.svg?style=flat-square)
+- Added "cancel" and "die" return strings for Nanotube events
+- Fixed return value of `Nanotube:Fire`
+
 ![1.1.2](https://img.shields.io/badge/1.1.2-released-brightgreen.svg?style=flat-square)
 - Update to Graphene 1.1.9, multiple fixes
 - Fixed documentation format to use `extra_css`
