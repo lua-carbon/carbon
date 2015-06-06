@@ -181,12 +181,12 @@ function Nanotube:Fire(name, ...)
 
 	count = count + add_star
 	if (cancel) then
-		return count
+		return count, true
 	end
 
-	count = count + fire_predicate(self, name, ...)
+	local add_ev, cancel = fire_predicate(self, name, ...)
 
-	return count
+	return count + add_ev, cancel
 end
 
 --[[#method {
