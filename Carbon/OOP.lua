@@ -14,9 +14,13 @@ local Carbon = (...)
 local Dictionary = Carbon.Collections.Dictionary
 local List = Carbon.Collections.List
 
-local ok, ffi = pcall(require, "ffi")
-if (not ok) then
-	ffi = nil
+local ffi
+if (Carbon.Support.ffi) then
+	local ok
+	ok, ffi = pcall(require, "ffi")
+	if (not ok) then
+		ffi = nil
+	end
 end
 
 local OOP = {
@@ -52,8 +56,6 @@ local function handle_indirection(class, instance)
 		local meta = getmetatable(instance)
 		meta.__index = meta.__index or internal
 		meta.__newindex = meta.__newindex or internal
-		meta.__pairs = meta.__pairs or internal
-		meta.__ipairs = meta.__ipairs or internal
 	end
 
 	return instance
@@ -67,7 +69,12 @@ local function apply_metatable(class, instance)
 		-- The InstancedMetatable attribute determines whether the metatable
 		-- is class-specific or instance-specific.
 		if (class.__attributes.InstancedMetatable) then
-			setmetatable(instance, Dictionary.ShallowCopy(class.__metatable, Dictionary.ShallowCopy(getmetatable(instance))))
+			local target
+			if (getmetatable(instance)) then
+				target = Dictionary.ShallowCopy(getmetatable(instance))
+			end
+
+			setmetatable(instance, Dictionary.ShallowCopy(class.__metatable, target))
 		else
 			setmetatable(instance, class.__metatable)
 		end
@@ -150,8 +157,7 @@ OOP:RegisterAttribute("Class", "PooledInstantiation",
 			end
 		end
 
-		class.__members.Destroy = class.__members.Destroy or class.__pool_destructor
-		class.__metatable.__gc = class.__metatable.__gc or class.__pool_destructor
+		class.__members.Destroy = rawget(class.__members, "Destroy") or class.__pool_destructor
 
 		class:Attributes {
 			Allocator = function(self)
@@ -455,7 +461,12 @@ OOP.Object.__base_members.Copy = function(self, target, datawise, map)
 	end
 	map[class] = class
 
-	local copy = Dictionary.DeepCopy(self, target, false, map)
+	local source = self
+	if (type(self) == "userdata") then
+		source = getmetatable(self).__index
+	end
+
+	local copy = Dictionary.DeepCopy(source, target, false, map)
 
 	copy = handle_indirection(class, copy)
 	apply_metatable(class, copy)

@@ -30,6 +30,7 @@ print("\nDictionary:")
 
 -- Create a small test dictionary
 local my_dict = {
+	member = {},
 	hello = "world",
 	foo = "bar"
 }
@@ -40,17 +41,16 @@ my_dict.self = my_dict
 -- Shallow copies don't follow references!
 local shallow = Dictionary.ShallowCopy(my_dict)
 
--- This is true: a shallow copy doesn't copy tables, userdata, or functions.
--- These are the only by-reference types in Lua.
-print("shallow.self still the same?", shallow.self == my_dict)
+-- True!
+print("shallow.member same?", my_dict.member == shallow.member)
 
 -- A deep copy does follow references.
 -- This implementation handles intrareferences intelligently
 -- Check Carbon/Dictionary.lua for more details on it.
 local deep = Dictionary.DeepCopy(my_dict)
 
--- The 'self' reference is preserved, so this is true.
-print("deep.self is the same as deep?", deep.self == deep)
+-- False!
+print("deep.member same?", my_dict.member == deep.member)
 
 -- We can also perform deep and shallow copies into other tables.
 local copied = {

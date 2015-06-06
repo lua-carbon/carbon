@@ -799,7 +799,7 @@ function docs.update_mkdocs()
 		))
 	end
 
-	table.insert(filename_buffer, "- [style.css]")
+	-- table.insert(filename_buffer, "- [style.css]")
 
 	body = body:gsub("pages%:.+", "pages:\n" .. table.concat(filename_buffer, "\n"))
 
