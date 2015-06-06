@@ -1,13 +1,13 @@
 # Carbon Change Log
 
-![1.1.2](https://img.shields.io/badge/1.1.2-in_development-orange.svg?style=flat-square)
+![1.1.2](https://img.shields.io/badge/1.1.2-released-brightgreen.svg?style=flat-square)
 - Update to Graphene 1.1.9, multiple fixes
 - Fixed documentation format to use `extra_css`
 - Fixed OOP to run even with `RemoveDeprecated` enabled
 - Fixed `InstancedMetatable` attribute
 - Fixed `InstanceIndirection` attribute
 
-![1.1.1](https://img.shields.io/badge/1.1.1-latest-brightgreen.svg?style=flat-square)
+![1.1.1](https://img.shields.io/badge/1.1.1-unsupported-red.svg?style=flat-square)
 - Added `Object.Class` and `Class.ClassPointer` for referencing classes
 - Deprecated `Object.class` and `Class.__class_reference`
 
