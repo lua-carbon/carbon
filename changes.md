@@ -1,7 +1,7 @@
 # Carbon Change Log
 
 ![1.1.2](https://img.shields.io/badge/1.1.2-in_development-orange.svg?style=flat-square)
-- Update to Graphene 1.1.8 to fix Graphene `Importable` objects on folders
+- Update to Graphene 1.1.9, multiple fixes
 
 ![1.1.1](https://img.shields.io/badge/1.1.1-latest-brightgreen.svg?style=flat-square)
 - Added `Object.Class` and `Class.ClassPointer` for referencing classes

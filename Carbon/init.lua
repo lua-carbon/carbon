@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.8
+	Graphene 1.1.9
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 8}
+local g_version = {1, 1, 9}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -49,6 +49,11 @@ if (not NO_LFS) then
 	end
 end
 
+local ok, ffi = pcall(require, "ffi")
+if (not ok) then
+	ffi = nil
+end
+
 -- What Lua are we running under?
 -- For our purposes, 5.3 is a superset of 5.2.
 if (table.unpack) then
@@ -64,7 +69,8 @@ end
 -- LuaJIT 2.0+
 -- Also check for OS in this path.
 if (jit) then
-	support.jit = true
+	support.jit = true -- Deprecated in Graphene 1.1.9
+	support.luajit = true
 
 	if (jit.os == "Windows") then
 		support.windows = true
@@ -79,6 +85,11 @@ else
 	else
 		support.nix = true
 	end
+end
+
+-- FFI
+if (ffi) then
+	support.ffi = true
 end
 
 -- LuaFileSystem
@@ -206,7 +217,7 @@ local G = {
 
 	-- Metadata API
 	Metadata = {
-		__store = {},
+		__store = setmetatable({}, {__mode = "k"}),
 		Enabled = true
 	},
 
@@ -750,10 +761,7 @@ if (support.io and (not support.love or USE_IO)) then
 		end
 
 		local execute_success
-		if (support.jit and support.windows) then
-
-			local ffi = require("ffi")
-
+		if (support.ffi and support.windows) then
 			ffi.cdef([[
 				typedef struct _iobuf FILE;
 				FILE* _popen(const char* command, const char* mode);
@@ -893,6 +901,8 @@ end
 -- {% if (support.vfs) then %}
 -- Virtual Filesystem for Graphene
 -- Used when packing for platforms that don't have real filesystem access
+
+-- The internal VFS is deprecated as of Graphene 1.1.9
 do
 	local vfs = {
 		ID = "vfs",
@@ -1719,11 +1729,11 @@ function G:Get(path, target, key)
 end
 
 -- If the Lib switch is set, make our base the current namespace instead of the Graphene core.
--- This is the default and recommended functionality.
--- To retrieve the core, use :GetGraphene() on this object.
+-- Setting 'Lib' to false is deprecated.
 if (G.Config.Lib) then
 	G:Get(nil, G, "Base")
 else
+	print("Deprecated: Lib = false in configuration is deprecated as of Graphene 1.1.9")
 	G.Base = G
 end
 
