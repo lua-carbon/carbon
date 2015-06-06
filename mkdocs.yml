@@ -1,6 +1,8 @@
 site_name: Carbon for Lua
 theme: readthedocs
 repo_url: https://github.com/lua-carbon/carbon
+extra_css:
+- style.css
 pages:
 - [index.md, Index]
 - [Getting_Started.md, Tutorials, Getting Started]

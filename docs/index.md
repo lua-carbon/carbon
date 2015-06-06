@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="../style.css" type="text/css" />
 # Carbon for Lua
 
 Carbon is a full suite intended to make Lua more semantic, expressive, and powerful. It aims to provide a set of functionality comparable to .NET, and runs on Lua 5.1 and above on any platform. Carbon will take advantage of a few extra if it finds that they're installed, like LuaJIT's FFI, LuaSocket, and LÖVE.

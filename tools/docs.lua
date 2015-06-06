@@ -574,8 +574,8 @@ local function do_template(template, data)
 	return template
 end
 
+-- <link href="../../style.css" rel="stylesheet" type="text/css"/>
 local template_class = clean_string [[
-<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">{name}</h1>
 <span class="file-link">(in [{filename}]({file_link}))</span><br/>
 

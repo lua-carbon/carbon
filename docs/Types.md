@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="../style.css" type="text/css" />
 The Carbon documentation refers to some types that may be uncommon to some Lua users. Types in the documentation with `lowercase` names can be found here.
 
 # Standard Lua Types

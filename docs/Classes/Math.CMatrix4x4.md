@@ -1,4 +1,3 @@
-<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Math.CMatrix4x4</h1>
 <span class="file-link">(in [./Carbon/Math/CMatrix4x4.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Math/CMatrix4x4.lua))</span><br/>
 

@@ -1,4 +1,3 @@
-<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Carbon</h1>
 <span class="file-link">(in [./Carbon/_.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/_.lua))</span><br/>
 

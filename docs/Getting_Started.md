@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="../style.css" type="text/css" />
 # Getting Started with Carbon
 Carbon is easy to set up, both as a component in a regular Lua project, or as a [Graphene][graphene] submodule. The latter form is recommended for new projects using Carbon.
 

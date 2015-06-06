@@ -1,4 +1,3 @@
-<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">CopyBarrier</h1>
 <span class="file-link">(in [./Carbon/CopyBarrier.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/CopyBarrier.lua))</span><br/>
 

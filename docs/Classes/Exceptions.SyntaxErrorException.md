@@ -1,4 +1,3 @@
-<link href="../../style.css" rel="stylesheet" type="text/css"/>
 <h1 class="class-title">Exceptions.SyntaxErrorException</h1>
 <span class="file-link">(in [./Carbon/Exceptions/SyntaxErrorException.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Exceptions/SyntaxErrorException.lua))</span><br/>
 
