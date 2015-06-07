@@ -2,7 +2,11 @@
 
 ![1.2.0](https://img.shields.io/badge/1.2.0-in_development-orange.svg?style=flat-square)
 - Added "cancel" and "die" return strings for Nanotube events
+- Added `Carbon.Serialization` to provide object serialization
+- Changed `Carbon.Enable` and `Carbon.Disable` to accept multiple features
+- Deprecated `Carbon.Serializable` in favor of the `Serialization` module
 - Fixed return value of `Nanotube:Fire`
+- Fixed OOP breaking when `RemoveDeprecated` is enabled
 
 ![1.1.2](https://img.shields.io/badge/1.1.2-released-brightgreen.svg?style=flat-square)
 - Update to Graphene 1.1.9, multiple fixes

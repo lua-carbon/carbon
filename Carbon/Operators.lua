@@ -10,7 +10,7 @@
 ]]
 
 local Carbon, self = ...
-local Operators = Carbon.Deprecated {}
+local Operators = {}
 
 local Graphene = Carbon:GetGraphene()
 local lua52 = Graphene.Support.lua52
@@ -324,4 +324,4 @@ end
 
 Carbon.Metadata:RegisterMethods(Operators, self)
 
-return Operators
+return Carbon.Deprecated(Operators)

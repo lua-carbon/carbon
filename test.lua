@@ -3,7 +3,6 @@ local docs = require("tools.docs")
 
 local function main()
 	local Carbon = require("Carbon")
-	Carbon:Enable("RemoveDeprecated")
 
 	print("Test Suite for Carbon " .. Carbon.VersionString)
 

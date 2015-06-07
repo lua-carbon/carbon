@@ -1,6 +1,8 @@
 <h1 class="class-title">Serializable</h1>
 <span class="file-link">(in [./Carbon/Serializable.lua](https://github.com/lua-carbon/carbon/tree/master/./Carbon/Serializable.lua))</span><br/>
 
+**Deprecated in Carbon 1.2.0**: this class will be removed in Carbon 2.0.
+
 **Abstract**
 
 Provides an interface to serialize and deserialize data.

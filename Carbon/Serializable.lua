@@ -4,6 +4,8 @@
 	#inherits OOP.Object
 
 	#description {
+		**Deprecated in Carbon 1.2.0**: this class will be removed in Carbon 2.0.
+
 		**Abstract**
 
 		Provides an interface to serialize and deserialize data.
@@ -56,13 +58,4 @@ end
 
 Carbon.Metadata:RegisterMethods(Serializable, self)
 
--- Add the Serializable ancestry entry to classes that can't directly reference this one.
-for key, class in ipairs({
-	Carbon.Collections.Dictionary,
-	Carbon.Collections.List,
-	Carbon.Collections.Set
-}) do
-	class.Is[Serializable] = true
-end
-
-return Serializable
+return Carbon.Deprecated(Serializable)

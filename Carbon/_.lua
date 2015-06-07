@@ -58,23 +58,27 @@ Carbon.Features = {
 }
 
 --[[#method {
-	class public @void Carbon.Enable(@any feature)
-		required feature: The feature to enable
+	class public @void Carbon.Enable(@any ...)
+		optional ...: The features to enable
 
 	Enables a feature by name.
 }]]
-function Carbon.Enable(feature)
-	Carbon.Features[feature] = true
+function Carbon.Enable(...)
+	for i = 1, select("#", ...) do
+		Carbon.Features[select(i, ...)] = true
+	end
 end
 
 --[[#method {
-	class public @void Carbon.Disable(@any feature)
-		required feature: The feature to disable
+	class public @void Carbon.Disable(@any ...)
+		optional ...: The features to disable
 
 	Disables a feature by name.
 }]]
-function Carbon.Disable(feature)
-	Carbon.Features[feature] = false
+function Carbon.Disable(...)
+	for i = 1, select("#", ...) do
+		Carbon.Features[select(i, ...)] = false
+	end
 end
 
 --[[#method {

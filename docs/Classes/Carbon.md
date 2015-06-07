@@ -50,18 +50,18 @@ If the <code>RemoveDeprecated</code> feature is enabled, this method will return
 
 If <code>thing</code> is a function, it will throw a one-time warning on the first call.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Disable(<code><a href="Types#any">any</a> feature</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Disable(<code><a href="Types#any">any</a> ...</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `feature`: The feature to disable</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `...`: The features to disable</li>
 </ul>
 
 Disables a feature by name.
 <hr/>
-<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Enable(<code><a href="Types#any">any</a> feature</code>)</h4>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Enable(<code><a href="Types#any">any</a> ...</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
 <ul class="doc-arg-list">
-<li><span class="doc-arg-level doc-required">required</span>  `feature`: The feature to enable</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `...`: The features to enable</li>
 </ul>
 
 Enables a feature by name.

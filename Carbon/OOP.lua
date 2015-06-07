@@ -508,8 +508,10 @@ function OOP:Class(based_on)
 
 	class.Is[class] = true
 
-	class.__class_reference = Carbon.Deprecated(newproxy(true))
+	class.__class_reference = newproxy(true)
 	getmetatable(class.__class_reference).__index = class
+	
+	class.__class_reference = Carbon.Deprecated(class.__class_reference)
 
 	class.ClassPointer = function()
 		return class
