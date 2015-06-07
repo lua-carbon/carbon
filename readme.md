@@ -14,7 +14,7 @@ Carbon uses a custom cross-platform loader and namespacing provider, [Graphene][
 
 You can see Carbon's documentation at [http://carbon.lpghatguy.com](http://carbon.lpghatguy.com), which works much better than GitHub's in-tree markdown viewer.
 
-See [changelog.md](changelog.md) for the releases history of Carbon.
+See [changes.md](changes.md) for the releases history of Carbon.
 
 [graphene]: https://github.com/lua-carbon/graphene
 [carbon_banner]: https://raw.githubusercontent.com/lua-carbon/carbon/master/assets/carbon-banner.png
