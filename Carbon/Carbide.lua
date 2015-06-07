@@ -275,7 +275,7 @@ local function operator_lambda(source)
 	local start, finish = 0, 0
 	while (true) do
 		local prec, keys
-		start, finish, name, args = source:find("(%w*)%s*(%b())%s*=>%s*", finish + 1)
+		start, finish, name, args = source:find("([%w%.:]*)%s*(%b())%s*=>%s*", finish + 1)
 
 		if (not start) then
 			break
@@ -289,6 +289,77 @@ local function operator_lambda(source)
 			name, args,
 			body,
 			source:sub(body_ending + 1)
+		)
+	end
+
+	return source
+end
+
+local function operator_defaultargs(source)
+	local start, finish = 0, 0
+	while (true) do
+		local prec, keys
+		start, finish, name, args = source:find("function ([%w%.:]*)%s*(%b())", finish + 1)
+
+		if (not start) then
+			break
+		end
+
+		local args_buffer = {}
+		local defs_buffer = {}
+		local state = 0
+		local aname_building = ""
+		local adef_building = ""
+		local depth = 0
+
+		for i = 2, args:len() do
+			local char = args:sub(i, i)
+
+			if (state == 0) then -- match name
+				if (char:match("%w")) then
+					aname_building = aname_building .. char
+				elseif (char == ",") then
+					table.insert(args_buffer, aname_building)
+					aname_building = ""
+				elseif (char == "=") then
+					state = 1
+				end
+			elseif (state == 1) then -- match default definition
+				if (char:match("[,%)]") and depth == 0) then
+					table.insert(args_buffer, aname_building)
+					table.insert(defs_buffer, {aname_building, adef_building})
+					aname_building = ""
+					adef_building = ""
+					state = 0
+				else
+					adef_building = adef_building .. char
+				end
+
+				if (char:match("[%[%(%{]")) then
+					depth = depth + 1
+				elseif (char:match("[%]%)%}]")) then
+					depth = depth - 1
+				end
+			end
+		end
+
+		local defo_buffer = {}
+		for key, def in ipairs(defs_buffer) do
+			local name, value = def[1], def[2]
+			table.insert(defo_buffer, ("%s = (%s ~= nil) and %s or %s"):format(
+				name, name, name, value
+			))
+		end
+
+		local body_ending = matchexpr(source, finish + 1, false, " ")
+		local body = source:sub(finish + 1, body_ending)
+
+		source = ("%sfunction %s(%s)\n%s\n%s"):format(
+			source:sub(1, start - 1),
+			name,
+			table.concat(args_buffer, ","),
+			table.concat(defo_buffer, "\n"),
+			source:sub(finish + 1)
 		)
 	end
 
@@ -357,6 +428,7 @@ end
 Carbide.FeaturesByLevel = {
 	[1] = {
 		operator_lambda,
+		operator_defaultargs,
 		operator_bang,
 		operator_dan,
 		function(source)

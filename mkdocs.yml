@@ -50,6 +50,7 @@ pages:
 - [Classes/Pointers.WeakPointer.md, Classes, Pointers.WeakPointer]
 - [Classes/Promise.md, Classes, Promise]
 - [Classes/Serializable.md, Classes, Serializable]
+- [Classes/Serialization.md, Classes, Serialization]
 - [Classes/Serialization.Format.md, Classes, Serialization.Format]
 - [Classes/Serialization.Formats.JSON.md, Classes, Serialization.Formats.JSON]
 - [Classes/TemplateEngine.md, Classes, TemplateEngine]

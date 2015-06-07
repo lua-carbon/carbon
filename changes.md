@@ -3,8 +3,10 @@
 ![1.2.0](https://img.shields.io/badge/1.2.0-in_development-orange.svg?style=flat-square)
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
+- Added default arguments to Carbide function definitions
 - Changed `Carbon.Enable` and `Carbon.Disable` to accept multiple features
 - Deprecated `Carbon.Serializable` in favor of the `Serialization` module
+- Improved fat-arrow lambda parsing
 - Fixed return value of `Nanotube:Fire`
 - Fixed OOP breaking when `RemoveDeprecated` is enabled
 
