@@ -4,9 +4,11 @@
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
 - Added default arguments to Carbide function definitions
+- Added `Carbide.Parse` as a general parsing interface
 - Changed `Carbon.Enable` and `Carbon.Disable` to accept multiple features
 - Deprecated `Carbon.Serializable` in favor of the `Serialization` module
-- Improved fat-arrow lambda parsing
+- Improved Carbide parsing rigidity
+- Improved Carbide output formatting dramatically
 - Fixed return value of `Nanotube:Fire`
 - Fixed OOP breaking when `RemoveDeprecated` is enabled
 

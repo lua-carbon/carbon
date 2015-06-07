@@ -131,8 +131,10 @@ local function matchexpr(source, start, backwards, last_nspace)
 					if (backwards) then
 						illegal_set = illegal_set .. "%)%}%]"
 					end
-				elseif (forwards and last_nspace:match("[%)%}%]]")) then
-					illegal_set = illegal_set .. "%w"
+				elseif (forwards) then
+					if (last_nspace:match("[%)%}%]\27]")) then
+						illegal_set = illegal_set .. "%w"
+					end
 				end
 
 				if (elevel == 0) then
@@ -156,7 +158,7 @@ local function matchexpr(source, start, backwards, last_nspace)
 						prospective = j
 					else
 						if (illegal and jchar:match(illegal)) then
-							return i
+							return i - direction
 						else
 							i = prospective
 							break
@@ -192,7 +194,7 @@ local function operator_double(source, operator)
 		local target_beginning = matchexpr(source, start - 1, true, operator)
 		local target = source:sub(target_beginning, start - 1)
 
-		source = ("%s\n%s = (%s) %s 1\n%s"):format(
+		source = ("%s%s = (%s) %s 1%s"):format(
 			source:sub(1, target_beginning - 1),
 			target, target,
 			operator,
@@ -206,7 +208,7 @@ end
 local function operator_mutating(source, operator)
 	local start, finish = 0, 0
 	while (true) do
-		start, finish = source:find(operator .. "=", finish + 1, true)
+		start, finish = source:find("%s*%" .. operator .. "%=%s*", finish + 1)
 		
 		if (not start) then
 			break
@@ -218,7 +220,7 @@ local function operator_mutating(source, operator)
 		local value_ending = matchexpr(source, finish + 1)
 		local value = source:sub(finish + 1, value_ending)
 
-		source = ("%s\n%s = %s %s (%s)\n%s"):format(
+		source = ("%s%s = %s %s (%s)%s"):format(
 			source:sub(1, target_beginning - 1),
 			target, target,
 			operator,
@@ -354,7 +356,7 @@ local function operator_defaultargs(source)
 		local body_ending = matchexpr(source, finish + 1, false, " ")
 		local body = source:sub(finish + 1, body_ending)
 
-		source = ("%sfunction %s(%s)\n%s\n%s"):format(
+		source = ("%sfunction %s(%s)%s%s"):format(
 			source:sub(1, start - 1),
 			name,
 			table.concat(args_buffer, ","),
@@ -448,6 +450,9 @@ Carbide.FeaturesByLevel = {
 		end,
 		function(source)
 			return operator_mutating(source, "^")
+		end,
+		function(source)
+			return operator_mutating(source, "..")
 		end
 	}
 }
@@ -550,6 +555,23 @@ function Carbide.ParseCore(source, settings)
 end
 
 --[[#method 1 {
+	class public @function Carbide.Parse(@string source, [@table settings])
+		required source: The Carbide source.
+		optional settings: The settings to compile Carbide with.
+
+	Parses the given Carbide source.
+}]]
+function Carbide.Parse(source, settings)
+	source, err = Carbide.ParseTemplated(source, settings)
+
+	if (not source) then
+		return false, SyntaxErrorException(err)
+	end
+
+	return Carbide.ParseCore(source, settings)
+end
+
+--[[#method 1 {
 	class public @function Carbide.Compile(@string source, [@string chunkname, @table environment, @table settings])
 		required source: The Carbide source.
 		optional chunkname: The name of the chunk for Lua errors.
@@ -559,13 +581,11 @@ end
 	Parses and compiles the given Carbide source. A drop-in replacement for Carbon.LoadString.
 }]]
 function Carbide.Compile(source, name, environment, settings)
-	source, err = Carbide.ParseTemplated(source, settings)
+	local source, err = Carbide.Parse(source, settings)
 
 	if (not source) then
-		return false, SyntaxErrorException(err)
+		return false, err
 	end
-
-	source = Carbide.ParseCore(source, settings)
 
 	local chunk, err = Carbon.LoadString(source, name, environment)
 

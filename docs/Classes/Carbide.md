@@ -19,6 +19,15 @@ This file is related to the Carbide programmatic API, for details on using Carbi
 
 Parses and compiles the given Carbide source. A drop-in replacement for Carbon.LoadString.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbide.Parse(<code><a href="Types#string">string</a> source, [<a href="Types#table">table</a> settings]</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#function">function</a></code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `source`: The Carbide source.</li>
+<li><span class="doc-arg-level doc-optional">optional</span>  `settings`: The settings to compile Carbide with.</li>
+</ul>
+
+Parses the given Carbide source.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbide.ParseCore(<code><a href="Types#string">string</a> source, [<a href="Types#table">table</a> settings]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#string">string</a></code></p>
 <ul class="doc-arg-list">
