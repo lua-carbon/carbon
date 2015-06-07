@@ -13,8 +13,9 @@ local Serialization = {}
 
 function Serialization.Serialize(object, format, map)
 	map = map or {}
+end
 
-
+function Serialization.Deserialize(source, format)
 end
 
 return Serialization
