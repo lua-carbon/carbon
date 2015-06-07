@@ -31,6 +31,9 @@ The following feature levels are exposed by Carbide Lua:
 	- Fat-arrow lambdas (added in 1.1)
 		- `(x) => x^2` translates to `function(x) return x^2 end`
 		- Parentheses are required for both definitions and calls
+	- Default function arguments (added in 1.2)
+		- `function(x=5) end` translates to
+			- `function(x) x = (x ~= nil) and x or 5 end`
 
 ## Directives
 Carbide also exposes a set of directives to control the flow of compilation.
