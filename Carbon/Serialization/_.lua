@@ -7,22 +7,23 @@
 	}
 
 	#alias Format Serialization.Format
+	#alias NotImplementedException Exceptions.NotImplementedException
 ]]
 
 local Carbon = (...)
+local NotImplementedException = Carbon.Exceptions.NotImplementedException
 
 local Serialization = {}
 
 --[[#method {
-	class public @string Serialization.Serialize(@any object, @Format format, [@dictionary? map])
+	class public @string Serialization.Serialize(@any object, @Format format)
 		required object: The object to serialize.
 		required format: The @Format to serialize the object into.
-		internal map: An internal map used for fixing intrareferences.
 
 	Serializes an object into the specified data format.
 }]]
-function Serialization.Serialize(object, format, map)
-	map = map or {}
+function Serialization.Serialize(object, format)
+	return format:Serialize(object)
 end
 
 --[[#method {
@@ -31,9 +32,19 @@ end
 		optional format: The format to use; autodetected if not specified.
 
 	Deserializes a serialized object.
+
+	If no deserializer for the format could be found, returns (false, @NotImplementedException)
 }]]
 function Serialization.Deserialize(source, format)
-	-- autodetect format if not specified
+	for key, format in pairs(Serialization.Formats) do
+		if (format.Is and format.Is[Serialization.Format]) then
+			if (format:CanDeserialize(source)) then
+				return format:Deserialize(source)
+			end
+		end
+	end
+	
+	return false, NotImplementedException("serializer for this format")
 end
 
 return Serialization
