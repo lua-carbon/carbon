@@ -318,7 +318,7 @@ local function operator_defaultargs(source)
 			local char = args:sub(i, i)
 
 			if (state == 0) then -- match name
-				if (char:match("[%w%.]")) then
+				if (char:match("[%w%._]")) then
 					aname_building = aname_building .. char
 				elseif (char == ",") then
 					table.insert(args_buffer, aname_building)
