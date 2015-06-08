@@ -351,7 +351,7 @@ local function operator_defaultargs(source)
 end
 
 local function operator_bang(source, settings)
-	return (source:gsub("([%.:%->]+)(%w+)!", function(convention, method)
+	return (source:gsub("([%.:%->]*)(%w*)!", function(convention, method)
 		if (Compiler.Legacy or settings.LEGACY) then
 			return ("%s%sInPlace"):format(
 				convention, method
