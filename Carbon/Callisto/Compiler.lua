@@ -350,11 +350,17 @@ local function operator_defaultargs(source)
 	return source
 end
 
-local function operator_bang(source)
+local function operator_bang(source, settings)
 	return (source:gsub("([%.:%->]+)(%w+)!", function(convention, method)
-		return ("%s%sInPlace"):format(
-			convention, method
-		)
+		if (Compiler.Legacy or settings.LEGACY) then
+			return ("%s%sInPlace"):format(
+				convention, method
+			)
+		else
+			return ("%s%sBANG"):format(
+				convention, method
+			)
+		end
 	end))
 end
 
@@ -388,8 +394,12 @@ Compiler.Features = {
 	operator_defaultargs,
 	operator_bang,
 	operator_cnal,
-	function(source)
-		return operator_double(source, "+")
+	function(source, settings)
+		if (Compiler.Legacy or settings.LEGACY) then
+			return operator_double(source, "+")
+		else
+			return source
+		end
 	end,
 	function(source)
 		return operator_mutating(source, "+")
