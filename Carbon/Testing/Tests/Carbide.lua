@@ -64,7 +64,6 @@ end
 
 function Test:Run(test)
 	local compilation_settings = {
-		FEATURE_LEVEL = 4
 	}
 
 	feature(test, "bang", 

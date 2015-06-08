@@ -9,6 +9,8 @@ pages:
 - [Using_Carbide.md, Tutorials, Using Carbide]
 - [Types.md, Tutorials, Carbon Types]
 - [Classes/Bench.md, Classes, Bench]
+- [Classes/Callisto.md, Classes, Callisto]
+- [Classes/Callisto.Compiler.md, Classes, Callisto.Compiler]
 - [Classes/Carbide.md, Classes, Carbide]
 - [Classes/Carbon.md, Classes, Carbon]
 - [Classes/Collections.Dictionary.md, Classes, Collections.Dictionary]

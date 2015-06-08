@@ -15,6 +15,22 @@ Body for both <a href="Classes/OOP.Class">OOP.Class</a> and <a href="Classes/OOP
 Adds attributes to the class. Overwrites existing attributes.
 The attributes parameter is only shallow copied, keep this in mind.
 <hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:GetAttribute(<code><a href="Types#any">any</a> attribute</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#any">any</a>?</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `attribute`: The attribute identifier to look up.</li>
+</ul>
+
+Returns the value of the given attribute for this class.
+<hr/>
+<h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:GetMember(<code><a href="Types#any">any</a> key</code>)</h4>
+<p class="method-returns bold">Returns <code><a href="Types#any">any</a>?</code></p>
+<ul class="doc-arg-list">
+<li><span class="doc-arg-level doc-required">required</span>  `key`: The key of the member to get.</li>
+</ul>
+
+Returns a defined member in the class, if it is set.
+<hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> BaseClass:Inherits(<code>...</code>)</h4>
 <p class="method-returns bold">Returns <code>self</code></p>
 <ul class="doc-arg-list">

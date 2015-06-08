@@ -3,8 +3,11 @@
 ![1.2.0](https://img.shields.io/badge/1.2.0-in_development-orange.svg?style=flat-square)
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
+- Added `Carbon.None` for specifying "none" but not "nil"
 - Added default arguments to Carbide function definitions
 - Added `Carbide.Parse` as a general parsing interface
+- Added `BaseClass:GetAttribute` and `BaseClass:GetMember` for querying fields in classes
+- Moved Carbide out into Callisto, with a wrapper API to preserve compatibility
 - Changed `Carbon.Enable` and `Carbon.Disable` to accept multiple features
 - Deprecated `Carbon.Serializable` in favor of the `Serialization` module
 - Improved Carbide parsing rigidity

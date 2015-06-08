@@ -116,6 +116,9 @@ Performs a fast unpack on the table.
 #### <span class="doc-visibility doc-public">public</span> <code><a href="Types#set">set</a></code> Carbon.Features
 Contains a set of features and whether they are enabled or disabled.
 <hr/>
+#### <span class="doc-visibility doc-public">public</span> <code>None</code> Carbon.None
+A type to represent "none", but not <a href="Types#nil">nil</a>.
+<hr/>
 #### <span class="doc-visibility doc-public">public</span> <code><a href="Types#dictionary">dictionary</a></code> Carbon.Support
 Contains the support information provided by Graphene.
 <hr/>

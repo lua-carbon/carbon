@@ -11,6 +11,8 @@ local Carbon = (...)
 local Graphene = Carbon:GetGraphene()
 local Support = Graphene.Support
 
+Carbon:AddGrapheneSubmodule("Callisto")
+
 --[[#method 1 {
 	class public @void Carbon:ImportCore()
 
@@ -25,7 +27,7 @@ local Support = Graphene.Support
 	- Deprecated
 }]]
 function Carbon:ImportCore()
-	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString", "Deprecated")
+	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString", "Deprecated", "None")
 end
 
 --[[#property public @dictionary Carbon.Support {
@@ -56,6 +58,11 @@ Carbon.Features = {
 	Debug = false,
 	RemoveDeprecated = false
 }
+
+--[[#property public None Carbon.None {
+	A type to represent "none", but not @nil.
+}]]
+Carbon.None = newproxy(false)
 
 --[[#method {
 	class public @void Carbon.Enable(@any ...)

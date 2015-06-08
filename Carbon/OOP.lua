@@ -28,6 +28,7 @@ local OOP = {
 		-- Inherited attributes
 		InstanceIndirection = true,
 		InstancedMetatable = true,
+		Serialization = true,
 
 		-- Not inherited attributes
 		SparseInstances = false,
@@ -49,7 +50,7 @@ local default_static_attributes = {
 
 -- Utility methods
 local function handle_indirection(class, instance)
-	if (class.__attributes.InstanceIndirection) then
+	if (class:GetAttribute("InstanceIndirection")) then
 		local internal = instance
 		instance = newproxy(true)
 
@@ -62,7 +63,7 @@ local function handle_indirection(class, instance)
 end
 
 local function apply_metatable(class, instance)
-	if (class.__attributes.InstanceIndirection) then
+	if (class:GetAttribute("InstanceIndirection")) then
 		-- If we wrapped the object in a userdata, we need to apply metatables a little differently.
 		Dictionary.ShallowCopy(class.__metatable, getmetatable(instance))
 	else
@@ -279,6 +280,16 @@ function OOP.BaseClass:Attributes(attributes)
 end
 
 --[[#method {
+	class public @any? BaseClass:GetAttribute(@any attribute)
+		required attribute: The attribute identifier to look up.
+
+	Returns the value of the given attribute for this class.
+}]]
+function OOP.BaseClass:GetAttribute(attribute)
+	return self.__attributes[attribute]
+end
+
+--[[#method {
 	class public self BaseClass:Metatable(@dictionary metatable)
 		required metatable: The metatable to give to instances of this class.
 
@@ -302,6 +313,16 @@ function OOP.BaseClass:Members(members)
 	Dictionary.ShallowCopy(members, self.__members)
 
 	return self
+end
+
+--[[#method  {
+	class public @any? BaseClass:GetMember(@any key)
+		required key: The key of the member to get.
+
+	Returns a defined member in the class, if it is set.
+}]]
+function OOP.BaseClass:GetMember(key)
+	return self.__members[key]
 end
 
 --[[
