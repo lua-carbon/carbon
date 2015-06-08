@@ -4,14 +4,14 @@
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
 - Added `Carbon.None` for specifying "none" but not "nil"
-- Added default arguments to Carbide function definitions
 - Added `Carbide.Parse` as a general parsing interface
 - Added `BaseClass:GetAttribute` and `BaseClass:GetMember` for querying fields in classes
 - Moved Carbide out into Callisto, with a wrapper API to preserve compatibility
+	- Improved parsing rigidity and output formatting
+	- Added QUE methods (`method?()`)
+	- Added default arguments (`method(x=5)`)
 - Changed `Carbon.Enable` and `Carbon.Disable` to accept multiple features
 - Deprecated `Carbon.Serializable` in favor of the `Serialization` module
-- Improved Carbide parsing rigidity
-- Improved Carbide output formatting dramatically
 - Fixed return value of `Nanotube:Fire`
 - Fixed OOP breaking when `RemoveDeprecated` is enabled
 

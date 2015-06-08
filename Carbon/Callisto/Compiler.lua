@@ -364,6 +364,14 @@ local function operator_bang(source, settings)
 	end))
 end
 
+local function operator_que(source, settings)
+	return (source:gsub("([%.:%->]*)(%w*)?", function(convention, method)
+		return ("%s%sQUE"):format(
+			convention, method
+		)
+	end))
+end
+
 local function strip_strings(source, str_tab)
 	str_tab = str_tab or {}
 
@@ -393,6 +401,7 @@ Compiler.Features = {
 	operator_lambda,
 	operator_defaultargs,
 	operator_bang,
+	operator_que,
 	operator_cnal,
 	function(source, settings)
 		if (Compiler.Legacy or settings.LEGACY) then
