@@ -318,7 +318,7 @@ local function operator_defaultargs(source)
 			local char = args:sub(i, i)
 
 			if (state == 0) then -- match name
-				if (char:match("[%w.]")) then
+				if (char:match("[%w%.]")) then
 					aname_building = aname_building .. char
 				elseif (char == ",") then
 					table.insert(args_buffer, aname_building)
@@ -345,6 +345,10 @@ local function operator_defaultargs(source)
 			end
 		end
 
+		if (state == 0 and aname_building ~= "") then
+			table.insert(args_buffer, aname_building)
+		end
+
 		local defo_buffer = {}
 		for key, def in ipairs(defs_buffer) do
 			local name, value = def[1], def[2]
@@ -356,7 +360,7 @@ local function operator_defaultargs(source)
 		local body_ending = matchexpr(source, finish + 1, false, " ")
 		local body = source:sub(finish + 1, body_ending)
 
-		source = ("%sfunction %s(%s)%s%s"):format(
+		source = ("%sfunction %s(%s)\n%s%s"):format(
 			source:sub(1, start - 1),
 			name,
 			table.concat(args_buffer, ","),
