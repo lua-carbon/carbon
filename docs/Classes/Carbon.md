@@ -15,7 +15,7 @@ This is the Carbon core, containing all other modules and some utilities.
 Imports Carbon's core utilities into the current file for use.
 
 Presently imports:
-<ul><li>Async<li>Assert</li><li>Error</li><li>IsObject</li><li>LoadString</li><li>Deprecated</li></li></ul>
+<ul><li>Async<li>Assert</li><li>Error</li><li>IsObject</li><li>LoadString</li><li>Deprecated</li><li>None</li></li></ul>
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Assert(<code><a href="Types#bool">bool</a> condition, [<a href="Types#string">string</a> message]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>

@@ -351,24 +351,18 @@ local function operator_defaultargs(source)
 end
 
 local function operator_bang(source, settings)
-	return (source:gsub("([%.:%->]*)(%w*)!", function(convention, method)
+	return (source:gsub("([%w_!]*)", function(banged)
 		if (Compiler.Legacy or settings.LEGACY) then
-			return ("%s%sInPlace"):format(
-				convention, method
-			)
+			return (banged:gsub("!", "InPlace"))
 		else
-			return ("%s%sBANG"):format(
-				convention, method
-			)
+			return (banged:gsub("!", "BANG"))
 		end
 	end))
 end
 
 local function operator_que(source, settings)
-	return (source:gsub("([%.:%->]*)(%w*)?", function(convention, method)
-		return ("%s%sQUE"):format(
-			convention, method
-		)
+	return (source:gsub("([%w_%?]*)", function(banged)
+		return (banged:gsub("%?", "QUE"))
 	end))
 end
 

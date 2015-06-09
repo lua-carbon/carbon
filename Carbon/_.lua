@@ -25,6 +25,7 @@ Carbon:AddGrapheneSubmodule("Callisto")
 	- IsObject
 	- LoadString
 	- Deprecated
+	- None
 }]]
 function Carbon:ImportCore()
 	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString", "Deprecated", "None")
