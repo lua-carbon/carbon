@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.9
+	Graphene 1.1.10
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 9}
+local g_version = {1, 1, 10}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -1131,7 +1131,7 @@ function G.Directory:AddGrapheneSubmodule(path)
 	if (type(path) ~= "string") then
 		error("Bad argument #1: submodule path must be a string!", 2)
 	end
-
+	
 	return G:AddSubmodule(module_join(self.__directory.Path, path))
 end
 
@@ -1438,6 +1438,10 @@ function G:GetLoadedModules(path)
 	return list
 end
 
+local function submodule_predicate(a, b)
+	return #a[1] > #a[2]
+end
+
 --[[
 	void G:AddRebase(string path)
 		path: The path to have as a submodule
@@ -1453,6 +1457,7 @@ function G:AddSubmodule(path)
 	end
 
 	table.insert(self.__submodules, {"^" .. path:gsub("%.", "%%."), path})
+	table.sort(self.__submodules, submodule_predicate)
 end
 
 --[[
@@ -1648,7 +1653,7 @@ function G:Get(path, target, key)
 	local base = G.Base
 	for i, submodule in ipairs(self.__submodules) do
 		if (path:match(submodule[1])) then
-			base = self.__loaded[submodule[2]] or G.Base
+			base = self.__loaded[submodule[2]]
 
 			break
 		end

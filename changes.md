@@ -1,6 +1,7 @@
 # Carbon Change Log
 
 ![1.2.0](https://img.shields.io/badge/1.2.0-in_development-orange.svg?style=flat-square)
+- Update to Graphene 1.1.10, fixes several embedded Carbon issues
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
 - Added `Carbon.None` for specifying "none" but not "nil"
