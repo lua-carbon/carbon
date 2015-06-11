@@ -39,19 +39,27 @@ Callisto also exposes a set of directives to control the flow of compilation.
 Directives can appear in any place in the file, they affect compilation globally.
 
 ### Callisto Directives
-- `#CALLISTO_EXTENSIONS <extension>, <extension>, ...` (added in 1.2.0)
+- `#CallistoExtensions <extension>, <extension>, ...` (added in 1.2.0)
 	- Enables Callisto extensions, replaced `CARBIDE_EXTENSIONS` in 1.2.0
+- `#CallistoLegacy`
+	- Enables legacy mode from the source.
+	- Equivalent to setting the "Legacy" flag in the compiler or settings argument.
 
 ### Carbide Directives
-- `#TEMPLATES_ENABLED`
+- `#CARBIDE_LEGACY` (Legacy)
+	- Enables legacy mode
+- `#TEMPLATES_ENABLED` (Legacy)
+- `#TemplatesEnabled` (1.2.0+)
 	- Enables the templating engine for inline metaprogramming.
 	- Templates can output Carbide Lua and it will be parsed correctly.
-- `#TEMPLATE_LEVEL <level>`
+- `#TEMPLATE_LEVEL <level>` (Legacy)
+- `#TemplateLevel <level>` (1.2.0+)
 	- Lets the templating engine know what level of templates to use.
 	- Default: `#TEMPLATE_LEVEL 0`
 - `#CARBIDE_EXTENSIONS <extension>, <extension>, ...` (deprecated in 1.2.0)
 	- Enables Carbide extensions with given names.
-- `#COMPILE_TO <target>`
+- `#COMPILE_TO <target>` (Legacy)
+- `#CompileTo <target>` (1.2.0+)
 	- Ouputs the source to a given target.
 		- `stdout` writes out using `print`.
 		- Other values write out to files.

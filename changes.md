@@ -7,10 +7,12 @@
 - Added `Carbon.None` for specifying "none" but not "nil"
 - Added `Carbide.Parse` as a general parsing interface
 - Added `BaseClass:GetAttribute` and `BaseClass:GetMember` for querying fields in classes
+- Added `ExperimentalFeatures` attribute
 - Moved Carbide out into Callisto, with a wrapper API to preserve compatibility
 	- Improved parsing rigidity and output formatting
 	- Added QUE methods (`method?()`)
 	- Added default arguments (`method(x=5)`)
+	- Deprecated LOUD_DIRECTIVES, use PascalDirectives instead (see documentation)
 - Changed `Carbon.Enable` and `Carbon.Disable` to accept multiple features
 - Deprecated `Carbon.Serializable` in favor of the `Serialization` module
 - Fixed return value of `Nanotube:Fire`

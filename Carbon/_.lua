@@ -57,7 +57,8 @@ Carbon.VersionString = ("%d.%d.%d%s%s"):format(
 }]]
 Carbon.Features = {
 	Debug = false,
-	RemoveDeprecated = false
+	RemoveDeprecated = false,
+	ExperimentalFeatures = false
 }
 
 --[[#property public None Carbon.None {
