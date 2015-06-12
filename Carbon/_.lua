@@ -26,9 +26,10 @@ Carbon:AddGrapheneSubmodule("Callisto")
 	- LoadString
 	- Deprecated
 	- None
+	- Maybe
 }]]
 function Carbon:ImportCore()
-	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString", "Deprecated", "None")
+	return self:Import("Async", "Assert", "Error", "IsObject", "LoadString", "Deprecated", "None", "Maybe")
 end
 
 --[[#property public @dictionary Carbon.Support {
@@ -65,6 +66,11 @@ Carbon.Features = {
 	A type to represent "none", but not @nil.
 }]]
 Carbon.None = newproxy(false)
+
+--[[#property public Maybe Carbon.Maybe {
+	A type to represent a value between `true` and `false`.
+}]]
+Carbon.Maybe = newproxy(false)
 
 --[[#method {
 	class public @void Carbon.Enable(@any ...)

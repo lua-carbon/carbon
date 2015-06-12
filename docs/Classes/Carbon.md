@@ -15,7 +15,7 @@ This is the Carbon core, containing all other modules and some utilities.
 Imports Carbon's core utilities into the current file for use.
 
 Presently imports:
-<ul><li>Async<li>Assert</li><li>Error</li><li>IsObject</li><li>LoadString</li><li>Deprecated</li><li>None</li></li></ul>
+<ul><li>Async<li>Assert</li><li>Error</li><li>IsObject</li><li>LoadString</li><li>Deprecated</li><li>None</li><li>Maybe</li></li></ul>
 <hr/>
 <h4 class="method-name"><span class="doc-scope doc-class">class</span> <span class="doc-visibility doc-public">public</span> Carbon.Assert(<code><a href="Types#bool">bool</a> condition, [<a href="Types#string">string</a> message]</code>)</h4>
 <p class="method-returns bold">Returns <code><a href="Types#void">void</a></code></p>
@@ -115,6 +115,9 @@ Performs a fast unpack on the table.
 ## Properties
 #### <span class="doc-visibility doc-public">public</span> <code><a href="Types#set">set</a></code> Carbon.Features
 Contains a set of features and whether they are enabled or disabled.
+<hr/>
+#### <span class="doc-visibility doc-public">public</span> <code>Maybe</code> Carbon.Maybe
+A type to represent a value between `true` and `false`.
 <hr/>
 #### <span class="doc-visibility doc-public">public</span> <code>None</code> Carbon.None
 A type to represent "none", but not <a href="Types#nil">nil</a>.

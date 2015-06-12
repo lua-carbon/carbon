@@ -54,7 +54,7 @@ pages:
 - [Classes/Serializable.md, Classes, Serializable]
 - [Classes/Serialization.md, Classes, Serialization]
 - [Classes/Serialization.Format.md, Classes, Serialization.Format]
-- [Classes/Serialization.Formats.JSON.md, Classes, Serialization.Formats.JSON]
+- [Classes/Serialization.Formats.SimpleJSON.md, Classes, Serialization.Formats.SimpleJSON]
 - [Classes/TemplateEngine.md, Classes, TemplateEngine]
 - [Classes/Testing.md, Classes, Testing]
 - [Classes/Testing.TestResult.md, Classes, Testing.TestResult]

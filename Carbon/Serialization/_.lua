@@ -36,11 +36,25 @@ end
 	If no deserializer for the format could be found, returns (false, @NotImplementedException)
 }]]
 function Serialization.Deserialize(source, format)
+	local maybes = {}
+
 	for key, format in pairs(Serialization.Formats) do
 		if (format.Is and format.Is[Serialization.Format]) then
-			if (format:CanDeserialize(source)) then
+			local can = format:CanDeserialize(source)
+
+			if (can == true) then
 				return format:Deserialize(source)
+			elseif (can == Carbon.Maybe) then
+				table.insert(maybes, format)
 			end
+		end
+	end
+
+	for key, format in ipairs(maybes) do
+		local result = format:Deserialize(source)
+
+		if (result) then
+			return result
 		end
 	end
 	

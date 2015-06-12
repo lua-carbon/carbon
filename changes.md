@@ -1,10 +1,11 @@
 # Carbon Change Log
 
 ![1.2.0](https://img.shields.io/badge/1.2.0-in_development-orange.svg?style=flat-square)
-- Update to Graphene 1.1.10, fixes several embedded Carbon issues
+- Update to Graphene 1.1.11, fixes several issues
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
 - Added `Carbon.None` for specifying "none" but not "nil"
+- Added `Carbon.Maybe` for specifying a state between "true" and "false".
 - Added `Carbide.Parse` as a general parsing interface
 - Added `BaseClass:GetAttribute` and `BaseClass:GetMember` for querying fields in classes
 - Added `ExperimentalFeatures` attribute

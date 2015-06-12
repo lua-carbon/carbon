@@ -1,5 +1,5 @@
 --[[
-	Graphene 1.1.10
+	Graphene 1.1.11
 	https://github.com/lua-carbon/graphene
 ]]
 
@@ -8,7 +8,7 @@ if (type((...)) ~= "string") then
 end
 
 -- Current graphene version
-local g_version = {1, 1, 10}
+local g_version = {1, 1, 11}
 local g_versionstring = ("%s.%s.%s%s%s"):format(
 	g_version[1],
 	g_version[2],
@@ -1369,6 +1369,14 @@ function G:MakeImportable(object)
 	return object
 end
 
+function G:MakeLightImportable(object)
+	setmetatable(object, {
+		__index = self.Importable
+	})
+
+	return object
+end
+
 --[[
 	table? G.Metadata:Get(any object, any field)
 		object: The object to query metadata for.
@@ -1541,12 +1549,12 @@ function G:CreateDirectory(path, directory)
 		return result
 	end
 
-	setmetatable(object, {
+	local interface = setmetatable({}, {
 		__index = object.GrapheneGet
 	})
 
 	if (G.Metadata.Enabled) then
-		G.Metadata:Set(object, {
+		G.Metadata:Set(interface, {
 			Name = directory.Path,
 			ShortName = directory.Path:match("[^%.]+$"),
 			Path = directory.Path,
@@ -1556,7 +1564,7 @@ function G:CreateDirectory(path, directory)
 		})
 	end
 
-	return object
+	return interface
 end
 
 --[[
