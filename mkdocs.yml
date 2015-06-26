@@ -4,58 +4,60 @@ repo_url: https://github.com/lua-carbon/carbon
 extra_css:
 - style.css
 pages:
-- [index.md, Index]
-- [Getting_Started.md, Tutorials, Getting Started]
-- [Using_Carbide.md, Tutorials, Using Carbide]
-- [Types.md, Tutorials, Carbon Types]
-- [Classes/Bench.md, Classes, Bench]
-- [Classes/Callisto.md, Classes, Callisto]
-- [Classes/Callisto.Compiler.md, Classes, Callisto.Compiler]
-- [Classes/Carbide.md, Classes, Carbide]
-- [Classes/Carbon.md, Classes, Carbon]
-- [Classes/Collections.Dictionary.md, Classes, Collections.Dictionary]
-- [Classes/Collections.List.md, Classes, Collections.List]
-- [Classes/Collections.Set.md, Classes, Collections.Set]
-- [Classes/Collections.Tuple.md, Classes, Collections.Tuple]
-- [Classes/CopyBarrier.md, Classes, CopyBarrier]
-- [Classes/Exception.md, Classes, Exception]
-- [Classes/Exceptions.CodeGenerationException.md, Classes, Exceptions.CodeGenerationException]
-- [Classes/Exceptions.NotImplementedException.md, Classes, Exceptions.NotImplementedException]
-- [Classes/Exceptions.SyntaxErrorException.md, Classes, Exceptions.SyntaxErrorException]
-- [Classes/Functional.md, Classes, Functional]
-- [Classes/IO.md, Classes, IO]
-- [Classes/IO.File.md, Classes, IO.File]
-- [Classes/Logging.md, Classes, Logging]
-- [Classes/Math.CMatrix4x4.md, Classes, Math.CMatrix4x4]
-- [Classes/Math.Color.md, Classes, Math.Color]
-- [Classes/Math.ColorRGB.md, Classes, Math.ColorRGB]
-- [Classes/Math.ColorRGBA.md, Classes, Math.ColorRGBA]
-- [Classes/Math.Matrix.md, Classes, Math.Matrix]
-- [Classes/Math.Matrix2x2.md, Classes, Math.Matrix2x2]
-- [Classes/Math.Matrix3x3.md, Classes, Math.Matrix3x3]
-- [Classes/Math.Matrix4x4.md, Classes, Math.Matrix4x4]
-- [Classes/Math.Quaternion.md, Classes, Math.Quaternion]
-- [Classes/Math.Vector.md, Classes, Math.Vector]
-- [Classes/Math.Vector2.md, Classes, Math.Vector2]
-- [Classes/Math.Vector3.md, Classes, Math.Vector3]
-- [Classes/Math.Vector4.md, Classes, Math.Vector4]
-- [Classes/Metadata.md, Classes, Metadata]
-- [Classes/Nanotube.md, Classes, Nanotube]
-- [Classes/OOP.md, Classes, OOP]
-- [Classes/OOP.BaseClass.md, Classes, OOP.BaseClass]
-- [Classes/OOP.Object.md, Classes, OOP.Object]
-- [Classes/OOP.StaticObject.md, Classes, OOP.StaticObject]
-- [Classes/Operators.md, Classes, Operators]
-- [Classes/Pointers.BasicPointer.md, Classes, Pointers.BasicPointer]
-- [Classes/Pointers.ForwardPointer.md, Classes, Pointers.ForwardPointer]
-- [Classes/Pointers.LookupPointer.md, Classes, Pointers.LookupPointer]
-- [Classes/Pointers.WeakPointer.md, Classes, Pointers.WeakPointer]
-- [Classes/Promise.md, Classes, Promise]
-- [Classes/Serializable.md, Classes, Serializable]
-- [Classes/Serialization.md, Classes, Serialization]
-- [Classes/Serialization.Format.md, Classes, Serialization.Format]
-- [Classes/Serialization.Formats.SimpleJSON.md, Classes, Serialization.Formats.SimpleJSON]
-- [Classes/TemplateEngine.md, Classes, TemplateEngine]
-- [Classes/Testing.md, Classes, Testing]
-- [Classes/Testing.TestResult.md, Classes, Testing.TestResult]
-- [Classes/Time.md, Classes, Time]
+- Index: index.md
+- Tutorials:
+  - Getting Started: Getting_Started.md
+  - Using Carbide: Using_Carbide.md
+  - Carbon Types: Types.md
+- Classes:
+  - Bench: Classes/Bench.md
+  - Callisto: Classes/Callisto.md
+  - Callisto.Compiler: Classes/Callisto.Compiler.md
+  - Carbide: Classes/Carbide.md
+  - Carbon: Classes/Carbon.md
+  - Collections.Dictionary: Classes/Collections.Dictionary.md
+  - Collections.List: Classes/Collections.List.md
+  - Collections.Set: Classes/Collections.Set.md
+  - Collections.Tuple: Classes/Collections.Tuple.md
+  - CopyBarrier: Classes/CopyBarrier.md
+  - Exception: Classes/Exception.md
+  - Exceptions.CodeGenerationException: Classes/Exceptions.CodeGenerationException.md
+  - Exceptions.NotImplementedException: Classes/Exceptions.NotImplementedException.md
+  - Exceptions.SyntaxErrorException: Classes/Exceptions.SyntaxErrorException.md
+  - Functional: Classes/Functional.md
+  - IO: Classes/IO.md
+  - IO.File: Classes/IO.File.md
+  - Logging: Classes/Logging.md
+  - Math.CMatrix4x4: Classes/Math.CMatrix4x4.md
+  - Math.Color: Classes/Math.Color.md
+  - Math.ColorRGB: Classes/Math.ColorRGB.md
+  - Math.ColorRGBA: Classes/Math.ColorRGBA.md
+  - Math.Matrix: Classes/Math.Matrix.md
+  - Math.Matrix2x2: Classes/Math.Matrix2x2.md
+  - Math.Matrix3x3: Classes/Math.Matrix3x3.md
+  - Math.Matrix4x4: Classes/Math.Matrix4x4.md
+  - Math.Quaternion: Classes/Math.Quaternion.md
+  - Math.Vector: Classes/Math.Vector.md
+  - Math.Vector2: Classes/Math.Vector2.md
+  - Math.Vector3: Classes/Math.Vector3.md
+  - Math.Vector4: Classes/Math.Vector4.md
+  - Metadata: Classes/Metadata.md
+  - Nanotube: Classes/Nanotube.md
+  - OOP: Classes/OOP.md
+  - OOP.BaseClass: Classes/OOP.BaseClass.md
+  - OOP.Object: Classes/OOP.Object.md
+  - OOP.StaticObject: Classes/OOP.StaticObject.md
+  - Operators: Classes/Operators.md
+  - Pointers.BasicPointer: Classes/Pointers.BasicPointer.md
+  - Pointers.ForwardPointer: Classes/Pointers.ForwardPointer.md
+  - Pointers.LookupPointer: Classes/Pointers.LookupPointer.md
+  - Pointers.WeakPointer: Classes/Pointers.WeakPointer.md
+  - Promise: Classes/Promise.md
+  - Serializable: Classes/Serializable.md
+  - Serialization: Classes/Serialization.md
+  - Serialization.Format: Classes/Serialization.Format.md
+  - Serialization.Formats.SimpleJSON: Classes/Serialization.Formats.SimpleJSON.md
+  - TemplateEngine: Classes/TemplateEngine.md
+  - Testing: Classes/Testing.md
+  - Testing.TestResult: Classes/Testing.TestResult.md
+  - Time: Classes/Time.md
