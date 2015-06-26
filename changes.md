@@ -1,9 +1,10 @@
 # Carbon Change Log
 
-![1.2.0](https://img.shields.io/badge/1.2.0-in_development-orange.svg?style=flat-square)
+![1.2.0](https://img.shields.io/badge/1.2.0-latest-brightgreen.svg?style=flat-square)
 - Update to Graphene 1.1.11, fixes several issues
 - Added "cancel" and "die" return strings for Nanotube events
 - Added `Carbon.Serialization` to provide object serialization
+	- Implemented SimpleJSON serializer for the time being
 - Added `Carbon.None` for specifying "none" but not "nil"
 - Added `Carbon.Maybe` for specifying a state between "true" and "false".
 - Added `Carbide.Parse` as a general parsing interface
@@ -19,7 +20,7 @@
 - Fixed return value of `Nanotube:Fire`
 - Fixed OOP breaking when `RemoveDeprecated` is enabled
 
-![1.1.2](https://img.shields.io/badge/1.1.2-released-brightgreen.svg?style=flat-square)
+![1.1.2](https://img.shields.io/badge/1.1.2-unsupported-red.svg?style=flat-square)
 - Update to Graphene 1.1.9, multiple fixes
 - Fixed documentation format to use `extra_css`
 - Fixed OOP to run even with `RemoveDeprecated` enabled
